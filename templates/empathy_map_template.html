@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Empathy Map Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            color: #1d1d1f;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .field {
+            margin-bottom: 1.5rem;
+        }
+
+        .field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .field textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0071e3;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .quadrant {
+            border: 2px solid #e5e5ea;
+            border-radius: 10px;
+            padding: 1.25rem;
+        }
+
+        .quadrant h3 {
+            font-size: 0.9rem;
+            color: #0071e3;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .quadrant textarea {
+            width: 100%;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 0.75rem;
+            min-height: 120px;
+            font-size: 0.85rem;
+            font-family: inherit;
+            resize: vertical;
+        }
+
+        .note {
+            background: #f9f9fb;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+        }
+
+        @media print {
+            body {
+                padding: 1rem;
+            }
+
+            .quadrant textarea {
+                min-height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Empathy Map Template</h1>
+    <p class="subtitle">Design Thinking — Empathy Phase</p>
+
+    <div class="section-title">User / Persona</div>
+    <div class="field">
+        <label>Who are you mapping?</label>
+        <input type="text" placeholder="Name / persona description...">
+    </div>
+    <div class="field">
+        <label>Situation / Context</label>
+        <input type="text" placeholder="What scenario or task are they in?">
+    </div>
+
+    <div class="section-title">The Four Quadrants</div>
+    <div class="note">Fill in each quadrant with observations from interviews, field studies, or research. Use direct
+        quotes where possible.</div>
+    <div class="grid">
+        <div class="quadrant">
+            <h3>🗣️ Says</h3>
+            <textarea placeholder="Direct quotes. What did the user literally say?"></textarea>
+        </div>
+        <div class="quadrant">
+            <h3>🤔 Thinks</h3>
+            <textarea placeholder="What might they be thinking? Worries, hopes, internal dialogue..."></textarea>
+        </div>
+        <div class="quadrant">
+            <h3>🏃 Does</h3>
+            <textarea placeholder="Observable actions and behaviors. What did you see them do?"></textarea>
+        </div>
+        <div class="quadrant">
+            <h3>😟 Feels</h3>
+            <textarea placeholder="Emotional state: anxious, frustrated, hopeful, confused..."></textarea>
+        </div>
+    </div>
+
+    <div class="section-title">Insights & Contradictions</div>
+    <div class="field">
+        <label>Key Insights</label>
+        <textarea placeholder="What patterns or surprises emerged from the quadrants?"></textarea>
+    </div>
+    <div class="field">
+        <label>Contradictions (Says vs Does)</label>
+        <textarea
+            placeholder="Where what they SAY doesn't match what they DO — these are the deepest insights..."></textarea>
+    </div>
+</body>
+
+</html>

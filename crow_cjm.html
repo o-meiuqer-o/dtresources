@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Journey Map — The Thirsty Crow</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #fdf6ec;
+            --card-bg: #fff9f0;
+            --text: #3a2e1f;
+            --accent-orange: #e07830;
+            --accent-green: #3a7a4a;
+            --accent-red: #c44a3f;
+            --accent-gold: #d4a843;
+            --border: #c9b896;
+            --shadow: rgba(58, 46, 31, 0.12);
+            --emotion-high: #4caf50;
+            --emotion-mid: #ff9800;
+            --emotion-low: #e53935;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+        }
+
+        /* === HEADER === */
+        .header {
+            text-align: center;
+            padding: 48px 24px 24px;
+            position: relative;
+        }
+
+        .header::after {
+            content: '';
+            display: block;
+            width: 120px;
+            height: 4px;
+            background: var(--accent-orange);
+            margin: 16px auto 0;
+            border-radius: 2px;
+        }
+
+        .header h1 {
+            font-family: 'Caveat', cursive;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            line-height: 1.1;
+        }
+
+        .header .subtitle {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.3rem;
+            color: var(--accent-orange);
+            margin-top: 8px;
+        }
+
+        .header .tagline {
+            font-size: 0.95rem;
+            color: #7a6b56;
+            margin-top: 12px;
+            max-width: 650px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.5;
+        }
+
+        /* === EMOTION CURVE === */
+        .emotion-curve-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .emotion-curve-container svg {
+            width: 100%;
+            height: 100px;
+        }
+
+        /* === CJM TIMELINE === */
+        .cjm-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px 48px;
+            overflow-x: auto;
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 16px;
+            min-width: 1100px;
+            position: relative;
+        }
+
+        /* connector line */
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 24px;
+            right: 24px;
+            height: 4px;
+            background: linear-gradient(90deg,
+                    var(--emotion-low) 0%,
+                    var(--emotion-mid) 15%,
+                    var(--emotion-low) 30%,
+                    var(--emotion-low) 42%,
+                    var(--emotion-mid) 55%,
+                    var(--emotion-high) 75%,
+                    var(--emotion-high) 100%);
+            border-radius: 2px;
+        }
+
+        /* === STAGE CARD === */
+        .stage-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px 14px 18px;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stage-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 24px var(--shadow);
+        }
+
+        /* dot on the connector */
+        .stage-card::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 3px solid var(--card-bg);
+        }
+
+        .stage-card.emotion-low::before {
+            background: var(--emotion-low);
+        }
+
+        .stage-card.emotion-mid::before {
+            background: var(--emotion-mid);
+        }
+
+        .stage-card.emotion-high::before {
+            background: var(--emotion-high);
+        }
+
+        .stage-number {
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-bottom: 2px;
+        }
+
+        .stage-name {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.05rem;
+            color: var(--accent-green);
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+        }
+
+        .stage-illustration {
+            width: 100%;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            border: 2px dashed var(--border);
+            overflow: hidden;
+            margin-bottom: 12px;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stage-illustration img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .stage-illustration .placeholder {
+            font-family: 'Caveat', cursive;
+            color: #c9b896;
+            font-size: 0.9rem;
+        }
+
+        .stage-story {
+            font-size: 0.82rem;
+            line-height: 1.45;
+            color: #5a4e3e;
+            margin-bottom: 10px;
+            min-height: 54px;
+        }
+
+        .emotion-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .emotion-badge.low {
+            background: #fce4e4;
+            color: var(--emotion-low);
+        }
+
+        .emotion-badge.mid {
+            background: #fff3e0;
+            color: #e65100;
+        }
+
+        .emotion-badge.high {
+            background: #e8f5e9;
+            color: var(--emotion-high);
+        }
+
+        .touchpoint {
+            font-size: 0.72rem;
+            color: #8a7b66;
+            line-height: 1.4;
+        }
+
+        .touchpoint strong {
+            color: var(--accent-green);
+            font-weight: 600;
+        }
+
+        .pain-point {
+            font-size: 0.72rem;
+            color: var(--accent-red);
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        /* === EMOTION CURVE SECTION === */
+        .curve-section {
+            max-width: 1300px;
+            margin: 32px auto 0;
+            padding: 0 40px;
+        }
+
+        .curve-section h2 {
+            font-family: 'Caveat', cursive;
+            font-size: 1.6rem;
+            color: var(--accent-green);
+            margin-bottom: 8px;
+        }
+
+        .curve-wrapper {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 20px;
+            margin-bottom: 24px;
+        }
+
+        .curve-wrapper svg {
+            width: 100%;
+            height: 180px;
+        }
+
+        /* === INSIGHTS === */
+        .insights {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+        }
+
+        .insights h2 {
+            font-family: 'Caveat', cursive;
+            font-size: 1.8rem;
+            color: var(--accent-green);
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .insight-card {
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .insight-card h3 {
+            font-family: 'Patrick Hand', cursive;
+            font-size: 1.1rem;
+            color: var(--accent-orange);
+            margin-bottom: 8px;
+        }
+
+        .insight-card p {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #5a4e3e;
+        }
+
+        /* === SCROLL HINT === */
+        .scroll-hint {
+            text-align: center;
+            padding: 8px;
+            font-family: 'Patrick Hand', cursive;
+            color: #b8a88a;
+            font-size: 0.9rem;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 900px) {
+            .timeline {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .timeline {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .header h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <h1>🪨 Customer Journey Map</h1>
+        <div class="subtitle">The Thirsty Crow — An Aesop's Fable</div>
+        <p class="tagline">
+            Mapping the crow's journey from desperate thirst to creative problem-solving —
+            a classic story retold as a Customer Journey Map to illustrate awareness, friction, insight, and delight.
+        </p>
+    </header>
+
+    <!-- EMOTION CURVE -->
+    <div class="curve-section">
+        <h2>📈 Emotion Curve</h2>
+        <div class="curve-wrapper">
+            <svg viewBox="0 0 1000 180" preserveAspectRatio="none">
+                <!-- grid lines -->
+                <line x1="0" y1="45" x2="1000" y2="45" stroke="#e8dcc8" stroke-width="1" stroke-dasharray="4" />
+                <line x1="0" y1="90" x2="1000" y2="90" stroke="#e8dcc8" stroke-width="1" stroke-dasharray="4" />
+                <line x1="0" y1="135" x2="1000" y2="135" stroke="#e8dcc8" stroke-width="1" stroke-dasharray="4" />
+
+                <!-- labels -->
+                <text x="4" y="42" fill="#8a7b66" font-size="11" font-family="Patrick Hand">😊 Positive</text>
+                <text x="4" y="88" fill="#8a7b66" font-size="11" font-family="Patrick Hand">😐 Neutral</text>
+                <text x="4" y="133" fill="#8a7b66" font-size="11" font-family="Patrick Hand">😟 Negative</text>
+
+                <!-- emotion path -->
+                <path
+                    d="M 72 130 C 120 130, 160 65, 214 65 C 260 65, 310 140, 357 145 C 400 148, 440 140, 500 138 C 540 136, 600 85, 643 70 C 680 58, 730 50, 786 45 C 830 42, 880 20, 928 18"
+                    fill="none" stroke="url(#emotionGrad)" stroke-width="4" stroke-linecap="round" />
+
+                <!-- gradient -->
+                <defs>
+                    <linearGradient id="emotionGrad" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#e53935" />
+                        <stop offset="15%" stop-color="#ff9800" />
+                        <stop offset="30%" stop-color="#e53935" />
+                        <stop offset="42%" stop-color="#e53935" />
+                        <stop offset="58%" stop-color="#ff9800" />
+                        <stop offset="78%" stop-color="#4caf50" />
+                        <stop offset="100%" stop-color="#4caf50" />
+                    </linearGradient>
+                </defs>
+
+                <!-- stage markers -->
+                <circle cx="72" cy="130" r="8" fill="#e53935" stroke="#fff" stroke-width="2" />
+                <circle cx="214" cy="65" r="8" fill="#ff9800" stroke="#fff" stroke-width="2" />
+                <circle cx="357" cy="145" r="8" fill="#e53935" stroke="#fff" stroke-width="2" />
+                <circle cx="500" cy="138" r="8" fill="#e53935" stroke="#fff" stroke-width="2" />
+                <circle cx="643" cy="70" r="8" fill="#ff9800" stroke="#fff" stroke-width="2" />
+                <circle cx="786" cy="45" r="8" fill="#4caf50" stroke="#fff" stroke-width="2" />
+                <circle cx="928" cy="18" r="8" fill="#4caf50" stroke="#fff" stroke-width="2" />
+
+                <!-- stage labels -->
+                <text x="72" y="160" text-anchor="middle" fill="#3a2e1f" font-size="10"
+                    font-family="Patrick Hand">Awareness</text>
+                <text x="214" y="52" text-anchor="middle" fill="#3a2e1f" font-size="10"
+                    font-family="Patrick Hand">Discovery</text>
+                <text x="357" y="170" text-anchor="middle" fill="#3a2e1f" font-size="10"
+                    font-family="Patrick Hand">Friction</text>
+                <text x="500" y="165" text-anchor="middle" fill="#3a2e1f" font-size="10"
+                    font-family="Patrick Hand">Struggle</text>
+                <text x="643" y="56" text-anchor="middle" fill="#3a2e1f" font-size="10"
+                    font-family="Patrick Hand">Insight</text>
+                <text x="786" y="34" text-anchor="middle" fill="#3a2e1f" font-size="10"
+                    font-family="Patrick Hand">Engagement</text>
+                <text x="928" y="8" text-anchor="middle" fill="#3a2e1f" font-size="10"
+                    font-family="Patrick Hand">Delight</text>
+            </svg>
+        </div>
+    </div>
+
+    <!-- SCROLL HINT -->
+    <p class="scroll-hint">← scroll horizontally to see all stages →</p>
+
+    <!-- CJM TIMELINE -->
+    <div class="cjm-container">
+        <div class="timeline">
+
+            <!-- Stage 1: Awareness -->
+            <div class="stage-card emotion-low">
+                <div class="stage-number">01</div>
+                <div class="stage-name">🔍 Awareness</div>
+                <div class="stage-illustration">
+                    <img src="crow_01_thirsty.png" alt="Thirsty crow flying under hot sun"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>🌞🐦 Illustration loading...</div>'" />
+                </div>
+                <p class="stage-story">A crow flies under the scorching sun, desperately thirsty. It has been searching
+                    for water for hours.</p>
+                <span class="emotion-badge low">😰 Desperate &amp; Anxious</span>
+                <div class="touchpoint"><strong>Touchpoint:</strong> Recognises the need — "I am thirsty, I need water!"
+                </div>
+                <div class="pain-point">⚡ Pain: No water anywhere in sight</div>
+            </div>
+
+            <!-- Stage 2: Discovery -->
+            <div class="stage-card emotion-mid">
+                <div class="stage-number">02</div>
+                <div class="stage-name">✨ Discovery</div>
+                <div class="stage-illustration">
+                    <img src="crow_02_spots_jug.png" alt="Crow spots a jug"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>🏺🐦 Illustration loading...</div>'" />
+                </div>
+                <p class="stage-story">The crow spots a clay jug on the ground! Hope surges — there might be water
+                    inside.</p>
+                <span class="emotion-badge mid">😃 Hopeful &amp; Excited</span>
+                <div class="touchpoint"><strong>Touchpoint:</strong> Finds a potential solution — the jug</div>
+                <div class="pain-point">⚡ Pain: Uncertainty — is there actually water?</div>
+            </div>
+
+            <!-- Stage 3: First Contact / Friction -->
+            <div class="stage-card emotion-low">
+                <div class="stage-number">03</div>
+                <div class="stage-name">🚧 Friction</div>
+                <div class="stage-illustration">
+                    <img src="crow_03_cant_reach.png" alt="Crow can't reach water"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>🏺😤 Illustration loading...</div>'" />
+                </div>
+                <p class="stage-story">Water is at the bottom — but the crow's beak can't reach it! So close, yet so
+                    far.</p>
+                <span class="emotion-badge low">😤 Frustrated &amp; Disappointed</span>
+                <div class="touchpoint"><strong>Touchpoint:</strong> First contact with the product fails</div>
+                <div class="pain-point">⚡ Pain: Product exists but is unusable</div>
+            </div>
+
+            <!-- Stage 4: Struggle -->
+            <div class="stage-card emotion-low">
+                <div class="stage-number">04</div>
+                <div class="stage-name">💪 Struggle</div>
+                <div class="stage-illustration">
+                    <img src="crow_04_tries_tilting.png" alt="Crow tries to tilt the jug"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>🏺💢 Illustration loading...</div>'" />
+                </div>
+                <p class="stage-story">The crow tries tilting the jug, pushing it from all sides — but it's too heavy.
+                    Every workaround fails.</p>
+                <span class="emotion-badge low">😡 Angry &amp; Exhausted</span>
+                <div class="touchpoint"><strong>Touchpoint:</strong> Attempts workarounds</div>
+                <div class="pain-point">⚡ Pain: Effort without result — almost gives up</div>
+            </div>
+
+            <!-- Stage 5: Insight -->
+            <div class="stage-card emotion-mid">
+                <div class="stage-number">05</div>
+                <div class="stage-name">💡 Insight</div>
+                <div class="stage-illustration">
+                    <img src="crow_05_idea.png" alt="Crow has an idea with pebbles"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>💡🐦 Illustration loading...</div>'" />
+                </div>
+                <p class="stage-story">The crow notices pebbles on the ground — and has a brilliant idea! What if
+                    pebbles can raise the water level?</p>
+                <span class="emotion-badge mid">🤔 Curious &amp; Determined</span>
+                <div class="touchpoint"><strong>Touchpoint:</strong> Creative breakthrough — the "Aha!" moment</div>
+                <div class="pain-point">⚡ Gain: Reframes the problem entirely</div>
+            </div>
+
+            <!-- Stage 6: Engagement -->
+            <div class="stage-card emotion-high">
+                <div class="stage-number">06</div>
+                <div class="stage-name">⚙️ Engagement</div>
+                <div class="stage-illustration">
+                    <img src="crow_06_drops_pebbles.png" alt="Crow drops pebbles into jug"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>🪨🏺 Illustration loading...</div>'" />
+                </div>
+                <p class="stage-story">One by one, the crow drops pebbles into the jug. Slowly but surely, the water
+                    rises higher and higher!</p>
+                <span class="emotion-badge high">🎯 Focused &amp; Patient</span>
+                <div class="touchpoint"><strong>Touchpoint:</strong> Executes the solution step by step</div>
+                <div class="pain-point">⚡ Gain: Sees incremental progress — it's working!</div>
+            </div>
+
+            <!-- Stage 7: Delight -->
+            <div class="stage-card emotion-high">
+                <div class="stage-number">07</div>
+                <div class="stage-name">🎉 Delight</div>
+                <div class="stage-illustration">
+                    <img src="crow_07_drinks.png" alt="Happy crow drinks water"
+                        onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=placeholder>🎉🐦 Illustration loading...</div>'" />
+                </div>
+                <p class="stage-story">The water reaches the top! The crow drinks to its heart's content. Persistence
+                    and creativity win the day.</p>
+                <span class="emotion-badge high">🥳 Joyful &amp; Relieved</span>
+                <div class="touchpoint"><strong>Touchpoint:</strong> Goal achieved — complete satisfaction</div>
+                <div class="pain-point">⚡ Gain: "Where there's a will, there's a way!"</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- KEY INSIGHTS -->
+    <section class="insights">
+        <h2>🧠 Key CJM Insights from the Crow's Journey</h2>
+        <div class="insights-grid">
+            <div class="insight-card">
+                <h3>🔴 Friction Reveals Opportunity</h3>
+                <p>The crow couldn't reach the water — the biggest pain point in the journey. In real products, these
+                    friction moments are where innovation happens. <strong>Map them, don't ignore them.</strong></p>
+            </div>
+            <div class="insight-card">
+                <h3>💡 The Aha Moment Changes Everything</h3>
+                <p>Stage 5 (Insight) is the turning point. When users reframe a problem, their emotional curve flips
+                    upward. <strong>Design for that lightbulb moment.</strong></p>
+            </div>
+            <div class="insight-card">
+                <h3>📈 Emotional Arc Matters</h3>
+                <p>The journey isn't linear — it dips into frustration before rising to delight. Great CJMs capture
+                    these emotional highs and lows truthfully. <strong>The dips make the peaks meaningful.</strong></p>
+            </div>
+            <div class="insight-card">
+                <h3>🎯 Persistence = Engagement</h3>
+                <p>Stage 6 shows that engagement requires effort and patience. Products that show incremental progress
+                    keep users motivated. <strong>Show the water rising.</strong></p>
+            </div>
+        </div>
+    </section>
+
+</body>
+
+</html>

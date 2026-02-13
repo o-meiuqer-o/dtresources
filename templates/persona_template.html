@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Persona Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #1d1d1f;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .field {
+            margin-bottom: 1.5rem;
+        }
+
+        .field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0071e3;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .note {
+            background: #f0f7ff;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #0071e3;
+        }
+
+        @media print {
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>User Persona Template</h1>
+    <p class="subtitle">Design Thinking — Empathy Phase (Research-Based)</p>
+
+    <div class="note">ℹ️ Personas are built from REAL research data — interviews, surveys, observations. Every field
+        should be backed by evidence, not assumptions.</div>
+
+    <div class="section-title">1. Identity</div>
+    <div class="grid">
+        <div class="field">
+            <label>Name (representative)</label>
+            <input type="text" placeholder="A name that represents this user group...">
+        </div>
+        <div class="field">
+            <label>Archetype Quote</label>
+            <input type="text" placeholder='A quote that captures their mindset, e.g., "I just want it to work."'>
+        </div>
+    </div>
+    <div class="field">
+        <label>Photo / Illustration</label>
+        <div
+            style="height:120px; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ccc;">
+            Place a representative image here</div>
+    </div>
+
+    <div class="section-title">2. Demographics</div>
+    <div class="grid">
+        <div class="field">
+            <label>Age</label>
+            <input type="text" placeholder="Based on research data">
+        </div>
+        <div class="field">
+            <label>Occupation</label>
+            <input type="text" placeholder="Job title / role">
+        </div>
+        <div class="field">
+            <label>Location</label>
+            <input type="text" placeholder="Where they live/work">
+        </div>
+        <div class="field">
+            <label>Tech Comfort</label>
+            <input type="text" placeholder="Low / Medium / High">
+        </div>
+    </div>
+
+    <div class="section-title">3. Goals & Motivations</div>
+    <div class="field">
+        <label>Primary Goals (what they want to achieve)</label>
+        <textarea placeholder="List 2-3 primary goals from your research..."></textarea>
+    </div>
+    <div class="field">
+        <label>Motivations (why they want it)</label>
+        <textarea placeholder="What drives them? What's at stake?"></textarea>
+    </div>
+
+    <div class="section-title">4. Frustrations & Pain Points</div>
+    <div class="field">
+        <label>Current Frustrations</label>
+        <textarea placeholder="What problems do they face today?"></textarea>
+    </div>
+    <div class="field">
+        <label>Workarounds</label>
+        <textarea placeholder="How do they currently cope with these problems?"></textarea>
+    </div>
+
+    <div class="section-title">5. Behaviors & Habits</div>
+    <div class="field">
+        <label>Key Behaviors (observed, not assumed)</label>
+        <textarea placeholder="What patterns did you observe in their behavior?"></textarea>
+    </div>
+
+    <div class="section-title">6. Scenario</div>
+    <div class="field">
+        <label>A Day in Their Life (narrative)</label>
+        <textarea style="min-height:120px"
+            placeholder="Write a brief narrative scenario showing this persona encountering the problem in their daily life..."></textarea>
+    </div>
+</body>
+
+</html>

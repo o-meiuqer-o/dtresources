@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Proto-Persona Template</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #1d1d1f;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .field {
+            margin-bottom: 1.5rem;
+        }
+
+        .field label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 0.75rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .field textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0071e3;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .note {
+            background: #fff8e1;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #ffb400;
+        }
+
+        @media print {
+            body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Proto-Persona Template</h1>
+    <p class="subtitle">Design Thinking — Empathy Phase (Assumption-Based)</p>
+
+    <div class="note">⚠️ Proto-personas are based on assumptions and existing knowledge, NOT research. They are a
+        starting point to be validated later with real user data.</div>
+
+    <div class="section-title">1. Identity</div>
+    <div class="grid">
+        <div class="field">
+            <label>Name (fictional)</label>
+            <input type="text" placeholder="Give your persona a name...">
+        </div>
+        <div class="field">
+            <label>Role / Occupation</label>
+            <input type="text" placeholder="What do they do?">
+        </div>
+    </div>
+    <div class="field">
+        <label>Sketch / Photo placeholder</label>
+        <div
+            style="height:120px; border: 2px dashed #ddd; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #ccc;">
+            Draw or paste a face here</div>
+    </div>
+
+    <div class="section-title">2. Demographics & Context</div>
+    <div class="grid">
+        <div class="field">
+            <label>Age Range</label>
+            <input type="text" placeholder="e.g., 18-25">
+        </div>
+        <div class="field">
+            <label>Location / Environment</label>
+            <input type="text" placeholder="Where do they live/work?">
+        </div>
+    </div>
+
+    <div class="section-title">3. Behaviors & Attitudes</div>
+    <div class="field">
+        <label>What are their typical behaviors related to the problem?</label>
+        <textarea placeholder="List 3-4 key behaviors you assume they have..."></textarea>
+    </div>
+    <div class="field">
+        <label>What are their needs and goals?</label>
+        <textarea placeholder="What are they trying to achieve?"></textarea>
+    </div>
+    <div class="field">
+        <label>What are their pain points and frustrations?</label>
+        <textarea placeholder="What gets in their way?"></textarea>
+    </div>
+
+    <div class="section-title">4. Assumptions to Validate</div>
+    <div class="field">
+        <label>What assumptions have you made that MUST be tested with real users?</label>
+        <textarea placeholder="List your riskiest assumptions..."></textarea>
+    </div>
+</body>
+
+</html>

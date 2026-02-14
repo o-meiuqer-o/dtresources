@@ -681,6 +681,197 @@ img {
     content: '📖 ';
 }
 
+.modal-refs a:hover {
+    text-decoration: underline;
+}
+
+.story-illustration {
+    flex-shrink: 0;
+    width: 200px;
+}
+
+.story-illustration svg {
+    width: 100%;
+    height: auto;
+}
+
+.story-text {
+    text-align: left;
+}
+
+.story-text p {
+    text-align: left;
+    max-width: none;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+/* ===== 5-Column Grid ===== */
+.grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+}
+
+.grid-5 .card {
+    padding: 1.5rem 1rem;
+}
+
+.grid-5 .card h3 {
+    font-size: 0.95rem;
+}
+
+.grid-5 .card p {
+    font-size: 0.82rem;
+}
+
+.grid-5 .svg-container {
+    width: 100px;
+    height: 80px;
+}
+
+/* ===== Example Boxes ===== */
+.example-box {
+    background: #fafbfc;
+    border: 1px solid #e8e8ed;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.example-box p {
+    text-align: left;
+    max-width: none;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #444;
+}
+
+.example-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+.example-table td,
+.example-table th {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: top;
+    line-height: 1.5;
+}
+
+.example-table td:first-child,
+.example-table th:first-child {
+    white-space: nowrap;
+    color: #555;
+    width: 140px;
+}
+
+.example-table th {
+    background: #f0f0f5;
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+
+.empathy-quadrant.example-q {
+    background: white;
+    border: 1px solid #e8e8ed;
+    text-align: left;
+}
+
+.empathy-quadrant.example-q h4 {
+    text-align: left;
+}
+
+.empathy-quadrant.example-q p {
+    text-align: left;
+}
+
+/* ===== Journey Table ===== */
+.journey-table-wrap {
+    overflow-x: auto;
+}
+
+.journey-example td,
+.journey-example th {
+    font-size: 0.78rem;
+    padding: 0.5rem;
+    min-width: 90px;
+}
+
+/* ===== Comparison Columns ===== */
+.modal-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.compare-col {
+    background: var(--bg-color);
+    padding: 1.25rem;
+    border-radius: 10px;
+}
+
+.compare-col h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    color: var(--text-color);
+}
+
+.compare-col ul {
+    list-style: none;
+    padding: 0;
+}
+
+.compare-col ul li {
+    padding: 0.35rem 0;
+    font-size: 0.85rem;
+    color: #444;
+}
+
+/* ===== Download Button ===== */
+.download-btn {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--bg-color);
+    color: var(--text-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 2px solid #e5e5ea;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+/* ===== References ===== */
+.modal-refs ul {
+    list-style: none;
+    padding: 0;
+}
+
+.modal-refs ul li {
+    padding: 0.4rem 0;
+    font-size: 0.8rem;
+    color: #777;
+    line-height: 1.5;
+}
+
+.modal-refs ul li::before {
+    content: '📖 ';
+}
+
 .modal-refs a {
     color: var(--accent-color);
     text-decoration: none;
@@ -699,27 +890,131 @@ img {
     .story-card {
         flex-direction: column;
         text-align: center;
+        padding: 2rem;
+    }
+
+    .story-illustration {
+        width: 150px;
+        margin: 0 auto;
     }
 
     .story-text p {
         text-align: center;
     }
+
+    h1 {
+        font-size: 2.8rem;
+    }
 }
 
 @media (max-width: 600px) {
+    section {
+        padding: 4rem 1.5rem;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
     .grid-5 {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: 1fr;
+        /* Stack visually on mobile */
+        max-width: 400px;
+        margin: 2rem auto;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
     }
 
     .modal-comparison {
         grid-template-columns: 1fr;
+        gap: 1rem;
     }
 
     .empathy-grid {
         grid-template-columns: 1fr;
     }
-} 
- 
+
+    .decision-logic {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .logic-box {
+        width: 100%;
+        min-width: 0;
+        padding: 1.5rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+        margin: 1rem;
+        max-height: 90vh;
+    }
+
+    .modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px;
+        /* Larger touch target */
+        height: 40px;
+        background: #f0f0f5;
+    }
+
+    .journey-layer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+
+    .layer-label {
+        min-width: 0;
+        margin-bottom: 0.25rem;
+    }
+
+    #eval-framework {
+        padding: 1.5rem;
+    }
+
+    .eval-item {
+        flex-direction: row;
+        /* Keep checkbox and label aligned */
+        align-items: flex-start;
+    }
+
+    .download-btn {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .card-cta {
+        font-size: 0.9rem;
+    }
+}
+
 /* ===== Modal Illustrations ===== */
 .modal-illustration {
     width: 100%;
@@ -786,7 +1081,7 @@ img {
     transition: all 0.3s ease;
 }
 
-.eval-item input:checked ~ .status-dot {
+.eval-item input:checked~.status-dot {
     background: var(--accent-color);
 }
 
@@ -803,4 +1098,134 @@ img {
     min-height: 100vh;
     height: auto;
     padding: 4rem 2rem;
+}
+/* ===== Responsive ===== */
+@media (max-width: 900px) {
+    .grid-5 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .story-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+    
+    .story-illustration {
+        width: 150px;
+        margin: 0 auto;
+    }
+
+    .story-text p {
+        text-align: center;
+    }
+    
+    h1 {
+        font-size: 2.8rem;
+    }
+}
+
+@media (max-width: 600px) {
+    section {
+        padding: 4rem 1.5rem;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .grid-5 {
+        grid-template-columns: 1fr; /* Stack visually on mobile */
+        max-width: 400px;
+        margin: 2rem auto;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-comparison {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .empathy-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .decision-logic {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .logic-box {
+        width: 100%;
+        min-width: 0;
+        padding: 1.5rem;
+    }
+    
+    .card {
+        padding: 1.5rem;
+    }
+    
+    .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+        margin: 1rem;
+        max-height: 90vh;
+    }
+    
+    .modal-close {
+        top: 1rem;
+        right: 1rem;
+        width: 40px; /* Larger touch target */
+        height: 40px;
+        background: #f0f0f5;
+    }
+    
+    .journey-layer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .layer-label {
+        min-width: 0;
+        margin-bottom: 0.25rem;
+    }
+    
+    #eval-framework {
+        padding: 1.5rem;
+    }
+    
+    .eval-item {
+        flex-direction: row; /* Keep checkbox and label aligned */
+        align-items: flex-start;
+    }
+    
+    .download-btn {
+        width: 100%;
+        text-align: center;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 400px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .card-cta {
+        font-size: 0.9rem;
+    }
 }

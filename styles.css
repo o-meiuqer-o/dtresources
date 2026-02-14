@@ -1099,6 +1099,7 @@ img {
     height: auto;
     padding: 4rem 2rem;
 }
+
 /* ===== Responsive ===== */
 @media (max-width: 900px) {
     .grid-5 {
@@ -1110,7 +1111,7 @@ img {
         text-align: center;
         padding: 2rem;
     }
-    
+
     .story-illustration {
         width: 150px;
         margin: 0 auto;
@@ -1119,7 +1120,7 @@ img {
     .story-text p {
         text-align: center;
     }
-    
+
     h1 {
         font-size: 2.8rem;
     }
@@ -1127,21 +1128,50 @@ img {
 
 @media (max-width: 600px) {
     section {
-        padding: 4rem 1.5rem;
-        min-height: 100vh;
+        padding: 3rem 1.25rem;
+        /* Reduced padding */
+        min-height: auto;
+        /* Remove full height requirement */
         height: auto;
+        display: block;
+        /* Stack content naturally */
+        margin-bottom: 2rem;
+        /* Add spacing between sections */
+    }
+
+    /* Target specific sections to reduce gaps */
+    #intro,
+    #evolution,
+    #worth-solving,
+    #empathy,
+    #story {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
     }
 
     h1 {
-        font-size: 2.4rem;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
     }
-    
+
     h2 {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+        margin-bottom: 0.75rem;
+    }
+
+    p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .media-container {
+        margin-top: 1rem;
+        width: 100%;
     }
 
     .grid-5 {
-        grid-template-columns: 1fr; /* Stack visually on mobile */
+        grid-template-columns: 1fr;
+        /* Stack visually on mobile */
         max-width: 400px;
         margin: 2rem auto;
     }
@@ -1158,57 +1188,59 @@ img {
     .empathy-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .decision-logic {
         flex-direction: column;
         gap: 0.5rem;
     }
-    
+
     .logic-box {
         width: 100%;
         min-width: 0;
         padding: 1.5rem;
     }
-    
+
     .card {
         padding: 1.5rem;
     }
-    
+
     .modal-content {
         width: 95%;
         padding: 1.5rem;
         margin: 1rem;
         max-height: 90vh;
     }
-    
+
     .modal-close {
         top: 1rem;
         right: 1rem;
-        width: 40px; /* Larger touch target */
+        width: 40px;
+        /* Larger touch target */
         height: 40px;
         background: #f0f0f5;
     }
-    
+
     .journey-layer {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.25rem;
     }
-    
+
     .layer-label {
         min-width: 0;
         margin-bottom: 0.25rem;
     }
-    
+
     #eval-framework {
         padding: 1.5rem;
     }
-    
+
     .eval-item {
-        flex-direction: row; /* Keep checkbox and label aligned */
+        flex-direction: row;
+        /* Keep checkbox and label aligned */
         align-items: flex-start;
     }
-    
+
     .download-btn {
         width: 100%;
         text-align: center;
@@ -1220,11 +1252,11 @@ img {
     h1 {
         font-size: 2rem;
     }
-    
+
     h2 {
         font-size: 1.5rem;
     }
-    
+
     .card-cta {
         font-size: 0.9rem;
     }

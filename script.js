@@ -48,4 +48,60 @@ document.addEventListener('DOMContentLoaded', () => {
             feedback.style.color = "#1d1d1f";
         }
     }
+    // Modal Framework
+    const toolCards = document.querySelectorAll('.tool-card');
+    const modals = document.querySelectorAll('.modal-overlay');
+    const closeButtons = document.querySelectorAll('.modal-close');
+
+    toolCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const modalId = card.getAttribute('data-modal');
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                // Load video if it exists
+                const iframe = modal.querySelector('iframe');
+                if (iframe && iframe.hasAttribute('data-src')) {
+                    iframe.src = iframe.getAttribute('data-src');
+                }
+
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Prevent scroll
+            }
+        });
+    });
+
+    function closeAllModals() {
+        modals.forEach(modal => {
+            modal.classList.remove('active');
+
+            // Stop and unload YouTube videos
+            const iframe = modal.querySelector('iframe');
+            if (iframe) {
+                iframe.src = '';
+            }
+        });
+        document.body.style.overflow = ''; // Restore scroll
+    }
+
+    closeButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeAllModals();
+        });
+    });
+
+    modals.forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeAllModals();
+            }
+        });
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeAllModals();
+        }
+    });
 });

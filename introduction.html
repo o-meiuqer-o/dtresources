@@ -105,10 +105,12 @@
             <h2>Response to Stimuli</h2>
             <p>Every living thing responds to its environment to improve its situation.</p>
             <div class="grid-container grid-2">
-                <div class="card">
-                    <span style="font-size: 3rem;">🦠</span>
-                    <h3>Amoeba</h3>
-                    <p>A simple biological response to heat or light. Trivial survival.</p>
+                <div class="card tool-card" data-modal="corvid-video">
+                    <span style="font-size: 3rem;">🐦‍⬛</span>
+                    <h3>Corvid</h3>
+                    <p>Crows and Ravens using tools and logic to solve multi-stage puzzles. Advanced problem-solving.
+                    </p>
+                    <span class="card-cta">Click to see the logic →</span>
                 </div>
                 <div class="card tool-card" data-modal="squirrel-video">
                     <span style="font-size: 3rem;">🐿️</span>
@@ -187,6 +189,34 @@
                     <div style="margin-top: 1rem; font-size: 0.85rem; color: #888;">
                         Video Credit: <a href="https://www.youtube.com/@MarkRober" target="_blank" rel="noopener"
                             style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Mark Rober</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Overlay for Corvid Video -->
+    <div id="corvid-video" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem;">
+            <button class="modal-close">&times;</button>
+            <div class="media-container" style="width: 100%; max-width: none; margin-top: 0; box-shadow: none;">
+                <div class="video-crop">
+                    <iframe width="100%" height="500" src=""
+                        data-src="https://www.youtube.com/embed/cbSu2PXOTOc?rel=0&modestbranding=1"
+                        title="Corvid Intelligence" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+                <div style="padding: 1.5rem; text-align: left;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">The 007 Raven: Eight-Stage Puzzle</h2>
+                    <p style="text-align: left; font-size: 0.95rem; color: #444;">
+                        Corvids (crows, ravens, etc.) demonstrate incredible <strong>Proleptic Power</strong> by
+                        planning several steps ahead. They don't just react; they understand the properties of objects
+                        and sequence their actions to achieve a goal.
+                    </p>
+                    <div style="margin-top: 1rem; font-size: 0.85rem; color: #888;">
+                        Video Credit: <a href="https://www.youtube.com/@BBC" target="_blank" rel="noopener"
+                            style="color: var(--accent-color); text-decoration: none; font-weight: 600;">BBC Earth</a>
                     </div>
                 </div>
             </div>

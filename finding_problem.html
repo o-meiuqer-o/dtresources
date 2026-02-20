@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 03: Finding the Right Problem</title>
+    <meta name="description"
+        content="An interactive educational guide on Design Thinking, featuring empathy tools like Proto-Personas, Journey Maps, and problem statement frameworks. Created for Mahindra University students.">
+    <meta name="author" content="Raj Narayanan, Mahindra University">
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation Overlay -->
+    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px;">
+        <a href="foundations.html" class="nav-pill">← Module 02: Foundations</a>
+    </div>
+
+    <div class="scroll-container">
+
+        <!-- SECTION 1: INTRODUCTION -->
+        <section id="intro">
+            <h1>What is a Problem?</h1>
+            <p>It emerges when a person or multiple people share in a not-so-satisfying situation.</p>
+            <div class="media-container video-crop">
+                <video autoplay loop muted playsinline>
+                    <source src="GIF_Animation_Generation.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <!-- SECTION 2: EVOLUTION -->
+        <section id="evolution">
+            <h2>The Evolution</h2>
+            <p>How it evolves when there are multiple people affected.</p>
+            <div class="media-container video-crop">
+                <video autoplay loop muted playsinline>
+                    <source src="Action_GIF_Request_No_Happy_Ending (1).mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+
+        <!-- SECTION 3: WORTH SOLVING? -->
+        <section id="worth-solving">
+            <h2>Is it worth solving?</h2>
+            <p>Simple decision making logic: Are many people facing this particular problem?</p>
+            <div class="decision-logic">
+                <div class="logic-box">SINGLE USER<br><span style="font-size: 0.8rem; font-weight: 400;">Personal
+                        Inconvenience</span></div>
+                <div style="font-size: 2rem;">→</div>
+                <div class="logic-box"
+                    style="background: var(--accent-color); color: white; border-color: var(--accent-color);">MANY
+                    USERS<br><span style="font-size: 0.8rem; font-weight: 400;">Worth Solving</span></div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: EMPATHY -->
+        <section id="empathy">
+            <h2>What is Empathy?</h2>
+            <p>Empathy is the ability to see the world through other people's eyes, to feel what they feel, and to
+                understand their motivations and frustrations. It moves beyond observable actions to gain a deeper
+                understanding of the mindset.</p>
+            <div class="grid-container">
+                <div class="card">
+                    <h3>Understand</h3>
+                    <p>Gathering insights from real stories and experiences.</p>
+                </div>
+                <div class="card">
+                    <h3>Observe</h3>
+                    <p>Watching behaviors without judgment or interference.</p>
+                </div>
+                <div class="card">
+                    <h3>Feel</h3>
+                    <p>Connecting with the emotional core of the user's struggle.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4B: THE STORY -->
+        <section id="story">
+            <h2>🪨 The Thirsty Crow</h2>
+            <p style="max-width:700px; text-align:center;">Before we explore our empathy tools, let's meet our user.</p>
+            <div class="story-card">
+                <div class="story-illustration">
+                    <svg viewBox="0 0 200 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M85 60 Q80 60 78 100 Q78 130 100 130 Q122 130 122 100 Q120 60 115 60 Z" fill="#e8ddd0"
+                            stroke="#b8a89a" stroke-width="2" />
+                        <ellipse cx="100" cy="60" rx="17" ry="5" fill="#e8ddd0" stroke="#b8a89a" stroke-width="2" />
+                        <path d="M82 110 Q82 130 100 130 Q118 130 118 110 Z" fill="#a8d4f0" fill-opacity="0.5" />
+                        <circle cx="95" cy="125" r="4" fill="#888" />
+                        <circle cx="105" cy="122" r="3.5" fill="#999" />
+                        <circle cx="100" cy="118" r="3" fill="#777" />
+                        <ellipse cx="145" cy="48" rx="16" ry="11" fill="#2d2d2d" />
+                        <circle cx="154" cy="42" r="8" fill="#2d2d2d" />
+                        <circle cx="157" cy="40" r="2.5" fill="white" />
+                        <circle cx="157.5" cy="40" r="1.2" fill="#1d1d1f" />
+                        <path d="M162 42 L170 39 L162 44 Z" fill="#ffb400" />
+                        <path d="M132 42 Q122 30 130 48" stroke="#2d2d2d" stroke-width="3" fill="none" />
+                    </svg>
+                </div>
+                <div class="story-text">
+                    <p>A <strong>crow</strong>, parched with thirst on a scorching day, found a <strong>jug</strong>
+                        with water at the bottom — but the neck was too narrow and the water too low for the crow's beak
+                        to reach.</p>
+                    <p>After trying everything, the crow began <strong>dropping pebbles</strong> into the jug, one by
+                        one, until the water rose high enough to drink.</p>
+                    <p style="color: var(--accent-color); font-weight: 600; margin-top:1rem;">We'll use this story as
+                        our running example to learn each empathy tool below.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: TOOLS -->
+        <section id="tools">
+            <h2>Empathy Tools</h2>
+            <p>Tools we use to record and document empathy. Click each to explore.</p>
+            <div class="grid-container grid-5">
+                <div class="card tool-card" onclick="openModal('modal-proto-persona')">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="35" r="14" fill="#f0f0f0" stroke="#ddd" stroke-width="2" />
+                            <path d="M30 80 Q30 55 50 55 Q70 55 70 80" fill="#f0f0f0" stroke="#ddd" stroke-width="2" />
+                            <circle cx="45" cy="33" r="2" fill="#ccc" />
+                            <circle cx="55" cy="33" r="2" fill="#ccc" />
+                            <path d="M46 39 Q50 43 54 39" stroke="#ccc" stroke-width="1.5" fill="none"
+                                stroke-linecap="round" />
+                            <text x="50" y="95" text-anchor="middle" font-size="9" fill="#ffb400"
+                                font-weight="bold">?</text>
+                        </svg>
+                    </div>
+                    <h3>Proto-Persona</h3>
+                    <p>Your best guess before research.</p>
+                    <span class="card-cta">Tap to explore →</span>
+                </div>
+                <div class="card tool-card" onclick="openModal('modal-surveys')">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="25" y="15" width="50" height="70" rx="4" fill="white" stroke="#e1e1e1"
+                                stroke-width="2" />
+                            <rect x="35" y="35" width="30" height="2" rx="1" fill="#e1e1e1" />
+                            <rect x="35" y="45" width="30" height="2" rx="1" fill="#e1e1e1" />
+                            <rect x="35" y="55" width="20" height="2" rx="1" fill="#e1e1e1" />
+                            <circle cx="35" cy="70" r="4" fill="var(--accent-color)" />
+                            <path d="M45 70H65" stroke="#e1e1e1" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
+                    <h3>Surveys</h3>
+                    <p>Quantitative reach at scale.</p>
+                    <span class="card-cta">Tap to explore →</span>
+                </div>
+                <div class="card tool-card" onclick="openModal('modal-persona')">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="35" r="14" fill="#f0f7ff" stroke="var(--accent-color)"
+                                stroke-width="2" />
+                            <path d="M30 80 Q30 55 50 55 Q70 55 70 80" fill="#f0f7ff" stroke="var(--accent-color)"
+                                stroke-width="2" />
+                            <circle cx="45" cy="33" r="2" fill="var(--accent-color)" />
+                            <circle cx="55" cy="33" r="2" fill="var(--accent-color)" />
+                            <path d="M46 39 Q50 43 54 39" stroke="var(--accent-color)" stroke-width="1.5" fill="none"
+                                stroke-linecap="round" />
+                            <text x="50" y="95" text-anchor="middle" font-size="9" fill="var(--accent-color)"
+                                font-weight="bold">✓</text>
+                        </svg>
+                    </div>
+                    <h3>Persona</h3>
+                    <p>Research-backed user profile.</p>
+                    <span class="card-cta">Tap to explore →</span>
+                </div>
+                <div class="card tool-card" onclick="openModal('modal-journey-map')">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 65C30 65 35 35 50 35C65 35 70 65 85 65" stroke="var(--accent-color)"
+                                stroke-width="3" stroke-linecap="round" />
+                            <circle cx="15" cy="65" r="4" fill="white" stroke="var(--accent-color)" stroke-width="2" />
+                            <circle cx="50" cy="35" r="4" fill="white" stroke="#ffb400" stroke-width="2" />
+                            <circle cx="85" cy="65" r="4" fill="white" stroke="var(--accent-color)" stroke-width="2" />
+                        </svg>
+                    </div>
+                    <h3>Journey Maps</h3>
+                    <p>Timeline of the full experience.</p>
+                    <span class="card-cta">Tap to explore →</span>
+                </div>
+                <div class="card tool-card" onclick="openModal('modal-empathy-map')">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect x="15" y="15" width="70" height="70" rx="6" fill="#fdfdfd" stroke="#eee"
+                                stroke-width="1.5" />
+                            <line x1="15" y1="50" x2="85" y2="50" stroke="#eee" stroke-width="1.5" />
+                            <line x1="50" y1="15" x2="50" y2="85" stroke="#eee" stroke-width="1.5" />
+                            <rect x="25" y="25" width="10" height="6" rx="2" fill="#ffb400" fill-opacity="0.3" />
+                            <rect x="65" y="65" width="10" height="6" rx="2" fill="var(--accent-color)"
+                                fill-opacity="0.3" />
+                            <circle cx="50" cy="50" r="4" fill="white" stroke="#eee" stroke-width="1.5" />
+                        </svg>
+                    </div>
+                    <h3>Empathy Maps</h3>
+                    <p>Says, Thinks, Does, Feels.</p>
+                    <span class="card-cta">Tap to explore →</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== MODALS ==================== -->
+
+        <!-- Proto-Persona Modal -->
+        <div class="modal-overlay" id="modal-proto-persona">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('modal-proto-persona')">✕</button>
+                <h2>Proto-Persona</h2>
+                <p class="modal-subtitle">Your First Guess — Before the Research</p>
+
+                <div class="modal-illustration">
+                    <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="30" width="200" height="140" rx="8" fill="#f5f5f7" stroke="#d1d1d6"
+                            stroke-width="2" />
+                        <circle cx="150" cy="80" r="20" fill="#e5e5ea" stroke="#ffb400" stroke-width="2"
+                            stroke-dasharray="4 3" />
+                        <path d="M120 140 Q120 110 150 110 Q180 110 180 140" fill="#e5e5ea" stroke="#ffb400"
+                            stroke-width="2" stroke-dasharray="4 3" />
+                        <text x="80" y="70" font-size="24" fill="#ffb400" opacity="0.6">?</text>
+                        <text x="210" y="90" font-size="20" fill="#ffb400" opacity="0.5">?</text>
+                        <text x="90" y="150" font-size="18" fill="#ffb400" opacity="0.4">?</text>
+                        <rect x="200" y="150" width="8" height="40" rx="2" fill="#ffb400" />
+                        <path d="M204 150 L200 145 L208 145 Z" fill="#1d1d1f" />
+                    </svg>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What is a Proto-Persona?</h3>
+                    <p>A proto-persona is an <strong>assumption-based sketch</strong> of who your user might be. It's
+                        created <em>before</em> any research, using only your team's existing knowledge and gut
+                        instincts. The purpose is to align the team on a shared starting hypothesis, which you will then
+                        <strong>validate or correct</strong> through research.
+                    </p>
+                    <p>Think of it as a "best guess" — it's <em>expected</em> to be wrong in places. That's the point.
+                    </p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Proto-Persona vs Persona</h3>
+                    <div class="modal-comparison">
+                        <div class="compare-col">
+                            <h4>Proto-Persona</h4>
+                            <ul>
+                                <li>Based on <strong>assumptions</strong></li>
+                                <li>Created in <strong>15–30 minutes</strong></li>
+                                <li>Done <strong>before</strong> research</li>
+                                <li>A <strong>starting point</strong></li>
+                            </ul>
+                        </div>
+                        <div class="compare-col">
+                            <h4>Persona</h4>
+                            <ul>
+                                <li>Based on <strong>real data</strong></li>
+                                <li>Created after <strong>interviews & surveys</strong></li>
+                                <li>Done <strong>after</strong> research</li>
+                                <li>A <strong>validated profile</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>🪨 Example: The Thirsty Crow</h3>
+                    <div class="example-box">
+                        <table class="example-table">
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td>Kavi the Crow</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Context</strong></td>
+                                <td>A crow in a semi-arid landscape with scarce water sources</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Assumed Behaviors</strong></td>
+                                <td>Flies long distances to find water; tries multiple approaches; resourceful under
+                                    pressure</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Assumed Needs</strong></td>
+                                <td>Reliable water access; sources with easy physical access</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Assumed Pain Points</strong></td>
+                                <td>Water exists but is unreachable; narrow openings; no tools to modify containers</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Risky Assumptions</strong></td>
+                                <td>We <em>assume</em> the crow persists instead of flying away. We <em>assume</em>
+                                    pebbles are available nearby.</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <a href="templates/proto_persona_template.html" target="_blank" class="download-btn">📄 Open
+                        Proto-Persona Template</a>
+                </div>
+
+                <div class="modal-section modal-refs">
+                    <h3>📚 References</h3>
+                    <ul>
+                        <li>Gothelf, J. & Seiden, J. (2013). <em>Lean UX: Applying Lean Principles to Improve User
+                                Experience</em>. O'Reilly Media.</li>
+                        <li><a href="https://www.smashingmagazine.com/2014/08/a-closer-look-at-personas-part-1/"
+                                target="_blank">A Closer Look at Personas</a> — Smashing Magazine</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Surveys Modal -->
+        <div class="modal-overlay" id="modal-surveys">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('modal-surveys')">✕</button>
+                <h2>Surveys</h2>
+                <p class="modal-subtitle">Quantitative Empathy at Scale</p>
+
+                <div class="modal-illustration">
+                    <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="60" y="20" width="180" height="160" rx="8" fill="white" stroke="#e1e1e1"
+                            stroke-width="2" />
+                        <rect x="80" y="40" width="140" height="4" rx="2" fill="#0071e3" />
+                        <rect x="80" y="60" width="120" height="3" rx="1.5" fill="#d1d1d6" />
+                        <circle cx="85" cy="75" r="4" fill="white" stroke="#d1d1d6" stroke-width="1.5" />
+                        <circle cx="105" cy="75" r="4" fill="white" stroke="#d1d1d6" stroke-width="1.5" />
+                        <circle cx="125" cy="75" r="4" fill="#0071e3" stroke="#0071e3" stroke-width="1.5" />
+                        <rect x="80" y="95" width="110" height="3" rx="1.5" fill="#d1d1d6" />
+                        <circle cx="85" cy="110" r="4" fill="white" stroke="#d1d1d6" stroke-width="1.5" />
+                        <circle cx="105" cy="110" r="4" fill="#0071e3" stroke="#0071e3" stroke-width="1.5" />
+                        <rect x="80" y="130" width="130" height="3" rx="1.5" fill="#d1d1d6" />
+                        <rect x="80" y="145" width="140" height="20" rx="4" fill="#f5f5f7" stroke="#d1d1d6"
+                            stroke-width="1" />
+                        <rect x="220" y="140" width="6" height="30" rx="2" fill="#0071e3" opacity="0.3" />
+                        <rect x="230" y="125" width="6" height="45" rx="2" fill="#0071e3" opacity="0.5" />
+                        <rect x="240" y="110" width="6" height="60" rx="2" fill="#0071e3" />
+                    </svg>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What is a Survey?</h3>
+                    <p>A survey is a structured set of questions sent to a <strong>large number of people</strong> to
+                        collect quantitative data. It helps you understand the <strong>"What"</strong> and <strong>"How
+                            Many"</strong> — turning individual stories into statistical patterns. Surveys are the
+                        <em>breadth</em> tool in your empathy toolkit.
+                    </p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>When to Use</h3>
+                    <ul>
+                        <li>You need to <strong>validate assumptions</strong> from your proto-personas</li>
+                        <li>You want to <strong>measure the scale</strong> of a problem</li>
+                        <li>You need <strong>demographic or behavioral data</strong> to segment users</li>
+                        <li>You're building <strong>personas</strong> and need quantitative backing</li>
+                    </ul>
+                </div>
+
+                <div class="modal-section">
+                    <h3>How to Design One</h3>
+                    <div class="modal-steps">
+                        <div class="modal-step">
+                            <div class="step-number">1</div>
+                            <div><strong>Define your objective.</strong> What exactly do you want to learn?</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">2</div>
+                            <div><strong>Keep it short.</strong> 5–10 min max. Every extra question reduces completion.
+                            </div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">3</div>
+                            <div><strong>Mix question types.</strong> Multiple choice + Likert scales for data; 1–2
+                                open-ended for depth.</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">4</div>
+                            <div><strong>Avoid leading questions.</strong> "Don't you think X is bad?" biases answers.
+                            </div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">5</div>
+                            <div><strong>Pilot test.</strong> Send to 5 people first. Confused? Rewrite.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>🪨 Example: The Thirsty Crow</h3>
+                    <div class="example-box">
+                        <p><em>Imagine surveying 100 crows about their water-access struggles:</em></p>
+                        <table class="example-table">
+                            <tr>
+                                <td><strong>Q1</strong></td>
+                                <td>How often do you struggle to access water? <em>(Daily / Weekly / Rarely)</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q2</strong></td>
+                                <td>Most common obstacle? <em>(Too deep / Too narrow / Not available)</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q3</strong></td>
+                                <td>Have you used tools (pebbles, sticks) to access water? <em>(Yes / No)</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q4</strong></td>
+                                <td>Stress level when water is unreachable? <em>(1–5 scale)</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q5</strong></td>
+                                <td>Describe a creative solution you found. <em>(Open-ended)</em></td>
+                            </tr>
+                        </table>
+                        <p style="margin-top:0.75rem; color:#555;">📊 <strong>Finding:</strong> 78% of crows cite "too
+                            narrow" as the #1 obstacle. This validates and guides our design.</p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <div class="modal-warning">
+                        <p>⚠️ Surveys tell you <em>what</em> people do, but rarely <em>why</em>. Pair them with
+                            qualitative tools (empathy maps, interviews) for the full picture.</p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <a href="templates/survey_template.html" target="_blank" class="download-btn">📄 Open Survey
+                        Template</a>
+                </div>
+
+                <div class="modal-section modal-refs">
+                    <h3>📚 References</h3>
+                    <ul>
+                        <li>Fowler, F.J. (2013). <em>Survey Research Methods</em> (5th ed.). SAGE Publications.</li>
+                        <li><a href="https://www.designkit.org/methods/survey" target="_blank">IDEO Design Kit: Survey
+                                Method</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empathy Maps Modal -->
+        <div class="modal-overlay" id="modal-empathy-map">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('modal-empathy-map')">✕</button>
+                <h2>Empathy Maps</h2>
+                <p class="modal-subtitle">Understanding the User's Inner World</p>
+
+                <div class="modal-illustration">
+                    <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="50" y="30" width="200" height="140" rx="8" fill="white" stroke="#e5e5ea"
+                            stroke-width="2" />
+                        <line x1="150" y1="30" x2="150" y2="170" stroke="#e5e5ea" stroke-width="2" />
+                        <line x1="50" y1="100" x2="250" y2="100" stroke="#e5e5ea" stroke-width="2" />
+                        <circle cx="150" cy="100" r="18" fill="#f5f5f7" stroke="#0071e3" stroke-width="2" />
+                        <circle cx="145" cy="96" r="2" fill="#0071e3" />
+                        <circle cx="155" cy="96" r="2" fill="#0071e3" />
+                        <path d="M145 105 Q150 108 155 105" stroke="#0071e3" stroke-width="1.5" fill="none" />
+                        <text x="85" y="55" font-size="20" text-anchor="middle">💬</text>
+                        <rect x="65" y="60" width="30" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="70" y="68" width="25" height="2" rx="1" fill="#d1d1d6" />
+                        <text x="200" y="55" font-size="20" text-anchor="middle">💭</text>
+                        <rect x="180" y="60" width="35" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="185" y="68" width="25" height="2" rx="1" fill="#d1d1d6" />
+                        <text x="85" y="130" font-size="20" text-anchor="middle">👣</text>
+                        <path d="M70 140 L75 145 L80 135" stroke="#ffb400" stroke-width="2" fill="none"
+                            stroke-linecap="round" />
+                        <text x="200" y="130" font-size="20" text-anchor="middle">❤️</text>
+                        <path d="M190 145 Q200 135 210 145" stroke="#0071e3" stroke-width="2" fill="none" />
+                    </svg>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What is an Empathy Map?</h3>
+                    <p>An empathy map organizes what you know about a user into <strong>four quadrants</strong> — Says,
+                        Thinks, Does, Feels. It helps teams move beyond surface observations to understand
+                        <strong>mindset, motivations, and emotions</strong>. It was popularized by Dave Gray at XPLANE.
+                    </p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>The Four Quadrants</h3>
+                    <div class="empathy-grid">
+                        <div class="empathy-quadrant">
+                            <div class="quadrant-icon">🗣️</div>
+                            <h4>SAYS</h4>
+                            <p>Direct quotes. What did they literally say?</p>
+                        </div>
+                        <div class="empathy-quadrant">
+                            <div class="quadrant-icon">🤔</div>
+                            <h4>THINKS</h4>
+                            <p>Internal thoughts, worries, hopes — often unspoken.</p>
+                        </div>
+                        <div class="empathy-quadrant">
+                            <div class="quadrant-icon">🏃</div>
+                            <h4>DOES</h4>
+                            <p>Observable actions and behaviors.</p>
+                        </div>
+                        <div class="empathy-quadrant">
+                            <div class="quadrant-icon">😟</div>
+                            <h4>FEELS</h4>
+                            <p>Emotional state: anxious, frustrated, hopeful?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>🪨 Example: The Thirsty Crow</h3>
+                    <div class="example-box">
+                        <div class="empathy-grid" style="margin-top:0.5rem;">
+                            <div class="empathy-quadrant example-q">
+                                <h4>🗣️ SAYS</h4>
+                                <p><em>"The water is right there but I can't reach it!"</em></p>
+                                <p><em>"None of my usual tricks work."</em></p>
+                            </div>
+                            <div class="empathy-quadrant example-q">
+                                <h4>🤔 THINKS</h4>
+                                <p><em>"If I give up, I may not find another source."</em></p>
+                                <p><em>"What if I make the water come to me?"</em></p>
+                            </div>
+                            <div class="empathy-quadrant example-q">
+                                <h4>🏃 DOES</h4>
+                                <p>Tries to tilt the jug. Reaches beak in. Starts dropping pebbles one by one.</p>
+                            </div>
+                            <div class="empathy-quadrant example-q">
+                                <h4>😟 FEELS</h4>
+                                <p>Desperate thirst → Frustration → Cautious hope → Relief and pride</p>
+                            </div>
+                        </div>
+                        <p style="margin-top:1rem; color:#555;">💡 <strong>Key Insight:</strong> The crow SAYS "nothing
+                            works" but DOES find a creative workaround — this contradiction reveals <strong>resilience
+                                under constraint</strong>.</p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <a href="templates/empathy_map_template.html" target="_blank" class="download-btn">📄 Open Empathy
+                        Map
+                        Template</a>
+                </div>
+
+                <div class="modal-section modal-refs">
+                    <h3>📚 References</h3>
+                    <ul>
+                        <li>Gray, D., Brown, S. & Macanufo, J. (2010). <em>Gamestorming</em>. O'Reilly Media. — Original
+                            source.</li>
+                        <li><a href="https://medium.com/the-xplane-collection/updated-empathy-map-canvas-46df22df3c8a"
+                                target="_blank">Updated Empathy Map Canvas</a> — Dave Gray, Medium</li>
+                        <li><a href="https://www.nngroup.com/articles/empathy-mapping/" target="_blank">Empathy Mapping:
+                                First Step in Design Thinking</a> — NNGroup</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Journey Maps Modal -->
+        <div class="modal-overlay" id="modal-journey-map">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('modal-journey-map')">✕</button>
+                <h2>Customer Journey Maps</h2>
+                <p class="modal-subtitle">Mapping the Full Experience Timeline</p>
+
+                <div class="modal-illustration">
+                    <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M30 140 Q80 140 100 80 T170 100 Q200 100 270 60" stroke="#0071e3" stroke-width="3"
+                            fill="none" stroke-linecap="round" />
+                        <circle cx="30" cy="140" r="6" fill="white" stroke="#0071e3" stroke-width="2" />
+                        <circle cx="100" cy="80" r="6" fill="white" stroke="#ffb400" stroke-width="2" />
+                        <circle cx="170" cy="100" r="6" fill="white" stroke="#0071e3" stroke-width="2" />
+                        <circle cx="270" cy="60" r="6" fill="#00ca4e" stroke="#00ca4e" stroke-width="2" />
+                        <text x="30" y="165" font-size="18" text-anchor="middle">😊</text>
+                        <text x="100" y="60" font-size="18" text-anchor="middle">😟</text>
+                        <text x="170" y="125" font-size="18" text-anchor="middle">🤔</text>
+                        <text x="270" y="40" font-size="18" text-anchor="middle">😄</text>
+                        <rect x="20" y="175" width="20" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="90" y="95" width="20" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="160" y="115" width="20" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="260" y="75" width="20" height="2" rx="1" fill="#d1d1d6" />
+                        <path d="M100 70 L105 65 L100 60" stroke="#ff3b30" stroke-width="2" fill="none"
+                            stroke-linecap="round" />
+                        <circle cx="100" cy="65" r="3" fill="#ff3b30" />
+                    </svg>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What is a Journey Map?</h3>
+                    <p>A journey map is a <strong>timeline visualization of a user's complete experience</strong> — from
+                        first contact to outcome. It plots actions, thoughts, and emotions at each stage, revealing
+                        exactly where the experience breaks down.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>Anatomy of a Journey Map</h3>
+                    <div class="journey-anatomy">
+                        <div class="journey-layer">
+                            <div class="layer-label">Stages</div>
+                            <div class="layer-desc">High-level phases (Discover → Attempt → Solve → Outcome)</div>
+                        </div>
+                        <div class="journey-layer">
+                            <div class="layer-label">Actions</div>
+                            <div class="layer-desc">What the user does at each stage</div>
+                        </div>
+                        <div class="journey-layer">
+                            <div class="layer-label">Thoughts</div>
+                            <div class="layer-desc">Internal dialogue at each moment</div>
+                        </div>
+                        <div class="journey-layer">
+                            <div class="layer-label">Emotions</div>
+                            <div class="layer-desc">The emotional curve — highs and lows</div>
+                        </div>
+                        <div class="journey-layer">
+                            <div class="layer-label highlight">Pain Points</div>
+                            <div class="layer-desc"><strong>The gold.</strong> Where the curve dips — your design
+                                opportunities</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>🪨 Example: The Thirsty Crow</h3>
+                    <div class="example-box">
+                        <div class="journey-table-wrap">
+                            <table class="example-table journey-example">
+                                <tr>
+                                    <th></th>
+                                    <th>1. Discovery</th>
+                                    <th>2. First Try</th>
+                                    <th>3. Frustration</th>
+                                    <th>4. Insight</th>
+                                    <th>5. Solution</th>
+                                </tr>
+                                <tr>
+                                    <td><strong>Actions</strong></td>
+                                    <td>Spots jug</td>
+                                    <td>Reaches beak in</td>
+                                    <td>Tries tilting, pecking</td>
+                                    <td>Notices pebbles</td>
+                                    <td>Drops pebbles in</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Thoughts</strong></td>
+                                    <td>"Finally, water!"</td>
+                                    <td>"Why can't I reach?"</td>
+                                    <td>"Nothing works…"</td>
+                                    <td>"Wait — what if…?"</td>
+                                    <td>"It's working!"</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Emotions</strong></td>
+                                    <td>😊 Hope</td>
+                                    <td>😐 Confusion</td>
+                                    <td>😫 Frustration</td>
+                                    <td>🤔 Curiosity</td>
+                                    <td>😄 Relief</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pain Points</strong></td>
+                                    <td>—</td>
+                                    <td>Narrow opening</td>
+                                    <td>No tools, low water</td>
+                                    <td>—</td>
+                                    <td>—</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <p style="margin-top:1rem; color:#555;">📍 <strong>Design Opportunity:</strong> Stages 2–3 show
+                            the biggest pain. Wider openings or shallower containers would eliminate the frustration
+                            entirely.</p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <a href="templates/journey_map_template.html" target="_blank" class="download-btn">📄 Open Journey
+                        Map
+                        Template</a>
+                </div>
+
+                <div class="modal-section modal-refs">
+                    <h3>📚 References</h3>
+                    <ul>
+                        <li>Kalbach, J. (2016). <em>Mapping Experiences</em>. O'Reilly Media.</li>
+                        <li><a href="https://www.nngroup.com/articles/journey-mapping-101/" target="_blank">Journey
+                                Mapping 101</a> — Nielsen Norman Group</li>
+                        <li>Stickdorn, M. et al. (2018). <em>This is Service Design Doing</em>. O'Reilly Media.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Persona Modal -->
+        <div class="modal-overlay" id="modal-persona">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('modal-persona')">✕</button>
+                <h2>Persona</h2>
+                <p class="modal-subtitle">The Research-Validated User Profile</p>
+
+                <div class="modal-illustration">
+                    <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="40" y="20" width="220" height="160" rx="12" fill="white" stroke="#e5e5ea"
+                            stroke-width="2" />
+                        <circle cx="100" cy="70" r="30" fill="#f0f7ff" stroke="#0071e3" stroke-width="2" />
+                        <circle cx="93" cy="65" r="3" fill="#0071e3" />
+                        <circle cx="107" cy="65" r="3" fill="#0071e3" />
+                        <path d="M93 78 Q100 83 107 78" stroke="#0071e3" stroke-width="2" fill="none"
+                            stroke-linecap="round" />
+                        <rect x="145" y="45" width="100" height="3" rx="1.5" fill="#0071e3" />
+                        <rect x="145" y="55" width="90" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="145" y="62" width="85" height="2" rx="1" fill="#d1d1d6" />
+                        <text x="140" y="50" font-size="16" fill="#0071e3">"</text>
+                        <rect x="55" y="115" width="80" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="55" y="125" width="70" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="55" y="135" width="75" height="2" rx="1" fill="#d1d1d6" />
+                        <rect x="55" y="145" width="65" height="2" rx="1" fill="#d1d1d6" />
+                        <circle cx="170" cy="120" r="8" fill="#00ca4e" opacity="0.2" />
+                        <path d="M167 120 L169 122 L173 117" stroke="#00ca4e" stroke-width="2" fill="none"
+                            stroke-linecap="round" />
+                        <circle cx="195" cy="120" r="8" fill="#00ca4e" opacity="0.2" />
+                        <path d="M192 120 L194 122 L198 117" stroke="#00ca4e" stroke-width="2" fill="none"
+                            stroke-linecap="round" />
+                        <circle cx="220" cy="120" r="8" fill="#00ca4e" opacity="0.2" />
+                        <path d="M217 120 L219 122 L223 117" stroke="#00ca4e" stroke-width="2" fill="none"
+                            stroke-linecap="round" />
+                        <circle cx="220" cy="155" r="18" fill="#00ca4e" opacity="0.1" stroke="#00ca4e"
+                            stroke-width="2" />
+                        <path d="M212 155 L217 160 L228 148" stroke="#00ca4e" stroke-width="3" fill="none"
+                            stroke-linecap="round" />
+                    </svg>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What is a Persona?</h3>
+                    <p>A persona is a <strong>fictional but research-based character</strong> that represents a segment
+                        of real users. Unlike proto-personas, every detail is backed by <strong>interviews, surveys, and
+                            observations</strong>. Alan Cooper introduced personas in 1999 as a way to make design
+                        decisions around real human needs.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What Goes Into a Persona?</h3>
+                    <div class="modal-steps">
+                        <div class="modal-step">
+                            <div class="step-number">1</div>
+                            <div><strong>Identity:</strong> Name, photo, archetype quote</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">2</div>
+                            <div><strong>Demographics:</strong> Age, occupation, environment</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">3</div>
+                            <div><strong>Goals & Motivations:</strong> What drives them</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">4</div>
+                            <div><strong>Frustrations & Pain Points:</strong> What blocks them</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">5</div>
+                            <div><strong>Behaviors:</strong> Observed patterns (from empathy maps)</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">6</div>
+                            <div><strong>Scenario:</strong> A "day in their life" narrative</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>🪨 Example: The Thirsty Crow</h3>
+                    <div class="example-box">
+                        <p><em>After surveys (78% cite "narrow openings") and empathy maps, we build a validated
+                                persona:</em></p>
+                        <table class="example-table">
+                            <tr>
+                                <td><strong>Name</strong></td>
+                                <td><strong>Kavi the Crow</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quote</strong></td>
+                                <td><em>"The water is always there — I just can't get to it."</em></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Demographics</strong></td>
+                                <td>Adult crow, semi-arid region, solitary forager</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Goals</strong></td>
+                                <td>Dependable water sources; minimize energy spent searching</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frustrations</strong></td>
+                                <td>Narrow containers; no teammates; time pressure from heat</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Key Behavior</strong></td>
+                                <td>Uses tools (pebbles) creatively — observed in 3/5 field studies</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Scenario</strong></td>
+                                <td>On a 40°C day, Kavi spots a jug after flying 2 hours. Water is 15 cm below rim. He
+                                    drops 27 pebbles over 10 min until water reaches his beak.</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top:0.75rem; color:#555;">✅ Every detail here comes from actual data, not
+                            assumptions — that's the key difference from a proto-persona.</p>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <a href="templates/persona_template.html" target="_blank" class="download-btn">📄 Open Persona
+                        Template</a>
+                </div>
+
+                <div class="modal-section modal-refs">
+                    <h3>📚 References</h3>
+                    <ul>
+                        <li>Cooper, A. (1999). <em>The Inmates Are Running the Asylum</em>. SAMS. — The book that
+                            introduced personas.</li>
+                        <li>Cooper, A. (2004). <em>About Face: Essentials of Interaction Design</em>. Wiley.</li>
+                        <li><a href="https://www.nngroup.com/articles/persona/" target="_blank">Personas Make Users
+                                Memorable</a> — Nielsen Norman Group</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 6: PROBLEM STATEMENT -->
+        <section id="problem-statement">
+            <h2>The Problem Statement</h2>
+            <p>A good problem statement is <strong>solution-agnostic</strong>, <strong>measurable</strong>, and
+                <strong>human-centered</strong>. It defines the problem clearly without prescribing how to solve it.
+            </p>
+
+            <div class="card" style="max-width: 700px; text-align: left; background: #fff; margin-top: 2rem;">
+                <h3 style="margin-top: 0; color: var(--accent-color);">Formula</h3>
+                <p><strong>[User Persona]</strong> experiences <strong>[Pain Points]</strong> because <strong>[Root
+                        Causes/Insights]</strong>.</p>
+                <p style="margin-top: 1rem;">How might we help them <strong>[Desired Outcome]</strong> so that
+                    <strong>[Measurable Success Criteria]</strong>?
+                </p>
+
+                <div
+                    style="margin-top: 2rem; padding: 1.5rem; border-left: 4px solid var(--accent-color); background: #f9f9fb;">
+                    <h4 style="margin-top: 0; color: #333;">🪨 Example: The Thirsty Crow</h4>
+                    <p style="text-align: left; font-style: italic; line-height: 1.7;">
+                        <strong>Kavi the Crow</strong> experiences <strong>frustration and exhaustion when trying to
+                            access water from narrow-necked containers</strong> because <strong>his beak cannot reach
+                            water below 15cm from the rim, and he lacks knowledge of which containers are accessible
+                            before investing flight energy</strong>.
+                    </p>
+                    <p style="text-align: left; font-style: italic; line-height: 1.7; margin-top: 1rem;">
+                        How might we help him <strong>identify and access water sources efficiently</strong> so that
+                        <strong>he reduces wasted flight time by 60% and successfully drinks on the first attempt in 80%
+                            of cases</strong>?
+                    </p>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding: 1rem; background: #fff9e6; border-radius: 8px;">
+                    <p style="margin: 0; font-size: 0.9rem; color: #666;"><strong>✓ Notice:</strong> This statement
+                        doesn't say "build a water fountain" or "provide a drinking straw" — it leaves the solution
+                        space open while being crystal clear about success metrics.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: EVALUATION -->
+        <section id="evaluation">
+            <h2>Quality Test</h2>
+            <p>Evaluate if your problem statement passes the quality test.</p>
+            <div id="eval-framework">
+                <div class="eval-item">
+                    <label><input type="checkbox" class="eval-checkbox"> Is it human-centered? (Focuses on user needs,
+                        not business goals)</label>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="eval-item">
+                    <label><input type="checkbox" class="eval-checkbox"> Does it avoid prescribing solutions? (No "by
+                        using X" or "with Y")</label>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="eval-item">
+                    <label><input type="checkbox" class="eval-checkbox"> Is the desired outcome clear and
+                        specific?</label>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="eval-item">
+                    <label><input type="checkbox" class="eval-checkbox"> Can success be measured quantitatively? (Has
+                        numbers/percentages)</label>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="eval-item">
+                    <label><input type="checkbox" class="eval-checkbox"> Can we verify the problem exists through
+                        observation?</label>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="eval-item">
+                    <label><input type="checkbox" class="eval-checkbox"> Is it broad enough for creative
+                        solutions?</label>
+                    <div class="status-dot"></div>
+                </div>
+                <div class="eval-item">
+                    <label><input type="checkbox" class="eval-checkbox"> Is it narrow enough to be actionable?</label>
+                    <div class="status-dot"></div>
+                </div>
+                <div id="framework-feedback" style="text-align: center; font-weight: 700; margin-top: 1rem;">Start
+                    checking your statement...</div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Modal Functions
+        function openModal(id) {
+            document.getElementById(id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on backdrop click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            });
+        });
+
+        // Close modal on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay.active').forEach(m => {
+                    m.classList.remove('active');
+                });
+                document.body.style.overflow = '';
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Intersection Observer for scroll animations
+            const sections = document.querySelectorAll('section');
+            const observerOptions = {
+                threshold: 0.3
+            };
+
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                sectionObserver.observe(section);
+            });
+
+            // Evaluation Framework Logic
+            const checkboxes = document.querySelectorAll('.eval-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const dot = e.target.parentElement.querySelector('.status-dot');
+                    if (e.target.checked) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                    updateOverallProgress();
+                });
+            });
+
+            function updateOverallProgress() {
+                const total = checkboxes.length;
+                const checked = document.querySelectorAll('.eval-checkbox:checked').length;
+                const percentage = (checked / total) * 100;
+
+                const feedback = document.getElementById('framework-feedback');
+                if (percentage === 100) {
+                    feedback.textContent = "Perfect! Your problem statement is ready for the world.";
+                    feedback.style.color = "#00ca4e";
+                } else if (percentage > 50) {
+                    feedback.textContent = "Getting there. Refine the remaining points.";
+                    feedback.style.color = "#ffb400";
+                } else {
+                    feedback.textContent = "Keep refining your statement.";
+                    feedback.style.color = "#1d1d1f";
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

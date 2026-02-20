@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Restore scroll position
+    const lastScroll = localStorage.getItem('lastScrollPosition');
+    if (lastScroll) {
+        window.scrollTo(0, parseInt(lastScroll));
+    }
+
+    // Save scroll position on scroll
+    window.addEventListener('scroll', () => {
+        localStorage.setItem('lastScrollPosition', window.scrollY);
+    });
+
     // Intersection Observer for scroll animations
     const sections = document.querySelectorAll('section');
     const observerOptions = {

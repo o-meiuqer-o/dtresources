@@ -24,28 +24,76 @@ body {
     line-height: 1.6;
 }
 
+.global-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.breadcrumbs {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #666;
+}
+
+.breadcrumbs span {
+    color: var(--text-color);
+}
+
+.nav-links {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-pill {
+    background: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-color);
+    text-decoration: none;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    transition: all 0.2s ease;
+}
+
+.nav-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.05);
+    background: var(--accent-color);
+    color: white;
+}
+
 .scroll-container {
-    scroll-snap-type: y mandatory;
     height: 100vh;
-    overflow-y: scroll;
+    overflow-y: auto;
     scrollbar-width: none;
     /* Hide scrollbar Firefox */
 }
-
 .scroll-container::-webkit-scrollbar {
     display: none;
     /* Hide scrollbar Chrome/Safari */
 }
 
 section {
-    height: 100vh;
+    min-height: 60vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 2rem;
-    scroll-snap-align: start;
+    padding: 6rem 2rem 4rem 2rem;
     position: relative;
     opacity: 0;
     transform: translateY(20px);
@@ -1492,11 +1540,9 @@ img {
     /* Section & Layout Layout */
     section {
         height: auto;
-        /* Allow growing */
-        min-height: 100dvh;
-        /* Modern mobile viewport height */
-        padding: 1rem;
-        /* Halve the padding */
+        min-height: 0;
+        padding: 4rem 1rem 1.5rem 1rem;
+        justify-content: flex-start;
     }
 
     /* Reduce component padding */
@@ -1551,5 +1597,109 @@ img {
     .grid-2 {
         grid-template-columns: 1fr;
         gap: 1rem;
+    }
+}
+
+/* Comprehensive Responsive Layout Adjustments */
+@media (max-width: 768px) {
+    /* Navigation Adjustments */
+    .global-nav {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        text-align: center;
+    }
+
+    /* Force grids to single column on mobile, overriding any inline overrides */
+    .grid-container,
+    .grid-container[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+        margin-top: 1rem !important;
+    }
+
+    .grid-5,
+    .empathy-grid,
+    .modal-comparison,
+    .example-table {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+    }
+
+    /* Universal tight spacing for sections on mobile screens */
+    section {
+        min-height: 0 !important;
+        padding: 4.5rem 1rem 1.5rem 1rem !important; 
+        justify-content: flex-start !important;
+        gap: 1rem;
+    }
+
+    /* Force any side-by-side flex layouts with images/cards to stack */
+    .modal-content > div[style*="display: flex"],
+    .card > div[style*="display: flex"],
+    .story-card {
+        flex-direction: column !important;
+        align-items: center;
+    }
+    
+    .modal-content > div[style*="display: flex"] > img,
+    .card > div[style*="display: flex"] > img {
+        width: 100% !important;
+        margin-bottom: 10px;
+    }
+
+    .story-card {
+        padding: 1.5rem !important;
+        gap: 1.5rem !important;
+    }
+
+    /* Modal adjustments */
+    .modal-content {
+        padding: 1.5rem;
+        margin: 1rem;
+        width: 95%;
+        max-height: 90vh;
+    }
+
+    .modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
+    }
+
+    /* Specific element fixes */
+    .example-table th, 
+    .example-table td {
+        display: block;
+        width: 100% !important;
+    }
+    
+    .example-table tr {
+        display: block;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--accent-color);
+        padding-bottom: 0.5rem;
+    }
+
+    .v-overlap-text {
+        position: relative;
+        transform: none !important;
+        margin-top: 2rem;
+        top: auto !important;
+        left: auto !important;
+    }
+
+    .v-circle {
+        position: relative;
+        left: auto !important;
+        right: auto !important;
+        top: auto !important;
+        margin: 0 auto 1rem !important;
+        transform: none !important;
+    }
+
+    .venn-wrapper {
+        display: flex;
+        flex-direction: column;
+        height: auto !important;
     }
 }

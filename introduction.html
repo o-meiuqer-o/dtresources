@@ -22,9 +22,15 @@
 <body>
 
     <!-- Navigation Overlay -->
-    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px;">
-        <a href="foundations.html" class="nav-pill">Next: Module 02 →</a>
-    </div>
+    <nav class="global-nav">
+        <div class="breadcrumbs">
+            <span>Home</span> > <span>Module 01: The Genesis</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-pill">← Back</a>
+            <a href="foundations.html" class="nav-pill">Next: Module 02 →</a>
+        </div>
+    </nav>
 
     <div class="scroll-container">
 
@@ -53,23 +59,34 @@
         <section id="johnny-story">
             <span class="section-label">02: The Process in Action</span>
             <h2>The Sugar Conflict</h2>
-            <div class="story-card">
-                <div class="story-illustration">
-                    <!-- Placeholder for Johnny Johnny Story Illustration -->
-                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="100" cy="100" r="80" fill="#ffecb3" />
-                        <text x="50%" y="55%" dominant-baseline="middle" text-anchor="middle" font-size="60">🍬</text>
-                    </svg>
-                </div>
+            <div class="story-card" style="flex-direction: column; align-items: flex-start;">
                 <div class="story-text">
                     <h3>Johnny's Dilemma</h3>
-                    <p>Johnny wants sugar but needs to avoid punishment. He goes through a process:</p>
-                    <ul style="list-style: none; padding: 0;">
-                        <li><strong>1. Clarity:</strong> Understanding he's caught.</li>
-                        <li><strong>2. Ideation:</strong> Swallowing sugar? Lying?</li>
-                        <li><strong>3. Execution:</strong> The "Ha-ha-ha" distraction.</li>
-                    </ul>
-                    <p style="margin-top: 1rem; font-weight: 600; color: var(--accent-color);">This mirrors the design
+                    <p>Young Johnny has been caught red-handed eating sugar from the jar. A shadow looms over him—he is in trouble. He wants the sugar, but he desperately needs to avoid punishment.</p>
+                    <p>In a split second, his mind races through a deeply ingrained biological process:</p>
+                    
+                    <div class="grid-container grid-3" style="margin-top: 2rem; width: 100%;">
+                        <div class="card tool-card" data-modal="johnny-1-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/johnny_1_crisis.png" alt="Johnny in Crisis" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>1. Clarity</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Understanding he's caught.</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
+                        <div class="card tool-card" data-modal="johnny-2-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/johnny_2_ideation.png" alt="Johnny Ideating" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>2. Ideation</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Swallowing sugar? Lying?</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
+                        <div class="card tool-card" data-modal="johnny-3-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/johnny_3_execution.png" alt="Johnny Executing Strategy" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>3. Execution</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">The "Ha-ha-ha" distraction.</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 1.5rem; font-weight: 600; color: var(--accent-color);">This mirrors the core design
                         process: Clarity → Ideation → Execution.</p>
                 </div>
             </div>
@@ -79,22 +96,87 @@
         <section id="empathy-loop">
             <span class="section-label">03: Empathy & Iteration</span>
             <h2>The Human Logic</h2>
-            <div class="grid-container grid-2">
-                <div class="card">
-                    <div class="svg-container">
-                        <text font-size="50">👩‍👦</text>
+            
+            <div class="story-card" style="flex-direction: column; align-items: flex-start; margin-bottom: 2rem;">
+                <div class="story-text">
+                    <h3>The Mother's Empathy Prototype</h3>
+                    <p>Waking a child requires <strong>Empathy</strong>. A mother adjusts her approach depending on the context of the day, proving that design is not a one-size-fits-all reaction.</p>
+                    
+                    <div class="grid-container grid-3" style="margin-top: 2rem; width: 100%;">
+                        <div class="card tool-card" data-modal="mother-1-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/mother_1_assessment.png" alt="Assessment" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>1. Clarity</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Exam Day or Vacation?</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
+                        <div class="card tool-card" data-modal="mother-2-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/mother_2_ideation.png" alt="Ideation" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>2. Ideation</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Options: alarms, fans, water?</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
+                        <div class="card tool-card" data-modal="mother-3-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/mother_3_execution.png" alt="Execution" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>3. Execution</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">A specifically tailored wake-up.</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
                     </div>
-                    <h3>The Mother's Prototype</h3>
-                    <p>Waking a child requires <strong>Empathy</strong>. Is it an exam day or a vacation? She chooses
-                        between alarms, switching off the fan, or water sprinkling based on the situation.</p>
                 </div>
-                <div class="card">
-                    <div class="svg-container">
-                        <text font-size="50">👨‍⚕️</text>
+            </div>
+
+            <div class="story-card" style="flex-direction: column; align-items: flex-start;">
+                <div class="story-text">
+                    <h3>The Doctor's Iteration Loop</h3>
+                    <p>Professional design mirrors the medical process: gathering symptoms, prescribing a solution, and explicitly establishing a feedback loop to iterate.</p>
+                    
+                    <div class="grid-container grid-3" style="margin-top: 2rem; width: 100%;">
+                        <div class="card tool-card" data-modal="doctor-1-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/doctor_1_clarity.png" alt="Clarity" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>1. Clarity</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Gathering patient symptoms.</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
+                        <div class="card tool-card" data-modal="doctor-2-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/doctor_2_ideation.png" alt="Ideation" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>2. Ideation & Execution</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Considering treatments.</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
+                        <div class="card tool-card" data-modal="doctor-3-modal" style="padding: 1rem; text-align: center;">
+                            <img src="images/doctor_3_iteration.png" alt="Iteration" style="border-radius: 8px; margin-bottom: 1rem;">
+                            <strong>3. Feedback Loop</strong>
+                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">"Come back in 3 days."</p>
+                            <span class="card-cta">Click to expand</span>
+                        </div>
                     </div>
-                    <h3>The Doctor's Loop</h3>
-                    <p>Diagnosis (Clarity) → Medication (Ideation) → Prescription (Execution) → "Come back in 3 days"
-                        (<strong>Feedback & Iteration</strong>).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3.5 THE ATTITUDE -->
+        <section id="the-attitude">
+            <span class="section-label">03.5: The Core Mindset</span>
+            <h2>The Attitude</h2>
+            
+            <div class="highlight-box" style="border-left-color: #007aff; margin-bottom: 2rem;">
+                <h3 style="margin-bottom: 1rem; color: #007aff;">"Be Like Water" <span>&#x1F30A;</span></h3>
+                <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1rem;">"Empty your mind, be formless, shapeless — like water." — Bruce Lee</p>
+                <p>Do not conform to a rigid framework—whether that of a designer, an engineer, or a creator—until you truly understand the pain the users are facing. Maintain fluidity so you can adapt to the problem, rather than forcing the problem to fit into a pre-existing mold.</p>
+            </div>
+
+            <div class="grid-container grid-3" style="width: 100%;">
+                <div class="card" style="text-align: left; padding: 1.5rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">1. Stay Fluid</h4>
+                    <p style="font-size: 0.95rem;">Embrace ambiguity. Be comfortable not knowing the answer right away, allowing the user's needs to shape your structure instead of applying rigid frameworks.</p>
+                </div>
+                <div class="card" style="text-align: left; padding: 1.5rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">2. Radical Empathy</h4>
+                    <p style="font-size: 0.95rem;">You care deeply about the human condition and the real frictions people face before judging or jumping to solutions.</p>
+                </div>
+                <div class="card" style="text-align: left; padding: 1.5rem;">
+                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">3. Connect the Dots</h4>
+                    <p style="font-size: 0.95rem;">Once the user's pain is clear, become the orchestrator. Pull together insights, resources, tools, and even people from wherever possible to forge an optimistic prototype.</p>
                 </div>
             </div>
         </section>
@@ -165,6 +247,88 @@
                 Module 02 - Foundations →</a>
         </section>
 
+    </div>
+
+    <!-- Modals for Image Lightboxes -->
+    <div id="johnny-1-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/johnny_1_crisis.png" alt="Johnny in Crisis" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">1. Clarity</h3>
+            <p>Johnny is caught red-handed. The problem is clear: he wants the sugar, but faces immediate consequences.</p>
+        </div>
+    </div>
+    
+    <div id="johnny-2-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/johnny_2_ideation.png" alt="Johnny Ideating" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">2. Ideation</h3>
+            <p>His brain rapidly generates options: tell a lie, hide the evidence, or misdirect the attention.</p>
+        </div>
+    </div>
+    
+    <div id="johnny-3-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/johnny_3_execution.png" alt="Johnny Executing Strategy" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">3. Execution</h3>
+            <p>He selects the best option and executes the famous "Ha-ha-ha" distraction maneuver.</p>
+        </div>
+    </div>
+    
+    <div id="mother-1-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/mother_1_assessment.png" alt="Assessment" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">1. Clarity (The Assessment)</h3>
+            <p>The mother assesses the context (Exam vs Vacation) before deciding on an intervention.</p>
+        </div>
+    </div>
+    
+    <div id="mother-2-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/mother_2_ideation.png" alt="Ideation" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">2. Ideation (The Options)</h3>
+            <p>She pictures different methods: softly opening the curtains, loudly turning off a noisy fan, or gently splashing a drop of water.</p>
+        </div>
+    </div>
+    
+    <div id="mother-3-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/mother_3_execution.png" alt="Execution" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">3. Execution (Prototyping)</h3>
+            <p>She executes the chosen method, a specifically tailored wake-up providing an empathetic user experience.</p>
+        </div>
+    </div>
+    
+    <div id="doctor-1-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/doctor_1_clarity.png" alt="Clarity" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">1. Clarity (Diagnosis)</h3>
+            <p>A caring doctor examining a patient closely and gathering symptoms to isolate the problem.</p>
+        </div>
+    </div>
+    
+    <div id="doctor-2-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/doctor_2_ideation.png" alt="Ideation" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">2. Ideation & Execution (Prescription)</h3>
+            <p>The doctor considers multiple pill and therapy options before selecting and writing the finalized prescription.</p>
+        </div>
+    </div>
+    
+    <div id="doctor-3-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
+            <button class="modal-close">&times;</button>
+            <img src="images/doctor_3_iteration.png" alt="Iteration" style="width: 100%; border-radius: 8px;">
+            <h3 style="margin-top: 1rem;">3. Feedback Loop (Iteration)</h3>
+            <p>The doctor establishes a feedback loop to verify if the prototype (prescription) worked, adjusting dosages if necessary.</p>
+        </div>
     </div>
 
     <!-- Modal Overlay for Squirrel Video -->

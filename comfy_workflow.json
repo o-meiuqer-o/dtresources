@@ -1,0 +1,198 @@
+{
+    "1": {
+        "inputs": {
+            "ckpt_name": "sd_xl_base_1.0.safetensors"
+        },
+        "class_type": "CheckpointLoaderSimple"
+    },
+    "2": {
+        "inputs": {
+            "lora_name": "henri_matisse_sdxl.safetensors",
+            "strength_model": 0.6,
+            "strength_clip": 0.6,
+            "model": [
+                "1",
+                0
+            ],
+            "clip": [
+                "1",
+                1
+            ]
+        },
+        "class_type": "LoraLoader"
+    },
+    "3": {
+        "inputs": {
+            "lora_name": "anime_style_sdxl.safetensors",
+            "strength_model": 0.3,
+            "strength_clip": 0.3,
+            "model": [
+                "2",
+                0
+            ],
+            "clip": [
+                "2",
+                1
+            ]
+        },
+        "class_type": "LoraLoader"
+    },
+    "4": {
+        "inputs": {
+            "lora_name": "studio_ghibli_sdxl.safetensors",
+            "strength_model": 0.1,
+            "strength_clip": 0.1,
+            "model": [
+                "3",
+                0
+            ],
+            "clip": [
+                "3",
+                1
+            ]
+        },
+        "class_type": "LoraLoader"
+    },
+    "5": {
+        "inputs": {
+            "text": "m4t1, (Henri Matisse style painting:1.2), vibrant colors, simplified forms, flat colors, (anime style:0.6), high quality anime illustration, (studio ghibli aesthetic:0.2), scenic background, high quality masterpiece, sketch inspired, fluid lines",
+            "clip": [
+                "4",
+                1
+            ]
+        },
+        "class_type": "CLIPTextEncode"
+    },
+    "6": {
+        "inputs": {
+            "text": "ghibli characters, text, watermark, blurry, low quality, distorted anatomy, realistic photo",
+            "clip": [
+                "4",
+                1
+            ]
+        },
+        "class_type": "CLIPTextEncode"
+    },
+    "7": {
+        "inputs": {
+            "image": "sketch_input.png",
+            "upload": "image"
+        },
+        "class_type": "LoadImage"
+    },
+    "8": {
+        "inputs": {
+            "control_net_name": "controlnet-scribble-sdxl.safetensors"
+        },
+        "class_type": "ControlNetLoader"
+    },
+    "9": {
+        "inputs": {
+            "strength": 0.8,
+            "start_percent": 0.0,
+            "end_percent": 1.0,
+            "positive": [
+                "5",
+                0
+            ],
+            "negative": [
+                "6",
+                0
+            ],
+            "control_net": [
+                "8",
+                0
+            ],
+            "image": [
+                "7",
+                0
+            ]
+        },
+        "class_type": "ControlNetApply"
+    },
+    "10": {
+        "inputs": {
+            "width": 1024,
+            "height": 1024,
+            "batch_size": 16
+        },
+        "class_type": "EmptyLatentImage"
+    },
+    "11": {
+        "inputs": {
+            "model_name": "mm_sdxl_v10_beta.ckpt",
+            "beta_schedule": "sqrt_linear (AnimateDiff)",
+            "model": [
+                "4",
+                0
+            ]
+        },
+        "class_type": "ADE_AnimateDiffLoaderGen1"
+    },
+    "12": {
+        "inputs": {
+            "seed": 42,
+            "steps": 30,
+            "cfg": 7.0,
+            "sampler_name": "euler",
+            "scheduler": "normal",
+            "denoise": 1.0,
+            "model": [
+                "11",
+                0
+            ],
+            "positive": [
+                "9",
+                0
+            ],
+            "negative": [
+                "9",
+                1
+            ],
+            "latent_image": [
+                "10",
+                0
+            ]
+        },
+        "class_type": "KSampler"
+    },
+    "13": {
+        "inputs": {
+            "samples": [
+                "12",
+                0
+            ],
+            "vae": [
+                "1",
+                2
+            ]
+        },
+        "class_type": "VAEDecode"
+    },
+    "14": {
+        "inputs": {
+            "filename_prefix": "Matisse_Anime_Mix",
+            "images": [
+                "13",
+                0
+            ]
+        },
+        "class_type": "SaveImage"
+    },
+    "15": {
+        "inputs": {
+            "frame_rate": 8,
+            "loop_count": 0,
+            "filename_prefix": "Matisse_Anime_Video",
+            "format": "video/h264-mp4",
+            "pix_fmt": "yuv420p",
+            "crf": 20,
+            "save_output": true,
+            "images": [
+                "13",
+                0
+            ]
+        },
+        "class_type": "VHS_VideoCombine"
+    }
+}

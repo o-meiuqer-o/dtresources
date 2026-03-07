@@ -3,15 +3,80 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=introduction.html">
-    <script type="text/javascript">
-        window.location.href = "introduction.html"
-    </script>
-    <title>Redirecting...</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Introduction | Design Thinking</title>
+    <meta name="description" content="Introduction and Rationale to the Design Thinking Course.">
+    <meta name="author" content="Raj Narayanan, Mahindra University">
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <p>If you are not redirected, <a href="introduction.html">click here</a>.</p>
+
+    <!-- Navigation Overlay -->
+    <nav class="global-nav">
+        <div class="breadcrumbs">
+            <span>Home</span> > <span>Introduction</span>
+        </div>
+        <div class="nav-links">
+            <a href="introduction.html" class="nav-pill">Next: Module 01 →</a>
+        </div>
+    </nav>
+
+    <div class="scroll-container">
+        <!-- HEADER / COVER -->
+        <section id="cover">
+            <div class="accent-tag">Welcome</div>
+            <h1>Design Thinking</h1>
+            <p style="color: #666; margin-top: 1rem;">An Introduction to the Course and its Rationale.</p>
+            <div style="margin-top: 2rem; opacity: 0.5; font-size: 0.9rem;">Scroll to begin ↓</div>
+        </section>
+
+        <!-- 1. COURSE RATIONALE -->
+        <section id="rationale">
+            <h2>Why This Course?</h2>
+            <div class="highlight-box">
+                <p>We believe that empathy, iterative learning, and problem-solving are fundamental human traits, not exclusive talents reserved for "creatives".</p>
+                <p style="margin-top: 1rem;">This course is designed to demystify <strong>Design Thinking</strong>—strip it of academic jargon, and teach it as a biological instinct that you can harness deliberately to solve complex problems in the real world.</p>
+            </div>
+        </section>
+
+        <!-- 2. WHAT TO EXPECT -->
+        <section id="expectations">
+            <h2>What You Will Learn</h2>
+            <div class="grid-container grid-3" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card">
+                    <span style="font-size: 3rem;">🧠</span>
+                    <h3>The Mindset</h3>
+                    <p>Understanding problem-solving at a neurobiological level.</p>
+                </div>
+                <div class="card">
+                    <span style="font-size: 3rem;">🗺️</span>
+                    <h3>The Framework</h3>
+                    <p>Learning the structured Double-Diamond approach and Empathy tools.</p>
+                </div>
+                <div class="card">
+                    <span style="font-size: 3rem;">🛠️</span>
+                    <h3>The Execution</h3>
+                    <p>Translating wicked problems into actionable, prototyped solutions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. START JOURNEY -->
+        <section id="conclusion">
+            <h2>Begin the Journey</h2>
+            <p>Ready to unlearn what you think design is, and relearn what it truly means?</p>
+            <a href="introduction.html" class="download-btn" style="margin-top: 3rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Start Module 01: The Genesis →</a>
+        </section>
+
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>

@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Intersection Observer for scroll animations
     const sections = document.querySelectorAll('section');
     const observerOptions = {
-        threshold: 0.3
+        threshold: 0.1, // lowered from 0.3 so tall sections still trigger
+        rootMargin: "0px 0px -50px 0px" // Trigger slightly before it hits the very bottom
     };
 
     const sectionObserver = new IntersectionObserver((entries) => {

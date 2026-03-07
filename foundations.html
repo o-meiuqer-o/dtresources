@@ -17,18 +17,65 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap"
         rel="stylesheet">
     <style>
-        /* Internal overrides for this specific module if needed, 
-           but mostly will be in styles.css */
+        .spectrum-bar {
+            width: 100%;
+            height: 20px;
+            background: linear-gradient(90deg, #ccc 0%, #ffb400 50%, var(--accent-color) 100%);
+            border-radius: 10px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .spectrum-points {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .spectrum-point {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 30%;
+            text-align: center;
+        }
+
+        .spectrum-point .marker {
+            width: 14px;
+            height: 14px;
+            background: white;
+            border: 3px solid #111;
+            border-radius: 50%;
+            margin-top: -30px;
+            z-index: 2;
+        }
+
+        .spectrum-point h4 {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: #111;
+        }
+
+        .spectrum-point p {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
     </style>
 </head>
 
 <body>
 
     <!-- Navigation Overlay -->
-    <div style="position: fixed; top: 20px; right: 20px; z-index: 1000; display: flex; gap: 10px;">
-        <a href="introduction.html" class="nav-pill">← Previous: Introduction</a>
-        <a href="finding_problem.html" class="nav-pill">Next: Module 03 →</a>
-    </div>
+    <nav class="global-nav">
+        <div class="breadcrumbs">
+            <span>Home</span> > <span>Module 02: Foundations</span>
+        </div>
+        <div class="nav-links">
+            <a href="introduction.html" class="nav-pill">← Back</a>
+            <a href="finding_problem.html" class="nav-pill">Next: Module 03 →</a>
+        </div>
+    </nav>
 
     <div class="scroll-container">
 
@@ -47,10 +94,10 @@
             <div class="highlight-box">
                 <p>In our last interaction, we established that <strong>Design is not a career choice, but a biological
                         trait.</strong></p>
-                <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
-                    <li>It is the act of making <strong>thoughtful decisions</strong> to improve someone’s experience.
+                <ul style="text-align: left; max-width: 600px; margin: 0 auto; margin-top: 1rem; padding-left: 2rem;">
+                    <li style="margin-bottom: 0.5rem;">It is the act of making <strong>thoughtful decisions</strong> to improve someone’s experience.
                     </li>
-                    <li>You already do this: posting on social media, planning a surprise, or optimizing a daily
+                    <li style="margin-bottom: 0.5rem;">You already do this: posting on social media, planning a surprise, or optimizing a daily
                         commute.</li>
                     <li>Designers are simply people who have learned to scale this innate decision-making faculty to
                         solve for others.</li>
@@ -58,17 +105,16 @@
             </div>
         </section>
 
-        <!-- 2. DESIGN AS BIOLOGICAL NATURE -->
+        <!-- 2. DESIGN AS BIOLOGICAL NATURE (Replaced Amoeba with Seed Germination) -->
         <section id="biological-nature">
             <span class="section-label">02: Biological Nature</span>
-            <h2>The Neuro-Simulation</h2>
-            <p>Design ability is not learned in a studio; it is tethered to the evolution of the <strong>Nervous
-                    System</strong>.</p>
+            <h2>The Computation of Life</h2>
+            <p>Design ability is not learned in a studio; it is tethered to the evolution of the <strong>Decision-Making Mechanisms</strong>.</p>
             <div class="grid-container grid-2">
-                <div class="card">
-                    <h3>Amoeba (0-step)</h3>
-                    <p>Pure Stimulus-Response. There is no "thought" between the heat and the movement. It is a
-                        biological machine.</p>
+                <div class="card tool-card" data-modal="seed-modal">
+                    <h3>The Seed's Dilemma</h3>
+                    <p>Even life-forms without brains compute. A seed calculates temperature, moisture, and season before deciding to germinate. It's an autonomous, complex decision-making mechanism governed by biochemical logic.</p>
+                    <span class="card-cta">Click to watch the video →</span>
                 </div>
                 <div class="card">
                     <h3>Human (Multi-step)</h3>
@@ -90,37 +136,30 @@
             </div>
         </section>
 
-        <!-- 4. THE TRANSITION & PARAMETERS -->
+        <!-- 4. THE TRANSITION & PARAMETERS (Venn replaced with Spectrum) -->
         <section id="transition">
             <span class="section-label">04: The Transition Zone</span>
             <h2>From Reaction to Design</h2>
-
-            <div class="transition-container">
-                <div class="venn-wrapper">
-                    <div class="v-circle v-complexity">
-                        <div>
-                            <strong>Complexity</strong>
-                            <p style="font-size: 0.7rem;">Variables exceed biological working memory.</p>
-                        </div>
+            
+            <div style="max-width: 800px; width: 100%; padding: 2rem;">
+                <div class="spectrum-bar"></div>
+                <div class="spectrum-points">
+                    <div class="spectrum-point">
+                        <div class="marker"></div>
+                        <h4>Trivial Survival</h4>
+                        <p>Automatic responses, immediate gratification, zero-step computation (e.g. Amoeba pulling back from heat).</p>
                     </div>
-                    <div class="v-circle v-stewardship">
-                        <div>
-                            <strong>Stewardship</strong>
-                            <p style="font-size: 0.7rem;">Borrowing a life to own another's experience.</p>
-                        </div>
+                    <div class="spectrum-point">
+                        <div class="marker"></div>
+                        <h4>Fluid Transition Zone</h4>
+                        <p>Planning for the near-future, tool use, executing multi-step goals (e.g. Crow using pebbles).</p>
                     </div>
-                    <div class="v-overlap-text">
-                        <span>DESIGN</span>
-                        <p style="font-size: 0.65rem; font-weight: 700; color: #444;">Emergent Zone</p>
+                    <div class="spectrum-point">
+                        <div class="marker" style="border-color: var(--accent-color);"></div>
+                        <h4>Choreographed Design</h4>
+                        <p>Borrowing a life. Empathizing and creating solutions specifically tailored to others.</p>
                     </div>
                 </div>
-            </div>
-
-            <div
-                style="display: flex; justify-content: space-between; width: 100%; max-width: 600px; font-size: 0.7rem; font-weight: 700; color: #888; margin-top: 1rem;">
-                <span>TRIVIAL SURVIVAL</span>
-                <span>FLUID TRANSITION ZONE</span>
-                <span>CHOREOGRAPHED PRACTICE</span>
             </div>
         </section>
 
@@ -129,10 +168,10 @@
             <span class="section-label">05: Wicked Problems</span>
             <h2>Beyond the Trivial</h2>
             <p>Designers deal with <strong>Wicked Problems</strong>—issues that have no single right answer.</p>
-            <div style="max-width: 600px; width: 100%; margin-top: 2rem;">
-                <div class="wicked-layer"><strong>Cultural:</strong> Different people value different things.</div>
-                <div class="wicked-layer"><strong>Structural:</strong> Fixing one thing breaks another.</div>
-                <div class="wicked-layer"><strong>Temporal:</strong> The problem changes even while you solve it.</div>
+            <div style="max-width: 600px; width: 100%; margin-top: 2rem; display: flex; flex-direction: column; gap: 10px;">
+                <div class="card" style="padding: 1rem; border-left: 4px solid var(--accent-color);"><strong>Cultural:</strong> Different people value different things.</div>
+                <div class="card" style="padding: 1rem; border-left: 4px solid #ffb400;"><strong>Structural:</strong> Fixing one thing breaks another.</div>
+                <div class="card" style="padding: 1rem; border-left: 4px solid #00ca4e;"><strong>Temporal:</strong> The problem changes even while you solve it.</div>
             </div>
         </section>
 
@@ -144,77 +183,29 @@
                     Prosthetics</strong>—frameworks that help us externalize brain functions.</p>
 
             <div class="grid-container grid-2">
-                <div class="framework-visual card">
-                    <h4 style="font-size: 0.9rem; margin-top: 0; color: var(--accent-color); margin-bottom: 1rem;">
-                        Double Diamond</h4>
-                    <div style="display:flex; justify-content: space-around; font-size: 0.6rem; font-weight: 700;">
-                        <span style="border: 1px solid #ccc; padding: 5px; border-radius: 4px;">DISCOVER</span>
-                        <span style="border: 1px solid #ccc; padding: 5px; border-radius: 4px;">DEFINE</span>
-                        <span style="border: 1px solid #ccc; padding: 5px; border-radius: 4px;">DEVELOP</span>
+                <div class="card" style="text-align: center;">
+                    <h4 style="font-size: 1rem; color: var(--accent-color); margin-bottom: 1rem;">Double Diamond</h4>
+                    <div style="display:flex; justify-content: space-around; font-size: 0.7rem; font-weight: 700; gap: 5px;">
+                        <span style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px;">DISCOVER</span>
+                        <span style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px;">DEFINE</span>
+                        <span style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px;">DEVELOP</span>
                     </div>
-                    <p style="font-size: 0.75rem; margin-top: 15px;">Used to <strong>Externalize Exploration</strong>.
-                    </p>
+                    <p style="font-size: 0.85rem; margin-top: 15px;">Used to <strong>Externalize Exploration</strong>.</p>
                 </div>
-                <div class="framework-visual card">
-                    <h4 style="font-size: 0.9rem; margin-top: 0; color: var(--accent-color); margin-bottom: 1rem;">
-                        Empathy Maps</h4>
-                    <div
-                        style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 0.6rem; text-align: center;">
-                        <div style="background: #eee; padding: 5px; border-radius: 4px;">SAYS</div>
-                        <div style="background: #eee; padding: 5px; border-radius: 4px;">THINKS</div>
-                        <div style="background: #eee; padding: 5px; border-radius: 4px;">DOES</div>
-                        <div style="background: #eee; padding: 5px; border-radius: 4px;">FEELS</div>
+                <div class="card" style="text-align: center;">
+                    <h4 style="font-size: 1rem; color: var(--accent-color); margin-bottom: 1rem;">Empathy Maps</h4>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 0.7rem; text-align: center;">
+                        <div style="background: #eee; padding: 10px; border-radius: 4px;">SAYS</div>
+                        <div style="background: #eee; padding: 10px; border-radius: 4px;">THINKS</div>
+                        <div style="background: #eee; padding: 10px; border-radius: 4px;">DOES</div>
+                        <div style="background: #eee; padding: 10px; border-radius: 4px;">FEELS</div>
                     </div>
-                    <p style="font-size: 0.75rem; margin-top: 15px;">Used to <strong>Externalize Perspective</strong>.
-                    </p>
+                    <p style="font-size: 0.85rem; margin-top: 15px;">Used to <strong>Externalize Perspective</strong>.</p>
                 </div>
             </div>
         </section>
 
-        <!-- 7. THE SAWTOOTH TIMELINE -->
-        <section id="sawtooth">
-            <span class="section-label">07: Execution</span>
-            <h2>The Sawtooth Rhythm</h2>
-            <p>We must periodically "flush" the brain to check for errors. This creates a sawtooth pattern of growth and
-                externalization.</p>
-            <div class="milestone-chart">
-                <!-- Removed preserveAspectRatio="none" to allow proper scaling -->
-                <svg width="100%" height="100%" viewBox="0 0 800 220" preserveAspectRatio="xMidYMid meet">
-                    <path
-                        d="M 0 180 L 120 40 L 120 180 L 280 40 L 280 180 L 480 40 L 480 180 L 680 40 L 680 180 L 800 40"
-                        fill="none" stroke="var(--accent-color)" stroke-width="2" />
-                    <circle cx="120" cy="40" r="5" fill="#121212" />
-                    <text x="120" y="25" text-anchor="middle" font-size="12" font-weight="700">AREA APPROVAL</text>
-                    <circle cx="280" cy="40" r="5" fill="#121212" />
-                    <text x="280" y="25" text-anchor="middle" font-size="12" font-weight="700">INSIGHTS CARD</text>
-                    <circle cx="480" cy="40" r="5" fill="#121212" />
-                    <text x="480" y="25" text-anchor="middle" font-size="12" font-weight="700">POV SIGNED</text>
-                    <circle cx="680" cy="40" r="5" fill="#121212" />
-                    <text x="680" y="25" text-anchor="middle" font-size="12" font-weight="700">ALPHA PROTOTYPE</text>
-                </svg>
-            </div>
-        </section>
-
-        <!-- 8. ASSIGNMENT -->
-        <section id="assignment">
-            <span class="section-label">08: Assignment</span>
-            <h2>Borrowing a Life</h2>
-            <div class="tree-container" style="max-width: 700px;">
-                <div class="tree-node">
-                    <span class="node-title">Individual Task: The Problem Log</span>
-                    <span class="leaf-node">• Identify 14 problems across rural, urban, global, and accessibility
-                        contexts.</span>
-                    <span class="leaf-node">• Goal: Find things worth caring about (Ethical Stewardship).</span>
-                </div>
-                <div class="tree-node">
-                    <span class="node-title">Team Task: Area Selection</span>
-                    <span class="leaf-node">• Aggregate individual logs into a team repository.</span>
-                    <span class="leaf-node">• Finalize one "Wicked Problem" area to own for the semester.</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- 9. NEXT MODULE LINK -->
+        <!-- 7. NEXT MODULE LINK -->
         <section id="next-module">
             <h2>Ready to Begin?</h2>
             <p>You have the foundations. Now let's find the right problem to solve.</p>
@@ -223,6 +214,29 @@
                 Finding the Right Problem →</a>
         </section>
 
+    </div>
+
+    <!-- Modals -->
+    <div id="seed-modal" class="modal-overlay">
+        <div class="modal-content" style="max-width: 900px; padding: 1rem;">
+            <button class="modal-close">&times;</button>
+            <div class="media-container" style="width: 100%; max-width: none; margin-top: 0; box-shadow: none;">
+                <div class="video-crop">
+                    <!-- Standard Seed Germination Video -->
+                    <iframe id="youtube-iframe" width="100%" height="500" src=""
+                        data-src="https://www.youtube.com/embed/Z0bEXqNih-g?rel=0&modestbranding=1"
+                        title="How Seeds Decide to Germinate" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </div>
+                <div style="padding: 1.5rem; text-align: left;">
+                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">The Biochemistry of Decision Making</h2>
+                    <p style="text-align: left; font-size: 0.95rem; color: #444;">
+                        A seed behaves like a microscopic computer. Without a brain or nervous system, it uses hormone gradients and environmental signals like temperature, light, and water to "decide" the exact optimal time to germinate.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

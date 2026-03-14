@@ -28,7 +28,7 @@ function printToPDF() {
 
 // Image handling logic
 function setupImagePlaceholders() {
-    const placeholders = document.querySelectorAll('.image-placeholder');
+    const placeholders = document.querySelectorAll('.image-placeholder:not(.active-placeholder)');
     placeholders.forEach(placeholder => {
         // Create UI for upload/camera
         placeholder.innerHTML = `

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Root Cause Analysis Diagram</title>
+    <!-- Load vis-network -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            color: #1d1d1f;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .note {
+            background: #f0f7ff;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #0071e3;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            background: #f9f9fb;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .btn-tool {
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .btn-tool:hover {
+            background: #eee;
+        }
+
+        #mynetwork {
+            width: 100%;
+            height: 600px;
+            border: 1px solid lightgray;
+            border-radius: 8px;
+            background: #ffffff;
+        }
+
+        /* Print visibility overrides */
+        @media print {
+            .toolbar, .note {
+                display: none !important;
+            }
+            #mynetwork {
+                border: none;
+                height: 250mm;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Root Cause Analysis Map (5 Whys)</h1>
+    <p class="subtitle">Design Thinking — Define Phase</p>
+
+    <div class="note">
+        <strong>Instructions:</strong> Use this diagram to dig down to the root cause of a problem.<br>
+        • Select a node, then click "➕ Add Cause" to create a branched reason.<br>
+        • <strong>Double-click</strong> a node to edit its text.<br>
+        • <strong>Right-click</strong> a node to lock it in as the definitive <strong>Root Cause</strong> (marks it dark red).
+    </div>
+
+    <div class="toolbar">
+        <button class="btn-tool" onclick="addNode()">➕ Add Cause to Selected</button>
+        <button class="btn-tool" onclick="editNode()">✏️ Edit Selected</button>
+        <button class="btn-tool" onclick="deleteNode()" style="color:#ff3b30;">➖ Remove Selected</button>
+    </div>
+
+    <div id="mynetwork"></div>
+
+    <script src="template_shared.js"></script>
+    <script>
+        // Layer colors: Pastel colors for different depth levels
+        const layerColors = [
+            '#FFB3BA', // Level 0: Pink
+            '#FFDFBA', // Level 1: Orange
+            '#FFFFBA', // Level 2: Yellow
+            '#BAFFC9', // Level 3: Green
+            '#BAE1FF', // Level 4: Blue
+            '#E8BAFF'  // Level 5: Purple
+        ];
+
+        // Root Cause Dark Color
+        const rootColor = '#D32F2F'; // Dark Red
+        
+        // Initial Dataset
+        const nodes = new vis.DataSet([
+            { id: 1, label: 'The Problem Statement\n(e.g., Users abandon cart at checkout)', level: 0 }
+        ]);
+        const edges = new vis.DataSet([]);
+        
+        let nodeIdCounter = 2;
+
+        const container = document.getElementById('mynetwork');
+        const data = { nodes: nodes, edges: edges };
+        
+        const options = {
+            layout: {
+                hierarchical: {
+                    direction: 'UD', // Up-Down sorting
+                    sortMethod: 'directed',
+                    levelSeparation: 100,
+                    nodeSpacing: 200,
+                    treeSpacing: 250
+                }
+            },
+            physics: {
+                enabled: false // Disable physics for clean hierarchical layout
+            },
+            nodes: {
+                shape: 'box',
+                margin: 10,
+                font: {
+                    size: 14,
+                    face: 'Segoe UI'
+                },
+                borderWidth: 1,
+                shadow: true
+            },
+            edges: {
+                arrows: 'to',
+                color: '#999',
+                smooth: {
+                    type: 'cubicBezier',
+                    forceDirection: 'vertical',
+                    roundness: 0.4
+                }
+            },
+            interaction: {
+                dragNodes: true,
+                hover: true
+            }
+        };
+
+        const network = new vis.Network(container, data, options);
+
+        function updateNodeColors() {
+            const allNodes = nodes.get();
+            const updates = [];
+            allNodes.forEach(n => {
+                if (n.isRootCause) {
+                    updates.push({
+                        id: n.id,
+                        color: { background: rootColor, border: '#7F0000', highlight: { background: '#B71C1C', border: '#7F0000'} },
+                        font: { color: 'white' }
+                    });
+                } else {
+                    const index = (n.level !== undefined ? n.level : 0) % layerColors.length;
+                    updates.push({
+                        id: n.id,
+                        color: { background: layerColors[index], border: '#aaa', highlight: { background: '#f5f5f7', border: '#333'} },
+                        font: { color: 'black' }
+                    });
+                }
+            });
+            nodes.update(updates);
+        }
+
+        // Initialize colors
+        updateNodeColors();
+
+        // Right-Click Event (Lock Root Cause)
+        network.on("oncontext", function (params) {
+            params.event.preventDefault();
+            const nodeId = this.getNodeAt(params.pointer.DOM);
+            if (nodeId !== undefined) {
+                const node = nodes.get(nodeId);
+                
+                // Toggle state
+                if (node.isRootCause) {
+                    node.isRootCause = false;
+                } else {
+                    // Turn off any other root causes if desired, or allow multiple.
+                    // Let's assume there's one primary root cause highlighted.
+                    const allNodes = nodes.get();
+                    allNodes.forEach(n => {
+                        if (n.isRootCause) nodes.update({ id: n.id, isRootCause: false });
+                    });
+                    node.isRootCause = true;
+                }
+                updateNodeColors();
+            }
+        });
+
+        // Double-Click Event (Edit Node)
+        network.on("doubleClick", function (params) {
+            if (params.nodes.length > 0) {
+                editNode();
+            }
+        });
+
+        // Toolbar Functions
+        function addNode() {
+            const selected = network.getSelectedNodes();
+            if (selected.length === 0) {
+                alert("Please select a node first to attach a cause.");
+                return;
+            }
+            const parentId = selected[0];
+            const parentNode = nodes.get(parentId);
+            
+            const label = prompt("Enter cause (Why?):");
+            if (!label) return;
+            
+            const newLevel = (parentNode.level !== undefined ? parentNode.level : 0) + 1;
+            const newNodeId = nodeIdCounter++;
+            
+            nodes.add({ id: newNodeId, label: label, level: newLevel });
+            edges.add({ from: parentId, to: newNodeId });
+            updateNodeColors();
+            
+            // Adjust zoom to fit
+            setTimeout(() => { network.fit({ animation: true }); }, 100);
+        }
+
+        function editNode() {
+            const selected = network.getSelectedNodes();
+            if (selected.length === 0) return;
+            
+            const node = nodes.get(selected[0]);
+            const label = prompt("Edit text:", node.label);
+            if (label !== null) {
+                nodes.update({ id: node.id, label: label });
+            }
+        }
+
+        function deleteNode() {
+            const selected = network.getSelectedNodes();
+            if (selected.length === 0) return;
+            
+            if (confirm("Delete this node and all its descending connections?")) {
+                nodes.remove(selected[0]);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -240,6 +240,23 @@
                     <p>Says, Thinks, Does, Feels.</p>
                     <span class="card-cta">Tap to explore →</span>
                 </div>
+                <div class="card tool-card" onclick="openModal('modal-root-cause')">
+                    <div class="svg-container">
+                        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="25" r="8" fill="#f0f7ff" stroke="var(--accent-color)" stroke-width="2"/>
+                            <circle cx="30" cy="50" r="8" fill="#f0f7ff" stroke="var(--accent-color)" stroke-width="2"/>
+                            <circle cx="70" cy="50" r="8" fill="#f0f7ff" stroke="var(--accent-color)" stroke-width="2"/>
+                            <circle cx="50" cy="75" r="8" fill="#ffb400" stroke="#ff3b30" stroke-width="2"/>
+                            <line x1="45" y1="31" x2="35" y2="44" stroke="var(--accent-color)" stroke-width="2"/>
+                            <line x1="55" y1="31" x2="65" y2="44" stroke="var(--accent-color)" stroke-width="2"/>
+                            <line x1="35" y1="56" x2="45" y2="69" stroke="var(--accent-color)" stroke-width="2"/>
+                            <line x1="65" y1="56" x2="55" y2="69" stroke="var(--accent-color)" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3>Root Cause Analysis</h3>
+                    <p>The 5 Whys Framework.</p>
+                    <span class="card-cta">Tap to explore →</span>
+                </div>
             </div>
         </section>
 
@@ -865,6 +882,88 @@
                         <li><a href="https://www.nngroup.com/articles/persona/" target="_blank">Personas Make Users
                                 Memorable</a> — Nielsen Norman Group</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Root Cause Modal -->
+        <div class="modal-overlay" id="modal-root-cause">
+            <div class="modal-content">
+                <button class="modal-close" onclick="closeModal('modal-root-cause')">✕</button>
+                <h2>Root Cause Analysis</h2>
+                <p class="modal-subtitle">Digging Deeper with the 5 Whys</p>
+
+                <div class="modal-illustration">
+                    <svg viewBox="0 0 300 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="150" cy="50" r="15" fill="#f0f7ff" stroke="#0071e3" stroke-width="2"/>
+                        <circle cx="90" cy="100" r="15" fill="#f0f7ff" stroke="#0071e3" stroke-width="2"/>
+                        <circle cx="210" cy="100" r="15" fill="#f0f7ff" stroke="#0071e3" stroke-width="2"/>
+                        <circle cx="150" cy="150" r="20" fill="#fff5f5" stroke="#ff3b30" stroke-width="3"/>
+                        <line x1="139" y1="60" x2="101" y2="90" stroke="#0071e3" stroke-width="2"/>
+                        <line x1="161" y1="60" x2="199" y2="90" stroke="#0071e3" stroke-width="2"/>
+                        <line x1="150" y1="65" x2="150" y2="130" stroke="#00ca4e" stroke-width="3" stroke-dasharray="4"/>
+                        <text x="150" y="55" font-size="12" text-anchor="middle" font-weight="bold" fill="#0071e3">Why?</text>
+                        <text x="150" y="155" font-size="14" text-anchor="middle" font-weight="bold" fill="#ff3b30">Root</text>
+                    </svg>
+                </div>
+
+                <div class="modal-section">
+                    <h3>What is Root Cause Analysis?</h3>
+                    <p>Often, the problem we see is just a symptom of a deeper issue. <strong>Root Cause Analysis (RCA)</strong> is the process of digging down through the layers of a problem to find the fundamental reason it's happening. The most popular RCA method in design thinking is the <strong>5 Whys</strong>.</p>
+                </div>
+
+                <div class="modal-section">
+                    <h3>The 5 Whys Framework</h3>
+                    <p>Invented at Toyota, this technique simply involves asking "Why did this happen?" repeatedly (usually 5 times) until you hit the core systemic issue.</p>
+                    <div class="modal-steps">
+                        <div class="modal-step">
+                            <div class="step-number">1</div>
+                            <div><strong>State the visible problem.</strong> Exactly what went wrong?</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">2</div>
+                            <div><strong>Ask "Why?"</strong> and record the immediate cause.</div>
+                        </div>
+                        <div class="modal-step">
+                            <div class="step-number">3</div>
+                            <div><strong>Keep digging.</strong> Ask "Why?" for each answer. Stop when you hit a process or systemic issue rather than just a symptom.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <h3>🪨 Example: The Thirsty Crow</h3>
+                    <div class="example-box">
+                        <table class="example-table">
+                            <tr>
+                                <td><strong>Problem</strong></td>
+                                <td>The crow is thirsty and cannot drink the water from the jug.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Why? (1)</strong></td>
+                                <td>Because its beak cannot reach the water.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Why? (2)</strong></td>
+                                <td>Because the water level is too low.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Why? (3)</strong></td>
+                                <td>Because the jug is tall and has a narrow neck.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Why? (4)</strong></td>
+                                <td>Because it's a jug designed for human poured use, not for direct drinking by animals.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Why? (5)</strong></td>
+                                <td><strong style="color:red">Root Cause:</strong> The environment lacks species-agnostic water sources during the dry season.</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="modal-section">
+                    <a href="templates/root_cause_template.html" target="_blank" class="download-btn">📄 Open Root Cause Map Template</a>
                 </div>
             </div>
         </div>

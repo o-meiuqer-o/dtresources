@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Customer Journey Map Template</title>
+    <title>Customer Journey & Empathy Map</title>
     <style>
         * {
             margin: 0;
@@ -14,7 +14,7 @@
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             padding: 2rem;
-            max-width: 1000px;
+            max-width: 1400px; /* Wide layout to accommodate columns */
             margin: 0 auto;
             color: #1d1d1f;
         }
@@ -41,7 +41,7 @@
             font-size: 0.9rem;
         }
 
-        .field input,
+        .field input[type="text"],
         .field textarea {
             width: 100%;
             border: 1px solid #ddd;
@@ -51,19 +51,13 @@
             font-family: inherit;
         }
 
-        .field textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 1rem;
+            table-layout: fixed;
         }
 
-        th,
-        td {
+        th, td {
             border: 1px solid #ddd;
             padding: 0.75rem;
             text-align: left;
@@ -81,8 +75,18 @@
             border: none;
             font-size: 0.8rem;
             font-family: inherit;
-            min-height: 60px;
+            min-height: 80px;
             resize: vertical;
+            background: transparent;
+        }
+
+        td input[type="number"] {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 0.5rem;
+            font-size: 1rem;
+            text-align: center;
         }
 
         .section-title {
@@ -103,11 +107,77 @@
             margin-bottom: 1.5rem;
         }
 
-        @media print {
-            body {
-                padding: 1rem;
-            }
+        .table-controls {
+            margin-top: 1rem;
+            display: flex;
+            gap: 10px;
+        }
 
+        .layer-title {
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .layer-sub {
+            font-size: 0.7rem;
+            color: #666;
+            font-weight: normal;
+        }
+        
+        #graph-cell {
+            padding: 0;
+            height: 180px;
+            position: relative;
+            background: #fff;
+        }
+
+        #emotion-graph {
+            width: 100%;
+            height: 100%;
+            display: block;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 10;
+        }
+        
+        .axis-label {
+            position: absolute;
+            left: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: #888;
+            z-index: 15;
+            pointer-events: none;
+        }
+        
+        .image-placeholder-sm {
+            height: 120px;
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: #fafafa;
+            color: #ccc;
+        }
+        
+        @media print {
+            @page {
+                size: A4 landscape;
+                margin: 10mm;
+            }
+            body {
+                padding: 0 !important;
+                max-width: none !important;
+                width: 100% !important;
+            }
+            .table-container {
+                overflow: visible !important;
+            }
             td textarea {
                 min-height: 80px;
             }
@@ -116,79 +186,306 @@
 </head>
 
 <body>
-    <h1>Customer Journey Map Template</h1>
-    <p class="subtitle">Design Thinking — Empathy Phase</p>
+    <h1>Journey & Empathy Map Template</h1>
+    <p class="subtitle">Design Thinking — Empathy & Experience Mapping</p>
+
+    <div class="note">This map combines Empathy Mapping (Says, Thinks, Does, Feels) with a Timeline Journey Map. Capture the emotional experience quantitatively below and chart the user's highs and lows.</div>
 
     <div class="section-title">Journey Context</div>
-    <div class="field">
-        <label>Persona / User</label>
-        <input type="text" placeholder="Who is the user?">
-    </div>
-    <div class="field">
-        <label>Scenario / Goal</label>
-        <input type="text" placeholder="What are they trying to accomplish?">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+        <div class="field">
+            <label>Persona / User</label>
+            <input type="text" placeholder="Who is the user?">
+        </div>
+        <div class="field">
+            <label>Scenario / Goal</label>
+            <input type="text" placeholder="What are they trying to accomplish?">
+        </div>
     </div>
 
-    <div class="section-title">Journey Timeline</div>
-    <div class="note">Break the experience into 4–6 stages. For each stage, record what they do, think, feel, and where
-        pain points occur.</div>
-    <table>
-        <tr>
-            <th style="width:12%">Layer</th>
-            <th>Stage 1</th>
-            <th>Stage 2</th>
-            <th>Stage 3</th>
-            <th>Stage 4</th>
-            <th>Stage 5</th>
-        </tr>
-        <tr>
-            <td><strong>Stage Name</strong></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-        </tr>
-        <tr>
-            <td><strong>Actions</strong></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-        </tr>
-        <tr>
-            <td><strong>Thoughts</strong></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-        </tr>
-        <tr>
-            <td><strong>Emotions</strong></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-        </tr>
-        <tr>
-            <td><strong>Pain Points</strong></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-            <td><textarea></textarea></td>
-        </tr>
-    </table>
+    <div class="section-title">The Map</div>
+    <div class="table-container" style="overflow-x: auto;">
+        <table id="journey-table">
+            <thead>
+                <tr id="row-headers">
+                    <th style="width:12%; min-width: 130px;">Layer</th>
+                    <th>Stage 1</th>
+                    <th>Stage 2</th>
+                    <th>Stage 3</th>
+                    <th>Stage 4</th>
+                    <th>Stage 5</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="row-names">
+                    <td>
+                        <div class="layer-title">Stage Name</div>
+                        <div class="layer-sub">Key phase</div>
+                    </td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                </tr>
+                <tr id="row-images">
+                    <td>
+                        <div class="layer-title">Scene / Event</div>
+                        <div class="layer-sub">Upload picture</div>
+                    </td>
+                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
+                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
+                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
+                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
+                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
+                </tr>
+                <tr id="row-actions">
+                    <td>
+                        <div class="layer-title">🏃 Actions</div>
+                        <div class="layer-sub">What do they do?</div>
+                    </td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                </tr>
+                <tr id="row-thoughts">
+                    <td>
+                        <div class="layer-title">🤔 Thoughts</div>
+                        <div class="layer-sub">Internal mental state</div>
+                    </td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                </tr>
+                <tr id="row-emotions">
+                    <td>
+                        <div class="layer-title">🗣️/😟 Feels & Says</div>
+                        <div class="layer-sub">External & internal emotions</div>
+                    </td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                </tr>
+                <tr id="row-pain">
+                    <td>
+                        <div class="layer-title">Pain Points</div>
+                        <div class="layer-sub">Frictions & Blockers</div>
+                    </td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                    <td><textarea></textarea></td>
+                </tr>
+                <tr id="row-scores">
+                    <td>
+                        <div class="layer-title">Emotion Score</div>
+                        <div class="layer-sub">Rate from -10 to 10</div>
+                    </td>
+                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
+                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
+                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
+                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
+                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
+                </tr>
+                <tr id="row-graph">
+                    <td>
+                        <div class="layer-title">Emotion Graph</div>
+                        <div class="layer-sub">Automatically mapped</div>
+                    </td>
+                    <td colspan="5" id="graph-cell">
+                        <div class="axis-label" style="top:5px; color:#00ca4e;">+10 (Positive)</div>
+                        <div class="axis-label" style="top:calc(50% - 8px);">0 (Neutral)</div>
+                        <div class="axis-label" style="bottom:5px; color:#ff3b30;">-10 (Negative)</div>
+                        <svg id="emotion-graph"></svg>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="table-controls">
+        <button class="btn-control" onclick="addStage()">➕ Add Stage (Column)</button>
+        <button class="btn-control btn-remove" style="position:relative; right:auto; opacity:1;" onclick="removeStage()">➖ Remove Stage</button>
+    </div>
 
     <div class="section-title">Opportunities</div>
     <div class="field">
         <label>At each pain point, what could be changed to improve the experience?</label>
-        <textarea placeholder="List opportunities for improvement..."></textarea>
+        <textarea placeholder="List opportunities for improvement..." style="min-height:100px;"></textarea>
     </div>
+
     <script src="template_shared.js"></script>
+    <script>
+        function drawGraph() {
+            const inputs = document.querySelectorAll('.emotion-score');
+            const svg = document.getElementById('emotion-graph');
+            svg.innerHTML = '';
+            
+            const cell = document.getElementById('graph-cell');
+            const width = cell.clientWidth;
+            const height = cell.clientHeight;
+            
+            const padding = 20;
+            const yRange = 20; // from -10 to 10 is 20 steps
+            const count = inputs.length;
+            if(count === 0 || width === 0) return;
+            
+            const segmentWidth = width / count;
+            
+            let pathD = "";
+            let points = [];
+            
+            // Collect points
+            inputs.forEach((input, index) => {
+                let val = parseFloat(input.value);
+                if(isNaN(val)) val = 0;
+                if(val > 10) val = 10;
+                if(val < -10) val = -10;
+                
+                const x = (index * segmentWidth) + (segmentWidth / 2);
+                const y = padding + ((10 - val) / yRange) * (height - 2*padding);
+                
+                points.push({x, y, val});
+            });
+            
+            // Draw baseline (0 line)
+            const zeroY = height / 2;
+            const zeroLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            zeroLine.setAttribute('x1', 0);
+            zeroLine.setAttribute('y1', zeroY);
+            zeroLine.setAttribute('x2', width);
+            zeroLine.setAttribute('y2', zeroY);
+            zeroLine.setAttribute('stroke', '#ddd');
+            zeroLine.setAttribute('stroke-width', '2');
+            zeroLine.setAttribute('stroke-dasharray', '5,5');
+            svg.appendChild(zeroLine);
+            
+            // Generate Path D
+            points.forEach((pt, i) => {
+                if(i === 0) {
+                    pathD += `M ${pt.x} ${pt.y} `;
+                } else {
+                    const prev = points[i-1];
+                    const cp1X = prev.x + (pt.x - prev.x) / 2;
+                    pathD += `C ${cp1X} ${prev.y}, ${cp1X} ${pt.y}, ${pt.x} ${pt.y} `;
+                }
+            });
+            
+            // Draw Path curve
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            path.setAttribute('d', pathD);
+            path.setAttribute('stroke', '#0071e3');
+            path.setAttribute('stroke-width', '4');
+            path.setAttribute('fill', 'none');
+            svg.appendChild(path);
+            
+            // Draw points and highlight extremes
+            points.forEach((pt, i) => {
+                let isPeak = false;
+                let isTrough = false;
+                
+                // Determine extremes (local maxima/minima)
+                if (i > 0 && i < points.length - 1) {
+                    if (pt.val > points[i-1].val && pt.val > points[i+1].val) isPeak = true;
+                    if (pt.val < points[i-1].val && pt.val < points[i+1].val) isTrough = true;
+                } else if (i === 0 && points.length > 1) {
+                    if (pt.val > points[i+1].val) isPeak = true;
+                    if (pt.val < points[i+1].val) isTrough = true;
+                } else if (i === points.length - 1 && points.length > 1) {
+                    if (pt.val > points[i-1].val) isPeak = true;
+                    if (pt.val < points[i-1].val) isTrough = true;
+                }
+                
+                // Always draw a solid point
+                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                circle.setAttribute('cx', pt.x);
+                circle.setAttribute('cy', pt.y);
+                circle.setAttribute('r', '6');
+                circle.setAttribute('fill', 'white');
+                circle.setAttribute('stroke', '#0071e3');
+                circle.setAttribute('stroke-width', '3');
+                svg.appendChild(circle);
+                
+                // Highlight peaks (green) and troughs (red)
+                if(isPeak || isTrough) {
+                    const highlight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    highlight.setAttribute('cx', pt.x);
+                    highlight.setAttribute('cy', pt.y);
+                    highlight.setAttribute('r', '16');
+                    highlight.setAttribute('fill', 'none');
+                    highlight.setAttribute('stroke', isPeak ? '#00ca4e' : '#ff3b30');
+                    highlight.setAttribute('stroke-width', '3');
+                    svg.appendChild(highlight);
+                }
+            });
+        }
+
+        function addStage() {
+            const headers = document.getElementById('row-headers');
+            const stageNum = headers.children.length; // index starts at 1
+            
+            const th = document.createElement('th');
+            th.textContent = `Stage ${stageNum}`;
+            headers.appendChild(th);
+            
+            // Rows logic
+            document.getElementById('row-names').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
+            document.getElementById('row-images').insertAdjacentHTML('beforeend', '<td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>');
+            document.getElementById('row-actions').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
+            document.getElementById('row-thoughts').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
+            document.getElementById('row-emotions').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
+            document.getElementById('row-pain').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
+            
+            const tdScore = document.createElement('td');
+            tdScore.innerHTML = '<input type="number" class="emotion-score" min="-10" max="10" value="0">';
+            document.getElementById('row-scores').appendChild(tdScore);
+            
+            const graphCell = document.getElementById('graph-cell');
+            graphCell.colSpan = stageNum;
+            
+            bindEvents();
+            if(window.setupImagePlaceholders) window.setupImagePlaceholders();
+            drawGraph();
+        }
+
+        function removeStage() {
+            const headers = document.getElementById('row-headers');
+            if (headers.children.length <= 3) return; // Keep at least 2 stages + label
+            
+            headers.lastElementChild.remove();
+            
+            ['names', 'images', 'actions', 'thoughts', 'emotions', 'pain', 'scores'].forEach(id => {
+                const row = document.getElementById('row-' + id);
+                row.lastElementChild.remove();
+            });
+            
+            const graphCell = document.getElementById('graph-cell');
+            graphCell.colSpan = headers.children.length - 1;
+            
+            drawGraph();
+        }
+
+        function bindEvents() {
+            const inputs = document.querySelectorAll('.emotion-score');
+            inputs.forEach(input => {
+                input.removeEventListener('input', drawGraph);
+                input.addEventListener('input', drawGraph);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            bindEvents();
+            setTimeout(drawGraph, 100); // Give layout time to apply max-width
+            window.addEventListener('resize', drawGraph);
+        });
+    </script>
 </body>
 
 </html>

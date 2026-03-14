@@ -22,8 +22,123 @@ function addSection() {
     document.body.appendChild(sectionWrap);
 }
 
-function printToPDF() {
-    window.print();
+function saveToPDF() {
+    const btn = event.currentTarget || document.querySelector('.btn-primary');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Processing...';
+    btn.disabled = true;
+
+    const loadScripts = async () => {
+        if (typeof html2canvas === 'undefined') {
+            await new Promise(r => {
+                const s = document.createElement('script');
+                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+                s.onload = r;
+                document.head.appendChild(s);
+            });
+        }
+        if (typeof window.jspdf === 'undefined') {
+            await new Promise(r => {
+                const s = document.createElement('script');
+                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+                s.onload = r;
+                document.head.appendChild(s);
+            });
+        }
+    };
+
+    loadScripts().then(() => {
+        const controls = document.querySelector('.template-controls');
+        const disclaimer = document.querySelector('.template-disclaimer');
+        if(controls) controls.style.display = 'none';
+        if(disclaimer) disclaimer.style.display = 'none';
+        
+        const tableContainer = document.querySelector('.table-container');
+        let originalTableOverflow = '';
+        if(tableContainer) {
+            originalTableOverflow = tableContainer.style.overflow;
+            tableContainer.style.overflow = 'visible';
+        }
+
+        // Expand textareas to prevent scrollbars in PDF
+        const textareas = document.querySelectorAll('textarea');
+        const originalHeights = [];
+        textareas.forEach(t => {
+            originalHeights.push(t.style.height);
+            t.style.height = 'auto';
+            t.style.height = (t.scrollHeight + 10) + 'px'; // +10 for safety margin
+        });
+
+        // Expand document body width to capture everything
+        const originalBodyWidth = document.body.style.width;
+        document.body.style.width = document.body.scrollWidth + 'px';
+
+        html2canvas(document.body, { 
+            scale: 2,
+            useCORS: true,
+            windowWidth: document.body.scrollWidth,
+            scrollY: -window.scrollY 
+        }).then(canvas => {
+            // Restore everything
+            document.body.style.width = originalBodyWidth;
+            if(controls) controls.style.display = 'flex';
+            if(disclaimer) disclaimer.style.display = 'block';
+            if(tableContainer) tableContainer.style.overflow = originalTableOverflow;
+            
+            textareas.forEach((t, i) => {
+                t.style.height = originalHeights[i] || '';
+            });
+
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+
+            const { jsPDF } = window.jspdf;
+            
+            // Check if it's portrait or landscape. We can default to landscape for all maps.
+            const doc = new jsPDF({
+                orientation: 'landscape',
+                unit: 'mm',
+                format: 'a4'
+            });
+
+            const pdfWidth = 297;
+            const pdfHeight = 210;
+            const margin = 10;
+            const usableHeight = pdfHeight - (margin * 2);
+            const usableWidth = pdfWidth - (margin * 2);
+
+            const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+            // Fit the height to one page, then scale width proportionally
+            let ratio = usableHeight / canvas.height;
+            let totalWidthMM = canvas.width * ratio;
+
+            // If the map is actually narrow (like Persona), don't blow it up excessively
+            if (totalWidthMM < usableWidth) {
+                ratio = usableWidth / canvas.width;
+                if ((canvas.height * ratio) > usableHeight) {
+                    ratio = usableHeight / canvas.height;
+                }
+                totalWidthMM = canvas.width * ratio;
+            }
+
+            const activeHeightMM = canvas.height * ratio;
+
+            let currentX = 0;
+            while (currentX < totalWidthMM) {
+                if (currentX > 0) doc.addPage();
+                // Magic trick: Shift the image X offset negatively to "slice" it perfectly
+                doc.addImage(imgData, 'JPEG', margin - currentX, margin, totalWidthMM, activeHeightMM);
+                currentX += usableWidth;
+            }
+            
+            doc.save(document.title + '.pdf');
+        }).catch(err => {
+            console.error(err);
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+    });
 }
 
 // Image handling logic
@@ -146,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
     controls.className = 'template-controls';
     controls.innerHTML = `
         <button class="btn-control" onclick="addSection()">➕ Add Section</button>
-        <button class="btn-control btn-primary" onclick="printToPDF()">🖨️ Print to PDF</button>
+        <button class="btn-control btn-primary" onclick="saveToPDF()">💾 Save to PDF</button>
     `;
     document.body.appendChild(controls);
 

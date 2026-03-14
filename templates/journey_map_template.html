@@ -173,13 +173,27 @@
             body {
                 padding: 0 !important;
                 max-width: none !important;
-                width: 100% !important;
+                width: auto !important; /* Allow the body to grow horizontally */
             }
             .table-container {
                 overflow: visible !important;
             }
+            table {
+                width: auto !important; /* Do not force 100% width on print */
+                min-width: 100% !important;
+                table-layout: auto !important; /* Let columns set their widths naturally */
+            }
+            th, td {
+                min-width: 250px; /* Force a minimum width for columns so they break into pages */
+                word-wrap: break-word;
+            }
+            td:first-child, th:first-child {
+                min-width: 150px; /* First column handles headers */
+                max-width: 150px;
+            }
             td textarea {
                 min-height: 80px;
+                overflow: visible !important;
             }
         }
     </style>

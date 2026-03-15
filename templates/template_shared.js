@@ -239,6 +239,153 @@ function resetControls(controls) {
     `;
 }
 
+// ===== Section Help Tooltip System =====
+const SECTION_HELP = {
+    // Proto-Persona
+    'identity': {
+        tip: 'Give your assumed user a face and name — it makes them memorable.',
+        detail: 'Naming a proto-persona transforms abstract "users" into a concrete person your team can empathize with. Even though the details are assumed, a specific identity anchors team discussions and aligns decisions around a shared mental model.',
+        why: 'Research shows named personas significantly reduce team drift and "self-referential design" — where designers unknowingly build for themselves instead of real users.'
+    },
+    'demographics': {
+        tip: 'Age, location, environment — the context that shapes their world.',
+        detail: 'Demographics provide the situational backdrop for understanding behavior. A 20-year-old college student in a metro city has very different constraints, access, and habits than a 55-year-old farmer in a rural area.',
+        why: 'Context shapes behavior more than personality does. Two identical personality types in different environments will approach the same problem very differently.'
+    },
+    'demographics & context': {
+        tip: 'Age, location, environment — the context that shapes their world.',
+        detail: 'Demographics provide the situational backdrop for understanding behavior. A 20-year-old college student in a metro city has very different constraints, access, and habits than a 55-year-old farmer in a rural area.',
+        why: 'Context shapes behavior more than personality does. Two identical personality types in different environments will approach the same problem very differently.'
+    },
+    'behaviors & attitudes': {
+        tip: 'What you ASSUME they do and feel — to be validated later.',
+        detail: 'Proto-personas capture your team\'s best guesses about user behaviors. Writing these down explicitly — rather than leaving them as unspoken assumptions — makes them testable hypotheses.',
+        why: 'The primary value of a proto-persona is not accuracy; it\'s accountability. By writing assumptions down, you create a checklist of things to validate in real research.'
+    },
+    'assumptions to validate': {
+        tip: 'The riskiest guesses — test these FIRST with real users.',
+        detail: 'Not all assumptions carry equal risk. This section forces you to identify which beliefs, if wrong, would most damage your product direction. These should become the first interview or survey questions.',
+        why: 'Design thinking is fundamentally about reducing uncertainty. Prioritizing risky assumptions ensures your limited research time targets the highest-impact unknowns.'
+    },
+    // Persona
+    'goals & motivations': {
+        tip: 'What they actually want — based on research, not guesses.',
+        detail: 'Goals describe the desired end-state the user is working toward. Motivations explain the emotional or practical "why" behind those goals. Together, they define the job-to-be-done.',
+        why: 'Products that align with user goals feel intuitive. Products that ignore them feel frustrating — no matter how polished the UI is.'
+    },
+    'frustrations & pain points': {
+        tip: 'Real problems they voiced — the fuel for your design solutions.',
+        detail: 'Frustrations represent unmet needs and broken workflows. These are the specific friction points where your design can create the most impact.',
+        why: 'Pain points are the single best source of design opportunities. Every successful product solves a real frustration — not an imagined one.'
+    },
+    'behaviors & habits': {
+        tip: 'Observed patterns — what they actually do (not what they say they do).',
+        detail: 'Behavioral data comes from watching users in their natural context. This is critical because what people say they do and what they actually do are often very different.',
+        why: 'Observational research catches the "say/do gap" — one of the biggest sources of design failure. Always trust observed behavior over self-reported behavior.'
+    },
+    'scenario': {
+        tip: 'A narrative snapshot — show the persona in their natural context.',
+        detail: 'A scenario builds a small narrative showing the persona encountering the problem in their everyday life. It serves as a team alignment tool and an empathy exercise.',
+        why: 'Stories are the most powerful communication tool in design. A well-written scenario can instantly align a diverse team around a shared understanding of the problem space.'
+    },
+    // Empathy Map
+    'user / persona': {
+        tip: 'Who exactly are you mapping? Anchor the map to a specific person.',
+        detail: 'An empathy map must be anchored to a single user (or persona) in a specific situation. Mapping "users in general" produces vague insights.',
+        why: 'Specificity drives empathy. The more concrete and singular your subject, the deeper your team\'s understanding becomes.'
+    },
+    'the four quadrants': {
+        tip: 'Says, Thinks, Does, Feels — the core lens into user experience.',
+        detail: 'The four quadrants force you to separate observable facts (Says, Does) from inferred inner experience (Thinks, Feels). The magic happens when you compare across quadrants — contradictions between what users SAY and DO reveal the deepest insights.',
+        why: 'Empathy maps were designed by XPLANE as a "putting yourself in the user\'s shoes" tool. The quadrant structure prevents teams from over-relying on one data type.'
+    },
+    'insights & contradictions': {
+        tip: 'The gold — where Says vs. Does reveals hidden truths.',
+        detail: 'Contradictions (e.g., "I always read reviews" but observed skipping past them) reveal subconscious habits and unspoken needs. These are often the most actionable findings.',
+        why: 'Insight synthesis is where raw data becomes design direction. Without this step, empathy maps become filing cabinets of observations rather than launchpads for innovation.'
+    },
+    // Survey
+    'survey objective': {
+        tip: 'Define what you want to learn BEFORE writing any questions.',
+        detail: 'A clear research question prevents survey bloat and ensures every question earns its place. If a question doesn\'t serve the objective, cut it.',
+        why: 'Surveys with unclear objectives produce noisy data that\'s difficult to analyze. A focused survey of 8 questions outperforms a scattered survey of 30.'
+    },
+    'survey questions': {
+        tip: 'Mix closed (scales/MCQ) and open-ended. Keep it under 10 minutes.',
+        detail: 'Closed questions give you quantifiable data for patterns; open questions give you qualitative richness for understanding. The ideal survey alternates between both.',
+        why: 'Survey fatigue dramatically reduces response quality after ~10 minutes. Shorter, focused surveys yield higher completion rates and more honest answers.'
+    },
+    'analysis plan': {
+        tip: 'Plan how you\'ll use the data BEFORE collecting it.',
+        detail: 'Deciding your analysis strategy upfront ensures you ask the right questions in the right format. If you plan to create personas, you need different data than if you plan to generate journey maps.',
+        why: 'The most common survey mistake is collecting data you can\'t act on. An analysis plan prevents "now what?" paralysis after responses come in.'
+    },
+    // Journey & Empathy Map
+    'journey context': {
+        tip: 'Anchor the map — who is the user and what are they trying to do?',
+        detail: 'Every journey map needs a protagonist and a goal. Without these, the map becomes a disconnected list of steps rather than an empathetic narrative.',
+        why: 'Journey maps are storytelling tools. A clear protagonist and objective transforms a process diagram into an empathy-building experience.'
+    },
+    'the map': {
+        tip: 'The full timeline — actions, thoughts, emotions across every stage.',
+        detail: 'This combined journey + empathy map captures the complete experience across multiple dimensions simultaneously. Each column represents a stage; each row captures a different facet of the experience (actions, thoughts, speech, pain points, emotions).',
+        why: 'Combining journey and empathy mapping in one view reveals correlations that separate tools miss — like discovering that the most painful moments correlate with specific actions or unspoken thoughts.'
+    },
+    'emotion graph': {
+        tip: 'Quantify the emotional journey — where are the peaks and valleys?',
+        detail: 'The emotion score (-10 to +10) creates a visual heartbeat of the experience. Peaks represent delight moments worth preserving; troughs represent pain points worth solving. The graph makes emotional patterns instantly scannable.',
+        why: 'Emotion graphs help prioritize where to intervene. Fixing the deepest trough typically has more impact than enhancing the tallest peak.'
+    },
+    // Root Cause Analysis (parsed from visible text)
+    'root cause analysis': {
+        tip: 'Keep asking "Why?" to dig past symptoms to the real cause.',
+        detail: 'Root cause analysis uses graphical tree diagrams to trace problem causality. Each level answers "Why did this happen?" for the level above it. The goal is to identify the systemic root cause — a change that would prevent the problem from ever recurring.',
+        why: 'Treating symptoms feels productive but only provides temporary relief. RCA targets the one fundamental cause whose fix eliminates the entire chain of symptoms above it.'
+    }
+};
+
+function setupSectionHelp() {
+    // Create the help modal overlay (one shared instance)
+    let overlay = document.querySelector('.help-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'help-overlay';
+        overlay.innerHTML = '<div class="help-card"><button class="help-close">✕</button><h3></h3><p class="help-body"></p><div class="help-why"></div></div>';
+        document.body.appendChild(overlay);
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay || e.target.classList.contains('help-close')) {
+                overlay.classList.remove('active');
+            }
+        });
+    }
+
+    const titles = document.querySelectorAll('.section-title');
+    titles.forEach(el => {
+        if (el.dataset.helpBound) return; // Don't double-bind
+        el.dataset.helpBound = 'true';
+
+        const text = el.textContent.replace(/[0-9]+\.\s*/g, '').replace(/ⓘ/g, '').trim().toLowerCase();
+        const help = SECTION_HELP[text];
+        if (!help) return;
+
+        // Add hover tooltip
+        const tip = document.createElement('span');
+        tip.className = 'section-tip';
+        tip.innerHTML = help.tip + '<span class="tip-click">Click for more detail →</span>';
+        el.appendChild(tip);
+
+        // Click opens detail modal
+        el.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const card = overlay.querySelector('.help-card');
+            card.querySelector('h3').textContent = el.textContent.replace(/ⓘ/g, '').trim();
+            card.querySelector('.help-body').textContent = help.detail;
+            card.querySelector('.help-why').innerHTML = '<strong>Why this matters:</strong> ' + help.why;
+            overlay.classList.add('active');
+        });
+    });
+}
+
 // Add the controls UI to the page
 document.addEventListener('DOMContentLoaded', () => {
     // Add shared CSS
@@ -267,4 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     const firstSection = document.querySelector('.section-title') || document.body.firstChild;
     document.body.insertBefore(disclaimer, firstSection);
+
+    // Wire up section help tooltips
+    setupSectionHelp();
 });

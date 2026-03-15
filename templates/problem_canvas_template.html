@@ -295,9 +295,24 @@
         }
         .ref-list li { margin-bottom: 4px; }
 
+        .btn-zone-add {
+            margin-top: 8px;
+            padding: 3px 10px;
+            border-radius: 5px;
+            border: 1px dashed currentColor;
+            background: transparent;
+            cursor: pointer;
+            font-size: 0.72rem;
+            opacity: 0.7;
+            transition: opacity 0.15s;
+            color: inherit;
+        }
+        .btn-zone-add:hover { opacity: 1; }
+
         @media print {
             body { padding: 0.5rem; max-width: 100%; }
             .canvas { border-width: 1px; }
+            .btn-zone-add { display: none; }
         }
     </style>
 </head>
@@ -317,45 +332,63 @@
         <div class="canvas-zone zone-user">
             <h3>🧑 User / Protagonist</h3>
             <p class="zone-source">IDEO HCD Toolkit, d.school Define phase</p>
-            <input type="text" placeholder="Who specifically is affected? (Name the persona)" title="User name">
-            <textarea placeholder="Brief description: age, role, context, key characteristics..." title="User description"></textarea>
+            <div class="zone-fields">
+                <input type="text" placeholder="Who specifically is affected? (Name the persona)" title="User name">
+                <textarea placeholder="Brief description: age, role, context, key characteristics..." title="User description"></textarea>
+            </div>
             <div class="image-placeholder" style="max-width:180px; margin-top:8px; aspect-ratio:4/3;"></div>
+            <button class="btn-zone-add" onclick="addZoneField(this, 'Add another user detail...')">+ Add</button>
         </div>
 
         <div class="canvas-zone zone-context">
             <h3>🌍 Context & Situation</h3>
             <p class="zone-source">Griffith Problem Framing Canvas</p>
-            <textarea placeholder="When and where does this problem occur? What situation triggers it? What environment or conditions surround it?" title="Context"></textarea>
-            <textarea placeholder="Who else is involved or affected? (secondary stakeholders)" title="Stakeholders" style="margin-top:8px;"></textarea>
+            <div class="zone-fields">
+                <textarea placeholder="When and where does this problem occur? What situation triggers it? What environment or conditions surround it?" title="Context"></textarea>
+                <textarea placeholder="Who else is involved or affected? (secondary stakeholders)" title="Stakeholders"></textarea>
+            </div>
+            <button class="btn-zone-add" onclick="addZoneField(this, 'Add more context...')">+ Add</button>
         </div>
 
         <div class="canvas-zone zone-evidence">
             <h3>📋 Evidence Base</h3>
             <p class="zone-source">Creswell (2014), Ethnographic research</p>
-            <textarea placeholder="What research methods did you use? (interviews, surveys, observation, diary studies)" title="Methods"></textarea>
-            <textarea placeholder="Key data points: quotes, observations, numbers that prove this problem exists" title="Evidence" style="margin-top:8px;"></textarea>
+            <div class="zone-fields">
+                <textarea placeholder="What research methods did you use? (interviews, surveys, observation, diary studies)" title="Methods"></textarea>
+                <textarea placeholder="Key data points: quotes, observations, numbers that prove this problem exists" title="Evidence"></textarea>
+            </div>
+            <button class="btn-zone-add" onclick="addZoneField(this, 'Add more evidence...')">+ Add</button>
         </div>
 
         <!-- ROW 2: Problem Core -->
         <div class="canvas-zone zone-pain">
             <h3>💢 Pain Points & Needs</h3>
             <p class="zone-source">Empathy Map synthesis</p>
-            <textarea placeholder="What are the user's primary frustrations? What is NOT working for them? What needs are unmet?" title="Pain points"></textarea>
-            <textarea placeholder="Emotional impact: How does this problem make them FEEL? (frustrated, anxious, helpless...)" title="Emotions" style="margin-top:8px;"></textarea>
+            <div class="zone-fields">
+                <textarea placeholder="What are the user's primary frustrations? What is NOT working for them? What needs are unmet?" title="Pain points"></textarea>
+                <textarea placeholder="Emotional impact: How does this problem make them FEEL? (frustrated, anxious, helpless...)" title="Emotions"></textarea>
+            </div>
+            <button class="btn-zone-add" onclick="addZoneField(this, 'Add more pain points...')">+ Add</button>
         </div>
 
         <div class="canvas-zone zone-root">
             <h3>🔍 Root Causes (5 Whys)</h3>
             <p class="zone-source">Toyota / Dorst Frame Creation</p>
-            <textarea placeholder="Why does this problem exist? Keep asking 'Why?' to get past symptoms to systemic causes." title="Root causes"></textarea>
-            <textarea placeholder="What is the DEEPEST root cause you identified? (This should be structural/systemic, not a surface symptom)" title="Deepest cause" style="margin-top:8px;"></textarea>
+            <div class="zone-fields">
+                <textarea placeholder="Why does this problem exist? Keep asking 'Why?' to get past symptoms to systemic causes." title="Root causes"></textarea>
+                <textarea placeholder="What is the DEEPEST root cause you identified? (This should be structural/systemic, not a surface symptom)" title="Deepest cause"></textarea>
+            </div>
+            <button class="btn-zone-add" onclick="addZoneField(this, 'Add another Why? layer...')">+ Add</button>
         </div>
 
         <div class="canvas-zone zone-impact">
             <h3>📊 Impact & Scale</h3>
             <p class="zone-source">SMART criteria, Doran (1981)</p>
-            <textarea placeholder="How severe is this problem? How frequent? How many people are affected? What are the consequences if unsolved?" title="Impact"></textarea>
-            <textarea placeholder="Current alternatives/workarounds and why they fail" title="Workarounds" style="margin-top:8px;"></textarea>
+            <div class="zone-fields">
+                <textarea placeholder="How severe is this problem? How frequent? How many people are affected? What are the consequences if unsolved?" title="Impact"></textarea>
+                <textarea placeholder="Current alternatives/workarounds and why they fail" title="Workarounds"></textarea>
+            </div>
+            <button class="btn-zone-add" onclick="addZoneField(this, 'Add more impact data...')">+ Add</button>
         </div>
 
         <!-- ROW 3: POV Synthesis -->
@@ -398,8 +431,11 @@
         <div class="canvas-zone zone-reframe">
             <h3>🔄 Reframe Check</h3>
             <p class="zone-source">Wedell-Wedellsborg (HBR, 2017)</p>
-            <textarea placeholder="What if this problem isn't what you think it is? Try stating it from a completely different angle..." title="Reframe"></textarea>
-            <textarea placeholder="Who might see this 'problem' as a feature? What perspective are you missing?" title="Alternative perspective" style="margin-top:8px;"></textarea>
+            <div class="zone-fields">
+                <textarea placeholder="What if this problem isn't what you think it is? Try stating it from a completely different angle..." title="Reframe"></textarea>
+                <textarea placeholder="Who might see this 'problem' as a feature? What perspective are you missing?" title="Alternative perspective"></textarea>
+            </div>
+            <button class="btn-zone-add" onclick="addZoneField(this, 'Add another reframing...')">+ Add</button>
         </div>
     </div>
 
@@ -453,6 +489,16 @@
             const li = document.createElement('li');
             li.innerHTML = '<input type="text" placeholder="How might we..." title="HMW question">';
             list.appendChild(li);
+        }
+
+        // Generic zone field adder
+        function addZoneField(btn, placeholder) {
+            const fields = btn.parentElement.querySelector('.zone-fields');
+            const ta = document.createElement('textarea');
+            ta.placeholder = placeholder || 'Add more...';
+            ta.title = placeholder || 'Additional field';
+            ta.style.marginTop = '8px';
+            fields.appendChild(ta);
         }
 
         // Quality check ribbon

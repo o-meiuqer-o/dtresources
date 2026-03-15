@@ -64,10 +64,11 @@ function downloadAsPNG() {
         const captureWidth = document.body.scrollWidth;
         const captureHeight = document.body.scrollHeight;
         const scale = 2; // 2x for high-res output
+        const pad = 40; // Padding in CSS pixels on every side
 
         const canvas = document.createElement('canvas');
-        canvas.width = captureWidth * scale;
-        canvas.height = captureHeight * scale;
+        canvas.width = (captureWidth + pad * 2) * scale;
+        canvas.height = (captureHeight + pad * 2) * scale;
         const ctx = canvas.getContext('2d');
         ctx.scale(scale, scale);
 
@@ -103,9 +104,11 @@ function downloadAsPNG() {
         const img = new Image();
 
         img.onload = () => {
+            // Fill entire canvas (including padding) with white
             ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, captureWidth, captureHeight);
-            ctx.drawImage(img, 0, 0, captureWidth, captureHeight);
+            ctx.fillRect(0, 0, captureWidth + pad * 2, captureHeight + pad * 2);
+            // Draw content inset by the padding
+            ctx.drawImage(img, pad, pad, captureWidth, captureHeight);
             URL.revokeObjectURL(url);
 
             // 8. Trigger PNG download

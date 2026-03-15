@@ -432,6 +432,67 @@ function setupSectionHelp() {
     });
 }
 
+// ===== Colour Palette System =====
+const PALETTES = [
+    { id: 'blue',      name: 'Ocean',    accent: '#0071e3', light: '#f0f7ff', bg: '#ffffff', sectionBg: '#f5f5f7', text: '#1d1d1f', muted: '#666', border: '#ddd' },
+    { id: 'coral',     name: 'Coral',    accent: '#e85d75', light: '#fff0f3', bg: '#ffffff', sectionBg: '#fdf5f6', text: '#2c1e1e', muted: '#8a5a5a', border: '#f0d0d6' },
+    { id: 'emerald',   name: 'Forest',   accent: '#00a676', light: '#f0fdf8', bg: '#ffffff', sectionBg: '#f2faf7', text: '#1a2e24', muted: '#5a7a6d', border: '#c8e6d8' },
+    { id: 'violet',    name: 'Lavender', accent: '#7c3aed', light: '#f5f0ff', bg: '#ffffff', sectionBg: '#f8f5ff', text: '#1f1a2e', muted: '#7a6a90', border: '#d8ccf0' },
+    { id: 'sunset',    name: 'Sunset',   accent: '#e65100', light: '#fff3e0', bg: '#ffffff', sectionBg: '#fef6f0', text: '#2e1e0a', muted: '#8a6a4a', border: '#f0d8c0' },
+    { id: 'teal',      name: 'Teal',     accent: '#0097a7', light: '#e0f7fa', bg: '#ffffff', sectionBg: '#f0fafb', text: '#1a2c2e', muted: '#5a7e82', border: '#b2e0e8' },
+    { id: 'rose',      name: 'Rose',     accent: '#c2185b', light: '#fce4ec', bg: '#ffffff', sectionBg: '#fdf2f5', text: '#2e1a1e', muted: '#8a5a6a', border: '#f0c8d4' },
+    { id: 'midnight',  name: 'Midnight', accent: '#60a5fa', light: '#1e293b', bg: '#0f172a', sectionBg: '#1e293b', text: '#e2e8f0', muted: '#94a3b8', border: '#334155' }
+];
+
+function applyPalette(id) {
+    const p = PALETTES.find(x => x.id === id) || PALETTES[0];
+    const root = document.documentElement;
+    root.style.setProperty('--template-accent', p.accent);
+    root.style.setProperty('--template-accent-light', p.light);
+    root.style.setProperty('--template-accent-border', p.accent);
+    root.style.setProperty('--template-bg', p.bg);
+    root.style.setProperty('--template-section-bg', p.sectionBg);
+    root.style.setProperty('--template-note-bg', p.light);
+    root.style.setProperty('--template-note-border', p.accent);
+    root.style.setProperty('--template-text', p.text);
+    root.style.setProperty('--template-text-muted', p.muted);
+    root.style.setProperty('--template-border', p.border);
+
+    // Apply to inline-styled elements that can't easily be refactored
+    document.querySelectorAll('.section-title').forEach(el => {
+        el.style.borderBottomColor = p.accent;
+    });
+    document.querySelectorAll('.note').forEach(el => {
+        el.style.background = p.light;
+        el.style.borderLeftColor = p.accent;
+    });
+    document.querySelectorAll('.quadrant h3').forEach(el => {
+        el.style.color = p.accent;
+    });
+    document.querySelectorAll('th').forEach(el => {
+        el.style.background = p.sectionBg;
+    });
+    document.querySelectorAll('.eval-section h3').forEach(el => {
+        el.style.color = p.accent;
+    });
+
+    // Body theming
+    document.body.style.background = p.bg;
+    document.body.style.color = p.text;
+
+    // Update swatch previews
+    const preview = document.querySelector('.palette-swatch-preview');
+    if (preview) preview.style.background = p.accent;
+
+    // Mark active option
+    document.querySelectorAll('.palette-option').forEach(opt => {
+        opt.classList.toggle('active', opt.dataset.palette === id);
+    });
+
+    // Persist
+    try { localStorage.setItem('dt-template-palette', id); } catch(e) {}
+}
+
 // Add the controls UI to the page
 document.addEventListener('DOMContentLoaded', () => {
     // Add shared CSS
@@ -443,14 +504,56 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial setup
     setupImagePlaceholders();
 
+    // Build palette picker HTML
+    const swatchesHTML = PALETTES.map(p =>
+        `<button class="palette-option" data-palette="${p.id}" title="${p.name}">
+            <span class="swatch" style="background:${p.accent}"></span>
+            <span class="swatch-label">${p.name}</span>
+        </button>`
+    ).join('');
+
+    // Determine saved palette
+    let savedPalette = 'blue';
+    try { savedPalette = localStorage.getItem('dt-template-palette') || 'blue'; } catch(e) {}
+    const savedP = PALETTES.find(x => x.id === savedPalette) || PALETTES[0];
+
     // Add controls container
     const controls = document.createElement('div');
     controls.className = 'template-controls';
     controls.innerHTML = `
         <button class="btn-control" onclick="addSection()">➕ Add Section</button>
+        <div class="palette-wrapper">
+            <button class="palette-toggle" id="palette-toggle-btn">
+                <span class="palette-swatch-preview" style="background:${savedP.accent}"></span>
+                🎨 Theme
+            </button>
+            <div class="palette-dropdown" id="palette-dropdown">
+                ${swatchesHTML}
+            </div>
+        </div>
         <button class="btn-control btn-primary" onclick="downloadAsPNG()">📥 Download PNG</button>
     `;
     document.body.appendChild(controls);
+
+    // Toggle dropdown
+    document.getElementById('palette-toggle-btn').addEventListener('click', (e) => {
+        e.stopPropagation();
+        document.getElementById('palette-dropdown').classList.toggle('open');
+    });
+
+    // Palette option clicks
+    document.querySelectorAll('.palette-option').forEach(opt => {
+        opt.addEventListener('click', (e) => {
+            e.stopPropagation();
+            applyPalette(opt.dataset.palette);
+            document.getElementById('palette-dropdown').classList.remove('open');
+        });
+    });
+
+    // Close dropdown on outside click
+    document.addEventListener('click', () => {
+        document.getElementById('palette-dropdown').classList.remove('open');
+    });
 
     // Add disclaimer
     const disclaimer = document.createElement('div');
@@ -463,4 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Wire up section help tooltips
     setupSectionHelp();
+
+    // Apply saved palette
+    applyPalette(savedPalette);
 });

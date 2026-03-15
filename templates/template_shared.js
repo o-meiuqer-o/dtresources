@@ -341,6 +341,52 @@ const SECTION_HELP = {
         tip: 'Keep asking "Why?" to dig past symptoms to the real cause.',
         detail: 'Root cause analysis uses graphical tree diagrams to trace problem causality. Each level answers "Why did this happen?" for the level above it. The goal is to identify the systemic root cause — a change that would prevent the problem from ever recurring.',
         why: 'Treating symptoms feels productive but only provides temporary relief. RCA targets the one fundamental cause whose fix eliminates the entire chain of symptoms above it.'
+    },
+    // Problem Statement Evaluator
+    'your problem statement': {
+        tip: 'Write or paste your full problem statement here for evaluation.',
+        detail: 'The problem statement is the single most important artifact of the Define phase. It encodes your understanding of who the user is, what they struggle with, why, and what success looks like.',
+        why: 'A well-written problem statement acts as a compass for every downstream activity — ideation, prototyping, and testing. A flawed one sends the entire team in the wrong direction.'
+    },
+    'dimension 1 — human-centeredness': {
+        tip: 'Is a real human at the centre — not a business metric or technology?',
+        detail: 'IDEO and Stanford d.school define human-centeredness as beginning with real people in real situations. The statement must name a protagonist (persona), ground itself in observed needs, and acknowledge emotional experience — not just functional gaps.',
+        why: 'Human-centered problem statements produce solutions people actually want. Business-centered ones produce products that look good in boardrooms but fail in the field.'
+    },
+    'dimension 2 — solution-agnosticism': {
+        tip: 'Does the problem remain open to ANY solution — no embedded answers?',
+        detail: 'Wedell-Wedellsborg (HBR, 2017) warns of the "Law of the Hammer" — framing problems to match solutions you already have. The "elevator speed" example shows how reframing from "slow elevator" to "boring wait" opens entirely different (and cheaper) solutions.',
+        why: 'Solution-embedded problem statements kill creativity before ideation even begins. They turn brainstorming into rationalization of a pre-chosen path.'
+    },
+    'dimension 3 — frame quality': {
+        tip: 'Has the problem been properly framed — with causes and context?',
+        detail: 'Dorst (2011) argues that design thinking is fundamentally about frame creation — constructing a coherent narrative about WHY a problem exists. A well-framed statement includes a causal chain (because…), situational context, and evidence of having considered alternative framings.',
+        why: 'The way you frame a problem determines which solutions become visible and which remain hidden. Frame creation is the most cognitively demanding — and most valuable — part of design.'
+    },
+    'dimension 4 — measurability': {
+        tip: 'Can a neutral observer verify the problem exists and that you solved it?',
+        detail: 'Drawing from Creswell (2014) and SMART criteria (Doran, 1981), a quality problem statement defines success in terms that are specific, measurable, and time-bound. "Improve user experience" is unmeasurable; "reduce task completion time by 40% within 2 weeks" is not.',
+        why: 'Without measurable criteria, you cannot evaluate whether your solution actually worked — turning the design process from science into guesswork.'
+    },
+    'dimension 5 — scope calibration': {
+        tip: 'Is it broad enough for creativity but narrow enough for action?',
+        detail: 'Brown (2009) and Cross (2006) describe the design "sweet spot": a scope broad enough to admit 3+ fundamentally different solution types, yet narrow enough for a small team to make progress within a sprint (1-2 weeks).',
+        why: 'Too broad ("fix healthcare") produces paralysis. Too narrow ("add a button") produces trivial solutions. The right scope enables both ambition and action.'
+    },
+    'dimension 6 — ethical & systemic awareness': {
+        tip: 'Could solving this accidentally harm someone else?',
+        detail: 'Buchanan (1992) placed design problems firmly in the "wicked problems" category — where solutions to one stakeholder can create problems for another. Papanek (1971) demanded that designers account for the social and ecological consequences of their work.',
+        why: 'In interconnected systems, every solution creates ripples. Ethical awareness prevents the classic trap of "solving" a problem by shifting its burden to a less visible group.'
+    },
+    'reflective notes': {
+        tip: 'Step back — what would you change about the statement?',
+        detail: 'Reflection closes the evaluation loop. After scoring each dimension, identify the weakest criteria and attempt a reframing (Wedell-Wedellsborg technique): "What if the problem isn\'t what we think it is?"',
+        why: 'Metacognition — thinking about your own thinking — is the hallmark of expert designers (Schön, 1983). Without explicit reflection, evaluation becomes a checkbox exercise rather than genuine learning.'
+    },
+    'academic references': {
+        tip: 'The scholarly sources behind this evaluation framework.',
+        detail: 'This evaluator synthesizes criteria from 9 foundational texts spanning design theory (Dorst, Buchanan, Cross), design practice (Brown, IDEO, Papanek), research methodology (Creswell), management (Doran), and innovation strategy (Wedell-Wedellsborg).',
+        why: 'Academic grounding distinguishes a rigorous evaluation from subjective opinion. Each criterion can be traced to a specific published framework.'
     }
 };
 

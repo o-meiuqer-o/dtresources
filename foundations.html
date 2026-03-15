@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 02: Foundations | Design Thinking</title>
-    <meta name="description" content="Module 02: Foundations - A Biological & Neuro-Philosophical Theory of Design.">
+    <title>Module 01: Foundations | Design Thinking</title>
+    <meta name="description" content="Module 01: Foundations - A Biological & Neuro-Philosophical Theory of Design.">
     <meta name="author" content="Raj Narayanan, Mahindra University">
     <meta name="theme-color" content="#f5f5f7">
     <link rel="icon"
@@ -69,11 +69,18 @@
     <!-- Navigation Overlay -->
     <nav class="global-nav">
         <div class="breadcrumbs">
-            <span>Home</span> > <span>Module 02: Foundations</span>
+            <a href="index.html">Home</a> > <span>Module 01: Foundations</span>
         </div>
         <div class="nav-links">
-            <a href="introduction.html" class="nav-pill">← Back</a>
-            <a href="finding_problem.html" class="nav-pill">Next: Module 03 →</a>
+            <div class="teacher-mode-control">
+                <span>Teacher Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="teacher-mode-checkbox" aria-label="Toggle Teacher Mode">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <a href="index.html" class="nav-pill">← Home</a>
+            <a href="introduction.html" class="nav-pill">Next: Module 02 →</a>
         </div>
     </nav>
 
@@ -81,164 +88,196 @@
 
         <!-- HEADER / COVER -->
         <section id="cover">
-            <div class="accent-tag">Module 02: Foundations</div>
-            <h1>Decision-Choreography</h1>
-            <p style="color: #666; margin-top: 1rem;">A Biological & Neuro-Philosophical Theory of Design</p>
-            <div style="margin-top: 2rem; opacity: 0.5; font-size: 0.9rem;">Scroll to begin ↓</div>
+            <div class="accent-tag">Module 01: Foundations</div>
+            <h1>The Biological Roots</h1>
+            <p style="color: #666; margin-top: 1rem;">Design as a natural, evolutionary response to stimuli.</p>
         </section>
 
-        <!-- 1. PREVIOUS GROUNDING SUMMARY -->
-        <section id="grounding">
-            <span class="section-label">01: Grounding Summary</span>
-            <h2>The Recall</h2>
-            <div class="highlight-box">
-                <p>In our last interaction, we established that <strong>Design is not a career choice, but a biological
-                        trait.</strong></p>
-                <ul style="text-align: left; max-width: 600px; margin: 0 auto; margin-top: 1rem; padding-left: 2rem;">
-                    <li style="margin-bottom: 0.5rem;">It is the act of making <strong>thoughtful decisions</strong> to improve someone’s experience.
-                    </li>
-                    <li style="margin-bottom: 0.5rem;">You already do this: posting on social media, planning a surprise, or optimizing a daily
-                        commute.</li>
-                    <li>Designers are simply people who have learned to scale this innate decision-making faculty to
-                        solve for others.</li>
-                </ul>
+        <!-- 1. RESPONSE TO STIMULI (MOVED HERE) -->
+        <section id="response-to-stimuli">
+            <span class="section-label">01: Natural Logic</span>
+            <h2>Response to Stimuli</h2>
+            <p>Every living thing responds to its environment to improve its situation. This is the origin of design.</p>
+            <div class="grid-container grid-2">
+                <div class="card tool-card" data-modal="corvid-modal">
+                    <span style="font-size: 3.2rem;">🐦‍⬛</span>
+                    <h3>The Corvid Strategy</h3>
+                    <p>Solving multi-stage puzzles using tools. Complex reasoning in a bird's brain.</p>
+                    <span class="card-cta">Watch Video →</span>
+                </div>
+                <div class="card tool-card" data-modal="squirrel-modal">
+                    <span style="font-size: 3.2rem;">🐿️</span>
+                    <h3>The Squirrel Strategy</h3>
+                    <p>Navigating obstacle courses with rapid trial-and-error learning.</p>
+                    <span class="card-cta">Watch Video →</span>
+                </div>
+            </div>
+            <div class="teacher-cue">
+                <strong>Instructional Insight:</strong> By showing that animals solve puzzles, we prove that <em>systems thinking</em> is an evolutionary advantage, not just a human tool.
             </div>
         </section>
 
-        <!-- 2. DESIGN AS BIOLOGICAL NATURE (Replaced Amoeba with Seed Germination) -->
+        <!-- 2. THE COMPUTATION OF LIFE -->
         <section id="biological-nature">
-            <span class="section-label">02: Biological Nature</span>
+            <span class="section-label">02: Cellular Logic</span>
             <h2>The Computation of Life</h2>
-            <p>Design ability is not learned in a studio; it is tethered to the evolution of the <strong>Decision-Making Mechanisms</strong>.</p>
             <div class="grid-container grid-2">
                 <div class="card tool-card" data-modal="seed-modal">
-                    <h3>The Seed's Dilemma</h3>
-                    <p>Even life-forms without brains compute. A seed calculates temperature, moisture, and season before deciding to germinate. It's an autonomous, complex decision-making mechanism governed by biochemical logic.</p>
-                    <span class="card-cta">Click to watch the video →</span>
+                    <span style="font-size: 3rem;">🌱</span>
+                    <h3>The Seed's Logic</h3>
+                    <p>A seed calculates moisture, temperature, and light before "designing" its path upward.</p>
+                    <span class="card-cta">Watch Video →</span>
                 </div>
-                <div class="card">
-                    <h3>Human (Multi-step)</h3>
-                    <p>We can imagine 100 different futures, predict emotional reactions, and weigh long-term ethical
-                        consequences before making a single move.</p>
+                <div class="card tool-card" data-modal="fungi-modal">
+                    <span style="font-size: 3rem;">🍄</span>
+                    <h3>The Fungi Network</h3>
+                    <p>Fungal networks design the world's most efficient logistics systems without a brain.</p>
+                    <span class="card-cta">Watch Video →</span>
                 </div>
             </div>
         </section>
 
-        <!-- 3. SPECTRUM OF COMPLEXITY & NERVOUS SYSTEM -->
+        <!-- 3. SPECTRUM OF COMPLEXITY -->
         <section id="proleptic-power">
             <span class="section-label">03: Proleptic Power</span>
-            <h2>The Nervous System Spectrum</h2>
+            <h2>The Design Spectrum</h2>
             <p>We measure the "Design Faculty" by <strong>Proleptic Power</strong>—the ability to think ahead.</p>
-            <div class="highlight-box" style="border-left-color: #fbbf24; background: #fffcf0; max-width: 700px;">
-                <strong>The Cat's Butt-Wiggle:</strong> Watch a cat before it jumps. It calculates distance, wind, and
-                height in a mental simulation. That wiggle is the "pre-flight check"—the mid-complexity nervous system
-                performing a proleptic calculation.
-            </div>
-        </section>
-
-        <!-- 4. THE TRANSITION & PARAMETERS (Venn replaced with Spectrum) -->
-        <section id="transition">
-            <span class="section-label">04: The Transition Zone</span>
-            <h2>From Reaction to Design</h2>
-            
             <div style="max-width: 800px; width: 100%; padding: 2rem;">
                 <div class="spectrum-bar"></div>
                 <div class="spectrum-points">
                     <div class="spectrum-point">
                         <div class="marker"></div>
                         <h4>Trivial Survival</h4>
-                        <p>Automatic responses, immediate gratification, zero-step computation (e.g. Amoeba pulling back from heat).</p>
+                        <p>Immediate reaction (Amoeba).</p>
                     </div>
                     <div class="spectrum-point">
                         <div class="marker"></div>
-                        <h4>Fluid Transition Zone</h4>
-                        <p>Planning for the near-future, tool use, executing multi-step goals (e.g. Crow using pebbles).</p>
+                        <h4>Transition Zone</h4>
+                        <p>Tool use & Planning (Crow/Squirrel).</p>
                     </div>
                     <div class="spectrum-point">
                         <div class="marker" style="border-color: var(--accent-color);"></div>
                         <h4>Choreographed Design</h4>
-                        <p>Borrowing a life. Empathizing and creating solutions specifically tailored to others.</p>
+                        <p>Empathy & Ethics (Human).</p>
                     </div>
                 </div>
             </div>
-        </section>
-
-        <!-- 5. WICKED PROBLEMS -->
-        <section id="wicked-problems">
-            <span class="section-label">05: Wicked Problems</span>
-            <h2>Beyond the Trivial</h2>
-            <p>Designers deal with <strong>Wicked Problems</strong>—issues that have no single right answer.</p>
-            <div style="max-width: 600px; width: 100%; margin-top: 2rem; display: flex; flex-direction: column; gap: 10px;">
-                <div class="card" style="padding: 1rem; border-left: 4px solid var(--accent-color);"><strong>Cultural:</strong> Different people value different things.</div>
-                <div class="card" style="padding: 1rem; border-left: 4px solid #ffb400;"><strong>Structural:</strong> Fixing one thing breaks another.</div>
-                <div class="card" style="padding: 1rem; border-left: 4px solid #00ca4e;"><strong>Temporal:</strong> The problem changes even while you solve it.</div>
+        <!-- 4. HUMAN PROBLEM SOLVING -->
+        <section id="case-studies">
+            <span class="section-label">04: Human Problem Solving</span>
+            <h2>Human Problem Solving</h2>
+            <p>We apply this biological instinct to modern complex systems through a structured process.</p>
+            <div class="grid-container grid-3">
+                <div class="card tool-card" data-modal="fog-modal">
+                    <span style="font-size: 2.5rem;">🌫️</span>
+                    <h3>The Fog Catchers</h3>
+                    <p>Converting vapor into drinking water in drought-stricken regions.</p>
+                    <span class="card-cta">Watch Case Study →</span>
+                </div>
+                <div class="card tool-card" data-modal="kitchen-modal">
+                    <span style="font-size: 2.5rem;">🍲</span>
+                    <h3>The Good Kitchen</h3>
+                    <p>Redesigning the meal service for the elderly in Denmark through empathy.</p>
+                    <span class="card-cta">Watch Case Study →</span>
+                </div>
+                <div class="card tool-card" data-modal="ideo-cart-modal">
+                    <span style="font-size: 2.5rem;">🛒</span>
+                    <h3>IDEO Shopping Cart</h3>
+                    <p>The classic "Deep Dive" redesign that launched a movement.</p>
+                    <span class="card-cta">Watch Case Study →</span>
+                </div>
+            </div>
+            <div class="teacher-cue">
+                <strong>Pedagogical Bridge:</strong> Use these cases to show students that "Design" isn't just for products; it's for <em>processes</em>, <em>experiences</em>, and <em>systems</em>. Highlight the multidisciplinary nature of the IDEO team.
             </div>
         </section>
 
-        <!-- 6. COGNITIVE PROSTHETICS & FRAMEWORKS -->
-        <section id="prosthetics">
-            <span class="section-label">06: Cognitive Prosthetics</span>
-            <h2>Exoskeletons for the Mind</h2>
-            <p>When a problem is "Wicked," our innate faculty fails. We need <strong>Cognitive
-                    Prosthetics</strong>—frameworks that help us externalize brain functions.</p>
-
-            <div class="grid-container grid-2">
-                <div class="card" style="text-align: center;">
-                    <h4 style="font-size: 1rem; color: var(--accent-color); margin-bottom: 1rem;">Double Diamond</h4>
-                    <div style="display:flex; justify-content: space-around; font-size: 0.7rem; font-weight: 700; gap: 5px;">
-                        <span style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px;">DISCOVER</span>
-                        <span style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px;">DEFINE</span>
-                        <span style="border: 1px solid #ccc; padding: 5px 10px; border-radius: 4px;">DEVELOP</span>
-                    </div>
-                    <p style="font-size: 0.85rem; margin-top: 15px;">Used to <strong>Externalize Exploration</strong>.</p>
-                </div>
-                <div class="card" style="text-align: center;">
-                    <h4 style="font-size: 1rem; color: var(--accent-color); margin-bottom: 1rem;">Empathy Maps</h4>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 5px; font-size: 0.7rem; text-align: center;">
-                        <div style="background: #eee; padding: 10px; border-radius: 4px;">SAYS</div>
-                        <div style="background: #eee; padding: 10px; border-radius: 4px;">THINKS</div>
-                        <div style="background: #eee; padding: 10px; border-radius: 4px;">DOES</div>
-                        <div style="background: #eee; padding: 10px; border-radius: 4px;">FEELS</div>
-                    </div>
-                    <p style="font-size: 0.85rem; margin-top: 15px;">Used to <strong>Externalize Perspective</strong>.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 7. NEXT MODULE LINK -->
+        <!-- NEXT MODULE LINK -->
         <section id="next-module">
-            <h2>Ready to Begin?</h2>
-            <p>You have the foundations. Now let's find the right problem to solve.</p>
-            <a href="finding_problem.html" class="download-btn"
-                style="margin-top: 2rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Next:
-                Finding the Right Problem →</a>
+            <h2>Moving to Genesis</h2>
+            <p>From biological foundations to the human process.</p>
+            <a href="introduction.html" class="download-btn"
+                style="margin-top: 2rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Next: Module 02: Genesis →</a>
         </section>
 
     </div>
 
     <!-- Modals -->
-    <div id="seed-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem;">
-            <button class="modal-close">&times;</button>
-            <div class="media-container" style="width: 100%; max-width: none; margin-top: 0; box-shadow: none;">
-                <div class="video-crop">
-                    <!-- Standard Seed Germination Video -->
-                    <iframe id="youtube-iframe" width="100%" height="500" src=""
-                        data-src="https://www.youtube.com/embed/Z0bEXqNih-g?rel=0&modestbranding=1"
-                        title="How Seeds Decide to Germinate" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                </div>
-                <div style="padding: 1.5rem; text-align: left;">
-                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">The Biochemistry of Decision Making</h2>
-                    <p style="text-align: left; font-size: 0.95rem; color: #444;">
-                        A seed behaves like a microscopic computer. Without a brain or nervous system, it uses hormone gradients and environmental signals like temperature, light, and water to "decide" the exact optimal time to germinate.
-                    </p>
-                </div>
+    <div id="corvid-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>The Corvid Logic</h2>
+            <div class="media-container" style="aspect-ratio: 16/9; background: #000; width: 100%;">
+                <iframe width="100%" height="100%" data-src="https://www.youtube.com/embed/AVaITA7eBZE" title="Corvid Problem Solving" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
     </div>
 
+    <div id="squirrel-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>The Squirrel Logic</h2>
+            <div class="media-container" style="aspect-ratio: 16/9; background: #000; width: 100%;">
+                <iframe width="100%" height="100%" data-src="https://www.youtube.com/embed/DTvS9lvRxZ8" title="Squirrel Obstacle Course" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="seed-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>Seed Germination</h2>
+            <div class="media-container" style="aspect-ratio: 16/9; background: #000; width: 100%;">
+                <iframe width="100%" height="100%" data-src="https://www.youtube.com/embed/TkP7d2onb10" title="Seed Logic" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <div id="fungi-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>Fungal Networks</h2>
+            <div class="media-container" style="aspect-ratio: 16/9; background: #000; width: 100%;">
+                <iframe width="100%" height="100%" data-src="https://www.youtube.com/embed/7YWbY7kWesI" title="Fungi Logistics" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Human Case Study Modals -->
+    <div id="fog-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>Catching Fog: Water from Air</h2>
+            <div class="media-container" style="aspect-ratio: 16/9; background: #000; width: 100%;">
+                <iframe width="100%" height="100%" data-src="https://www.youtube.com/embed/5i6Se5oFoWA" title="Fog Catching" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.95rem;">Observe how design thinking addresses <strong>Basic Human Needs</strong> by observing environmental constraints and prototyping low-tech solutions.</p>
+        </div>
+    </div>
+
+    <div id="kitchen-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>The Good Kitchen</h2>
+            <div class="media-container" style="aspect-ratio: 16/9; background: #000; width: 100%;">
+                <iframe width="100%" height="100%" data-src="https://www.youtube.com/embed/JAcB272FI8s" title="The Good Kitchen" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.95rem;">A classic case where <strong>Empathy</strong> for both the cooks and the elderly users transformed a failing meal service into a source of dignity.</p>
+        </div>
+    </div>
+
+    <div id="ideo-cart-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>IDEO: Shopping Cart Redesign</h2>
+            <div class="media-container" style="aspect-ratio: 16/9; background: #000; width: 100%;">
+                <iframe width="100%" height="100%" data-src="https://www.youtube.com/embed/izjhx17NuSE" title="IDEO Shopping Cart" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <p style="margin-top: 1rem; font-size: 0.95rem;">Observe how a diverse team uses <strong>Empathy</strong> for shoppers and <strong>Rapid Prototyping</strong> to build a better cart in just 5 days.</p>
+        </div>
+    </div>
+
+    <div class="teacher-mode-indicator">TEACHER MODE ACTIVE</div>
     <script src="script.js"></script>
 </body>
 

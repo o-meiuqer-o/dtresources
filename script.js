@@ -116,4 +116,66 @@ document.addEventListener('DOMContentLoaded', () => {
             closeAllModals();
         }
     });
+
+    // --- Teacher Mode Logic ---
+    const teacherToggle = document.getElementById('teacher-mode-checkbox');
+    if (teacherToggle) {
+        // Initialize from localStorage
+        const isTeacherMode = localStorage.getItem('teacherMode') === 'true';
+        teacherToggle.checked = isTeacherMode;
+        if (isTeacherMode) document.body.classList.add('teacher-mode-active');
+
+        teacherToggle.addEventListener('change', (e) => {
+            const active = e.target.checked;
+            localStorage.setItem('teacherMode', active);
+            if (active) {
+                document.body.classList.add('teacher-mode-active');
+            } else {
+                document.body.classList.remove('teacher-mode-active');
+            }
+        });
+    }
+
+    // --- Interactive Narrative Game Logic ---
+    window.startGame = function(gameId) {
+        const container = document.getElementById(gameId);
+        if (!container) return;
+        
+        // Show the first screen
+        const startScreen = container.querySelector('.game-screen[data-step="1"]');
+        if (startScreen) {
+            container.querySelectorAll('.game-screen').forEach(s => s.classList.remove('active'));
+            startScreen.classList.add('active');
+        }
+    };
+
+    window.makeChoice = function(gameId, currentStep, nextStep, feedbackType, feedbackText) {
+        const container = document.getElementById(gameId);
+        if (!container) return;
+
+        const currentScreen = container.querySelector(`.game-screen[data-step="${currentStep}"]`);
+        const nextScreen = container.querySelector(`.game-screen[data-step="${nextStep}"]`);
+
+        if (nextScreen) {
+            currentScreen.classList.remove('active');
+            nextScreen.classList.add('active');
+
+            // Show feedback if provided
+            if (feedbackType && feedbackText) {
+                const feedbackElArr = nextScreen.querySelectorAll('.game-feedback');
+                feedbackElArr.forEach(el => {
+                    if (el.classList.contains(feedbackType)) {
+                        el.textContent = feedbackText;
+                        el.style.display = 'block';
+                    } else {
+                        el.style.display = 'none';
+                    }
+                });
+            }
+        }
+    };
+
+    window.resetGame = function(gameId) {
+        startGame(gameId);
+    };
 });

@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Module 01: The Genesis | Design Thinking</title>
+    <title>Module 02: Genesis | Design Thinking</title>
     <meta name="description"
-        content="Module 01: Introduction to Design Thinking - Design as a Verb and Natural Instinct.">
+        content="Module 02: Genesis - The architecture of human problem solving.">
     <meta name="author" content="Raj Narayanan, Mahindra University">
     <meta name="theme-color" content="#f5f5f7">
     <link rel="icon"
@@ -17,6 +17,42 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&display=swap"
         rel="stylesheet">
+    <style>
+        .game-visual {
+            width: 100%;
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+        }
+
+        .game-visual.animate {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+        .pillar-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            background: #f0f7ff;
+        }
+
+        .pillar-image {
+            width: 100%;
+            height: 120px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,11 +60,18 @@
     <!-- Navigation Overlay -->
     <nav class="global-nav">
         <div class="breadcrumbs">
-            <span>Home</span> > <span>Module 01: The Genesis</span>
+            <a href="index.html">Home</a> > <a href="foundations.html">Module 01</a> > <span>Module 02: Genesis</span>
         </div>
         <div class="nav-links">
-            <a href="index.html" class="nav-pill">← Back</a>
-            <a href="foundations.html" class="nav-pill">Next: Module 02 →</a>
+            <div class="teacher-mode-control">
+                <span>Teacher Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="teacher-mode-checkbox" aria-label="Toggle Teacher Mode">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <a href="foundations.html" class="nav-pill">← Back</a>
+            <a href="finding_problem.html" class="nav-pill">Next: Module 03 →</a>
         </div>
     </nav>
 
@@ -36,357 +79,186 @@
 
         <!-- HEADER / COVER -->
         <section id="cover">
-            <div class="accent-tag">Module 01: The Genesis</div>
-            <h1>Design as a Verb</h1>
-            <p style="color: #666; margin-top: 1rem;">It is not just a thing you make; it is the process through which
-                we solve.</p>
-            <div style="margin-top: 2rem; opacity: 0.5; font-size: 0.9rem;">Scroll to begin your journey ↓</div>
+            <div class="accent-tag">Module 02: Genesis</div>
+            <h1>The Human Genesis</h1>
+            <p style="color: #666; margin-top: 1rem;">How we transformed survival into the choreography of design.</p>
         </section>
 
-        <!-- 1. NATURAL INSTINCT -->
-        <section id="natural-instinct">
-            <span class="section-label">01: Natural Instinct</span>
-            <h2>Common Sense Made Systematic</h2>
-            <div class="highlight-box">
-                <p>Design Thinking is something we are already familiar with in our daily lives. We just haven't given
-                    it a formal name yet.</p>
-                <p style="margin-top: 1rem; font-style: italic; color: #555;">"Every human naturally practices
-                    problem-solving. Design thinking is the formalization of this instinct."</p>
-            </div>
-        </section>
-
-        <!-- 2. JOHNNY JOHNNY STORY -->
+        <!-- 1. JOHNNY'S DILEMMA (INTERACTIVE GAME) -->
         <section id="johnny-story">
-            <span class="section-label">02: The Process in Action</span>
-            <h2>The Sugar Conflict</h2>
-            <div class="story-card" style="flex-direction: column; align-items: flex-start;">
-                <div class="story-text">
-                    <h3>Johnny's Dilemma</h3>
-                    <p>Young Johnny has been caught red-handed eating sugar from the jar. A shadow looms over him—he is in trouble. He wants the sugar, but he desperately needs to avoid punishment.</p>
-                    <p>In a split second, his mind races through a deeply ingrained biological process:</p>
-                    
-                    <div class="grid-container grid-3" style="margin-top: 2rem; width: 100%;">
-                        <div class="card tool-card" data-modal="johnny-1-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/johnny_1_crisis.png" alt="Johnny in Crisis" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>1. Clarity</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Understanding he's caught.</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
-                        <div class="card tool-card" data-modal="johnny-2-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/johnny_2_ideation.png" alt="Johnny Ideating" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>2. Ideation</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Swallowing sugar? Lying?</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
-                        <div class="card tool-card" data-modal="johnny-3-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/johnny_3_execution.png" alt="Johnny Executing Strategy" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>3. Execution</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">The "Ha-ha-ha" distraction.</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
-                    </div>
-                    
-                    <p style="margin-top: 1.5rem; font-weight: 600; color: var(--accent-color);">This mirrors the core design
-                        process: Clarity → Ideation → Execution.</p>
-                </div>
+            <span class="section-label">01: Johnny's Dilemma</span>
+            <h2>Johnny's Dilemma</h2>
+            <div class="highlight-box" style="margin-bottom: 2rem;">
+                <p><strong>Context & Complexity:</strong> This isn't just a story about a boy and sugar; it's a simulation of <strong>Clarity, Ideation, and Execution</strong>. In design, we often face 'Red-Handed' moments where our first prototype fails publicly. This game explores how we pivot our strategy based on friction.</p>
             </div>
-        </section>
-
-        <!-- 3. EMPATHY EXAMPLES (MOTHER & DOCTOR) -->
-        <section id="empathy-loop">
-            <span class="section-label">03: Empathy & Iteration</span>
-            <h2>The Human Logic</h2>
             
-            <div class="story-card" style="flex-direction: column; align-items: flex-start; margin-bottom: 2rem;">
-                <div class="story-text">
-                    <h3>The Mother's Empathy Prototype</h3>
-                    <p>Waking a child requires <strong>Empathy</strong>. A mother adjusts her approach depending on the context of the day, proving that design is not a one-size-fits-all reaction.</p>
-                    
-                    <div class="grid-container grid-3" style="margin-top: 2rem; width: 100%;">
-                        <div class="card tool-card" data-modal="mother-1-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/mother_1_assessment.png" alt="Assessment" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>1. Clarity</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Exam Day or Vacation?</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
-                        <div class="card tool-card" data-modal="mother-2-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/mother_2_ideation.png" alt="Ideation" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>2. Ideation</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Options: alarms, fans, water?</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
-                        <div class="card tool-card" data-modal="mother-3-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/mother_3_execution.png" alt="Execution" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>3. Execution</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">A specifically tailored wake-up.</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
+            <div class="game-container" id="johnny-game">
+                <div class="game-screen active" data-step="1">
+                    <h3>The Sugar Crisis</h3>
+                    <div class="game-visual" id="johnny-visual-1" style="background-image: url('images/johnny_stage_1.png');"></div>
+                    <p>You've been caught with the jar open. Your father is walking into the kitchen. The feedback is immediate and high-stakes.</p>
+                    <p style="font-weight: 600; margin-top: 1rem;">What is your first "Ideation" (Prototype)?</p>
+                    <div class="game-choices">
+                        <button class="choice-btn" onclick="executeJohnnyAction(2)">The Bold Lie: "It wasn't me!"</button>
+                        <button class="choice-btn" onclick="executeJohnnyAction(3)">Radical Transparency: "I'm sorry, I was hungry."</button>
+                        <button class="choice-btn" onclick="executeJohnnyAction(4)">The Distraction Pivot: "Look at that bird outside!"</button>
                     </div>
                 </div>
+
+                <div class="game-screen" data-step="2">
+                    <h3>Outcome: System Failure</h3>
+                    <div class="game-visual" style="background-image: url('images/johnny_stage_2_lie.png');"></div>
+                    <p><strong>The Lie Failed.</strong> Your father sees the sugar on your face. You've created more friction, and trust is broken. In design, a bad prototype leads to a 'Hard Stop'.</p>
+                    <button class="choice-btn" onclick="resetGame('johnny-game')">Refine Strategy (Iterate) →</button>
+                </div>
+
+                <div class="game-screen" data-step="3">
+                    <h3>Outcome: Human Resonance</h3>
+                    <div class="game-visual" style="background-image: url('images/johnny_stage_3_truth.png');"></div>
+                    <p><strong>Transparency Succeeded.</strong> By being honest, you removed the conflict. Your father smiles and talks to you about health. You solved the problem through Empathy for his concern.</p>
+                    <button class="choice-btn" onclick="resetGame('johnny-game')">Play again</button>
+                </div>
+
+                <div class="game-screen" data-step="4">
+                    <h3>Outcome: The Lucky Pivot</h3>
+                    <div class="game-visual" style="background-image: url('images/johnny_stage_4_pivot.png');"></div>
+                    <p>You escaped for now, but the root cause (your hunger and the open jar) hasn't been addressed. This is a 'Patch'—it works once, but doesn't solve the long-term architecture.</p>
+                    <button class="choice-btn" onclick="resetGame('johnny-game')">Try again</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. HUMAN LOGIC (ANIMATED GAME) -->
+        <section id="human-logic">
+            <span class="section-label">02: Human Logic</span>
+            <h2>Human Logic</h2>
+            <div class="highlight-box" style="margin-bottom: 2rem;">
+                 <p><strong>Context & Complexity:</strong> Unlike the seed which reacts to simple triggers, human logic handles <strong>conflicting variables</strong>. This game shows how Empathy dictates the 'Design of the Morning'.</p>
             </div>
 
-            <div class="story-card" style="flex-direction: column; align-items: flex-start;">
-                <div class="story-text">
-                    <h3>The Doctor's Iteration Loop</h3>
-                    <p>Professional design mirrors the medical process: gathering symptoms, prescribing a solution, and explicitly establishing a feedback loop to iterate.</p>
-                    
-                    <div class="grid-container grid-3" style="margin-top: 2rem; width: 100%;">
-                        <div class="card tool-card" data-modal="doctor-1-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/doctor_1_clarity.png" alt="Clarity" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>1. Clarity</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Gathering patient symptoms.</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
-                        <div class="card tool-card" data-modal="doctor-2-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/doctor_2_ideation.png" alt="Ideation" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>2. Ideation & Execution</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">Considering treatments.</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
-                        <div class="card tool-card" data-modal="doctor-3-modal" style="padding: 1rem; text-align: center;">
-                            <img src="images/doctor_3_iteration.png" alt="Iteration" style="border-radius: 8px; margin-bottom: 1rem;">
-                            <strong>3. Feedback Loop</strong>
-                            <p style="font-size: 0.85rem; margin-top: 0.5rem;">"Come back in 3 days."</p>
-                            <span class="card-cta">Click to expand</span>
-                        </div>
+            <div class="game-container" id="mother-game">
+                <div class="game-screen active" data-step="1">
+                    <h3>The Morning Context</h3>
+                    <div class="game-visual" style="background-image: url('images/mother_stage_1.png');"></div>
+                    <p>It's 7:00 AM. You need to wake your child. But first, you must identify the <strong>Constraint</strong>.</p>
+                    <div class="game-choices">
+                        <button class="choice-btn" onclick="makeChoice('mother-game', 1, 2)">High-Stakes: It's Exam Day</button>
+                        <button class="choice-btn" onclick="makeChoice('mother-game', 1, 3)">Low-Stakes: It's Saturday</button>
                     </div>
                 </div>
+
+                <div class="game-screen" data-step="2">
+                    <h3>Exam Day Protocol</h3>
+                    <div class="game-visual" style="background-image: url('images/mother_stage_2_exam.png');"></div>
+                    <p>They need to be sharp and alert. Choose your <strong>Divergent Solution</strong>:</p>
+                    <div class="game-choices">
+                        <button class="choice-btn" onclick="makeChoice('mother-game', 2, 4)">Loud Siren + Sprinkled Water</button>
+                        <button class="choice-btn" onclick="makeChoice('mother-game', 2, 5)">Soft Music + The Smell of Pancakes</button>
+                    </div>
+                </div>
+
+                <div class="game-screen" data-step="3">
+                    <h3>Saturday Protocol</h3>
+                    <div class="game-visual" style="background-image: url('images/mother_stage_3_saturday.png');"></div>
+                    <p>Rest is the primary goal. Choose your <strong>Divergent Solution</strong>:</p>
+                    <div class="game-choices">
+                        <button class="choice-btn" onclick="makeChoice('mother-game', 3, 5)">Let them wake naturally</button>
+                        <button class="choice-btn" onclick="makeChoice('mother-game', 3, 4)">Vacuum outside their door</button>
+                    </div>
+                </div>
+
+                <div class="game-screen" data-step="4">
+                    <h3>Feedback: Design Friction</h3>
+                    <div class="game-visual" style="background-image: url('images/mother_stage_4_friction.png');"></div>
+                    <p>Wrong choice! You created stress or annoyance. Your 'solution' ignored the user's emotional state.</p>
+                    <button class="choice-btn" onclick="resetGame('mother-game')">Iterate Strategy →</button>
+                </div>
+
+                <div class="game-screen" data-step="5">
+                    <h3>Feedback: Design Resonance</h3>
+                    <div class="game-visual" style="background-image: url('images/mother_stage_5_resonance.png');"></div>
+                    <p>Perfect! You balanced the objective with the user's context. This is what we call a 'Fluent Solution'.</p>
+                    <button class="choice-btn" onclick="resetGame('mother-game')">Restart</button>
+                </div>
             </div>
         </section>
 
-        <!-- 3.5 THE ATTITUDE -->
-        <section id="the-attitude">
-            <span class="section-label">03.5: The Core Mindset</span>
-            <h2>The Attitude</h2>
-            
-            <div class="highlight-box" style="border-left-color: #007aff; margin-bottom: 2rem;">
-                <h3 style="margin-bottom: 1rem; color: #007aff;">"Be Like Water" <span>&#x1F30A;</span></h3>
-                <p style="font-size: 1.1rem; font-style: italic; margin-bottom: 1rem;">"Empty your mind, be formless, shapeless — like water." — Bruce Lee</p>
-                <p>Do not conform to a rigid framework—whether that of a designer, an engineer, or a creator—until you truly understand the pain the users are facing. Maintain fluidity so you can adapt to the problem, rather than forcing the problem to fit into a pre-existing mold.</p>
-            </div>
-
-            <div class="grid-container grid-3" style="width: 100%;">
-                <div class="card" style="text-align: left; padding: 1.5rem;">
-                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">1. Stay Fluid</h4>
-                    <p style="font-size: 0.95rem;">Embrace ambiguity. Be comfortable not knowing the answer right away, allowing the user's needs to shape your structure instead of applying rigid frameworks.</p>
-                </div>
-                <div class="card" style="text-align: left; padding: 1.5rem;">
-                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">2. Radical Empathy</h4>
-                    <p style="font-size: 0.95rem;">You care deeply about the human condition and the real frictions people face before judging or jumping to solutions.</p>
-                </div>
-                <div class="card" style="text-align: left; padding: 1.5rem;">
-                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">3. Connect the Dots</h4>
-                    <p style="font-size: 0.95rem;">Once the user's pain is clear, become the orchestrator. Pull together insights, resources, tools, and even people from wherever possible to forge an optimistic prototype.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. BIOLOGICAL FOUNDATION -->
-        <section id="biological-response">
-            <span class="section-label">04: Biological Foundation</span>
-            <h2>Response to Stimuli</h2>
-            <p>Every living thing responds to its environment to improve its situation.</p>
-            <div class="grid-container grid-2">
-                <div class="card tool-card" data-modal="corvid-video">
-                    <span style="font-size: 3rem;">🐦‍⬛</span>
-                    <h3>Corvid</h3>
-                    <p>Crows and Ravens using tools and logic to solve multi-stage puzzles. Advanced problem-solving.
-                    </p>
-                    <span class="card-cta">Click to see the logic →</span>
-                </div>
-                <div class="card tool-card" data-modal="squirrel-video">
-                    <span style="font-size: 3rem;">🐿️</span>
-                    <h3>Squirrel</h3>
-                    <p>Solving obstacle courses for food. Goal-oriented problem-solving.</p>
-                    <span class="card-cta">Click to see him in action →</span>
-                </div>
-            </div>
-
-            <div class="highlight-box" style="margin-top: 2rem; border-left-color: #ffb400;">
-                <strong>The Difference:</strong> Professional Design Thinking is a natural response, but performed
-                <strong>for others</strong>.
-            </div>
-        </section>
-
-        <!-- 5. THE FOUR STAGES -->
-        <section id="four-stages">
-            <span class="section-label">05: The Framework</span>
-            <h2>The Four Pillars</h2>
-            <div class="grid-container grid-5" style="grid-template-columns: repeat(4, 1fr);">
+        <!-- 3. DOCTOR'S LOOP (STILL HERE AS COMPLEMENT) -->
+        <section id="doctor-section">
+            <span class="section-label">03: Doctor's Loop</span>
+            <h2>Doctor's Loop</h2>
+            <div class="grid-container grid-3">
                 <div class="card">
+                    <h4>Assess</h4>
+                    <p>Gathering symptoms to find the root cause (Empathy).</p>
+                </div>
+                <div class="card">
+                    <h4>Prescribe</h4>
+                    <p>The first prototype of a solution (Execution).</p>
+                </div>
+                <div class="card">
+                    <h4>Follow-up</h4>
+                    <p>The feedback loop (Iteration).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. FOUR PILLARS (LINKED) -->
+        <section id="four-pillars">
+            <span class="section-label">04: The Framework</span>
+            <h2>The Design Pillars</h2>
+            <div class="grid-container grid-5">
+                <div class="card pillar-card" onclick="window.location.href='finding_problem.html#empathy-tools'">
+                    <div class="pillar-image" style="background-image: url('images/pillar_empathy.png');"></div>
                     <h3 style="color: var(--accent-color);">Empathy</h3>
-                    <p>Gaining Clarity. Understanding the user's problem as your own.</p>
+                    <p>Gaining Clarity. (Click to see tools) →</p>
                 </div>
-                <div class="card">
-                    <h3 style="color: var(--accent-color);">Ideation</h3>
-                    <p>Looking for Options. Brainstorming multiple paths.</p>
+                <div class="card pillar-card" onclick="window.location.href='finding_problem.html#problem-statement'">
+                    <div class="pillar-image" style="background-image: url('images/pillar_problem.png');"></div>
+                    <h3 style="color: var(--accent-color);">Problem Statement</h3>
+                    <p>Defining the core friction with precision.</p>
                 </div>
-                <div class="card">
-                    <h3 style="color: var(--accent-color);">Execution</h3>
-                    <p>Prototyping. Implementing the best idea.</p>
+                <div class="card pillar-card">
+                    <div class="pillar-image" style="background-image: url('images/pillar_ideation.png'); filter: grayscale(1); opacity: 0.5;"></div>
+                    <h3 style="color: #666;">Ideation</h3>
+                    <p>Coming Soon...</p>
                 </div>
-                <div class="card">
-                    <h3 style="color: var(--accent-color);">Iteration</h3>
-                    <p>Feedback Loop. Testing and improving based on results.</p>
+                <div class="card pillar-card">
+                    <div class="pillar-image" style="background-image: url('images/pillar_execution.png'); filter: grayscale(1); opacity: 0.5;"></div>
+                    <h3 style="color: #666;">Execution</h3>
+                    <p>Coming Soon...</p>
+                </div>
+                <div class="card pillar-card">
+                    <div class="pillar-image" style="background-image: url('images/pillar_iteration.png'); filter: grayscale(1); opacity: 0.5;"></div>
+                    <h3 style="color: #666;">Iteration</h3>
+                    <p>Coming Soon...</p>
                 </div>
             </div>
         </section>
 
-        <!-- 6. CONCLUSION / ROAD NOT TAKEN -->
+        <!-- CONCLUSION -->
         <section id="conclusion">
-            <span class="section-label">06: Conclusion</span>
-            <h2>The Road Less Traveled</h2>
-            <p>Design is the ability to take the road less traveled to find innovative solutions. It isn't about never
-                failing; it's about the ability to revise and try again.</p>
-            <div style="margin-top: 3rem; text-align: center;">
-                <p style="font-family: 'Georgia', serif; font-style: italic; font-size: 1.2rem;">"Two roads diverged in
-                    a wood, and I—<br>I took the one less traveled by,<br>And that has made all the difference."</p>
-            </div>
-            <a href="foundations.html" class="download-btn"
-                style="margin-top: 3rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Next:
-                Module 02 - Foundations →</a>
+            <h2>Moving to the Problem</h2>
+            <p>Ready to apply this logic to real-world challenges?</p>
+            <a href="finding_problem.html" class="download-btn"
+                style="margin-top: 2rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Module 03: Problem Identification →</a>
         </section>
 
     </div>
 
-    <!-- Modals for Image Lightboxes -->
-    <div id="johnny-1-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/johnny_1_crisis.png" alt="Johnny in Crisis" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">1. Clarity</h3>
-            <p>Johnny is caught red-handed. The problem is clear: he wants the sugar, but faces immediate consequences.</p>
-        </div>
-    </div>
+    <div class="teacher-mode-indicator">TEACHER MODE ACTIVE</div>
     
-    <div id="johnny-2-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/johnny_2_ideation.png" alt="Johnny Ideating" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">2. Ideation</h3>
-            <p>His brain rapidly generates options: tell a lie, hide the evidence, or misdirect the attention.</p>
-        </div>
-    </div>
-    
-    <div id="johnny-3-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/johnny_3_execution.png" alt="Johnny Executing Strategy" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">3. Execution</h3>
-            <p>He selects the best option and executes the famous "Ha-ha-ha" distraction maneuver.</p>
-        </div>
-    </div>
-    
-    <div id="mother-1-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/mother_1_assessment.png" alt="Assessment" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">1. Clarity (The Assessment)</h3>
-            <p>The mother assesses the context (Exam vs Vacation) before deciding on an intervention.</p>
-        </div>
-    </div>
-    
-    <div id="mother-2-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/mother_2_ideation.png" alt="Ideation" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">2. Ideation (The Options)</h3>
-            <p>She pictures different methods: softly opening the curtains, loudly turning off a noisy fan, or gently splashing a drop of water.</p>
-        </div>
-    </div>
-    
-    <div id="mother-3-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/mother_3_execution.png" alt="Execution" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">3. Execution (Prototyping)</h3>
-            <p>She executes the chosen method, a specifically tailored wake-up providing an empathetic user experience.</p>
-        </div>
-    </div>
-    
-    <div id="doctor-1-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/doctor_1_clarity.png" alt="Clarity" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">1. Clarity (Diagnosis)</h3>
-            <p>A caring doctor examining a patient closely and gathering symptoms to isolate the problem.</p>
-        </div>
-    </div>
-    
-    <div id="doctor-2-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/doctor_2_ideation.png" alt="Ideation" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">2. Ideation & Execution (Prescription)</h3>
-            <p>The doctor considers multiple pill and therapy options before selecting and writing the finalized prescription.</p>
-        </div>
-    </div>
-    
-    <div id="doctor-3-modal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem; text-align: center;">
-            <button class="modal-close">&times;</button>
-            <img src="images/doctor_3_iteration.png" alt="Iteration" style="width: 100%; border-radius: 8px;">
-            <h3 style="margin-top: 1rem;">3. Feedback Loop (Iteration)</h3>
-            <p>The doctor establishes a feedback loop to verify if the prototype (prescription) worked, adjusting dosages if necessary.</p>
-        </div>
-    </div>
-
-    <!-- Modal Overlay for Squirrel Video -->
-    <div id="squirrel-video" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem;">
-            <button class="modal-close">&times;</button>
-            <div class="media-container" style="width: 100%; max-width: none; margin-top: 0; box-shadow: none;">
-                <div class="video-crop">
-                    <iframe id="youtube-iframe" width="100%" height="500" src=""
-                        data-src="https://www.youtube.com/embed/DTvS9lvRxZ8?rel=0&modestbranding=1"
-                        title="Squirrel Obstacle Course" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                </div>
-                <div style="padding: 1.5rem; text-align: left;">
-                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">The Squirrel Obstacle Course</h2>
-                    <p style="text-align: left; font-size: 0.95rem; color: #444;">
-                        Mark Rober's experiment perfectly illustrates <strong>Proleptic Power</strong>. The squirrel
-                        doesn't just react; it observes, calculates, and evolves its strategy to solve complex physical
-                        puzzles.
-                    </p>
-                    <div style="margin-top: 1rem; font-size: 0.85rem; color: #888;">
-                        Video Credit: <a href="https://www.youtube.com/@MarkRober" target="_blank" rel="noopener"
-                            style="color: var(--accent-color); text-decoration: none; font-weight: 600;">Mark Rober</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Overlay for Corvid Video -->
-    <div id="corvid-video" class="modal-overlay">
-        <div class="modal-content" style="max-width: 900px; padding: 1rem;">
-            <button class="modal-close">&times;</button>
-            <div class="media-container" style="width: 100%; max-width: none; margin-top: 0; box-shadow: none;">
-                <div class="video-crop">
-                    <iframe width="100%" height="500" src=""
-                        data-src="https://www.youtube.com/embed/cbSu2PXOTOc?rel=0&modestbranding=1"
-                        title="Corvid Intelligence" frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen></iframe>
-                </div>
-                <div style="padding: 1.5rem; text-align: left;">
-                    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">The 007 Raven: Eight-Stage Puzzle</h2>
-                    <p style="text-align: left; font-size: 0.95rem; color: #444;">
-                        Corvids (crows, ravens, etc.) demonstrate incredible <strong>Proleptic Power</strong> by
-                        planning several steps ahead. They don't just react; they understand the properties of objects
-                        and sequence their actions to achieve a goal.
-                    </p>
-                    <div style="margin-top: 1rem; font-size: 0.85rem; color: #888;">
-                        Video Credit: <a href="https://www.youtube.com/@BBC" target="_blank" rel="noopener"
-                            style="color: var(--accent-color); text-decoration: none; font-weight: 600;">BBC Earth</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <script>
+        // Specific animation logic for Johnny's game
+        function executeJohnnyAction(step) {
+            const visual = document.getElementById('johnny-visual-1');
+            visual.classList.add('animate');
+            setTimeout(() => {
+                makeChoice('johnny-game', 1, step);
+                visual.classList.remove('animate');
+            }, 600);
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 

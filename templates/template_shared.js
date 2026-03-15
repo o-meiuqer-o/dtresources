@@ -435,6 +435,30 @@ function setupSectionHelp() {
             card.querySelector('.help-why').innerHTML = '<strong>Why this matters:</strong> ' + help.why;
             overlay.classList.add('active');
         });
+
+        // Add "Add Item" button to the section if it follows a standard pattern
+        // (i.e. if it has fields following it until the next section)
+        if (!el.dataset.addBtnAdded && !document.body.classList.contains('canvas-template')) {
+            const btn = document.createElement('button');
+            btn.className = 'btn-add-item';
+            btn.innerHTML = '➕ Add Field';
+            btn.onclick = () => {
+                const field = document.createElement('div');
+                field.className = 'field';
+                field.innerHTML = '<label>New Field</label><textarea placeholder="Enter details..."></textarea>';
+                
+                // Find insertion point: before next section-title or end of siblings
+                let next = el.nextElementSibling;
+                let lastField = el;
+                while (next && !next.classList.contains('section-title') && !next.classList.contains('template-controls')) {
+                    lastField = next;
+                    next = next.nextElementSibling;
+                }
+                lastField.after(field);
+            };
+            el.after(btn);
+            el.dataset.addBtnAdded = 'true';
+        }
     });
 }
 

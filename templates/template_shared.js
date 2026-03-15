@@ -434,19 +434,69 @@ function setupSectionHelp() {
 
 // ===== Colour Palette System =====
 const PALETTES = [
-    { id: 'blue',      name: 'Ocean',    accent: '#0071e3', light: '#f0f7ff', bg: '#ffffff', sectionBg: '#f5f5f7', text: '#1d1d1f', muted: '#666', border: '#ddd' },
-    { id: 'coral',     name: 'Coral',    accent: '#e85d75', light: '#fff0f3', bg: '#ffffff', sectionBg: '#fdf5f6', text: '#2c1e1e', muted: '#8a5a5a', border: '#f0d0d6' },
-    { id: 'emerald',   name: 'Forest',   accent: '#00a676', light: '#f0fdf8', bg: '#ffffff', sectionBg: '#f2faf7', text: '#1a2e24', muted: '#5a7a6d', border: '#c8e6d8' },
-    { id: 'violet',    name: 'Lavender', accent: '#7c3aed', light: '#f5f0ff', bg: '#ffffff', sectionBg: '#f8f5ff', text: '#1f1a2e', muted: '#7a6a90', border: '#d8ccf0' },
-    { id: 'sunset',    name: 'Sunset',   accent: '#e65100', light: '#fff3e0', bg: '#ffffff', sectionBg: '#fef6f0', text: '#2e1e0a', muted: '#8a6a4a', border: '#f0d8c0' },
-    { id: 'teal',      name: 'Teal',     accent: '#0097a7', light: '#e0f7fa', bg: '#ffffff', sectionBg: '#f0fafb', text: '#1a2c2e', muted: '#5a7e82', border: '#b2e0e8' },
-    { id: 'rose',      name: 'Rose',     accent: '#c2185b', light: '#fce4ec', bg: '#ffffff', sectionBg: '#fdf2f5', text: '#2e1a1e', muted: '#8a5a6a', border: '#f0c8d4' },
-    { id: 'midnight',  name: 'Midnight', accent: '#60a5fa', light: '#1e293b', bg: '#0f172a', sectionBg: '#1e293b', text: '#e2e8f0', muted: '#94a3b8', border: '#334155' }
+    {
+        id: 'blue', name: 'Ocean',
+        accent: '#0071e3', light: '#f0f7ff', bg: '#ffffff', sectionBg: '#f5f5f7',
+        text: '#1d1d1f', muted: '#666', border: '#ddd',
+        heading: '#0071e3', label: '#333', inputBg: '#ffffff', inputText: '#1d1d1f',
+        cardBg: '#f8faff', linkColor: '#0071e3'
+    },
+    {
+        id: 'coral', name: 'Coral',
+        accent: '#e85d75', light: '#fff0f3', bg: '#fdf8f8', sectionBg: '#fdf2f4',
+        text: '#3d1f24', muted: '#8a5a5a', border: '#f0c8d0',
+        heading: '#c2185b', label: '#5c2e36', inputBg: '#fff8f9', inputText: '#3d1f24',
+        cardBg: '#fff5f7', linkColor: '#e85d75'
+    },
+    {
+        id: 'emerald', name: 'Forest',
+        accent: '#00a676', light: '#ecfdf5', bg: '#f7fdfb', sectionBg: '#ecfdf5',
+        text: '#14332a', muted: '#4a7a6a', border: '#a8dcc8',
+        heading: '#047857', label: '#1e4037', inputBg: '#f8fffb', inputText: '#14332a',
+        cardBg: '#f0fdf8', linkColor: '#00a676'
+    },
+    {
+        id: 'violet', name: 'Lavender',
+        accent: '#7c3aed', light: '#f5f0ff', bg: '#faf8ff', sectionBg: '#f3efff',
+        text: '#2d1f54', muted: '#7a6a90', border: '#d4c4f0',
+        heading: '#6d28d9', label: '#3d2e5a', inputBg: '#faf8ff', inputText: '#2d1f54',
+        cardBg: '#f7f3ff', linkColor: '#7c3aed'
+    },
+    {
+        id: 'sunset', name: 'Sunset',
+        accent: '#e65100', light: '#fff3e0', bg: '#fffbf5', sectionBg: '#fff0e0',
+        text: '#3e2208', muted: '#8a6a4a', border: '#f0d0a0',
+        heading: '#bf360c', label: '#5c3a1a', inputBg: '#fffcf8', inputText: '#3e2208',
+        cardBg: '#fff8ef', linkColor: '#e65100'
+    },
+    {
+        id: 'teal', name: 'Teal',
+        accent: '#0097a7', light: '#e0f7fa', bg: '#f5fdfe', sectionBg: '#e0f7fa',
+        text: '#0e2f33', muted: '#4a7a80', border: '#a0d8e0',
+        heading: '#00838f', label: '#1a3e42', inputBg: '#f8fffe', inputText: '#0e2f33',
+        cardBg: '#eefafb', linkColor: '#0097a7'
+    },
+    {
+        id: 'rose', name: 'Rose',
+        accent: '#c2185b', light: '#fce4ec', bg: '#fef8fa', sectionBg: '#fce4ec',
+        text: '#3b1220', muted: '#8a5a6a', border: '#f0b8c8',
+        heading: '#ad1457', label: '#5c2040', inputBg: '#fff8fa', inputText: '#3b1220',
+        cardBg: '#fef2f5', linkColor: '#c2185b'
+    },
+    {
+        id: 'midnight', name: 'Midnight',
+        accent: '#60a5fa', light: '#1e293b', bg: '#0f172a', sectionBg: '#1e293b',
+        text: '#e2e8f0', muted: '#94a3b8', border: '#334155',
+        heading: '#93c5fd', label: '#cbd5e1', inputBg: '#1e293b', inputText: '#e2e8f0',
+        cardBg: '#1e293b', linkColor: '#60a5fa'
+    }
 ];
 
 function applyPalette(id) {
     const p = PALETTES.find(x => x.id === id) || PALETTES[0];
     const root = document.documentElement;
+
+    // Set CSS custom properties
     root.style.setProperty('--template-accent', p.accent);
     root.style.setProperty('--template-accent-light', p.light);
     root.style.setProperty('--template-accent-border', p.accent);
@@ -458,29 +508,161 @@ function applyPalette(id) {
     root.style.setProperty('--template-text-muted', p.muted);
     root.style.setProperty('--template-border', p.border);
 
-    // Apply to inline-styled elements that can't easily be refactored
+    // === Body ===
+    document.body.style.background = p.bg;
+    document.body.style.color = p.text;
+
+    // === Headings ===
+    document.querySelectorAll('h1').forEach(el => {
+        el.style.color = p.heading;
+    });
+    document.querySelectorAll('.subtitle').forEach(el => {
+        el.style.color = p.muted;
+    });
+
+    // === Section Titles ===
     document.querySelectorAll('.section-title').forEach(el => {
         el.style.borderBottomColor = p.accent;
+        el.style.color = p.text;
     });
+
+    // === Labels ===
+    document.querySelectorAll('.field label, label').forEach(el => {
+        el.style.color = p.label;
+    });
+
+    // === Inputs & Textareas ===
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+        el.style.background = p.inputBg;
+        el.style.color = p.inputText;
+        el.style.borderColor = p.border;
+    });
+
+    // === Notes / Disclaimers ===
     document.querySelectorAll('.note').forEach(el => {
         el.style.background = p.light;
         el.style.borderLeftColor = p.accent;
+        el.style.color = p.muted;
+    });
+    document.querySelectorAll('.template-disclaimer').forEach(el => {
+        el.style.background = p.light;
+        el.style.borderLeftColor = p.accent;
+        el.style.color = p.text;
+    });
+
+    // === Table Headers ===
+    document.querySelectorAll('th').forEach(el => {
+        el.style.background = p.sectionBg;
+        el.style.color = p.text;
+        el.style.borderColor = p.border;
+    });
+    document.querySelectorAll('td').forEach(el => {
+        el.style.borderColor = p.border;
+        el.style.color = p.text;
+    });
+
+    // === Empathy Map Quadrants ===
+    document.querySelectorAll('.quadrant').forEach(el => {
+        el.style.background = p.cardBg;
+        el.style.borderColor = p.border;
     });
     document.querySelectorAll('.quadrant h3').forEach(el => {
         el.style.color = p.accent;
     });
-    document.querySelectorAll('th').forEach(el => {
-        el.style.background = p.sectionBg;
-    });
+
+    // === Evaluation Items ===
     document.querySelectorAll('.eval-section h3').forEach(el => {
         el.style.color = p.accent;
     });
+    document.querySelectorAll('.eval-item').forEach(el => {
+        el.style.borderColor = p.border;
+        el.style.background = p.cardBg;
+    });
+    document.querySelectorAll('.eval-item .eval-question strong').forEach(el => {
+        el.style.color = p.text;
+    });
+    document.querySelectorAll('.eval-item .eval-question span').forEach(el => {
+        el.style.color = p.muted;
+    });
 
-    // Body theming
-    document.body.style.background = p.bg;
-    document.body.style.color = p.text;
+    // === Score Summary ===
+    document.querySelectorAll('.score-summary').forEach(el => {
+        el.style.background = p.sectionBg;
+        el.style.color = p.text;
+    });
+    document.querySelectorAll('.score-bar').forEach(el => {
+        el.style.background = p.border;
+    });
 
-    // Update swatch previews
+    // === Grid/Cards ===
+    document.querySelectorAll('.grid').forEach(el => {
+        el.style.color = p.text;
+    });
+
+    // === Links ===
+    document.querySelectorAll('a').forEach(el => {
+        if (!el.closest('.template-controls') && !el.closest('.palette-dropdown')) {
+            el.style.color = p.linkColor;
+        }
+    });
+
+    // === Image Placeholders ===
+    document.querySelectorAll('.image-placeholder').forEach(el => {
+        el.style.background = p.cardBg;
+        el.style.borderColor = p.border;
+    });
+
+    // === Controls bar theming ===
+    const controlsEl = document.querySelector('.template-controls');
+    if (controlsEl) {
+        if (p.id === 'midnight') {
+            controlsEl.style.background = 'rgba(15, 23, 42, 0.9)';
+            controlsEl.querySelectorAll('.btn-control').forEach(b => {
+                b.style.background = '#1e293b';
+                b.style.color = '#e2e8f0';
+                b.style.borderColor = '#334155';
+            });
+            const palBtn = controlsEl.querySelector('.palette-toggle');
+            if (palBtn) {
+                palBtn.style.background = '#1e293b';
+                palBtn.style.color = '#e2e8f0';
+                palBtn.style.borderColor = '#334155';
+            }
+            const primaryBtn = controlsEl.querySelector('.btn-primary');
+            if (primaryBtn) {
+                primaryBtn.style.background = p.accent;
+                primaryBtn.style.color = '#0f172a';
+                primaryBtn.style.borderColor = p.accent;
+            }
+        } else {
+            controlsEl.style.background = 'rgba(255,255,255,0.9)';
+            controlsEl.querySelectorAll('.btn-control').forEach(b => {
+                b.style.background = 'white';
+                b.style.color = '';
+                b.style.borderColor = '#ddd';
+            });
+            const palBtn = controlsEl.querySelector('.palette-toggle');
+            if (palBtn) {
+                palBtn.style.background = 'white';
+                palBtn.style.color = '';
+                palBtn.style.borderColor = '#ddd';
+            }
+            const primaryBtn = controlsEl.querySelector('.btn-primary');
+            if (primaryBtn) {
+                primaryBtn.style.background = p.accent;
+                primaryBtn.style.color = '#fff';
+                primaryBtn.style.borderColor = p.accent;
+            }
+        }
+    }
+
+    // === Palette dropdown theming ===
+    const dropdown = document.getElementById('palette-dropdown');
+    if (dropdown) {
+        dropdown.style.background = p.id === 'midnight' ? '#1e293b' : '#fff';
+    }
+
+    // Update swatch preview
     const preview = document.querySelector('.palette-swatch-preview');
     if (preview) preview.style.background = p.accent;
 

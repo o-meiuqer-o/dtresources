@@ -385,8 +385,14 @@ const SECTION_HELP = {
     },
     'academic references': {
         tip: 'The scholarly sources behind this evaluation framework.',
-        detail: 'This evaluator synthesizes criteria from 9 foundational texts spanning design theory (Dorst, Buchanan, Cross), design practice (Brown, IDEO, Papanek), research methodology (Creswell), management (Doran), and innovation strategy (Wedell-Wedellsborg).',
+        detail: 'This evaluator synthesizes criteria from foundational texts spanning design theory, practice, research methodology, and innovation strategy.',
         why: 'Academic grounding distinguishes a rigorous evaluation from subjective opinion. Each criterion can be traced to a specific published framework.'
+    },
+    // Problem Statement Canvas
+    'final problem statement': {
+        tip: 'Combine your POV with measurable success criteria into one actionable statement.',
+        detail: 'The final problem statement is the culmination of the entire canvas. It should encode WHO the user is, WHAT they struggle with, WHY (root cause), and HOW you will measure success. Use the formula: [User] experiences [Pain] because [Root Cause]. HMW help them [Outcome] so that [Measurable Criteria]?',
+        why: 'This statement becomes the single artifact that guides your entire team through ideation, prototyping, and testing. Every design decision should be traceable back to this statement.'
     }
 };
 

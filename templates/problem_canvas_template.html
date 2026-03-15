@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problem Statement Canvas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            padding: 2rem;
+            margin: 0 auto;
+            color: #1d1d1f;
+            max-width: 1400px;
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .subtitle {
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .note {
+            background: #f0f7ff;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid #0071e3;
+        }
+
+        /* ===== Canvas Grid Layout ===== */
+        .canvas {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: auto auto auto auto;
+            gap: 0;
+            border: 2px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .canvas-zone {
+            border: 1px solid #ddd;
+            padding: 1rem;
+            min-height: 140px;
+            position: relative;
+        }
+
+        .canvas-zone h3 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .canvas-zone .zone-source {
+            font-size: 0.62rem;
+            color: #aaa;
+            font-style: italic;
+            margin-bottom: 0.5rem;
+        }
+
+        .canvas-zone textarea {
+            width: 100%;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 0.82rem;
+            font-family: inherit;
+            min-height: 70px;
+            resize: vertical;
+            background: rgba(255,255,255,0.7);
+        }
+
+        .canvas-zone input[type="text"] {
+            width: 100%;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 8px;
+            font-size: 0.82rem;
+            font-family: inherit;
+            background: rgba(255,255,255,0.7);
+        }
+
+        /* ===== Row 1: Empathy Inputs (3 columns) ===== */
+        .zone-user { background: #f0f7ff; grid-column: 1; grid-row: 1; }
+        .zone-user h3 { color: #0071e3; }
+
+        .zone-context { background: #f0fdf8; grid-column: 2; grid-row: 1; }
+        .zone-context h3 { color: #047857; }
+
+        .zone-evidence { background: #fef6f0; grid-column: 3; grid-row: 1; }
+        .zone-evidence h3 { color: #e65100; }
+
+        /* ===== Row 2: Problem Core (3 columns) ===== */
+        .zone-pain { background: #fff0f3; grid-column: 1; grid-row: 2; }
+        .zone-pain h3 { color: #c2185b; }
+
+        .zone-root { background: #fff5f5; grid-column: 2; grid-row: 2; }
+        .zone-root h3 { color: #d32f2f; }
+
+        .zone-impact { background: #fce4ec; grid-column: 3; grid-row: 2; }
+        .zone-impact h3 { color: #880e4f; }
+
+        /* ===== Row 3: Synthesis (full width) ===== */
+        .zone-pov {
+            background: #f5f0ff;
+            grid-column: 1 / -1;
+            grid-row: 3;
+            border-top: 3px solid #7c3aed;
+        }
+        .zone-pov h3 { color: #7c3aed; }
+
+        .pov-builder {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .pov-part {
+            background: rgba(255,255,255,0.6);
+            border-radius: 8px;
+            padding: 10px;
+            border: 1px dashed #d4c4f0;
+        }
+
+        .pov-part label {
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #7c3aed;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .pov-part input {
+            width: 100%;
+            border: none;
+            border-bottom: 2px solid #d4c4f0;
+            background: transparent;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            font-family: inherit;
+            color: #2d1f54;
+        }
+
+        .pov-part input:focus {
+            outline: none;
+            border-bottom-color: #7c3aed;
+        }
+
+        .pov-output {
+            background: rgba(255,255,255,0.8);
+            border: 2px solid #7c3aed;
+            border-radius: 8px;
+            padding: 12px 16px;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            min-height: 50px;
+            color: #2d1f54;
+            font-style: italic;
+        }
+
+        /* ===== Row 4: Action (full width, 3 col split) ===== */
+        .zone-hmw {
+            background: #e0f7fa;
+            grid-column: 1 / span 2;
+            grid-row: 4;
+            border-top: 3px solid #0097a7;
+        }
+        .zone-hmw h3 { color: #00838f; }
+
+        .hmw-list {
+            list-style: none;
+            counter-reset: hmw;
+        }
+
+        .hmw-list li {
+            counter-increment: hmw;
+            margin-bottom: 8px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .hmw-list li::before {
+            content: "HMW " counter(hmw);
+            font-size: 0.68rem;
+            font-weight: 700;
+            color: #0097a7;
+            background: #b2ebf2;
+            padding: 2px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .hmw-list input {
+            flex: 1;
+            border: 1px solid #b2e0e8;
+            border-radius: 6px;
+            padding: 6px 8px;
+            font-size: 0.82rem;
+            font-family: inherit;
+            background: rgba(255,255,255,0.7);
+        }
+
+        .zone-reframe {
+            background: #fff3e0;
+            grid-column: 3;
+            grid-row: 4;
+            border-top: 3px solid #e65100;
+        }
+        .zone-reframe h3 { color: #bf360c; }
+
+        /* ===== Quick-Check Ribbon ===== */
+        .quality-ribbon {
+            background: #f5f5f7;
+            border-radius: 10px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .quality-ribbon h3 {
+            width: 100%;
+            font-size: 0.85rem;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .qcheck {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.78rem;
+            color: #666;
+            padding: 4px 10px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            cursor: pointer;
+            transition: all 0.15s;
+            background: white;
+        }
+
+        .qcheck:hover {
+            border-color: #aaa;
+        }
+
+        .qcheck input[type="checkbox"] {
+            accent-color: #00ca4e;
+        }
+
+        .qcheck.checked {
+            background: #f0fef4;
+            border-color: #00ca4e;
+            color: #1a6b34;
+        }
+
+        /* ===== Section title for shared.js compatibility ===== */
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #0071e3;
+        }
+
+        .ref-list {
+            font-size: 0.78rem;
+            color: #888;
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+        .ref-list li { margin-bottom: 4px; }
+
+        @media print {
+            body { padding: 0.5rem; max-width: 100%; }
+            .canvas { border-width: 1px; }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Problem Statement Canvas</h1>
+    <p class="subtitle">Design Thinking — Define Phase — Integrated Framework</p>
+
+    <div class="note">🧩 This canvas synthesises inputs from empathy research (interviews, observations, surveys) through
+        root cause analysis, POV statement construction, and HMW question generation — all on a single visual surface.
+        It draws from IDEO (2015), Stanford d.school, Dorst (2011), Wedell-Wedellsborg (2017), and the Griffith Problem Framing Canvas.</div>
+
+    <!-- ===== THE CANVAS ===== -->
+    <div class="canvas">
+
+        <!-- ROW 1: Empathy Inputs -->
+        <div class="canvas-zone zone-user">
+            <h3>🧑 User / Protagonist</h3>
+            <p class="zone-source">IDEO HCD Toolkit, d.school Define phase</p>
+            <input type="text" placeholder="Who specifically is affected? (Name the persona)" title="User name">
+            <textarea placeholder="Brief description: age, role, context, key characteristics..." title="User description"></textarea>
+            <div class="image-placeholder" style="max-width:180px; margin-top:8px; aspect-ratio:4/3;"></div>
+        </div>
+
+        <div class="canvas-zone zone-context">
+            <h3>🌍 Context & Situation</h3>
+            <p class="zone-source">Griffith Problem Framing Canvas</p>
+            <textarea placeholder="When and where does this problem occur? What situation triggers it? What environment or conditions surround it?" title="Context"></textarea>
+            <textarea placeholder="Who else is involved or affected? (secondary stakeholders)" title="Stakeholders" style="margin-top:8px;"></textarea>
+        </div>
+
+        <div class="canvas-zone zone-evidence">
+            <h3>📋 Evidence Base</h3>
+            <p class="zone-source">Creswell (2014), Ethnographic research</p>
+            <textarea placeholder="What research methods did you use? (interviews, surveys, observation, diary studies)" title="Methods"></textarea>
+            <textarea placeholder="Key data points: quotes, observations, numbers that prove this problem exists" title="Evidence" style="margin-top:8px;"></textarea>
+        </div>
+
+        <!-- ROW 2: Problem Core -->
+        <div class="canvas-zone zone-pain">
+            <h3>💢 Pain Points & Needs</h3>
+            <p class="zone-source">Empathy Map synthesis</p>
+            <textarea placeholder="What are the user's primary frustrations? What is NOT working for them? What needs are unmet?" title="Pain points"></textarea>
+            <textarea placeholder="Emotional impact: How does this problem make them FEEL? (frustrated, anxious, helpless...)" title="Emotions" style="margin-top:8px;"></textarea>
+        </div>
+
+        <div class="canvas-zone zone-root">
+            <h3>🔍 Root Causes (5 Whys)</h3>
+            <p class="zone-source">Toyota / Dorst Frame Creation</p>
+            <textarea placeholder="Why does this problem exist? Keep asking 'Why?' to get past symptoms to systemic causes." title="Root causes"></textarea>
+            <textarea placeholder="What is the DEEPEST root cause you identified? (This should be structural/systemic, not a surface symptom)" title="Deepest cause" style="margin-top:8px;"></textarea>
+        </div>
+
+        <div class="canvas-zone zone-impact">
+            <h3>📊 Impact & Scale</h3>
+            <p class="zone-source">SMART criteria, Doran (1981)</p>
+            <textarea placeholder="How severe is this problem? How frequent? How many people are affected? What are the consequences if unsolved?" title="Impact"></textarea>
+            <textarea placeholder="Current alternatives/workarounds and why they fail" title="Workarounds" style="margin-top:8px;"></textarea>
+        </div>
+
+        <!-- ROW 3: POV Synthesis -->
+        <div class="canvas-zone zone-pov">
+            <h3>📝 Point of View Statement</h3>
+            <p class="zone-source">Stanford d.school "Define" phase — [User] needs [Need] because [Insight]</p>
+
+            <div class="pov-builder">
+                <div class="pov-part">
+                    <label>[User]</label>
+                    <input type="text" id="pov-user" placeholder="Specific user/persona..." oninput="buildPOV()" title="POV User">
+                </div>
+                <div class="pov-part">
+                    <label>[Need — verb]</label>
+                    <input type="text" id="pov-need" placeholder="needs to..." oninput="buildPOV()" title="POV Need">
+                </div>
+                <div class="pov-part">
+                    <label>[Insight — because]</label>
+                    <input type="text" id="pov-insight" placeholder="because..." oninput="buildPOV()" title="POV Insight">
+                </div>
+            </div>
+
+            <div class="pov-output" id="pov-output">
+                <span style="color:#aaa;">Your POV statement will appear here as you type above...</span>
+            </div>
+        </div>
+
+        <!-- ROW 4: Action -->
+        <div class="canvas-zone zone-hmw">
+            <h3>💡 How Might We...?</h3>
+            <p class="zone-source">IDEO HMW technique — reframe POV into opportunity questions</p>
+            <ul class="hmw-list">
+                <li><input type="text" placeholder="How might we help [user] to [need/goal]..." title="HMW 1"></li>
+                <li><input type="text" placeholder="How might we reduce [pain point] so that..." title="HMW 2"></li>
+                <li><input type="text" placeholder="How might we make it easier for [user] to..." title="HMW 3"></li>
+            </ul>
+            <button class="btn-add-hmw" onclick="addHMW()" style="margin-top:6px; padding:4px 12px; border-radius:6px; border:1px dashed #0097a7; background:transparent; color:#0097a7; cursor:pointer; font-size:0.78rem;">+ Add HMW</button>
+        </div>
+
+        <div class="canvas-zone zone-reframe">
+            <h3>🔄 Reframe Check</h3>
+            <p class="zone-source">Wedell-Wedellsborg (HBR, 2017)</p>
+            <textarea placeholder="What if this problem isn't what you think it is? Try stating it from a completely different angle..." title="Reframe"></textarea>
+            <textarea placeholder="Who might see this 'problem' as a feature? What perspective are you missing?" title="Alternative perspective" style="margin-top:8px;"></textarea>
+        </div>
+    </div>
+
+    <!-- ===== Full Problem Statement ===== -->
+    <div class="section-title">Final Problem Statement</div>
+    <div class="note">Combine your POV with measurable success criteria using the formula below.</div>
+
+    <div style="background:#f5f0ff; padding:1.25rem; border-radius:10px; border:2px solid #7c3aed; margin-bottom:1.5rem;">
+        <textarea id="final-statement" style="width:100%; min-height:100px; border:none; background:transparent; font-size:0.95rem; font-family:inherit; resize:vertical; line-height:1.6; color:#2d1f54;"
+            placeholder="[User Persona] experiences [Pain Points] because [Root Causes/Insights].&#10;&#10;How might we help them [Desired Outcome] so that [Measurable Success Criteria]?"></textarea>
+    </div>
+
+    <!-- ===== Quick Quality Check ===== -->
+    <div class="quality-ribbon" id="quality-ribbon">
+        <h3>⚡ Quick Quality Check</h3>
+    </div>
+
+    <!-- ===== References ===== -->
+    <div class="section-title">Academic References</div>
+    <ol class="ref-list">
+        <li>Brown, T. (2009). <em>Change by Design.</em> HarperBusiness.</li>
+        <li>Dorst, K. (2011). The Core of Design Thinking. <em>Design Studies</em>, 32(6), 521–532.</li>
+        <li>Griffith Centre for Systems Innovation. <em>Problem Framing Canvas.</em> Griffith University.</li>
+        <li>IDEO (2015). <em>The Field Guide to Human-Centered Design.</em></li>
+        <li>IxDF. <em>Define and Frame Your Design Challenge.</em> Interaction Design Foundation.</li>
+        <li>Wedell-Wedellsborg, T. (2017). Are You Solving the Right Problems? <em>HBR</em>, 95(1), 76–83.</li>
+    </ol>
+
+    <script>
+        // Live POV builder
+        function buildPOV() {
+            const user = document.getElementById('pov-user').value.trim();
+            const need = document.getElementById('pov-need').value.trim();
+            const insight = document.getElementById('pov-insight').value.trim();
+            const out = document.getElementById('pov-output');
+
+            if (!user && !need && !insight) {
+                out.innerHTML = '<span style="color:#aaa;">Your POV statement will appear here as you type above...</span>';
+                return;
+            }
+
+            out.innerHTML =
+                '<strong>' + (user || '[User]') + '</strong> needs to ' +
+                '<strong>' + (need || '[need]') + '</strong> because ' +
+                '<strong>' + (insight || '[insight]') + '</strong>.';
+        }
+
+        // Add HMW line
+        function addHMW() {
+            const list = document.querySelector('.hmw-list');
+            const li = document.createElement('li');
+            li.innerHTML = '<input type="text" placeholder="How might we..." title="HMW question">';
+            list.appendChild(li);
+        }
+
+        // Quality check ribbon
+        const CHECKS = [
+            { label: 'Human-centered', tip: 'Names a specific user, not "people"' },
+            { label: 'Solution-free', tip: 'No technology or method prescribed' },
+            { label: 'Evidence-backed', tip: 'Based on real research data' },
+            { label: 'Causal chain', tip: 'Explains WHY, not just WHAT' },
+            { label: 'Measurable', tip: 'Has quantified success criteria' },
+            { label: 'Broad enough', tip: '3+ different solutions could work' },
+            { label: 'Narrow enough', tip: 'Actionable in 1-2 weeks' },
+            { label: 'Reframeable', tip: 'Passes elevator-speed test' },
+            { label: 'Ethical', tip: 'Won\'t harm other stakeholders' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const ribbon = document.getElementById('quality-ribbon');
+            CHECKS.forEach(c => {
+                const lbl = document.createElement('label');
+                lbl.className = 'qcheck';
+                lbl.title = c.tip;
+                lbl.innerHTML = '<input type="checkbox"> ' + c.label;
+                lbl.querySelector('input').addEventListener('change', function () {
+                    lbl.classList.toggle('checked', this.checked);
+                });
+                ribbon.appendChild(lbl);
+            });
+        });
+    </script>
+    <script src="template_shared.js"></script>
+</body>
+
+</html>

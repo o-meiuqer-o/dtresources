@@ -22,123 +22,152 @@ function addSection() {
     document.body.appendChild(sectionWrap);
 }
 
-function saveToPDF() {
-    const btn = event.currentTarget || document.querySelector('.btn-primary');
+function downloadAsPNG() {
+    const btn = event ? (event.currentTarget || document.querySelector('.btn-primary')) : document.querySelector('.btn-primary');
     const originalText = btn.innerHTML;
-    btn.innerHTML = '⏳ Processing...';
+    btn.innerHTML = '⏳ Rendering...';
     btn.disabled = true;
 
-    const loadScripts = async () => {
-        if (typeof html2canvas === 'undefined') {
-            await new Promise(r => {
-                const s = document.createElement('script');
-                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-                s.onload = r;
-                document.head.appendChild(s);
-            });
-        }
-        if (typeof window.jspdf === 'undefined') {
-            await new Promise(r => {
-                const s = document.createElement('script');
-                s.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-                s.onload = r;
-                document.head.appendChild(s);
-            });
-        }
-    };
+    // 1. Hide UI chrome
+    const controlsEl = document.querySelector('.template-controls');
+    const disclaimerEl = document.querySelector('.template-disclaimer');
+    const tableControls = document.querySelector('.table-controls');
+    if (controlsEl) controlsEl.style.display = 'none';
+    if (disclaimerEl) disclaimerEl.style.display = 'none';
+    if (tableControls) tableControls.style.display = 'none';
 
-    loadScripts().then(() => {
-        const controls = document.querySelector('.template-controls');
-        const disclaimer = document.querySelector('.template-disclaimer');
-        if(controls) controls.style.display = 'none';
-        if(disclaimer) disclaimer.style.display = 'none';
-        
-        const tableContainer = document.querySelector('.table-container');
-        let originalTableOverflow = '';
-        if(tableContainer) {
-            originalTableOverflow = tableContainer.style.overflow;
-            tableContainer.style.overflow = 'visible';
-        }
+    // 2. Expand overflow containers so nothing is clipped
+    const tableContainer = document.querySelector('.table-container');
+    let savedOverflow = '';
+    if (tableContainer) {
+        savedOverflow = tableContainer.style.overflow;
+        tableContainer.style.overflow = 'visible';
+    }
 
-        // Expand textareas to prevent scrollbars in PDF
-        const textareas = document.querySelectorAll('textarea');
-        const originalHeights = [];
-        textareas.forEach(t => {
-            originalHeights.push(t.style.height);
-            t.style.height = 'auto';
-            t.style.height = (t.scrollHeight + 10) + 'px'; // +10 for safety margin
-        });
-
-        // Expand document body width to capture everything
-        const originalBodyWidth = document.body.style.width;
-        document.body.style.width = document.body.scrollWidth + 'px';
-
-        html2canvas(document.body, { 
-            scale: 2,
-            useCORS: true,
-            windowWidth: document.body.scrollWidth,
-            scrollY: -window.scrollY 
-        }).then(canvas => {
-            // Restore everything
-            document.body.style.width = originalBodyWidth;
-            if(controls) controls.style.display = 'flex';
-            if(disclaimer) disclaimer.style.display = 'block';
-            if(tableContainer) tableContainer.style.overflow = originalTableOverflow;
-            
-            textareas.forEach((t, i) => {
-                t.style.height = originalHeights[i] || '';
-            });
-
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-
-            const { jsPDF } = window.jspdf;
-            
-            // Check if it's portrait or landscape. We can default to landscape for all maps.
-            const doc = new jsPDF({
-                orientation: 'landscape',
-                unit: 'mm',
-                format: 'a4'
-            });
-
-            const pdfWidth = 297;
-            const pdfHeight = 210;
-            const margin = 10;
-            const usableHeight = pdfHeight - (margin * 2);
-            const usableWidth = pdfWidth - (margin * 2);
-
-            const imgData = canvas.toDataURL('image/jpeg', 1.0);
-
-            // Fit the height to one page, then scale width proportionally
-            let ratio = usableHeight / canvas.height;
-            let totalWidthMM = canvas.width * ratio;
-
-            // If the map is actually narrow (like Persona), don't blow it up excessively
-            if (totalWidthMM < usableWidth) {
-                ratio = usableWidth / canvas.width;
-                if ((canvas.height * ratio) > usableHeight) {
-                    ratio = usableHeight / canvas.height;
-                }
-                totalWidthMM = canvas.width * ratio;
-            }
-
-            const activeHeightMM = canvas.height * ratio;
-
-            let currentX = 0;
-            while (currentX < totalWidthMM) {
-                if (currentX > 0) doc.addPage();
-                // Magic trick: Shift the image X offset negatively to "slice" it perfectly
-                doc.addImage(imgData, 'JPEG', margin - currentX, margin, totalWidthMM, activeHeightMM);
-                currentX += usableWidth;
-            }
-            
-            doc.save(document.title + '.pdf');
-        }).catch(err => {
-            console.error(err);
-            btn.innerHTML = originalText;
-            btn.disabled = false;
-        });
+    // 3. Expand textareas to show full content
+    const textareas = document.querySelectorAll('textarea');
+    const savedHeights = [];
+    textareas.forEach(t => {
+        savedHeights.push(t.style.height);
+        t.style.height = 'auto';
+        t.style.height = (t.scrollHeight + 4) + 'px';
     });
+
+    // 4. Force body to its full scroll width so the table is unconstrained
+    const savedBodyMaxWidth = document.body.style.maxWidth;
+    const savedBodyWidth = document.body.style.width;
+    document.body.style.maxWidth = 'none';
+    document.body.style.width = document.body.scrollWidth + 'px';
+
+    // Small delay to let layout reflow
+    setTimeout(() => {
+        const captureWidth = document.body.scrollWidth;
+        const captureHeight = document.body.scrollHeight;
+        const scale = 2; // 2x for high-res output
+
+        const canvas = document.createElement('canvas');
+        canvas.width = captureWidth * scale;
+        canvas.height = captureHeight * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(scale, scale);
+
+        // 5. Clone the body and inline all computed styles
+        const clone = document.body.cloneNode(true);
+
+        // Remove hidden elements from clone
+        const hideSelectors = ['.template-controls', '.template-disclaimer', '.table-controls'];
+        hideSelectors.forEach(sel => {
+            const el = clone.querySelector(sel);
+            if (el) el.remove();
+        });
+
+        // Inline computed styles on every element
+        inlineStyles(document.body, clone);
+
+        // 6. Serialize clone to XML string
+        const serializer = new XMLSerializer();
+        const htmlString = serializer.serializeToString(clone);
+
+        // 7. Build SVG foreignObject wrapper
+        const svgString = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="${captureWidth}" height="${captureHeight}">
+                <foreignObject width="100%" height="100%">
+                    <body xmlns="http://www.w3.org/1999/xhtml" style="margin:0; padding:0;">
+                        ${htmlString}
+                    </body>
+                </foreignObject>
+            </svg>`;
+
+        const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(svgBlob);
+        const img = new Image();
+
+        img.onload = () => {
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, captureWidth, captureHeight);
+            ctx.drawImage(img, 0, 0, captureWidth, captureHeight);
+            URL.revokeObjectURL(url);
+
+            // 8. Trigger PNG download
+            canvas.toBlob(blob => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = (document.title || 'template') + '.png';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(a.href);
+
+                restore();
+            }, 'image/png');
+        };
+
+        img.onerror = () => {
+            // Fallback: If SVG foreignObject method fails (CORS, complex CSS),
+            // fall back to simple window.print()
+            console.warn('SVG render failed, falling back to print dialog.');
+            restore();
+            window.print();
+        };
+
+        img.src = url;
+    }, 150);
+
+    function restore() {
+        document.body.style.maxWidth = savedBodyMaxWidth;
+        document.body.style.width = savedBodyWidth;
+        if (controlsEl) controlsEl.style.display = 'flex';
+        if (disclaimerEl) disclaimerEl.style.display = 'block';
+        if (tableControls) tableControls.style.display = 'flex';
+        if (tableContainer) tableContainer.style.overflow = savedOverflow;
+        textareas.forEach((t, i) => { t.style.height = savedHeights[i] || ''; });
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+}
+
+// Recursively inline computed styles from source tree onto cloned tree
+function inlineStyles(source, clone) {
+    if (source.nodeType !== 1) return; // Element nodes only
+    const computed = window.getComputedStyle(source);
+    const dominated = [
+        'font-family','font-size','font-weight','color','background-color','background',
+        'border','border-radius','padding','margin','display','flex-direction','align-items',
+        'justify-content','gap','width','height','min-height','max-width','min-width',
+        'text-align','vertical-align','line-height','white-space','overflow','position',
+        'top','left','right','bottom','box-sizing','border-collapse','table-layout',
+        'aspect-ratio','object-fit','opacity','visibility','flex-wrap','grid-template-columns'
+    ];
+    dominated.forEach(prop => {
+        try {
+            clone.style[prop] = computed.getPropertyValue(prop);
+        } catch(e) {}
+    });
+    const srcChildren = source.children;
+    const clnChildren = clone.children;
+    for (let i = 0; i < srcChildren.length && i < clnChildren.length; i++) {
+        inlineStyles(srcChildren[i], clnChildren[i]);
+    }
 }
 
 // Image handling logic
@@ -261,7 +290,7 @@ document.addEventListener('DOMContentLoaded', () => {
     controls.className = 'template-controls';
     controls.innerHTML = `
         <button class="btn-control" onclick="addSection()">➕ Add Section</button>
-        <button class="btn-control btn-primary" onclick="saveToPDF()">💾 Save to PDF</button>
+        <button class="btn-control btn-primary" onclick="downloadAsPNG()">📥 Download PNG</button>
     `;
     document.body.appendChild(controls);
 

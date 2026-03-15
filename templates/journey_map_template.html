@@ -52,9 +52,10 @@
         }
 
         table {
-            width: 100%;
             border-collapse: collapse;
-            table-layout: fixed;
+            table-layout: auto;
+            width: max-content; /* Grow with content */
+            min-width: 100%;
         }
 
         th, td {
@@ -63,6 +64,12 @@
             text-align: left;
             font-size: 0.8rem;
             vertical-align: top;
+            min-width: 180px; /* Each stage column gets at least this much */
+        }
+
+        td:first-child, th:first-child {
+            min-width: 130px;
+            max-width: 150px;
         }
 
         th {

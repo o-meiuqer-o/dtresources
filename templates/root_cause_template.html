@@ -224,18 +224,8 @@
             if (nodeId !== undefined) {
                 const node = nodes.get(nodeId);
                 
-                // Toggle state
-                if (node.isRootCause) {
-                    node.isRootCause = false;
-                } else {
-                    // Turn off any other root causes if desired, or allow multiple.
-                    // Let's assume there's one primary root cause highlighted.
-                    const allNodes = nodes.get();
-                    allNodes.forEach(n => {
-                        if (n.isRootCause) nodes.update({ id: n.id, isRootCause: false });
-                    });
-                    node.isRootCause = true;
-                }
+                // Toggle state - allowing multiple root causes
+                nodes.update({ id: nodeId, isRootCause: !node.isRootCause });
                 updateNodeColors();
             }
         });

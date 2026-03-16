@@ -135,6 +135,67 @@ function downloadAsPNG() {
     });
 }
 
+function downloadAsSVG() {
+    const btn = event ? (event.currentTarget || document.querySelector('.btn-svg')) : document.querySelector('.btn-svg');
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '⏳ Rendering SVG...';
+    btn.disabled = true;
+
+    // Load html-to-image from CDN on first use
+    const ensureLib = (callback) => {
+        if (typeof htmlToImage !== 'undefined') return callback();
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/html-to-image/1.11.11/html-to-image.min.js';
+        s.onload = callback;
+        s.onerror = () => { alert('Could not load export library. Check your internet connection.'); restore(); };
+        document.head.appendChild(s);
+    };
+
+    // UI elements to hide during capture
+    const controlsEl = document.querySelector('.template-controls');
+    const disclaimerEl = document.querySelector('.template-disclaimer');
+    const tableControls = document.querySelector('.table-controls');
+    const removeButtons = document.querySelectorAll('.btn-remove, .btn-add-item');
+
+    if (controlsEl) controlsEl.style.display = 'none';
+    if (disclaimerEl) disclaimerEl.style.display = 'none';
+    if (tableControls) tableControls.style.display = 'none';
+    removeButtons.forEach(b => b.style.display = 'none');
+
+    function restore() {
+        if (controlsEl) controlsEl.style.display = 'flex';
+        if (disclaimerEl) disclaimerEl.style.display = 'block';
+        if (tableControls) tableControls.style.display = 'flex';
+        removeButtons.forEach(b => b.style.display = 'flex');
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+    }
+
+    ensureLib(() => {
+        const node = document.body;
+        const options = {
+            backgroundColor: window.getComputedStyle(document.body).backgroundColor || '#ffffff',
+            style: {
+                margin: '40px'
+            }
+        };
+
+        htmlToImage.toSvg(node, options)
+            .then(dataUrl => {
+                const a = document.createElement('a');
+                a.download = (document.title || 'template').replace(/[^a-zA-Z0-9 ]/g, '') + '.svg';
+                a.href = dataUrl;
+                a.click();
+                restore();
+            })
+            .catch(err => {
+                console.error('SVG export failed:', err);
+                restore();
+                alert('SVG export failed. Try PNG instead.');
+            });
+    });
+}
+
 // Image handling logic
 function setupImagePlaceholders() {
     const placeholders = document.querySelectorAll('.image-placeholder:not(.active-placeholder)');
@@ -664,6 +725,12 @@ function applyPalette(id) {
                 primaryBtn.style.color = '#0f172a';
                 primaryBtn.style.borderColor = p.accent;
             }
+            const svgBtn = controlsEl.querySelector('.btn-svg');
+            if (svgBtn) {
+                svgBtn.style.background = '#1e293b';
+                svgBtn.style.color = '#e2e8f0';
+                svgBtn.style.borderColor = '#334155';
+            }
         } else {
             controlsEl.style.background = 'rgba(255,255,255,0.9)';
             controlsEl.querySelectorAll('.btn-control').forEach(b => {
@@ -743,7 +810,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${swatchesHTML}
             </div>
         </div>
-        <button class="btn-control btn-primary" onclick="downloadAsPNG()">📥 Download PNG</button>
+        <button class="btn-control btn-primary" onclick="downloadAsPNG()">📥 PNG</button>
+        <button class="btn-control btn-svg" onclick="downloadAsSVG()">📐 SVG</button>
     `;
     document.body.appendChild(controls);
 

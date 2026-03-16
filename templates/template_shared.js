@@ -42,9 +42,12 @@ function downloadAsPNG() {
     const controlsEl = document.querySelector('.template-controls');
     const disclaimerEl = document.querySelector('.template-disclaimer');
     const tableControls = document.querySelector('.table-controls');
+    const extraUi = document.querySelectorAll('.toolbar, .note, .btn-remove, .btn-add-item');
+
     if (controlsEl) controlsEl.style.display = 'none';
     if (disclaimerEl) disclaimerEl.style.display = 'none';
     if (tableControls) tableControls.style.display = 'none';
+    extraUi.forEach(el => el.style.display = 'none');
 
     // 2. Expand overflow containers
     const tableContainer = document.querySelector('.table-container');
@@ -71,6 +74,7 @@ function downloadAsPNG() {
 
     // 5. Special handling for vis-network (Root Cause Analysis)
     let savedNetworkSize = null;
+    let savedNetworkStyle = null;
     const networkDiv = document.getElementById('mynetwork');
     if (networkDiv && typeof network !== 'undefined') {
         savedNetworkSize = { 
@@ -79,7 +83,17 @@ function downloadAsPNG() {
             viewId: network.getViewPosition(),
             scale: network.getScale()
         };
+        savedNetworkStyle = {
+            border: networkDiv.style.border,
+            background: networkDiv.style.background,
+            boxShadow: networkDiv.style.boxShadow
+        };
         
+        // Hide borders for export
+        networkDiv.style.border = 'none';
+        networkDiv.style.background = 'transparent';
+        networkDiv.style.boxShadow = 'none';
+
         network.fit();
         const scale = network.getScale();
         if (scale < 1) {
@@ -99,12 +113,18 @@ function downloadAsPNG() {
         if (controlsEl) controlsEl.style.display = 'flex';
         if (disclaimerEl) disclaimerEl.style.display = 'block';
         if (tableControls) tableControls.style.display = 'flex';
+        extraUi.forEach(el => el.style.display = '');
+
         if (tableContainer) tableContainer.style.overflow = savedOverflow;
         textareas.forEach((t, i) => { t.style.height = savedHeights[i] || ''; });
         
         if (savedNetworkSize) {
             networkDiv.style.width = savedNetworkSize.width;
             networkDiv.style.height = savedNetworkSize.height;
+            networkDiv.style.border = savedNetworkStyle.border;
+            networkDiv.style.background = savedNetworkStyle.background;
+            networkDiv.style.boxShadow = savedNetworkStyle.boxShadow;
+            
             network.setSize(savedNetworkSize.width, savedNetworkSize.height);
             network.redraw();
             setTimeout(() => {

@@ -815,6 +815,24 @@ img {
     height: 80px;
 }
 
+/* ===== 6-Column Grid ===== */
+.grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+}
+
+.grid-6 .card {
+    padding: 1.5rem 0.8rem;
+}
+
+.grid-6 .card h3 {
+    font-size: 0.9rem;
+}
+
+.grid-6 .card p {
+    font-size: 0.8rem;
+}
+
 /* ===== Example Boxes ===== */
 .example-box {
     background: #fafbfc;

@@ -230,6 +230,7 @@
                 // Toggle state - allowing multiple root causes
                 nodes.update({ id: nodeId, isRootCause: !node.isRootCause });
                 updateNodeColors();
+                saveTemplateData();
             }
         });
 
@@ -238,6 +239,11 @@
             if (params.nodes.length > 0) {
                 editNode();
             }
+        });
+
+        // Drag Event (Persist positions)
+        network.on("dragEnd", function() {
+            saveTemplateData();
         });
 
         // Toolbar Functions
@@ -259,6 +265,7 @@
             nodes.add({ id: newNodeId, label: label, level: newLevel });
             edges.add({ from: parentId, to: newNodeId });
             updateNodeColors();
+            saveTemplateData();
             
             // Adjust zoom to fit
             setTimeout(() => { network.fit({ animation: true }); }, 100);
@@ -272,6 +279,7 @@
             const label = prompt("Edit text:", node.label);
             if (label !== null) {
                 nodes.update({ id: node.id, label: label });
+                saveTemplateData();
             }
         }
 
@@ -281,6 +289,7 @@
             
             if (confirm("Delete this node and all its descending connections?")) {
                 nodes.remove(selected[0]);
+                saveTemplateData();
             }
         }
     </script>

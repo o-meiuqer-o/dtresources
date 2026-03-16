@@ -1,3 +1,130 @@
+// --- Persistence Logic ---
+const STORAGE_PREFIX = 'dt-persistence-';
+const PAGE_ID = window.location.pathname.split('/').pop() || 'index';
+const STORAGE_KEY = STORAGE_PREFIX + PAGE_ID;
+
+function saveTemplateData() {
+    const data = {
+        fields: [],
+        sections: [],
+        images: []
+    };
+
+    // 1. Core Fields (by index to handle non-ID fields)
+    document.querySelectorAll('input, textarea, select').forEach((el, i) => {
+        if (el.closest('.template-controls')) return;
+        data.fields.push({
+            index: i,
+            value: el.value,
+            checked: el.type === 'checkbox' || el.type === 'radio' ? el.checked : null
+        });
+    });
+
+    // 2. Dynamic Sections
+    document.querySelectorAll('.section-wrapper').forEach(sw => {
+        const title = sw.querySelector('.section-title')?.textContent;
+        const label = sw.querySelector('label')?.textContent;
+        const value = sw.querySelector('textarea')?.value;
+        data.sections.push({ title, label, value });
+    });
+
+    // 3. Images (Data URLs)
+    document.querySelectorAll('.image-placeholder').forEach((ph, i) => {
+        const img = ph.querySelector('.preview-img');
+        if (img && img.src.startsWith('data:')) {
+            data.images.push({ index: i, src: img.src });
+        }
+    });
+
+    // 4. Special: Root Cause Analysis (vis-network)
+    if (typeof nodes !== 'undefined' && typeof edges !== 'undefined' && typeof network !== 'undefined') {
+        data.rca = {
+            nodes: nodes.get(),
+            edges: edges.get()
+        };
+    }
+
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    } catch (e) {
+        console.warn('Auto-save failed:', e);
+    }
+}
+
+function loadTemplateData() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+
+    try {
+        const data = JSON.parse(raw);
+
+        // 1. Restore Dynamic Sections
+        (data.sections || []).forEach(s => {
+            restoreSection(s.title, s.label, s.value);
+        });
+
+        // 2. Restore Fields
+        const fields = document.querySelectorAll('input, textarea, select');
+        (data.fields || []).forEach(f => {
+            const el = fields[f.index];
+            if (el) {
+                if (f.checked !== null) el.checked = f.checked;
+                else el.value = f.value;
+                // Trigger auto-resize for textareas
+                if (el.tagName === 'TEXTAREA') {
+                    el.style.height = 'auto';
+                    el.style.height = (el.scrollHeight) + 'px';
+                }
+            }
+        });
+
+        // 3. Restore Images
+        const placeholders = document.querySelectorAll('.image-placeholder');
+        (data.images || []).forEach(img => {
+            const ph = placeholders[img.index];
+            if (ph) displayImage(ph, img.src);
+        });
+
+        // 4. Special: Root Cause Analysis
+        if (data.rca && typeof nodes !== 'undefined' && typeof edges !== 'undefined' && typeof network !== 'undefined') {
+            nodes.clear();
+            edges.clear();
+            nodes.add(data.rca.nodes);
+            edges.add(data.rca.edges);
+            if (typeof updateNodeColors === 'function') updateNodeColors();
+            setTimeout(() => network.fit(), 200);
+        }
+    } catch (e) {
+        console.error('Auto-load failed:', e);
+    }
+}
+
+function restoreSection(title, label, value) {
+    const sectionWrap = document.createElement('div');
+    sectionWrap.className = 'section-wrapper';
+    sectionWrap.innerHTML = `
+        <div class="section-title">${title}</div>
+        <button class="btn-remove" onclick="this.parentElement.parentElement.remove(); saveTemplateData();">×</button>
+        <div class="field">
+            ${label ? `<label>${label}</label>` : ''}
+            <textarea placeholder="Enter details here...">${value || ''}</textarea>
+        </div>
+    `;
+    document.body.appendChild(sectionWrap);
+    
+    // Add event listeners to new content
+    const ta = sectionWrap.querySelector('textarea');
+    ta.addEventListener('input', saveTemplateData);
+    setupSectionHelp(); // Re-bind help
+}
+
+function resetTemplate() {
+    if (confirm("Reset template and clear all your answers?")) {
+        localStorage.removeItem(STORAGE_KEY);
+        window.location.reload();
+    }
+}
+
 function addSection() {
     const heading = prompt("Enter Section Heading:");
     if (!heading) return;
@@ -9,7 +136,7 @@ function addSection() {
 
     let html = `
         <div class="section-title">${heading}</div>
-        <button class="btn-remove" onclick="this.parentElement.parentElement.remove()">×</button>
+        <button class="btn-remove" onclick="this.parentElement.parentElement.remove(); saveTemplateData();">×</button>
         <div class="field">
             ${description ? `<label>${description}</label>` : ''}
             <textarea placeholder="Enter details here..."></textarea>
@@ -17,9 +144,12 @@ function addSection() {
     `;
 
     sectionWrap.innerHTML = html;
-
-    // Append before the end of body or a specific container
     document.body.appendChild(sectionWrap);
+    
+    // Wire up events
+    sectionWrap.querySelector('textarea').addEventListener('input', saveTemplateData);
+    setupSectionHelp();
+    saveTemplateData();
 }
 
 function downloadAsPNG() {
@@ -289,6 +419,7 @@ function displayImage(placeholder, src) {
     img.src = src;
     img.style.display = 'block';
     placeholder.querySelector('.placeholder-text').style.display = 'none';
+    saveTemplateData();
 }
 
 function resetControls(controls) {
@@ -792,6 +923,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const controls = document.createElement('div');
     controls.className = 'template-controls';
     controls.innerHTML = `
+        <button class="btn-control" onclick="resetTemplate()" title="Clear all work">🧹 Reset</button>
         <button class="btn-control" onclick="addSection()">➕ Add Section</button>
         <div class="palette-wrapper">
             <button class="palette-toggle" id="palette-toggle-btn">
@@ -840,4 +972,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Apply saved palette
     applyPalette(savedPalette);
+
+    // --- Persistence Wiring ---
+    // Load existing
+    loadTemplateData();
+
+    // Setup listeners for all inputs
+    document.body.addEventListener('input', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+            saveTemplateData();
+        }
+    });
+
+    // Handle checkboxes/radios
+    document.body.addEventListener('change', (e) => {
+        if (e.target.type === 'checkbox' || e.target.type === 'radio') {
+            saveTemplateData();
+        }
+    });
 });

@@ -242,7 +242,19 @@
             }
         });
 
-        // Drag Event (Anchor nodes when moved)
+        // Drag Events (Continuous manual control)
+        network.on("dragStart", function(params) {
+            if (params.nodes.length > 0) {
+                const nodeId = params.nodes[0];
+                // Temporarily release for smooth movement
+                nodes.update({ 
+                    id: nodeId, 
+                    physics: true, 
+                    fixed: { x: false, y: false } 
+                });
+            }
+        });
+
         network.on("dragEnd", function(params) {
             if (params.nodes.length > 0) {
                 const nodeId = params.nodes[0];
@@ -251,7 +263,8 @@
                     id: nodeId, 
                     x: pos[nodeId].x, 
                     y: pos[nodeId].y, 
-                    fixed: { x: true, y: true } 
+                    physics: false, // Pin it after drop
+                    fixed: { x: true, y: true } // Double-lock to ensure it stays
                 });
             }
             saveTemplateData();
@@ -307,6 +320,7 @@
             const allNodes = nodes.get();
             const updates = allNodes.map(node => ({
                 id: node.id,
+                physics: true,
                 fixed: { x: false, y: false }
             }));
             nodes.update(updates);

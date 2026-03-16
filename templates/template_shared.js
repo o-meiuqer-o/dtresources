@@ -91,6 +91,18 @@ function loadTemplateData() {
             edges.clear();
             nodes.add(data.rca.nodes);
             edges.add(data.rca.edges);
+            
+            // Restore settings if any
+            if (data.rca_settings) {
+                const slider = document.getElementById('lengthSlider');
+                if (slider) {
+                    slider.value = data.rca_settings.nodeDistance;
+                    if (typeof updateLineLength === 'function') {
+                        updateLineLength(slider.value);
+                    }
+                }
+            }
+
             if (typeof updateNodeColors === 'function') updateNodeColors();
             setTimeout(() => network.fit(), 200);
         }

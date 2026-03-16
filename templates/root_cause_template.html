@@ -105,6 +105,10 @@
         <button class="btn-tool" onclick="editNode()">✏️ Edit Text</button>
         <button class="btn-tool" onclick="deleteNode()" style="color:#ff3b30;">➖ Delete</button>
         <div style="flex:1"></div>
+        <div style="display:flex; align-items:center; gap:8px; font-size: 0.8rem; font-weight: 600; color: #666; background: white; padding: 4px 12px; border-radius: 6px; border: 1px solid #ccc;">
+            📏 Line Length
+            <input type="range" id="lengthSlider" min="100" max="500" value="200" style="cursor:pointer;" oninput="updateLineLength(this.value)">
+        </div>
         <button class="btn-tool btn-primary" onclick="downloadAsPNG()">📥 PNG</button>
     </div>
 
@@ -291,6 +295,29 @@
                 nodes.remove(selected[0]);
                 saveTemplateData();
             }
+        }
+        function updateLineLength(val) {
+            network.setOptions({
+                physics: {
+                    repulsion: {
+                        nodeDistance: parseInt(val)
+                    }
+                }
+            });
+            if (typeof saveTemplateData === 'function') saveTemplateData();
+        }
+
+        // Add to persistence
+        const originalSave = typeof saveTemplateData === 'function' ? saveTemplateData : null;
+        if (originalSave) {
+            window.saveTemplateData = function() {
+                const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                data.rca_settings = {
+                    nodeDistance: document.getElementById('lengthSlider').value
+                };
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                originalSave();
+            };
         }
     </script>
 </body>

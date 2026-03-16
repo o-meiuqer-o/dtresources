@@ -38,6 +38,8 @@ function saveTemplateData() {
 
     // 4. Special: Root Cause Analysis (vis-network)
     if (typeof nodes !== 'undefined' && typeof edges !== 'undefined' && typeof network !== 'undefined') {
+        // Sync visual coordinates back to DataSet for persistence
+        network.storePositions();
         data.rca = {
             nodes: nodes.get(),
             edges: edges.get()

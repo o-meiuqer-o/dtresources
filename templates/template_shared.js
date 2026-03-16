@@ -69,6 +69,30 @@ function downloadAsPNG() {
     document.body.style.maxWidth = 'none';
     document.body.style.width = 'max-content';
 
+    // 5. Special handling for vis-network (Root Cause Analysis)
+    let savedNetworkSize = null;
+    const networkDiv = document.getElementById('mynetwork');
+    if (networkDiv && typeof network !== 'undefined') {
+        savedNetworkSize = { 
+            width: networkDiv.style.width, 
+            height: networkDiv.style.height,
+            viewId: network.getViewPosition(),
+            scale: network.getScale()
+        };
+        
+        network.fit();
+        const scale = network.getScale();
+        if (scale < 1) {
+            const reqH = (networkDiv.offsetHeight / scale) + 100;
+            const reqW = (networkDiv.offsetWidth / scale) + 100;
+            networkDiv.style.height = reqH + 'px';
+            networkDiv.style.width = reqW + 'px';
+            network.setSize(reqW + 'px', reqH + 'px');
+            network.redraw();
+            network.fit();
+        }
+    }
+
     function restore() {
         document.body.style.maxWidth = savedBodyMaxWidth;
         document.body.style.width = savedBodyWidth;
@@ -77,6 +101,21 @@ function downloadAsPNG() {
         if (tableControls) tableControls.style.display = 'flex';
         if (tableContainer) tableContainer.style.overflow = savedOverflow;
         textareas.forEach((t, i) => { t.style.height = savedHeights[i] || ''; });
+        
+        if (savedNetworkSize) {
+            networkDiv.style.width = savedNetworkSize.width;
+            networkDiv.style.height = savedNetworkSize.height;
+            network.setSize(savedNetworkSize.width, savedNetworkSize.height);
+            network.redraw();
+            setTimeout(() => {
+                network.moveTo({
+                    position: savedNetworkSize.viewId,
+                    scale: savedNetworkSize.scale,
+                    animation: false
+                });
+            }, 50);
+        }
+
         btn.innerHTML = originalText;
         btn.disabled = false;
     }

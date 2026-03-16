@@ -104,6 +104,7 @@
         <button class="btn-tool" onclick="addNode()">➕ Add Cause</button>
         <button class="btn-tool" onclick="editNode()">✏️ Edit Text</button>
         <button class="btn-tool" onclick="deleteNode()" style="color:#ff3b30;">➖ Delete</button>
+        <button class="btn-tool" onclick="releaseAllNodes()">🔓 Release All</button>
         <div style="flex:1"></div>
         <button class="btn-tool btn-primary" onclick="downloadAsPNG()">📥 PNG</button>
     </div>
@@ -295,6 +296,15 @@
                 nodes.remove(selected[0]);
                 saveTemplateData();
             }
+        }
+        function releaseAllNodes() {
+            const allNodes = nodes.get();
+            const updates = allNodes.map(node => ({
+                id: node.id,
+                fixed: { x: false, y: false }
+            }));
+            nodes.update(updates);
+            saveTemplateData();
         }
     </script>
 </body>

@@ -138,16 +138,21 @@
         
         const options = {
             layout: {
-                hierarchical: {
-                    direction: 'UD', // Up-Down sorting
-                    sortMethod: 'directed',
-                    levelSeparation: 100,
-                    nodeSpacing: 200,
-                    treeSpacing: 250
-                }
+                hierarchical: false // Setting to false enables free movement while keeping logic
             },
             physics: {
-                enabled: false // Disable physics for clean hierarchical layout
+                enabled: true,
+                solver: 'repulsion',
+                repulsion: {
+                    nodeDistance: 200,
+                    centralGravity: 0.1,
+                    springLength: 150,
+                    springConstant: 0.05
+                },
+                stabilization: {
+                    enabled: true,
+                    iterations: 1000
+                }
             },
             nodes: {
                 shape: 'box',
@@ -175,8 +180,8 @@
                 width: 2,
                 smooth: {
                     type: 'cubicBezier',
-                    forceDirection: 'vertical',
-                    roundness: 0.5
+                    forceDirection: 'none',
+                    roundness: 0.4
                 }
             },
             interaction: {

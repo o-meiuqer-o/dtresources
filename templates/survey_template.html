@@ -14,25 +14,16 @@
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             padding: 2rem;
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             color: #1d1d1f;
         }
 
-        h1 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
 
-        .subtitle {
-            color: #666;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
-        }
+        .subtitle { color: #666; margin-bottom: 2rem; font-size: 0.9rem; }
 
-        .field {
-            margin-bottom: 1.5rem;
-        }
+        .field { margin-bottom: 1.5rem; }
 
         .field label {
             display: block;
@@ -51,31 +42,7 @@
             font-family: inherit;
         }
 
-        .field textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-
-        table {
-            border-collapse: collapse;
-            table-layout: auto;
-            width: max-content;
-            min-width: 100%;
-            margin-top: 1rem;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 0.75rem;
-            text-align: left;
-            font-size: 0.85rem;
-        }
-
-        th {
-            background: #f5f5f7;
-            font-weight: 600;
-        }
+        .field textarea { min-height: 80px; resize: vertical; }
 
         .section-title {
             font-size: 1.1rem;
@@ -95,10 +62,85 @@
             margin-bottom: 1.5rem;
         }
 
+        /* Questions table */
+        #questions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        #questions-table th {
+            background: #f5f5f7;
+            font-weight: 600;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+        #questions-table td {
+            border: 1px solid #ddd;
+            padding: 0.4rem 0.75rem;
+            vertical-align: middle;
+        }
+        /* # column */
+        #questions-table td:first-child {
+            text-align: center;
+            width: 36px;
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        /* delete button column */
+        #questions-table td:last-child { width: 36px; text-align: center; }
+
+        #questions-table input[type="text"],
+        #questions-table select {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 0.85rem;
+            font-family: inherit;
+            padding: 0.25rem;
+            color: #1d1d1f;
+            outline: none;
+        }
+        #questions-table input[type="text"]:focus,
+        #questions-table select:focus {
+            background: #f0f7ff;
+            border-radius: 4px;
+        }
+        #questions-table tr:hover td { background: #fbfbfd; }
+
+        .btn-add-row {
+            margin-top: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            background: #0071e3;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-add-row:hover { background: #005bb5; }
+
+        .btn-del-row {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            padding: 0 4px;
+            transition: color 0.15s;
+        }
+        .btn-del-row:hover { color: #ff3b30; }
+
         @media print {
-            body {
-                padding: 1rem;
-            }
+            body { padding: 1rem; }
+            .btn-add-row, .btn-del-row { display: none !important; }
         }
     </style>
 </head>
@@ -122,64 +164,21 @@
     </div>
 
     <div class="section-title">2. Survey Questions</div>
-    <div class="note">Mix closed-ended (multiple choice, rating scales) and open-ended questions. Aim for 5–10 minutes
-        completion time.</div>
-    <table>
-        <tr>
-            <th>#</th>
-            <th>Question</th>
-            <th>Type</th>
-            <th>Options / Scale</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
+    <div class="note">Mix closed-ended (multiple choice, rating scales) and open-ended questions. Aim for 5–10 minutes completion time. Click any cell to edit — use the dropdown to set the question type.</div>
+
+    <table id="questions-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Question</th>
+                <th>Type</th>
+                <th>Options / Scale</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="questions-body"></tbody>
     </table>
+    <button class="btn-add-row" onclick="addQuestionRow()">➕ Add Question</button>
 
     <div class="section-title">3. Analysis Plan</div>
     <div class="field">
@@ -190,7 +189,96 @@
         <label>How will findings feed into empathy maps or personas?</label>
         <textarea placeholder="Describe how survey data connects to other tools..."></textarea>
     </div>
+
     <script src="template_shared.js"></script>
+    <script>
+        const QUESTION_TYPES = [
+            'Open-ended',
+            'Multiple choice',
+            'Rating scale (1–5)',
+            'Rating scale (1–10)',
+            'Likert scale',
+            'Yes / No',
+            'Ranking',
+            'Checkbox',
+            'Short answer'
+        ];
+
+        function makeTypeOptions(selected) {
+            return QUESTION_TYPES.map(t =>
+                `<option value="${t}" ${t === selected ? 'selected' : ''}>${t}</option>`
+            ).join('');
+        }
+
+        function addQuestionRow(question = '', type = 'Open-ended', options = '') {
+            const tbody = document.getElementById('questions-body');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="row-num"></td>
+                <td><input type="text" placeholder="Type your question here..." value="${question.replace(/"/g, '&quot;')}" oninput="saveTemplateData()"></td>
+                <td>
+                    <select onchange="saveTemplateData()">${makeTypeOptions(type)}</select>
+                </td>
+                <td><input type="text" placeholder="e.g. A, B, C  or  1–5" value="${options.replace(/"/g, '&quot;')}" oninput="saveTemplateData()"></td>
+                <td><button class="btn-del-row" title="Remove this question" onclick="removeRow(this)">✕</button></td>
+            `;
+            tbody.appendChild(tr);
+            renumberRows();
+            // Don't call saveTemplateData on initial load to avoid infinite loop
+        }
+
+        function removeRow(btn) {
+            btn.closest('tr').remove();
+            renumberRows();
+            saveTemplateData();
+        }
+
+        function renumberRows() {
+            document.querySelectorAll('#questions-body tr .row-num').forEach((td, i) => {
+                td.textContent = i + 1;
+            });
+        }
+
+        // ---- Survey-specific persistence ----
+        function saveSurveyRows() {
+            const rows = [];
+            document.querySelectorAll('#questions-body tr').forEach(tr => {
+                const cells = tr.querySelectorAll('input[type="text"], select');
+                rows.push({
+                    question: cells[0]?.value || '',
+                    type:     cells[1]?.value || 'Open-ended',
+                    options:  cells[2]?.value || ''
+                });
+            });
+            try {
+                const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                stored.survey_rows = rows;
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+            } catch(e) { console.warn('Survey save failed', e); }
+        }
+
+        function loadSurveyRows() {
+            try {
+                const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                if (stored.survey_rows && stored.survey_rows.length > 0) {
+                    stored.survey_rows.forEach(r => addQuestionRow(r.question, r.type, r.options));
+                    return;
+                }
+            } catch(e) {}
+            // Default: 5 blank starter rows
+            for (let i = 0; i < 5; i++) addQuestionRow();
+        }
+
+        // Wrap the shared saveTemplateData to also persist rows
+        const _sharedSave = window.saveTemplateData;
+        window.saveTemplateData = function () {
+            saveSurveyRows();
+            if (typeof _sharedSave === 'function') _sharedSave();
+        };
+
+        // Init
+        loadSurveyRows();
+    </script>
 </body>
 
 </html>

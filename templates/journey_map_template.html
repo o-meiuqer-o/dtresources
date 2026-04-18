@@ -324,7 +324,7 @@
                         <div class="axis-label" style="top:5px; color:#00ca4e;">+10 (Positive)</div>
                         <div class="axis-label" style="top:calc(50% - 8px);">0 (Neutral)</div>
                         <div class="axis-label" style="bottom:5px; color:#ff3b30;">-10 (Negative)</div>
-                        <svg id="emotion-graph"></svg>
+                        <svg id="emotion-graph" xmlns="http://www.w3.org/2000/svg"></svg>
                     </td>
                 </tr>
             </tbody>
@@ -352,6 +352,12 @@
             const cell = document.getElementById('graph-cell');
             const width = cell.clientWidth;
             const height = cell.clientHeight;
+
+            // html2canvas requires these explicit attributes to parse svgs cleanly
+            svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            svg.setAttribute('width', width);
+            svg.setAttribute('height', height);
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
             
             const padding = 20;
             const yRange = 20; // from -10 to 10 is 20 steps

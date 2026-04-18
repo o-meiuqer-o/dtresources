@@ -14,6 +14,7 @@ function saveTemplateData() {
     document.querySelectorAll('input, textarea, select').forEach((el, i) => {
         if (el.closest('.template-controls')) return;
         data.fields.push({
+            id: el.id || null,
             index: i,
             value: el.value,
             checked: el.type === 'checkbox' || el.type === 'radio' ? el.checked : null
@@ -54,6 +55,10 @@ function saveTemplateData() {
 }
 
 function loadTemplateData() {
+    if (typeof window.preLoadTemplateHook === 'function') {
+        window.preLoadTemplateHook();
+    }
+
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return;
 
@@ -68,7 +73,7 @@ function loadTemplateData() {
         // 2. Restore Fields
         const fields = document.querySelectorAll('input, textarea, select');
         (data.fields || []).forEach(f => {
-            const el = fields[f.index];
+            const el = f.id ? document.getElementById(f.id) : fields[f.index];
             if (el) {
                 if (f.checked !== null) el.checked = f.checked;
                 else el.value = f.value;

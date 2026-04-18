@@ -474,6 +474,8 @@
             bindEvents();
             if(window.setupImagePlaceholders) window.setupImagePlaceholders();
             drawGraph();
+            assignIDs();
+            if (window.saveTemplateData) window.saveTemplateData();
         }
 
         function removeStage() {
@@ -491,6 +493,19 @@
             graphCell.colSpan = headers.children.length - 1;
             
             drawGraph();
+            assignIDs();
+            if (window.saveTemplateData) window.saveTemplateData();
+        }
+
+        function assignIDs() {
+            ['names', 'actions', 'thoughts', 'emotions', 'pain', 'scores'].forEach(id => {
+                const row = document.getElementById('row-' + id);
+                if(!row) return;
+                const inputs = row.querySelectorAll('textarea, input');
+                inputs.forEach((input, index) => {
+                    input.id = `jm-grid-${id}-col${index}`;
+                });
+            });
         }
 
         function bindEvents() {
@@ -501,8 +516,41 @@
             });
         }
 
+        // Setup custom persistence for column count
+        const STORAGE_PREFIX = 'dt-persistence-';
+        const PAGE_ID = window.location.pathname.split('/').pop() || 'index';
+        const STORAGE_KEY = STORAGE_PREFIX + PAGE_ID;
+
+        window.preLoadTemplateHook = function() {
+            window.isRestoring = true;
+            try {
+                const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                const targetStages = stored.jm_stages || 5;
+                const currentStages = document.getElementById('row-headers').children.length - 1;
+                for (let i = currentStages; i < targetStages; i++) {
+                    addStage();
+                }
+            } catch(e) {}
+            assignIDs();
+            window.isRestoring = false;
+        };
+
         document.addEventListener('DOMContentLoaded', () => {
+            // Intercept saveTemplateData to also save stage count
+            const _sharedSave = window.saveTemplateData;
+            window.saveTemplateData = function () {
+                if (window.isRestoring) return;
+                try {
+                    const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+                    stored.jm_stages = document.getElementById('row-headers').children.length - 1;
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
+                } catch(e) { console.warn('Survey save failed', e); }
+                
+                if (typeof _sharedSave === 'function') _sharedSave();
+            };
+
             bindEvents();
+            assignIDs();
             setTimeout(drawGraph, 100); // Give layout time to apply max-width
             window.addEventListener('resize', drawGraph);
         });

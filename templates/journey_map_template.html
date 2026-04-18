@@ -225,112 +225,37 @@
     </div>
 
     <div class="section-title">The Map</div>
-    <div class="table-container" style="overflow-x: auto;">
+    <div class="table-container" style="overflow-x: auto; padding-bottom: 1rem;">
         <table id="journey-table">
             <thead>
-                <tr id="row-headers">
-                    <th style="width:12%; min-width: 130px;">Layer</th>
-                    <th>Stage 1</th>
-                    <th>Stage 2</th>
-                    <th>Stage 3</th>
-                    <th>Stage 4</th>
-                    <th>Stage 5</th>
+                <tr>
+                    <th style="min-width: 250px;">Stage Name<br><span class="layer-sub">Key phase</span></th>
+                    <th style="min-width: 180px;">Scene / Event<br><span class="layer-sub">Upload picture</span></th>
+                    <th style="min-width: 350px;">🏃 Actions<br><span class="layer-sub">What do they do?</span></th>
+                    <th style="min-width: 350px;">🤔 Thoughts<br><span class="layer-sub">Internal mental state</span></th>
+                    <th style="min-width: 350px;">🗣️/😟 Feels & Says<br><span class="layer-sub">External & internal emotions</span></th>
+                    <th style="min-width: 350px;">Pain Points<br><span class="layer-sub">Frictions & Blockers</span></th>
+                    <th style="min-width: 130px;">Emotion Score<br><span class="layer-sub">-10 to 10</span></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr id="row-names">
-                    <td>
-                        <div class="layer-title">Stage Name</div>
-                        <div class="layer-sub">Key phase</div>
-                    </td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                </tr>
-                <tr id="row-images">
-                    <td>
-                        <div class="layer-title">Scene / Event</div>
-                        <div class="layer-sub">Upload picture</div>
-                    </td>
-                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
-                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
-                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
-                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
-                    <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
-                </tr>
-                <tr id="row-actions">
-                    <td>
-                        <div class="layer-title">🏃 Actions</div>
-                        <div class="layer-sub">What do they do?</div>
-                    </td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                </tr>
-                <tr id="row-thoughts">
-                    <td>
-                        <div class="layer-title">🤔 Thoughts</div>
-                        <div class="layer-sub">Internal mental state</div>
-                    </td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                </tr>
-                <tr id="row-emotions">
-                    <td>
-                        <div class="layer-title">🗣️/😟 Feels & Says</div>
-                        <div class="layer-sub">External & internal emotions</div>
-                    </td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                </tr>
-                <tr id="row-pain">
-                    <td>
-                        <div class="layer-title">Pain Points</div>
-                        <div class="layer-sub">Frictions & Blockers</div>
-                    </td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                    <td><textarea></textarea></td>
-                </tr>
-                <tr id="row-scores">
-                    <td>
-                        <div class="layer-title">Emotion Score</div>
-                        <div class="layer-sub">Rate from -10 to 10</div>
-                    </td>
-                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
-                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
-                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
-                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
-                    <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
-                </tr>
-                <tr id="row-graph">
-                    <td>
-                        <div class="layer-title">Emotion Graph</div>
-                        <div class="layer-sub">Automatically mapped</div>
-                    </td>
-                    <td colspan="5" id="graph-cell">
-                        <canvas id="emotion-graph-canvas" style="position: absolute; left: 0; top: 0; z-index: 10; width: 100%; height: 100%;"></canvas>
-                    </td>
-                </tr>
+            <tbody id="row-container">
+                <!-- Stages will be populated here -->
             </tbody>
         </table>
     </div>
     
     <div class="table-controls">
-        <button class="btn-control" onclick="addStage()">➕ Add Stage (Column)</button>
+        <button class="btn-control" onclick="addStage()">➕ Add Stage (Row)</button>
         <button class="btn-control btn-remove" style="position:relative; right:auto; opacity:1;" onclick="removeStage()">➖ Remove Stage</button>
+    </div>
+
+    <div class="section-title">Emotion Graph</div>
+    <div class="note">Automatically mapped left-to-right from the Emotion Scores above. Ranges from -10 (negative) to +10 (positive).</div>
+    <div style="position: relative; height: 300px; background: #fff; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 2rem; overflow: hidden;" id="graph-cell">
+        <canvas id="emotion-graph-canvas" style="position: absolute; left: 0; top: 0; z-index: 10; width: 100%; height: 100%;"></canvas>
+        <div class="axis-label" style="top:5px; color:#00ca4e;">+10 (Positive)</div>
+        <div class="axis-label" style="top:calc(50% - 8px);">0 (Neutral)</div>
+        <div class="axis-label" style="bottom:5px; color:#ff3b30;">-10 (Negative)</div>
     </div>
 
     <div class="section-title">Opportunities</div>
@@ -442,27 +367,20 @@
         }
 
         function addStage() {
-            const headers = document.getElementById('row-headers');
-            const stageNum = headers.children.length; // index starts at 1
+            const tbody = document.getElementById('row-container');
             
-            const th = document.createElement('th');
-            th.textContent = `Stage ${stageNum}`;
-            headers.appendChild(th);
-            
-            // Rows logic
-            document.getElementById('row-names').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
-            document.getElementById('row-images').insertAdjacentHTML('beforeend', '<td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>');
-            document.getElementById('row-actions').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
-            document.getElementById('row-thoughts').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
-            document.getElementById('row-emotions').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
-            document.getElementById('row-pain').insertAdjacentHTML('beforeend', '<td><textarea></textarea></td>');
-            
-            const tdScore = document.createElement('td');
-            tdScore.innerHTML = '<input type="number" class="emotion-score" min="-10" max="10" value="0">';
-            document.getElementById('row-scores').appendChild(tdScore);
-            
-            const graphCell = document.getElementById('graph-cell');
-            graphCell.colSpan = stageNum;
+            const tr = document.createElement('tr');
+            tr.className = 'stage-row';
+            tr.innerHTML = `
+                <td><textarea placeholder="Name..."></textarea></td>
+                <td><div class="image-placeholder image-placeholder-sm" style="aspect-ratio:unset;"></div></td>
+                <td><textarea></textarea></td>
+                <td><textarea></textarea></td>
+                <td><textarea></textarea></td>
+                <td><textarea></textarea></td>
+                <td><input type="number" class="emotion-score" min="-10" max="10" value="0"></td>
+            `;
+            tbody.appendChild(tr);
             
             bindEvents();
             if(window.setupImagePlaceholders) window.setupImagePlaceholders();
@@ -472,18 +390,10 @@
         }
 
         function removeStage() {
-            const headers = document.getElementById('row-headers');
-            if (headers.children.length <= 3) return; // Keep at least 2 stages + label
+            const tbody = document.getElementById('row-container');
+            if (tbody.children.length <= 1) return; // Keep at least 1 stage
             
-            headers.lastElementChild.remove();
-            
-            ['names', 'images', 'actions', 'thoughts', 'emotions', 'pain', 'scores'].forEach(id => {
-                const row = document.getElementById('row-' + id);
-                row.lastElementChild.remove();
-            });
-            
-            const graphCell = document.getElementById('graph-cell');
-            graphCell.colSpan = headers.children.length - 1;
+            tbody.lastElementChild.remove();
             
             drawGraph();
             assignIDs();
@@ -491,12 +401,11 @@
         }
 
         function assignIDs() {
-            ['names', 'actions', 'thoughts', 'emotions', 'pain', 'scores'].forEach(id => {
-                const row = document.getElementById('row-' + id);
-                if(!row) return;
+            const rows = document.querySelectorAll('.stage-row');
+            rows.forEach((row, rowIndex) => {
                 const inputs = row.querySelectorAll('textarea, input');
-                inputs.forEach((input, index) => {
-                    input.id = `jm-grid-${id}-col${index}`;
+                inputs.forEach((input, colIndex) => {
+                    input.id = `jm-grid-row${rowIndex}-col${colIndex}`;
                 });
             });
         }
@@ -519,7 +428,7 @@
             try {
                 const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
                 const targetStages = stored.jm_stages || 5;
-                const currentStages = document.getElementById('row-headers').children.length - 1;
+                const currentStages = document.getElementById('row-container').children.length;
                 for (let i = currentStages; i < targetStages; i++) {
                     addStage();
                 }
@@ -534,8 +443,9 @@
             window.saveTemplateData = function () {
                 if (window.isRestoring) return;
                 try {
+                    const tbody = document.getElementById('row-container');
                     const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-                    stored.jm_stages = document.getElementById('row-headers').children.length - 1;
+                    stored.jm_stages = tbody ? tbody.children.length : 0;
                     localStorage.setItem(STORAGE_KEY, JSON.stringify(stored));
                 } catch(e) { console.warn('Survey save failed', e); }
                 

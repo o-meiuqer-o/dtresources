@@ -4,11 +4,15 @@ const PAGE_ID = window.location.pathname.split('/').pop() || 'index';
 const STORAGE_KEY = STORAGE_PREFIX + PAGE_ID;
 
 function saveTemplateData() {
-    const data = {
-        fields: [],
-        sections: [],
-        images: []
-    };
+    let data = { fields: [], sections: [], images: [] };
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+            const parsed = JSON.parse(raw);
+            // Keep all custom keys, just reset the ones we re-calculate
+            data = { ...parsed, fields: [], sections: [], images: [] };
+        }
+    } catch(e) {}
 
     // 1. Core Fields (by index to handle non-ID fields)
     document.querySelectorAll('input, textarea, select').forEach((el, i) => {

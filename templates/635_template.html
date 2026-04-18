@@ -329,11 +329,13 @@
             </div>
         </div>
 
-        <!-- Worksheet Screen -->
         <div id="screen-worksheet" class="card">
             <div class="worksheet-header">
                 <div class="info-group">
-                    <p class="round-info">Round <span id="display-round">1</span> of <span id="display-total-rounds">?</span></p>
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                        <p class="round-info" style="margin: 0;">Round <span id="display-round">1</span> of <span id="display-total-rounds">?</span></p>
+                        <button class="btn btn-secondary" onclick="endSessionPermanently()" style="padding: 0.25rem 0.75rem; font-size: 0.7rem; width: auto; border-radius: 8px; opacity: 0.6; height: auto;">🚪 Abort & Reset</button>
+                    </div>
                     <h2 id="display-problem" style="font-size: 1.25rem;">Problem Statement</h2>
                 </div>
                 <div class="timer-box">

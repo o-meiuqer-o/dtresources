@@ -293,7 +293,6 @@
                     <ul style="font-size: 0.875rem; color: var(--text-muted); padding-left: 1.2rem;">
                         <li style="margin-bottom: 0.5rem;"><strong>6</strong> participants per session.</li>
                         <li style="margin-bottom: 0.5rem;"><strong>3</strong> ideas written by each in every round.</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>5</strong> minutes per round.</li>
                         <li style="margin-bottom: 0.5rem;">After each round, your <strong>Ideas Pass</strong> to the next person wirelessly!</li>
                     </ul>
                     <p style="margin-top: 1.5rem; font-size: 0.75rem; opacity: 0.6;">Connect to the same WiFi/Hotspot for best results. No server required.</p>
@@ -306,13 +305,13 @@
             <div class="lobby-info">
                 <h2>Waiting for Collaborators</h2>
                 <p class="status-msg">Share this code or QR with your team:</p>
-                <div class="room-badge" id="display-room-id" onclick="copyRoomLink()">----</div>
+                <div class="room-badge" id="display-room-id">----</div>
                 
                 <div class="qrcode-container" id="qrcode" style="margin: 2rem auto;"></div>
 
                 <div id="url-config" style="max-width:320px; margin: 1rem auto; background: rgba(99, 102, 241, 0.1); padding: 1rem; border-radius: 12px; border: 1px solid var(--primary); border-style: dashed;">
                     <p style="font-size:0.65rem; color: #818cf8; font-weight: 800; letter-spacing: 0.05em;">🌐 CLOUD HANDSHAKE READY</p>
-                    <p style="font-size:0.6rem; color: var(--text-muted); margin-top: 4px;">Scanning this QR connects your phone to this host automatically via GitHub Pages.</p>
+                    <p style="font-size:0.6rem; color: var(--text-muted); margin-top: 4px;" id="cloud-sync-status">Cloud-Sync: INITIALIZING...</p>
                 </div>
 
                 <p id="participant-count-msg" style="font-weight: 600; margin-top: 2rem;">Connected: 1 / 6</p>
@@ -366,7 +365,7 @@
 
             <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
                 <p id="transfer-status" style="color: var(--text-muted); font-size: 0.875rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px;">Waiting for host to signal next round...</p>
-                <button class="btn" id="btn-pass-ideas" style="width: auto; padding: 0.8rem 2rem;">
+                <button class="btn" id="btn-pass-ideas" style="width: auto; padding: 0.8rem 2rem; display: none;">
                     <span>Pass Sheet →</span>
                 </button>
             </div>
@@ -387,7 +386,7 @@
             </div>
 
             <div style="margin-top: 3rem; text-align: center;">
-                <button class="btn" onclick="window.location.reload()" style="width: auto; padding: 0.8rem 2rem;">
+                <button class="btn" onclick="endSessionPermanently()" style="width: auto; padding: 0.8rem 2rem;">
                     <span>🏁 End Session for All</span>
                 </button>
             </div>
@@ -435,15 +434,14 @@
             }
         });
 
-        // Auto-save on typing
         ['idea-1', 'idea-2', 'idea-3'].forEach(id => {
             document.getElementById(id).addEventListener('input', saveSessionState);
         });
 
-        // --- Core Variables ---
+        // --- PeerJS & Network ---
         let peer = null;
-        let conn = null; // Connection to host (for clients)
-        let connections = {}; // List of connections (for host)
+        let conn = null; 
+        let connections = {}; 
         let participants = [];
         let myId = null;
         let myName = "";
@@ -457,12 +455,13 @@
         const screens = {
             join: document.getElementById('screen-join'),
             lobby: document.getElementById('screen-lobby'),
-            worksheet: document.getElementById('screen-worksheet')
+            worksheet: document.getElementById('screen-worksheet'),
+            review: document.getElementById('screen-review')
         };
 
         function showScreen(name) {
             Object.values(screens).forEach(s => s.classList.remove('active'));
-            screens[name].classList.add('active');
+            if (screens[name]) screens[name].classList.add('active');
         }
 
         function notify(msg) {
@@ -472,71 +471,46 @@
             setTimeout(() => n.classList.remove('show'), 3000);
         }
 
-        // --- Host Side Connection Handler ---
         function handleHostIncoming(c) {
-            console.log("Incoming connection from:", c.peer);
-            
-            // On the Host side, we listen for data immediately. 
-            // PeerJS connections often arrive already open.
             const onData = (data) => {
-                console.log("Host received data:", data.type, "from", c.peer);
-                
                 if (data.type === 'IDENTIFY') {
                     if (participants.length >= 6) {
                         c.send({ type: 'ERROR', message: 'Room Full (Max 6)' });
                         setTimeout(() => c.close(), 500);
                         return;
                     }
-
                     participants.push({ id: c.peer, name: data.name, role: 'client' });
                     connections[c.peer] = c;
-                    
                     broadcastParticipants();
                     updateParticipantUI();
                     notify(`${data.name} joined!`);
                 } else if (data.type === 'ROUTE_SHEET') {
-                    // New synchronized handover: Host collects all into currentSheets
                     handleSheetReceipt(c.peer, data.content);
                 }
             };
-
             c.on('data', onData);
-            
             c.on('close', () => {
-                console.log("Connection closed:", c.peer);
                 participants = participants.filter(p => p.id !== c.peer);
                 delete connections[c.peer];
                 broadcastParticipants();
                 updateParticipantUI();
             });
-
-            c.on('error', (err) => console.error("Peer error:", err));
         }
 
         function broadcastParticipants() {
-            const data = { 
-                type: 'SYNC_LOBBY', 
-                participants: participants,
-                problem: problemStatement 
-            };
+            const data = { type: 'SYNC_LOBBY', participants, problem: problemStatement };
             Object.values(connections).forEach(c => c.send(data));
         }
 
-        // --- Client Side Connection Manager ---
         function connectToHost(hostId) {
-            console.log("Connecting to host:", hostId);
             conn = peer.connect(hostId);
-
             conn.on('open', () => {
-                console.log("Connected to host!");
                 conn.send({ type: 'IDENTIFY', name: myName });
                 document.getElementById('display-room-id').innerText = hostId;
                 document.getElementById('host-only-msg').style.display = 'block';
                 showScreen('lobby');
             });
-
             conn.on('data', (data) => {
-                console.log("Client received data:", data.type);
                 if (data.type === 'SYNC_LOBBY') {
                     participants = data.participants;
                     problemStatement = data.problem;
@@ -544,7 +518,6 @@
                 } else if (data.type === 'START') {
                     startSessionUI();
                 } else if (data.type === 'COLLECT') {
-                    // Host wants my sheet!
                     const content = {
                         idea1: document.getElementById('idea-1').value,
                         idea2: document.getElementById('idea-2').value,
@@ -558,50 +531,33 @@
                     showReviewUI(data.allSheets);
                 } else if (data.type === 'ERROR') {
                     alert(data.message);
+                    clearSessionState();
                     window.location.reload();
                 }
             });
-
             conn.on('close', () => {
-                alert("Disconnected from session.");
-                window.location.reload();
+                notify("Host disconnected.");
             });
         }
 
-        // --- Core Control Logic ---
-        document.getElementById('btn-create-room').addEventListener('click', () => {
-            myName = document.getElementById('input-name').value || "Host";
-            problemStatement = document.getElementById('host-problem').value;
-            isHost = true;
-            
-            // Generate a 6-digit ID and try to open room
-            const randomId = Math.floor(100000 + Math.random() * 900000).toString();
-            initPeer(randomId);
-        });
-
-        document.getElementById('btn-join-room').addEventListener('click', () => {
-            const hostId = document.getElementById('input-room-id').value.trim();
-            if (!hostId) return alert("Please enter 6-digit Room ID");
-            
-            myName = document.getElementById('input-name').value || "Collaborator";
-            isHost = false;
-            initPeer(null, hostId); // No custom ID for self, but target the hostId
-        });
-
         function initPeer(customId = null, targetHostId = null) {
-            console.log("Initializing peer. CustomId:", customId, "TargetHost:", targetHostId);
+            if (peer) {
+                console.log("Destroying existing peer...");
+                peer.destroy();
+            }
+            
+            console.log("Initializing peer. ID:", customId, "Targeting Host:", targetHostId);
             peer = customId ? new Peer(customId) : new Peer();
 
             peer.on('open', (id) => {
                 myId = id;
-                console.log('My peer ID is: ' + id);
+                console.log('Peer successfully opened. My ID:', id);
                 
                 if (isHost) {
                     roomID = id;
                     document.getElementById('display-room-id').innerText = id;
                     document.getElementById('cloud-sync-status').innerText = "Cloud-Sync: ACTIVE";
                     generateQR(id);
-                    // If reclaiming, don't reset participants unless empty
                     if (participants.length === 0) {
                         participants = [{ id, name: myName, role: 'host' }];
                     }
@@ -614,19 +570,20 @@
                 }
             });
 
-            peer.on('connection', (c) => {
-                if (isHost) handleHostIncoming(c);
-            });
+            peer.on('connection', handleHostIncoming);
             
             peer.on('error', (err) => {
-                if (err.type === 'unavailable-id' && isHost) {
-                    notify("ID still active. Waiting to reclaim...");
-                    setTimeout(() => initPeer(customId), 2500);
-                } else {
-                    console.error("PeerJS Error:", err);
-                    if (err.type === 'peer-unavailable') {
-                        alert("Could not find Room " + targetHostId + ". Check the code.");
+                console.error("PeerJS Error Event:", err.type, err);
+                if (err.type === 'unavailable-id') {
+                    if (isHost) {
+                        notify("ID collision or reclaimed. Retrying with new...");
+                        const fallbackId = Math.floor(100000 + Math.random() * 900000).toString();
+                        setTimeout(() => initPeer(fallbackId), 1500);
                     }
+                } else if (err.type === 'peer-unavailable') {
+                    notify("Host not found. Check the Room ID.");
+                } else {
+                    notify("Network/Peer Error: " + err.type);
                 }
             });
         }
@@ -640,236 +597,192 @@
                     ${p.role === 'host' ? '<div style="font-size: 0.6rem; color: var(--primary); font-weight: 800; margin-top:2px;">HOST</div>' : ''}
                 </div>
             `).join('');
-            
             document.getElementById('participant-count-msg').innerText = `Connected: ${participants.length} / 6`;
             document.getElementById('btn-start-session').disabled = !isHost || participants.length < 2;
         }
 
+        // --- Session Flow ---
         let totalRounds = 1;
-        let sessionHistory = []; // [ { ownerId: x, rounds: [ { idea1, idea2, idea3 } ] } ]
+        let currentSheets = {};
+
+        document.getElementById('btn-create-room').addEventListener('click', () => {
+            console.log("Create Room clicked. Clearing old session...");
+            clearSessionState(); // Clear any cached state before starting fresh
+            
+            myName = document.getElementById('input-name').value || "Host";
+            problemStatement = document.getElementById('host-problem').value;
+            isHost = true;
+            participants = [];
+            connections = {}; // Reset connections
+            
+            const randomId = Math.floor(100000 + Math.random() * 900000).toString();
+            initPeer(randomId);
+        });
+
+        document.getElementById('btn-join-room').addEventListener('click', () => {
+            const hostId = document.getElementById('input-room-id').value.trim();
+            if (!hostId) return alert("Please enter Room ID");
+            myName = document.getElementById('input-name').value || "Collaborator";
+            isHost = false;
+            initPeer(null, hostId);
+        });
+
+        document.getElementById('btn-start-session').addEventListener('click', () => {
+            if (!isHost) return;
+            Object.values(connections).forEach(c => c.send({ type: 'START' }));
+            startSessionUI();
+        });
 
         function startSessionUI() {
             totalRounds = participants.length;
             document.getElementById('display-total-rounds').innerText = totalRounds;
             document.getElementById('display-problem').innerText = problemStatement;
-            
-            // Initialize history (Host only keeps master, clients just keep theirs)
-            if (isHost) {
-                sessionHistory = participants.map(p => ({
-                    ownerId: p.id,
-                    ownerName: p.name,
-                    rounds: []
-                }));
-            }
-
             showScreen('worksheet');
             if (isHost) {
                 document.getElementById('btn-pass-ideas').style.display = 'block';
                 document.getElementById('btn-pass-ideas').innerText = "End Round & Pass All →";
-            } else {
-                document.getElementById('btn-pass-ideas').style.display = 'none';
-                document.getElementById('transfer-status').innerText = "Writing phase. Host will trigger the pass.";
             }
             startTimer();
         }
 
-        // Host triggers rotation
         document.getElementById('btn-pass-ideas').addEventListener('click', () => {
             if (!isHost) return;
             notify("Collecting sheets...");
             currentSheets = {};
-            // Gather host's own sheet
-            const hostContent = {
+            currentSheets[myId] = {
                 idea1: document.getElementById('idea-1').value,
                 idea2: document.getElementById('idea-2').value,
                 idea3: document.getElementById('idea-3').value
             };
-            currentSheets[myId] = hostContent;
-            
-            // Ask everyone else for their sheets
             Object.values(connections).forEach(c => c.send({ type: 'COLLECT' }));
         });
 
         function handleSheetReceipt(fromId, content) {
             currentSheets[fromId] = content;
             if (Object.keys(currentSheets).length === participants.length) {
-                // If this was the last round, move to review
-                if (currentRound >= totalRounds) {
-                    finalizeSession();
-                } else {
-                    rotateAndDistribute();
-                }
+                if (currentRound >= totalRounds) finalizeSession();
+                else rotateAndDistribute();
             }
         }
 
+        function rotateAndDistribute() {
+            const rotatedData = {};
+            for (let i = 0; i < participants.length; i++) {
+                const nextOwner = participants[(i + 1) % participants.length].id;
+                rotatedData[nextOwner] = currentSheets[participants[i].id];
+            }
+            participants.forEach(p => {
+                const sheet = rotatedData[p.id];
+                if (p.id === myId) receiveSheetData(sheet);
+                else if (connections[p.id]) connections[p.id].send({ type: 'RECEIVE_SHEET', content: sheet });
+            });
+        }
+
         function finalizeSession() {
-            notify("Brainwriting Complete!");
-            // Distribute final sheets (including the ones just collected)
-            // But instead of 'RECEIVE_SHEET' (which starts a timer), we send 'SHOW_REVIEW'
             const finalData = { type: 'SHOW_REVIEW', allSheets: currentSheets };
             Object.values(connections).forEach(c => c.send(finalData));
             showReviewUI(currentSheets);
         }
 
-        function rotateAndDistribute() {
-            notify("Rotating sheets!");
-            const rotatedData = {};
-            
-            for (let i = 0; i < participants.length; i++) {
-                const currentOwnerIndex = i;
-                const nextOwnerIndex = (i + 1) % participants.length;
-                
-                const currentOwnerId = participants[currentOwnerIndex].id;
-                const nextOwnerId = participants[nextOwnerIndex].id;
-                
-                rotatedData[nextOwnerId] = currentSheets[currentOwnerId];
-            }
-
-            // Send out the new sheets
-            participants.forEach(p => {
-                const sheet = rotatedData[p.id];
-                if (p.id === myId) {
-                    receiveSheetData(sheet);
-                } else if (connections[p.id]) {
-                    connections[p.id].send({ type: 'RECEIVE_SHEET', content: sheet });
-                }
-            });
-        }
-
         function receiveSheetData(content) {
             currentRound++;
             document.getElementById('display-round').innerText = currentRound;
-            
-            // 1. Move current boxes to History
             const hist = document.getElementById('history-container');
-            const ideaHistoryBox = document.getElementById('idea-history');
-            ideaHistoryBox.style.display = 'block';
-
-            const roundEntry = document.createElement('div');
-            roundEntry.style.gridColumn = "1 / span 3";
-            roundEntry.style.display = "grid";
-            roundEntry.style.gridTemplateColumns = "repeat(3, 1fr)";
-            roundEntry.style.gap = "1.5rem";
-            roundEntry.style.padding = "1rem";
-            roundEntry.style.background = "rgba(255,255,255,0.03)";
-            roundEntry.style.borderRadius = "12px";
-            roundEntry.style.marginBottom = "1rem";
-            roundEntry.innerHTML = `
-                <div style="font-size: 0.6rem; color: var(--text-muted); grid-column: 1/span 3;">ROUND ${currentRound-1} IDEAS:</div>
-                <div style="font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap;">${content.idea1}</div>
-                <div style="font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap;">${content.idea2}</div>
-                <div style="font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap;">${content.idea3}</div>
-            `;
-            hist.appendChild(roundEntry);
-
-            // 2. Clear current inputs
+            document.getElementById('idea-history').style.display = 'block';
+            const entry = document.createElement('div');
+            entry.style.gridColumn = "1/span 3";
+            entry.className = "idea-grid"; // reuse grid styles
+            entry.style.background = "rgba(255,255,255,0.03)";
+            entry.style.padding = "1rem";
+            entry.style.borderRadius = "12px";
+            entry.style.marginBottom = "1rem";
+            entry.innerHTML = `<div style="grid-column:1/span 3; font-size:0.6rem; opacity:0.5;">ROUND ${currentRound-1}</div>
+                <div style="font-size:0.85rem; white-space:pre-wrap;">${content.idea1}</div>
+                <div style="font-size:0.85rem; white-space:pre-wrap;">${content.idea2}</div>
+                <div style="font-size:0.85rem; white-space:pre-wrap;">${content.idea3}</div>`;
+            hist.appendChild(entry);
             document.getElementById('idea-1').value = "";
             document.getElementById('idea-2').value = "";
             document.getElementById('idea-3').value = "";
-
-            document.getElementById('transfer-status').innerText = "New Round Started! 🚀";
             startTimer();
         }
 
         function showReviewUI(allSheets) {
-            showScreen('screen-review');
+            showScreen('review');
             const container = document.getElementById('final-results-container');
-            container.innerHTML = "";
-
-            // Create a table-like view of all ideas
-            participants.forEach(p => {
-                const section = document.createElement('div');
-                section.style.marginBottom = "2rem";
-                section.innerHTML = `
-                    <h3 style="color: var(--primary); margin-bottom: 1rem;">${p.name}'s Contribution</h3>
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
-                        <div class="idea-card" style="font-size: 0.9rem;">${allSheets[p.id].idea1}</div>
-                        <div class="idea-card" style="font-size: 0.9rem;">${allSheets[p.id].idea2}</div>
-                        <div class="idea-card" style="font-size: 0.9rem;">${allSheets[p.id].idea3}</div>
+            container.innerHTML = participants.map(p => `
+                <div style="margin-bottom:2rem;">
+                    <h3 style="color:var(--primary);">${p.name}'s Contribution</h3>
+                    <div class="idea-grid">
+                        <div class="idea-card">${allSheets[p.id].idea1}</div>
+                        <div class="idea-card">${allSheets[p.id].idea2}</div>
+                        <div class="idea-card">${allSheets[p.id].idea3}</div>
                     </div>
-                `;
-                container.appendChild(section);
-            });
+                </div>
+            `).join('');
         }
 
-        function exportToPNG() {
-            // Import and call the shared export utility
-            if (typeof downloadAsPNG === 'function') {
-                downloadAsPNG();
-            } else {
-                notify("Export logic not found. Trying print...");
-                window.print();
-            }
-        }
-
-        // --- Utilities ---
+        // --- Timer ---
         function startTimer() {
-            timerSeconds = 300;
-            updateTimerDisplay();
             clearInterval(timerInterval);
+            timerSeconds = 300;
             timerInterval = setInterval(() => {
                 timerSeconds--;
-                updateTimerDisplay();
+                const m = Math.floor(timerSeconds/60).toString().padStart(2,'0');
+                const s = (timerSeconds % 60).toString().padStart(2,'0');
+                document.getElementById('display-timer').innerText = `${m}:${s}`;
                 if (timerSeconds <= 0) {
                     clearInterval(timerInterval);
-                    passSheet();
+                    notify("Time is Up! Pass your sheets.");
                 }
             }, 1000);
         }
 
-        function updateTimerDisplay() {
-            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
-            const s = (timerSeconds % 60).toString().padStart(2, '0');
-            document.getElementById('display-timer').innerText = `${m}:${s}`;
-        }
-
-        // --- QR & Connectivity Logic ---
-        function generateQR(id) {
-            // Point to the public GitHub Pages version of the app.
-            // This works even if the host is running locally, as both connect to PeerJS cloud.
-            const publicUrl = "https://o-meiuqer-o.github.io/dtresources/templates/635_template.html";
-            const finalUrl = `${publicUrl}?room=${id}`;
-            
-            console.log("Generating public-facing QR:", finalUrl);
-
-            document.getElementById("qrcode").innerHTML = "";
-            new QRCode(document.getElementById("qrcode"), {
-                text: finalUrl,
-                width: 128,
-                height: 128,
-                colorDark : "#0f172a",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
+        // --- Utilities ---
+        function generateQR(roomID) {
+            const qrContainer = document.getElementById("qrcode");
+            qrContainer.innerHTML = "";
+            new QRCode(qrContainer, {
+                text: `https://muef2246.github.io/dtresources/templates/635_template.html?room=${roomID}`,
+                width: 180, height: 180, colorDark: "#000000", colorLight: "#ffffff"
             });
-            
-            // Show helpful hint
-            document.getElementById('url-config').innerHTML = `
-                <p style="font-size:0.65rem; color: #818cf8; margin-bottom: 0.5rem; font-weight: 600;">🌐 PUBLIC HOTSPOT LINK ACTIVE</p>
-                <p style="font-size:0.6rem; color: var(--text-muted);">Points to your GitHub Pages. No IP configuration needed!</p>
-            `;
         }
 
-        document.getElementById('btn-update-qr').addEventListener('click', () => {
-            if (myId) generateQR(myId);
-            notify("QR Code updated with your Laptop IP!");
-        });
-
-        function copyRoomLink() {
-            const id = document.getElementById('display-room-id').innerText;
-            navigator.clipboard.writeText(id).then(() => notify("Room ID copied!"));
+        function exitSession() {
+            clearSessionState();
+            window.location.reload();
         }
 
-        document.getElementById('btn-pass-ideas').addEventListener('click', passSheet);
+        function endSessionPermanently() {
+            if (confirm("End session and clear all data?")) exitSession();
+        }
+
+        function exportToPNG() {
+            if (typeof downloadAsPNG === 'function') downloadAsPNG();
+            else window.print();
+        }
 
         window.onload = () => {
             const urlParams = new URLSearchParams(window.location.search);
-            const room = urlParams.get('room');
-            if (room) {
-                document.getElementById('input-room-id').value = room;
-                notify("Scanned Room ID auto-filled!");
+            const autoJoinId = urlParams.get('room');
+            if (autoJoinId) {
+                document.getElementById('input-room-id').value = autoJoinId;
+                notify("Auto-joining room: " + autoJoinId);
+            }
+
+            const saved = loadSessionState();
+            if (saved && saved.roomID) {
+                roomID = saved.roomID; isHost = saved.isHost; myName = saved.myName;
+                problemStatement = saved.problemStatement; currentRound = saved.currentRound;
+                participants = saved.participants || [];
+                if (saved.ideas) {
+                    document.getElementById('idea-1').value = saved.ideas.idea1 || "";
+                    document.getElementById('idea-2').value = saved.ideas.idea2 || "";
+                    document.getElementById('idea-3').value = saved.ideas.idea3 || "";
+                }
+                initPeer(isHost ? roomID : null, isHost ? null : roomID);
             }
         };
     </script>
 </body>
 </html>
-

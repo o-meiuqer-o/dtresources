@@ -321,10 +321,7 @@
                         <div class="layer-sub">Automatically mapped</div>
                     </td>
                     <td colspan="5" id="graph-cell">
-                        <div class="axis-label" style="top:5px; color:#00ca4e;">+10 (Positive)</div>
-                        <div class="axis-label" style="top:calc(50% - 8px);">0 (Neutral)</div>
-                        <div class="axis-label" style="bottom:5px; color:#ff3b30;">-10 (Negative)</div>
-                        <svg id="emotion-graph" xmlns="http://www.w3.org/2000/svg"></svg>
+                        <canvas id="emotion-graph-canvas" style="position: absolute; left: 0; top: 0; z-index: 10; width: 100%; height: 100%;"></canvas>
                     </td>
                 </tr>
             </tbody>
@@ -346,18 +343,19 @@
     <script>
         function drawGraph() {
             const inputs = document.querySelectorAll('.emotion-score');
-            const svg = document.getElementById('emotion-graph');
-            svg.innerHTML = '';
+            const canvas = document.getElementById('emotion-graph-canvas');
+            if(!canvas) return;
+            const ctx = canvas.getContext('2d');
             
             const cell = document.getElementById('graph-cell');
             const width = cell.clientWidth;
             const height = cell.clientHeight;
 
-            // html2canvas requires these explicit attributes to parse svgs cleanly
-            svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-            svg.setAttribute('width', width);
-            svg.setAttribute('height', height);
-            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            // Set actual canvas resolution to match display size for sharp lines
+            canvas.width = width;
+            canvas.height = height;
+            
+            ctx.clearRect(0, 0, width, height);
             
             const padding = 20;
             const yRange = 20; // from -10 to 10 is 20 steps
@@ -366,7 +364,6 @@
             
             const segmentWidth = width / count;
             
-            let pathD = "";
             let points = [];
             
             // Collect points
@@ -384,41 +381,35 @@
             
             // Draw baseline (0 line)
             const zeroY = height / 2;
-            const zeroLine = document.createElementNS("http://www.w3.org/2000/svg", "line");
-            zeroLine.setAttribute('x1', 0);
-            zeroLine.setAttribute('y1', zeroY);
-            zeroLine.setAttribute('x2', width);
-            zeroLine.setAttribute('y2', zeroY);
-            zeroLine.setAttribute('stroke', '#ddd');
-            zeroLine.setAttribute('stroke-width', '2');
-            zeroLine.setAttribute('stroke-dasharray', '5,5');
-            svg.appendChild(zeroLine);
-            
-            // Generate Path D
+            ctx.beginPath();
+            ctx.moveTo(0, zeroY);
+            ctx.lineTo(width, zeroY);
+            ctx.strokeStyle = '#ddd';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]); // reset
+
+            // Draw Path curve
+            ctx.beginPath();
             points.forEach((pt, i) => {
                 if(i === 0) {
-                    pathD += `M ${pt.x} ${pt.y} `;
+                    ctx.moveTo(pt.x, pt.y);
                 } else {
                     const prev = points[i-1];
                     const cp1X = prev.x + (pt.x - prev.x) / 2;
-                    pathD += `C ${cp1X} ${prev.y}, ${cp1X} ${pt.y}, ${pt.x} ${pt.y} `;
+                    ctx.bezierCurveTo(cp1X, prev.y, cp1X, pt.y, pt.x, pt.y);
                 }
             });
-            
-            // Draw Path curve
-            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            path.setAttribute('d', pathD);
-            path.setAttribute('stroke', '#0071e3');
-            path.setAttribute('stroke-width', '4');
-            path.setAttribute('fill', 'none');
-            svg.appendChild(path);
+            ctx.strokeStyle = '#0071e3';
+            ctx.lineWidth = 4;
+            ctx.stroke();
             
             // Draw points and highlight extremes
             points.forEach((pt, i) => {
                 let isPeak = false;
                 let isTrough = false;
                 
-                // Determine extremes (local maxima/minima)
                 if (i > 0 && i < points.length - 1) {
                     if (pt.val > points[i-1].val && pt.val > points[i+1].val) isPeak = true;
                     if (pt.val < points[i-1].val && pt.val < points[i+1].val) isTrough = true;
@@ -430,26 +421,22 @@
                     if (pt.val < points[i-1].val) isTrough = true;
                 }
                 
-                // Always draw a solid point
-                const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                circle.setAttribute('cx', pt.x);
-                circle.setAttribute('cy', pt.y);
-                circle.setAttribute('r', '6');
-                circle.setAttribute('fill', 'white');
-                circle.setAttribute('stroke', '#0071e3');
-                circle.setAttribute('stroke-width', '3');
-                svg.appendChild(circle);
+                // Solid core point
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, 6, 0, 2 * Math.PI);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                ctx.strokeStyle = '#0071e3';
+                ctx.lineWidth = 3;
+                ctx.stroke();
                 
-                // Highlight peaks (green) and troughs (red)
+                // Highlight extremes
                 if(isPeak || isTrough) {
-                    const highlight = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-                    highlight.setAttribute('cx', pt.x);
-                    highlight.setAttribute('cy', pt.y);
-                    highlight.setAttribute('r', '16');
-                    highlight.setAttribute('fill', 'none');
-                    highlight.setAttribute('stroke', isPeak ? '#00ca4e' : '#ff3b30');
-                    highlight.setAttribute('stroke-width', '3');
-                    svg.appendChild(highlight);
+                    ctx.beginPath();
+                    ctx.arc(pt.x, pt.y, 16, 0, 2 * Math.PI);
+                    ctx.strokeStyle = isPeak ? '#00ca4e' : '#ff3b30';
+                    ctx.lineWidth = 3;
+                    ctx.stroke();
                 }
             });
         }

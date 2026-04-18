@@ -57,8 +57,8 @@
         /* Glassmorphism Cards */
         .card {
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 2.5rem;
@@ -307,8 +307,25 @@
                 <h2>Waiting for Collaborators</h2>
                 <p class="status-msg">Share this code or QR with your team:</p>
                 <div class="room-badge" id="display-room-id" onclick="copyRoomLink()">----</div>
-                <div class="qrcode-container" id="qrcode"></div>
-                <p id="participant-count-msg" style="font-weight: 600;">Connected: 1 / 6</p>
+                <div id="qr-section">
+                    <div class="qrcode-container" id="qrcode"></div>
+                    
+                    <div id="url-config" style="max-width:320px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); margin-top: 1rem;">
+                        <div id="file-warning" style="color: #fbbf24; margin-bottom: 0.5rem; font-size: 0.75rem; display: none;">
+                            ⚠️ Running from local file. Phones need your Laptop IP to join.
+                        </div>
+                        <label style="font-size:0.6rem; color: var(--text-muted); display: block; margin-bottom: 4px; text-transform: uppercase;">Laptop IP Address:</label>
+                        <div style="display:flex; gap:5px;">
+                            <input type="text" id="input-ip-override" placeholder="e.g. 192.168.1.5" style="padding: 0.4rem; font-size: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); color: white; border-radius: 8px; flex: 1;">
+                            <button class="btn" id="btn-update-qr" style="width:auto; padding:0 0.75rem; font-size:0.75rem; border-radius: 8px;">Update QR</button>
+                        </div>
+                        <p style="font-size:0.6rem; color: #64748b; margin-top:0.4rem;">
+                            Type `ipconfig` (Win) or `ifconfig` (Mac) in terminal to find your IP.
+                        </p>
+                    </div>
+                </div>
+
+                <p id="participant-count-msg" style="font-weight: 600; margin-top: 1.5rem;">Connected: 1 / 6</p>
             </div>
 
             <div class="participant-list" id="participant-list">
@@ -626,13 +643,42 @@
             document.getElementById('display-timer').innerText = `${m}:${s}`;
         }
 
+        // --- QR & Connectivity Logic ---
         function generateQR(id) {
-            const url = window.location.origin + window.location.pathname + "?room=" + id;
+            let baseUrl = "";
+            
+            // Check if we are on file://
+            if (window.location.protocol === 'file:') {
+                document.getElementById('file-warning').style.display = 'block';
+                const overrideIp = document.getElementById('input-ip-override').value.trim();
+                if (overrideIp) {
+                    // Assuming Live Server default port 5500 if not specified
+                    baseUrl = `http://${overrideIp}:5500${window.location.pathname}`;
+                } else {
+                    baseUrl = window.location.href; // Fallback to current file://
+                }
+            } else {
+                baseUrl = window.location.origin + window.location.pathname;
+            }
+
+            const finalUrl = baseUrl + (baseUrl.includes('?') ? '&' : '?') + "room=" + id;
+            console.log("Generating QR for:", finalUrl);
+
             document.getElementById("qrcode").innerHTML = "";
             new QRCode(document.getElementById("qrcode"), {
-                text: url, width: 128, height: 128, colorDark : "#0f172a", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
+                text: finalUrl,
+                width: 128,
+                height: 128,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
             });
         }
+
+        document.getElementById('btn-update-qr').addEventListener('click', () => {
+            if (myId) generateQR(myId);
+            notify("QR Code updated with your Laptop IP!");
+        });
 
         function copyRoomLink() {
             const id = document.getElementById('display-room-id').innerText;

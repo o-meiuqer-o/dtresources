@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>6-3-5 Brainwriting | Multiplayer Lobby</title>
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-glow: rgba(99, 102, 241, 0.4);
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            background: var(--bg);
+            background-image: radial-gradient(circle at 50% -20%, #312e81 0%, #0f172a 70%);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* Glassmorphism Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            display: none;
+            animation: zoomIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .card.active { display: block; }
+
+        /* Join Screen */
+        .setup-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .form-group { margin-bottom: 1.5rem; }
+        label { display: block; font-size: 0.875rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em; }
+        input, textarea {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: white;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            gap: 0.5rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background: #4f46e5;
+            box-shadow: 0 10px 15px -3px var(--primary-glow);
+        }
+
+        .btn:active { transform: translateY(0); }
+        .btn:disabled { background: var(--text-muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+        .btn-secondary { background: rgba(255, 255, 255, 0.1); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.2); box-shadow: none; }
+
+        /* Lobby */
+        .lobby-info { text-align: center; margin-bottom: 2rem; }
+        .room-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(99, 102, 241, 0.2);
+            border: 1px dashed var(--primary);
+            border-radius: 99px;
+            font-family: monospace;
+            font-size: 1.25rem;
+            color: #a5b4fc;
+            margin: 1rem 0;
+            cursor: pointer;
+        }
+
+        .participant-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .participant-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.25rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid var(--glass-border);
+            animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .participant-card .avatar { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+        .participant-card span { font-size: 0.875rem; font-weight: 600; color: #cbd5e1; }
+
+        .qrcode-container {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            width: fit-content;
+            margin: 0 auto 1.5rem;
+        }
+
+        /* Worksheet */
+        .worksheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .timer-box {
+            background: rgba(239, 68, 68, 0.15);
+            padding: 0.5rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            text-align: right;
+        }
+        .timer { font-size: 1.5rem; font-weight: 800; color: #ef4444; font-variant-numeric: tabular-nums; }
+        .round-info { color: var(--primary); font-weight: 700; font-size: 1.2rem; }
+
+        .idea-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .idea-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem;
+            border-radius: 20px;
+            transition: transform 0.3s;
+        }
+        .idea-card:focus-within { transform: scale(1.02); background: rgba(255, 255, 255, 0.06); }
+        .idea-card h4 { font-size: 0.75rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; }
+        .idea-card textarea { min-height: 200px; background: transparent; border: none; padding: 0; resize: none; line-height: 1.6; }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes popIn {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .status-msg {
+            text-align: center;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .setup-grid, .idea-grid { grid-template-columns: 1fr; }
+            body { padding: 1rem; }
+            h1 { font-size: 1.8rem; }
+        }
+
+        #notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+            transform: translateX(200%);
+            transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            z-index: 1000;
+        }
+        #notification.show { transform: translateX(0); }
+    </style>
+</head>
+<body>
+
+    <div id="notification">Notification message</div>
+
+    <div class="container">
+        <header>
+            <h1>6-3-5 Brainwriting</h1>
+            <p class="subtitle">Real-time Collaborative Ideation</p>
+        </header>
+
+        <!-- Join Screen -->
+        <div id="screen-join" class="card active">
+            <div class="setup-grid">
+                <div class="setup-form">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="input-name" placeholder="E.g. Elon Musk">
+                    </div>
+                    
+                    <div id="host-options">
+                        <div class="form-group">
+                            <label>Problem Statement</label>
+                            <textarea id="host-problem" placeholder="How might we..." rows="3">How might we improve the public transportation experience in rural areas?</textarea>
+                        </div>
+                        <button class="btn" id="btn-create-room">
+                            <span>🚀 Host New Session</span>
+                        </button>
+                    </div>
+
+                    <div style="margin: 1.5rem 0; text-align: center; color: var(--text-muted); position: relative;">
+                        <span style="background: var(--bg); padding: 0 1rem; position: relative; z-index: 1;">OR JOIN EXISTING</span>
+                        <div style="position: absolute; top: 50%; left: 0; right: 0; height: 1px; background: var(--glass-border);"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Room ID / Host ID</label>
+                        <input type="text" id="input-room-id" placeholder="Enter ID from host">
+                    </div>
+                    <button class="btn btn-secondary" id="btn-join-room">
+                        <span>🤝 Join Session</span>
+                    </button>
+                </div>
+                
+                <div class="setup-info" style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="margin-bottom: 1rem; font-size: 1rem; color: var(--primary);">HOW IT WORKS</h3>
+                    <ul style="font-size: 0.875rem; color: var(--text-muted); padding-left: 1.2rem;">
+                        <li style="margin-bottom: 0.5rem;"><strong>6</strong> participants per session.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>3</strong> ideas written by each in every round.</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>5</strong> minutes per round.</li>
+                        <li style="margin-bottom: 0.5rem;">After each round, your <strong>Ideas Pass</strong> to the next person wirelessly!</li>
+                    </ul>
+                    <p style="margin-top: 1.5rem; font-size: 0.75rem; opacity: 0.6;">Connect to the same WiFi/Hotspot for best results. No server required.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lobby Screen -->
+        <div id="screen-lobby" class="card">
+            <div class="lobby-info">
+                <h2>Waiting for Collaborators</h2>
+                <p class="status-msg">Share this code or QR with your team:</p>
+                <div class="room-badge" id="display-room-id" onclick="copyRoomLink()">----</div>
+                <div class="qrcode-container" id="qrcode"></div>
+                <p id="participant-count-msg" style="font-weight: 600;">Connected: 1 / 6</p>
+            </div>
+
+            <div class="participant-list" id="participant-list">
+                <!-- List will be populated dynamically -->
+            </div>
+
+            <div style="max-width: 400px; margin: 0 auto;">
+                <button class="btn" id="btn-start-session" disabled>
+                    <span>🎮 Start Brainwriting</span>
+                </button>
+                <p id="host-only-msg" class="status-msg" style="display: none;">Only the host can start the session.</p>
+            </div>
+        </div>
+
+        <!-- Worksheet Screen -->
+        <div id="screen-worksheet" class="card">
+            <div class="worksheet-header">
+                <div class="info-group">
+                    <p class="round-info">Round <span id="display-round">1</span> of 6</p>
+                    <h2 id="display-problem" style="font-size: 1.25rem;">Problem Statement</h2>
+                </div>
+                <div class="timer-box">
+                    <p style="font-size: 0.75rem; color: #f87171; text-transform: uppercase; font-weight: 700;">Remaining</p>
+                    <div class="timer" id="display-timer">05:00</div>
+                </div>
+            </div>
+
+            <div class="idea-grid">
+                <div class="idea-card">
+                    <h4>Idea 1</h4>
+                    <textarea id="idea-1" placeholder="Type your first idea here..."></textarea>
+                </div>
+                <div class="idea-card">
+                    <h4>Idea 2</h4>
+                    <textarea id="idea-2" placeholder="Build on previous concepts..."></textarea>
+                </div>
+                <div class="idea-card">
+                    <h4>Idea 3</h4>
+                    <textarea id="idea-3" placeholder="Push for something radical..."></textarea>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
+                <p id="transfer-status" style="color: var(--text-muted); font-size: 0.875rem;">Editing your current sheet...</p>
+                <button class="btn" id="btn-pass-ideas" style="width: auto;">
+                    <span>Pass Sheet →</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- PeerJS & Network Logic ---
+        let peer = null;
+        let conn = null; // Connection to host (for clients)
+        let connections = {}; // List of connections (for host)
+        let participants = [];
+        let myId = null;
+        let myName = "";
+        let isHost = false;
+        let problemStatement = "";
+        
+        let currentRound = 1;
+        let timerSeconds = 300;
+        let timerInterval = null;
+
+        const screens = {
+            join: document.getElementById('screen-join'),
+            lobby: document.getElementById('screen-lobby'),
+            worksheet: document.getElementById('screen-worksheet')
+        };
+
+        function showScreen(name) {
+            Object.values(screens).forEach(s => s.classList.remove('active'));
+            screens[name].classList.add('active');
+        }
+
+        function notify(msg) {
+            const n = document.getElementById('notification');
+            n.innerText = msg;
+            n.classList.add('show');
+            setTimeout(() => n.classList.remove('show'), 3000);
+        }
+
+        // --- Host Side Connection Handler ---
+        function handleHostIncoming(c) {
+            console.log("Incoming connection from:", c.peer);
+            
+            // On the Host side, we listen for data immediately. 
+            // PeerJS connections often arrive already open.
+            const onData = (data) => {
+                console.log("Host received data:", data.type, "from", c.peer);
+                
+                if (data.type === 'IDENTIFY') {
+                    if (participants.length >= 6) {
+                        c.send({ type: 'ERROR', message: 'Room Full (Max 6)' });
+                        setTimeout(() => c.close(), 500);
+                        return;
+                    }
+
+                    participants.push({ id: c.peer, name: data.name, role: 'client' });
+                    connections[c.peer] = c;
+                    
+                    broadcastParticipants();
+                    updateParticipantUI();
+                    notify(`${data.name} joined!`);
+                } else if (data.type === 'ROUTE_SHEET') {
+                    // Forward sheet to the correct target
+                    if (data.to === myId) {
+                        receiveSheetData(data.content);
+                    } else if (connections[data.to]) {
+                        connections[data.to].send({ type: 'RECEIVE_SHEET', content: data.content });
+                    }
+                }
+            };
+
+            c.on('data', onData);
+            
+            c.on('close', () => {
+                console.log("Connection closed:", c.peer);
+                participants = participants.filter(p => p.id !== c.peer);
+                delete connections[c.peer];
+                broadcastParticipants();
+                updateParticipantUI();
+            });
+
+            c.on('error', (err) => console.error("Peer error:", err));
+        }
+
+        function broadcastParticipants() {
+            const data = { 
+                type: 'SYNC_LOBBY', 
+                participants: participants,
+                problem: problemStatement 
+            };
+            Object.values(connections).forEach(c => c.send(data));
+        }
+
+        // --- Client Side Connection Manager ---
+        function connectToHost(hostId) {
+            console.log("Connecting to host:", hostId);
+            conn = peer.connect(hostId);
+
+            conn.on('open', () => {
+                console.log("Connected to host!");
+                conn.send({ type: 'IDENTIFY', name: myName });
+                document.getElementById('display-room-id').innerText = hostId;
+                document.getElementById('host-only-msg').style.display = 'block';
+                showScreen('lobby');
+            });
+
+            conn.on('data', (data) => {
+                console.log("Client received data:", data.type);
+                if (data.type === 'SYNC_LOBBY') {
+                    participants = data.participants;
+                    problemStatement = data.problem;
+                    updateParticipantUI();
+                } else if (data.type === 'START') {
+                    startSessionUI();
+                } else if (data.type === 'RECEIVE_SHEET') {
+                    receiveSheetData(data.content);
+                } else if (data.type === 'ERROR') {
+                    alert(data.message);
+                    window.location.reload();
+                }
+            });
+
+            conn.on('close', () => {
+                alert("Disconnected from session.");
+                window.location.reload();
+            });
+        }
+
+        // --- Core Control Logic ---
+        document.getElementById('btn-create-room').addEventListener('click', () => {
+            myName = document.getElementById('input-name').value || "Host";
+            problemStatement = document.getElementById('host-problem').value;
+            isHost = true;
+            initPeer();
+        });
+
+        document.getElementById('btn-join-room').addEventListener('click', () => {
+            const hostId = document.getElementById('input-room-id').value.trim();
+            if (!hostId) return alert("Please enter Room ID");
+            
+            myName = document.getElementById('input-name').value || "Collaborator";
+            isHost = false;
+            initPeer(hostId);
+        });
+
+        function initPeer(targetHostId = null) {
+            peer = new Peer();
+
+            peer.on('open', (id) => {
+                myId = id;
+                console.log('My ID:', id);
+                
+                if (isHost) {
+                    document.getElementById('display-room-id').innerText = id;
+                    participants = [{ id: myId, name: myName, role: 'host' }];
+                    updateParticipantUI();
+                    generateQR(id);
+                    showScreen('lobby');
+                } else {
+                    connectToHost(targetHostId);
+                }
+            });
+
+            peer.on('connection', (c) => {
+                if (isHost) handleHostIncoming(c);
+            });
+
+            peer.on('error', (err) => {
+                console.error("PeerJS Error:", err);
+                if (err.type === 'peer-unavailable') {
+                    alert("Could not find the host. Check the Room ID.");
+                } else {
+                    alert("Connection error: " + err.type);
+                }
+                window.location.reload();
+            });
+        }
+
+        function updateParticipantUI() {
+            const list = document.getElementById('participant-list');
+            list.innerHTML = participants.map(p => `
+                <div class="participant-card" style="${p.id === myId ? 'border-color: var(--primary);' : ''}">
+                    <span class="avatar">👤</span>
+                    <span>${p.name}${p.id === myId ? ' (You)' : ''}</span>
+                    ${p.role === 'host' ? '<div style="font-size: 0.6rem; color: var(--primary); font-weight: 800; margin-top:2px;">HOST</div>' : ''}
+                </div>
+            `).join('');
+            
+            document.getElementById('participant-count-msg').innerText = `Connected: ${participants.length} / 6`;
+            document.getElementById('btn-start-session').disabled = !isHost || participants.length < 2;
+        }
+
+        // --- Session Flow ---
+        document.getElementById('btn-start-session').addEventListener('click', () => {
+            if (!isHost) return;
+            Object.values(connections).forEach(c => c.send({ type: 'START' }));
+            startSessionUI();
+        });
+
+        function startSessionUI() {
+            document.getElementById('display-problem').innerText = problemStatement;
+            showScreen('worksheet');
+            startTimer();
+        }
+
+        function passSheet() {
+            const content = {
+                idea1: document.getElementById('idea-1').value,
+                idea2: document.getElementById('idea-2').value,
+                idea3: document.getElementById('idea-3').value
+            };
+
+            const myIndex = participants.findIndex(p => p.id === myId);
+            const nextIndex = (myIndex + 1) % participants.length;
+            const targetPeerId = participants[nextIndex].id;
+
+            if (isHost) {
+                if (targetPeerId === myId) receiveSheetData(content);
+                else {
+                    connections[targetPeerId].send({ type: 'RECEIVE_SHEET', content: content });
+                    document.getElementById('transfer-status').innerText = "Sheet passed!";
+                }
+            } else {
+                conn.send({ type: 'ROUTE_SHEET', to: targetPeerId, content: content });
+                document.getElementById('transfer-status').innerText = "Sheet passed!";
+            }
+        }
+
+        function receiveSheetData(content) {
+            currentRound++;
+            if (currentRound > 6) {
+                notify("Workshop Finished!");
+                document.getElementById('transfer-status').innerText = "Session Complete!";
+                return;
+            }
+
+            document.getElementById('display-round').innerText = currentRound;
+            
+            const t1 = document.getElementById('idea-1');
+            const t2 = document.getElementById('idea-2');
+            const t3 = document.getElementById('idea-3');
+
+            t1.value = content.idea1 + "\n\n---\n";
+            t2.value = content.idea2 + "\n\n---\n";
+            t3.value = content.idea3 + "\n\n---\n";
+
+            document.getElementById('transfer-status').innerText = "New sheet received!";
+            [t1, t2, t3].forEach(t => t.scrollTop = t.scrollHeight);
+            startTimer();
+        }
+
+        // --- Utilities ---
+        function startTimer() {
+            timerSeconds = 300;
+            updateTimerDisplay();
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    passSheet();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+            const s = (timerSeconds % 60).toString().padStart(2, '0');
+            document.getElementById('display-timer').innerText = `${m}:${s}`;
+        }
+
+        function generateQR(id) {
+            const url = window.location.origin + window.location.pathname + "?room=" + id;
+            document.getElementById("qrcode").innerHTML = "";
+            new QRCode(document.getElementById("qrcode"), {
+                text: url, width: 128, height: 128, colorDark : "#0f172a", colorLight : "#ffffff", correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        function copyRoomLink() {
+            const id = document.getElementById('display-room-id').innerText;
+            navigator.clipboard.writeText(id).then(() => notify("Room ID copied!"));
+        }
+
+        document.getElementById('btn-pass-ideas').addEventListener('click', passSheet);
+
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const room = urlParams.get('room');
+            if (room) {
+                document.getElementById('input-room-id').value = room;
+                notify("Scanned Room ID auto-filled!");
+            }
+        };
+    </script>
+</body>
+</html>
+

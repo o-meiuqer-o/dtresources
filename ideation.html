@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 04: Ideation | Design Thinking</title>
+    <meta name="description"
+        content="An interactive educational guide on Design Thinking, featuring divergent thinking tools like SCAMPER, 6-3-5, TRIZ, Moodboards, and the Worst Idea Method.">
+    <meta name="author" content="Raj Narayanan, Mahindra University">
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💡</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Navigation Overlay -->
+    <nav class="global-nav">
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> > <a href="foundations.html">Module 01</a> > <a href="introduction.html">Module 02</a> > <a href="finding_problem.html">Module 03</a> > <span>Module 04: Ideation</span>
+        </div>
+        <div class="nav-links">
+            <div class="teacher-mode-control">
+                <span>Teacher Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="teacher-mode-checkbox" aria-label="Toggle Teacher Mode">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <a href="finding_problem.html" class="nav-pill">← Back</a>
+        </div>
+    </nav>
+
+    <div class="scroll-container">
+
+        <!-- HEADER / COVER -->
+        <section id="cover">
+            <div class="accent-tag">Module 04: Ideation</div>
+            <h1>Divergent Thinking</h1>
+            <p style="color: #666; margin-top: 1rem;">Going beyond the first obvious solution. Moving from 'what is' to 'what could be'.</p>
+        </section>
+
+        <!-- SEC 1 -->
+        <section id="divergent-convergent">
+            <span class="section-label">01: The Philosophy</span>
+            <h2>Divergent vs Convergent</h2>
+            <p>Ideation is not about finding the 'right' idea immediately. It's about maximizing options before filtering.</p>
+            <div class="decision-logic">
+                <div class="logic-box" style="background: var(--accent-color); color: white; border-color: var(--accent-color);">DIVERGENT<br><span style="font-size: 0.8rem; font-weight: 400;">Create Choices</span></div>
+                <div style="font-size: 2rem;">→</div>
+                <div class="logic-box">CONVERGENT<br><span style="font-size: 0.8rem; font-weight: 400;">Make Choices</span></div>
+            </div>
+            
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Remind students that judgment kills ideation. During divergent exercises, there are absolutely no bad ideas. Encourage wild, unconstrained thinking first.
+            </div>
+        </section>
+
+        <!-- SEC 2: VISUALIZATION -->
+        <section id="visualization-tools">
+            <span class="section-label">02: Visualization</span>
+            <h2>Visual Ideation</h2>
+            <p>Using imagery and spatial mapping to connect disparate concepts before jumping into structured problem-solving.</p>
+            <div class="grid-container grid-2">
+                <div class="card tool-card" data-modal="modal-moodboard">
+                    <span style="font-size: 3rem;">🖼️</span>
+                    <h3>Moodboards</h3>
+                    <p>Collecting textures, colors, and images to establish an emotional tone before designing.</p>
+                </div>
+                <div class="card tool-card" data-modal="modal-mindmap">
+                    <span style="font-size: 3rem;">🕸️</span>
+                    <h3>Mindmaps</h3>
+                    <p>Radiant thinking. Starting from a central problem and branching out into related ideas.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEC 3: STRUCTURED IDEATION -->
+        <section id="structured-tools">
+            <span class="section-label">03: Frameworks</span>
+            <h2>Structured Brainstorming</h2>
+            <p>When free-association fails, we use constraints and rules to force new perspectives.</p>
+            <div class="grid-container grid-3">
+                <div class="card tool-card" data-modal="modal-635">
+                    <span style="font-size: 2.5rem;">📝</span>
+                    <h3>Method 6-3-5</h3>
+                    <p>Brainwriting. 6 people, 3 ideas, 5 minutes. Pass the paper to build on others' ideas. A high-efficiency method.</p>
+                </div>
+                <div class="card tool-card" data-modal="modal-scamper">
+                    <span style="font-size: 2.5rem;">🔄</span>
+                    <h3>SCAMPER</h3>
+                    <p>Substitute, Combine, Adapt, Modify, Put to other uses, Eliminate, Rearrange.</p>
+                </div>
+                <div class="card tool-card" data-modal="modal-triz">
+                    <span style="font-size: 2.5rem;">⚙️</span>
+                    <h3>TRIZ</h3>
+                    <p>Theory of inventive problem solving derived from analyzing thousands of patents and contradictions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEC 4: LATERAL THINKING -->
+        <section id="lateral-thinking">
+            <span class="section-label">04: Reversal</span>
+            <h2>Lateral & Reversal Methods</h2>
+            <div class="card tool-card" style="text-align: left;" data-modal="modal-worst-idea">
+                <div style="display: flex; gap: 2rem; align-items: center; flex-wrap: wrap;">
+                    <div style="flex: 1;">
+                        <h3 style="color: #ffb400; margin-top: 0;">The Worst Idea Method</h3>
+                        <p style="font-size: 0.95rem; line-height: 1.6;">Instead of trying to find the best solution, teams compete to suggest the absolute worst, most disastrous way to solve the problem. It relieves pressure, sparks humor, and reveals hidden constraints and anti-patterns.</p>
+                    </div>
+                    <div style="flex: 0 0 100px; text-align: center;">
+                        <span style="font-size: 4rem;">🗑️</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Modals -->
+    <div class="modal-overlay" id="modal-moodboard">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>Moodboards</h2>
+            <p>A physical or digital collage of ideas that's used to evoke a specific style or concept.</p>
+            <ul style="text-align: left; margin-top: 1rem; line-height: 1.6;">
+                <li><strong>Purpose:</strong> Align stakeholders on aesthetic and emotional direction before costly design work begins.</li>
+                <li><strong>Contains:</strong> Colors, typography, textures, photography styles, metaphors.</li>
+                <li><strong>Best For:</strong> UI/UX design, physical product aesthetics, and branding.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-mindmap">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>Mindmapping</h2>
+            <p>A diagram used to visually organize information into a hierarchy, showing relationships among pieces of the whole.</p>
+             <ul style="text-align: left; margin-top: 1rem; line-height: 1.6;">
+                <li><strong>Core:</strong> Write the main problem or core concept in the center.</li>
+                <li><strong>Branches:</strong> Create primary themes radiating outward.</li>
+                <li><strong>Twigs:</strong> Add specific ideas and details to the branches.</li>
+            </ul>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">Mindmaps leverage our brain's natural tendency to associate concepts rather than processing them linearly.</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-635">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>Method 6-3-5 (Brainwriting)</h2>
+            <p>A structured method to generate a large number of ideas silently, preventing loud voices from dominating.</p>
+            <div class="example-box" style="text-align: left; margin-top: 1rem;">
+                <p><strong>1.</strong> 6 participants sit in a circle.</p>
+                <p><strong>2.</strong> Each gets a worksheet and writes down 3 ideas in 5 minutes.</p>
+                <p><strong>3.</strong> After 5 minutes, pass the sheet to the person on the right.</p>
+                <p><strong>4.</strong> Read the ideas and build on them or add 3 new ones.</p>
+                <p><strong>5.</strong> Repeat for 6 rounds.</p>
+                <p style="margin-top: 1rem; font-weight: bold; color: var(--accent-color);">Result: 108 ideas in 30 minutes.</p>
+            </div>
+            <a href="templates/635_template.html" target="_blank" class="download-btn">👥 Enter Virtual Lobby</a>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-scamper">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="modal-close">✕</button>
+            <h2>SCAMPER Framework</h2>
+            <p>A checklist of questions to help you innovate on an existing product or service.</p>
+             <div class="grid-container grid-2" style="font-size: 0.9rem; text-align: left; margin-top: 1.5rem; gap: 1rem;">
+                <div style="background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px solid #eee;"><strong>S</strong>ubstitute<br><span style="color: #666; font-size: 0.8rem;">What materials or rules can be swapped?</span></div>
+                <div style="background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px solid #eee;"><strong>C</strong>ombine<br><span style="color: #666; font-size: 0.8rem;">What ideas or features can be merged?</span></div>
+                <div style="background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px solid #eee;"><strong>A</strong>dapt<br><span style="color: #666; font-size: 0.8rem;">What else is like this? How can we copy it?</span></div>
+                <div style="background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px solid #eee;"><strong>M</strong>odify<br><span style="color: #666; font-size: 0.8rem;">Can we change the scale, shape, or color?</span></div>
+                <div style="background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px solid #eee;"><strong>P</strong>ut to another use<br><span style="color: #666; font-size: 0.8rem;">Who else could use this? In what context?</span></div>
+                <div style="background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px solid #eee;"><strong>E</strong>liminate<br><span style="color: #666; font-size: 0.8rem;">What can be removed to simplify it?</span></div>
+                <div style="background: #fdfdfd; padding: 1rem; border-radius: 8px; border: 1px solid #eee; grid-column: span 2;"><strong>R</strong>earrange / Reverse<br><span style="color: #666; font-size: 0.8rem;">What happens if we reverse the process or order?</span></div>
+            </div>
+            <a href="templates/scamper_template.html" target="_blank" class="download-btn">📄 Use Template</a>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-triz">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>TRIZ Matrix</h2>
+            <p>Theory of Inventive Problem Solving. Based on the idea that "someone, somewhere, has already solved this problem (or one very similar to it)."</p>
+             <ul style="text-align: left; margin-top: 1rem; line-height: 1.6;">
+                <li>Developed by Genrikh Altshuller by examining thousands of patents.</li>
+                <li>Identifies 40 inventive principles (e.g., Segmentation, Asymmetry, Nesting).</li>
+                <li>Uses a contradiction matrix: If improving parameter A (e.g. Speed) worsens parameter B (e.g. Weight), TRIZ suggests specific historical principles to resolve the trade-off.</li>
+            </ul>
+            <a href="templates/triz_template.html" target="_blank" class="download-btn">📄 Use Template</a>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-worst-idea">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>The Worst Idea Method</h2>
+            <p>A lateral thinking technique that lowers the barrier to participation and uncovers psychological constraints.</p>
+            <div class="example-box" style="text-align: left; margin-top: 1rem;">
+                <p><strong>Step 1:</strong> Ideate the worst possible ways to solve the problem. Encourage absurd, illegal, or destructive ideas. <br><em>(e.g., "To reduce wait times, we just yell at the customers until they leave.")</em></p>
+                <p style="margin-top: 1rem;"><strong>Step 2:</strong> Analyze <em>why</em> it's bad. What exact rule did it break? What core value did it violate?</p>
+                <p style="margin-top: 1rem;"><strong>Step 3:</strong> Reverse the worst idea to find a radical good idea.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="teacher-mode-indicator">TEACHER MODE ACTIVE</div>
+    <script src="script.js"></script>
+</body>
+
+</html>

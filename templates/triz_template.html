@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TRIZ Contradiction Template</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; padding: 2rem; max-width: 900px; margin: 0 auto; color: #1d1d1f; }
+        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .subtitle { color: #666; margin-bottom: 2rem; font-size: 0.9rem; }
+        .field { margin-bottom: 1.5rem; }
+        .field label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .field input, .field textarea { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 0.75rem; font-size: 0.9rem; font-family: inherit; }
+        .field textarea { resize: vertical; min-height: 80px;}
+        .section-title { font-size: 1.1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #5e5ce6; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+        .logic-block { background: #fdfdfd; border: 2px solid #e5e5ea; border-radius: 10px; padding: 1.5rem; }
+        .logic-block h3 { color: #5e5ce6; font-size: 1rem; margin-bottom: 0.5rem;}
+        .logic-block p { font-size: 0.8rem; color: #666; margin-bottom: 1rem; }
+        .note { background: #f9f9fb; padding: 1rem; border-radius: 8px; font-size: 0.85rem; color: #555; margin-bottom: 1.5rem; }
+        .principles-list { list-style: none; display: grid; gap: 1rem;}
+        .principle-item { border-left: 4px solid #5e5ce6; padding-left: 1rem; }
+        .principle-item strong { display: block; font-size: 0.95rem; margin-bottom: 0.25rem;}
+        .principle-item textarea { width: 100%; border: 1px solid #eee; border-radius: 6px; padding: 0.5rem; min-height: 60px; font-size: 0.85rem; font-family: inherit; resize: vertical; margin-top:0.5rem; }
+        
+        @media print { body { padding: 1rem; } }
+    </style>
+</head>
+<body>
+    <h1>TRIZ Ideation Template</h1>
+    <p class="subtitle">Design Thinking — Theory of Inventive Problem Solving</p>
+
+    <div class="field">
+        <label>Problem Definition</label>
+        <textarea placeholder="Describe the problem you are trying to solve..."></textarea>
+    </div>
+
+    <div class="note">TRIZ operates on the premise that engineering or design problems often involve a <strong>trade-off (contradiction)</strong>. Define what you want to improve, and what gets worse as a result.</div>
+
+    <div class="section-title">The Contradiction Match</div>
+    <div class="grid-2">
+        <div class="logic-block" style="border-top: 4px solid #00ca4e;">
+            <h3 style="color: #00ca4e;">Improving Parameter (+)</h3>
+            <p>What specific feature or metric do you want to get better?</p>
+            <input type="text" placeholder="e.g., Strength, Speed, Customization...">
+        </div>
+        <div class="logic-block" style="border-top: 4px solid #ff3b30;">
+            <h3 style="color: #ff3b30;">Worsening Parameter (-)</h3>
+            <p>What collateral damage happens when you improve the above?</p>
+            <input type="text" placeholder="e.g., Weight increases, Cost increases, Complexity... ">
+        </div>
+    </div>
+
+    <div class="section-title">Applying Inventive Principles</div>
+    <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Cross-reference your contradiction in a TRIZ matrix to find suggested principles, or brainstorm using these common universally-successful principles:</p>
+    
+    <div class="principles-list">
+        <div class="principle-item">
+            <strong>1. Segmentation / Fragmentation</strong>
+            <span style="font-size:0.8rem; color: #666;">Can you break the object or system into smaller, independent parts?</span>
+            <textarea placeholder="Idea..."></textarea>
+        </div>
+        <div class="principle-item">
+            <strong>2. Asymmetry</strong>
+            <span style="font-size:0.8rem; color: #666;">Can you change the shape from symmetrical to asymmetrical?</span>
+            <textarea placeholder="Idea..."></textarea>
+        </div>
+        <div class="principle-item">
+            <strong>3. Nesting (Russian Dolls)</strong>
+            <span style="font-size:0.8rem; color: #666;">Can you place one object inside another?</span>
+            <textarea placeholder="Idea..."></textarea>
+        </div>
+        <div class="principle-item">
+            <strong>4. Skipping / Blessing in Disguise</strong>
+            <span style="font-size:0.8rem; color: #666;">Can you conduct a high-speed process to bypass a harmful phase, or turn a harm into a benefit?</span>
+            <textarea placeholder="Idea..."></textarea>
+        </div>
+    </div>
+
+    <div class="section-title">Selected Solution</div>
+    <div class="field">
+        <textarea placeholder="Describe the final synthesized solution that resolves the contradiction..."></textarea>
+    </div>
+
+    <script src="template_shared.js"></script>
+</body>
+</html>

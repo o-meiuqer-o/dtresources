@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SCAMPER Template</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; padding: 2rem; max-width: 900px; margin: 0 auto; color: #1d1d1f; }
+        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .subtitle { color: #666; margin-bottom: 2rem; font-size: 0.9rem; }
+        .field { margin-bottom: 1.5rem; }
+        .field label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .field input, .field textarea { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 0.75rem; font-size: 0.9rem; font-family: inherit; }
+        .section-title { font-size: 1.1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #00ca4e; }
+        .grid { display: grid; gap: 1.25rem; margin-top: 1rem; }
+        .scamper-item { border: 2px solid #e5e5ea; border-radius: 10px; padding: 1.25rem; display: flex; gap: 1.5rem; align-items:flex-start;}
+        .scamper-letter { font-size: 2.5rem; font-weight: bold; color: #00ca4e; min-width: 50px; text-align: center;}
+        .scamper-content { flex: 1; }
+        .scamper-content h3 { font-size: 1rem; margin-bottom: 0.25rem; color: #111;}
+        .scamper-content p { font-size: 0.8rem; color: #666; margin-bottom: 0.75rem; }
+        .scamper-content textarea { width: 100%; border: 1px solid #eee; border-radius: 6px; padding: 0.75rem; min-height: 80px; font-size: 0.85rem; font-family: inherit; resize: vertical; }
+        .note { background: #f9f9fb; padding: 1rem; border-radius: 8px; font-size: 0.85rem; color: #555; margin-bottom: 1.5rem; }
+        @media print { body { padding: 1rem; } }
+    </style>
+</head>
+<body>
+    <h1>SCAMPER Ideation Template</h1>
+    <p class="subtitle">Design Thinking — Divergent Ideation Phase</p>
+
+    <div class="field">
+        <label>Focus Subject / Current Solution</label>
+        <input type="text" placeholder="What product, service, or process are we innovating on?">
+    </div>
+
+    <div class="note">Use the SCAMPER prompts below to force lateral thinking on your current subject. Don't worry about feasibility yet.</div>
+
+    <div class="grid">
+        <div class="scamper-item">
+            <div class="scamper-letter">S</div>
+            <div class="scamper-content">
+                <h3>Substitute</h3>
+                <p>What materials, rules, or people can be swapped out?</p>
+                <textarea placeholder="e.g., Substitute plastic with bamboo. Substitute the receptionist with an iPad."></textarea>
+            </div>
+        </div>
+        <div class="scamper-item">
+            <div class="scamper-letter">C</div>
+            <div class="scamper-content">
+                <h3>Combine</h3>
+                <p>What happens if we merge this with another idea or feature?</p>
+                <textarea placeholder="e.g., Combine a phone with a camera. Combine a cafe with a laundromat."></textarea>
+            </div>
+        </div>
+        <div class="scamper-item">
+            <div class="scamper-letter">A</div>
+            <div class="scamper-content">
+                <h3>Adapt</h3>
+                <p>What else is like this? How can we copy from a different industry?</p>
+                <textarea placeholder="e.g., Adapt the hospital waiting room to look like a hotel lobby."></textarea>
+            </div>
+        </div>
+        <div class="scamper-item">
+            <div class="scamper-letter">M</div>
+            <div class="scamper-content">
+                <h3>Modify / Magnify / Minify</h3>
+                <p>Can we change the scale, shape, color, or emphasis?</p>
+                <textarea placeholder="e.g., Make the button huge. Shrink the device to fit in a pocket."></textarea>
+            </div>
+        </div>
+        <div class="scamper-item">
+            <div class="scamper-letter">P</div>
+            <div class="scamper-content">
+                <h3>Put to another use</h3>
+                <p>Who else could use this? In what other context?</p>
+                <textarea placeholder="e.g., Use the shipping container as a pop-up store."></textarea>
+            </div>
+        </div>
+        <div class="scamper-item">
+            <div class="scamper-letter">E</div>
+            <div class="scamper-content">
+                <h3>Eliminate</h3>
+                <p>What can be removed to simplify the solution?</p>
+                <textarea placeholder="e.g., Remove the physical buttons entirely. Eliminate the middleman."></textarea>
+            </div>
+        </div>
+        <div class="scamper-item">
+            <div class="scamper-letter">R</div>
+            <div class="scamper-content">
+                <h3>Rearrange / Reverse</h3>
+                <p>What happens if we flip the sequence or reverse the roles?</p>
+                <textarea placeholder="e.g., Reverse roles: the restaurant patrons cook their own food."></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="template_shared.js"></script>
+</body>
+</html>

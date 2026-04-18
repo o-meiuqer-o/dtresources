@@ -494,20 +494,24 @@
             myName = document.getElementById('input-name').value || "Host";
             problemStatement = document.getElementById('host-problem').value;
             isHost = true;
-            initPeer();
+            
+            // Generate a 6-digit ID and try to open room
+            const randomId = Math.floor(100000 + Math.random() * 900000).toString();
+            initPeer(randomId);
         });
 
         document.getElementById('btn-join-room').addEventListener('click', () => {
             const hostId = document.getElementById('input-room-id').value.trim();
-            if (!hostId) return alert("Please enter Room ID");
+            if (!hostId) return alert("Please enter 6-digit Room ID");
             
             myName = document.getElementById('input-name').value || "Collaborator";
             isHost = false;
-            initPeer(hostId);
+            initPeer(null, hostId); // No custom ID for self, but target the hostId
         });
 
-        function initPeer(targetHostId = null) {
-            peer = new Peer();
+        function initPeer(customId = null, targetHostId = null) {
+            // If we're hosting, we try to use our 6-digit ID
+            peer = customId ? new Peer(customId) : new Peer();
 
             peer.on('open', (id) => {
                 myId = id;
@@ -531,11 +535,17 @@
             peer.on('error', (err) => {
                 console.error("PeerJS Error:", err);
                 if (err.type === 'peer-unavailable') {
-                    alert("Could not find the host. Check the Room ID.");
+                    alert("Could not find Room " + targetHostId + ". Check the code.");
+                } else if (err.type === 'unavailable-id') {
+                    // If 6-digit ID taken, try another one
+                    if (isHost) {
+                        const nextId = Math.floor(100000 + Math.random() * 900000).toString();
+                        console.log("ID taken, retrying with:", nextId);
+                        initPeer(nextId);
+                    }
                 } else {
                     alert("Connection error: " + err.type);
                 }
-                window.location.reload();
             });
         }
 

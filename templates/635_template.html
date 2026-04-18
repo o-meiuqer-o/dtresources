@@ -334,7 +334,7 @@
         <div id="screen-worksheet" class="card">
             <div class="worksheet-header">
                 <div class="info-group">
-                    <p class="round-info">Round <span id="display-round">1</span> of 6</p>
+                    <p class="round-info">Round <span id="display-round">1</span> of <span id="display-total-rounds">?</span></p>
                     <h2 id="display-problem" style="font-size: 1.25rem;">Problem Statement</h2>
                 </div>
                 <div class="timer-box">
@@ -343,25 +343,52 @@
                 </div>
             </div>
 
+            <!-- History Section -->
+            <div id="idea-history" style="margin-bottom: 2rem; display: none;">
+                <h3 style="font-size: 0.8rem; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Previous Collaborators' Ideas</h3>
+                <div id="history-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; opacity: 0.8;"></div>
+            </div>
+
             <div class="idea-grid">
-                <div class="idea-card">
-                    <h4>Idea 1</h4>
+                <div class="idea-card" style="border-left: 4px solid var(--primary);">
+                    <h4>Your Idea 1</h4>
                     <textarea id="idea-1" placeholder="Type your first idea here..."></textarea>
                 </div>
-                <div class="idea-card">
-                    <h4>Idea 2</h4>
+                <div class="idea-card" style="border-left: 4px solid var(--primary);">
+                    <h4>Your Idea 2</h4>
                     <textarea id="idea-2" placeholder="Build on previous concepts..."></textarea>
                 </div>
-                <div class="idea-card">
-                    <h4>Idea 3</h4>
+                <div class="idea-card" style="border-left: 4px solid var(--primary);">
+                    <h4>Your Idea 3</h4>
                     <textarea id="idea-3" placeholder="Push for something radical..."></textarea>
                 </div>
             </div>
 
             <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                <p id="transfer-status" style="color: var(--text-muted); font-size: 0.875rem;">Editing your current sheet...</p>
-                <button class="btn" id="btn-pass-ideas" style="width: auto;">
+                <p id="transfer-status" style="color: var(--text-muted); font-size: 0.875rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px;">Waiting for host to signal next round...</p>
+                <button class="btn" id="btn-pass-ideas" style="width: auto; padding: 0.8rem 2rem;">
                     <span>Pass Sheet →</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Review Screen -->
+        <div id="screen-review" class="card">
+            <div class="worksheet-header">
+                <h2>Brainwriting Results</h2>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn btn-secondary" onclick="exportToPNG()" style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem;">📸 Save as PNG</button>
+                    <button class="btn btn-secondary" onclick="window.print()" style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem;">📄 Print PDF</button>
+                </div>
+            </div>
+            
+            <div id="final-results-container" style="margin-top: 2rem;">
+                <!-- Tables will be generated here -->
+            </div>
+
+            <div style="margin-top: 3rem; text-align: center;">
+                <button class="btn" onclick="window.location.reload()" style="width: auto; padding: 0.8rem 2rem;">
+                    <span>🏁 End Session for All</span>
                 </button>
             </div>
         </div>
@@ -482,6 +509,8 @@
                     document.getElementById('transfer-status').innerText = "Sheet sent! Waiting for rotation...";
                 } else if (data.type === 'RECEIVE_SHEET') {
                     receiveSheetData(data.content);
+                } else if (data.type === 'SHOW_REVIEW') {
+                    showReviewUI(data.allSheets);
                 } else if (data.type === 'ERROR') {
                     alert(data.message);
                     window.location.reload();
@@ -568,17 +597,23 @@
             document.getElementById('btn-start-session').disabled = !isHost || participants.length < 2;
         }
 
-        // --- Session Flow ---
-        let currentSheets = {}; // Store all sheets for rotation (Host only)
-
-        document.getElementById('btn-start-session').addEventListener('click', () => {
-            if (!isHost) return;
-            Object.values(connections).forEach(c => c.send({ type: 'START' }));
-            startSessionUI();
-        });
+        let totalRounds = 1;
+        let sessionHistory = []; // [ { ownerId: x, rounds: [ { idea1, idea2, idea3 } ] } ]
 
         function startSessionUI() {
+            totalRounds = participants.length;
+            document.getElementById('display-total-rounds').innerText = totalRounds;
             document.getElementById('display-problem').innerText = problemStatement;
+            
+            // Initialize history (Host only keeps master, clients just keep theirs)
+            if (isHost) {
+                sessionHistory = participants.map(p => ({
+                    ownerId: p.id,
+                    ownerName: p.name,
+                    rounds: []
+                }));
+            }
+
             showScreen('worksheet');
             if (isHost) {
                 document.getElementById('btn-pass-ideas').style.display = 'block';
@@ -596,26 +631,36 @@
             notify("Collecting sheets...");
             currentSheets = {};
             // Gather host's own sheet
-            currentSheets[myId] = {
+            const hostContent = {
                 idea1: document.getElementById('idea-1').value,
                 idea2: document.getElementById('idea-2').value,
                 idea3: document.getElementById('idea-3').value
             };
+            currentSheets[myId] = hostContent;
             
             // Ask everyone else for their sheets
             Object.values(connections).forEach(c => c.send({ type: 'COLLECT' }));
-            
-            // Check if we have everyone after a small delay (or on receipt)
-            // But we'll handle this in the 'on data' handler for better reliability
         });
 
         function handleSheetReceipt(fromId, content) {
             currentSheets[fromId] = content;
-            console.log(`Received sheet from ${fromId}. Total: ${Object.keys(currentSheets).length}/${participants.length}`);
-            
             if (Object.keys(currentSheets).length === participants.length) {
-                rotateAndDistribute();
+                // If this was the last round, move to review
+                if (currentRound >= totalRounds) {
+                    finalizeSession();
+                } else {
+                    rotateAndDistribute();
+                }
             }
+        }
+
+        function finalizeSession() {
+            notify("Brainwriting Complete!");
+            // Distribute final sheets (including the ones just collected)
+            // But instead of 'RECEIVE_SHEET' (which starts a timer), we send 'SHOW_REVIEW'
+            const finalData = { type: 'SHOW_REVIEW', allSheets: currentSheets };
+            Object.values(connections).forEach(c => c.send(finalData));
+            showReviewUI(currentSheets);
         }
 
         function rotateAndDistribute() {
@@ -623,9 +668,13 @@
             const rotatedData = {};
             
             for (let i = 0; i < participants.length; i++) {
-                const currentOwner = participants[i].id;
-                const nextOwner = participants[(i + 1) % participants.length].id;
-                rotatedData[nextOwner] = currentSheets[currentOwner];
+                const currentOwnerIndex = i;
+                const nextOwnerIndex = (i + 1) % participants.length;
+                
+                const currentOwnerId = participants[currentOwnerIndex].id;
+                const nextOwnerId = participants[nextOwnerIndex].id;
+                
+                rotatedData[nextOwnerId] = currentSheets[currentOwnerId];
             }
 
             // Send out the new sheets
@@ -641,29 +690,68 @@
 
         function receiveSheetData(content) {
             currentRound++;
-            if (currentRound > 6) {
-                notify("Workshop Finished!");
-                document.getElementById('transfer-status').innerText = "Session Complete! View Final Ideas.";
-                return;
-            }
-
             document.getElementById('display-round').innerText = currentRound;
             
-            const t1 = document.getElementById('idea-1');
-            const t2 = document.getElementById('idea-2');
-            const t3 = document.getElementById('idea-3');
+            // 1. Move current boxes to History
+            const hist = document.getElementById('history-container');
+            const ideaHistoryBox = document.getElementById('idea-history');
+            ideaHistoryBox.style.display = 'block';
 
-            // Format previous ideas and clear for new entry
-            t1.value = content.idea1 + "\n\n---\n";
-            t2.value = content.idea2 + "\n\n---\n";
-            t3.value = content.idea3 + "\n\n---\n";
+            const roundEntry = document.createElement('div');
+            roundEntry.style.gridColumn = "1 / span 3";
+            roundEntry.style.display = "grid";
+            roundEntry.style.gridTemplateColumns = "repeat(3, 1fr)";
+            roundEntry.style.gap = "1.5rem";
+            roundEntry.style.padding = "1rem";
+            roundEntry.style.background = "rgba(255,255,255,0.03)";
+            roundEntry.style.borderRadius = "12px";
+            roundEntry.style.marginBottom = "1rem";
+            roundEntry.innerHTML = `
+                <div style="font-size: 0.6rem; color: var(--text-muted); grid-column: 1/span 3;">ROUND ${currentRound-1} IDEAS:</div>
+                <div style="font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap;">${content.idea1}</div>
+                <div style="font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap;">${content.idea2}</div>
+                <div style="font-size: 0.8rem; color: #cbd5e1; white-space: pre-wrap;">${content.idea3}</div>
+            `;
+            hist.appendChild(roundEntry);
 
-            document.getElementById('transfer-status').innerText = "New sheet received! Start Round " + currentRound;
-            [t1, t2, t3].forEach(t => {
-                t.scrollTop = t.scrollHeight;
-                // Maybe auto-focus first box?
-            });
+            // 2. Clear current inputs
+            document.getElementById('idea-1').value = "";
+            document.getElementById('idea-2').value = "";
+            document.getElementById('idea-3').value = "";
+
+            document.getElementById('transfer-status').innerText = "New Round Started! 🚀";
             startTimer();
+        }
+
+        function showReviewUI(allSheets) {
+            showScreen('screen-review');
+            const container = document.getElementById('final-results-container');
+            container.innerHTML = "";
+
+            // Create a table-like view of all ideas
+            participants.forEach(p => {
+                const section = document.createElement('div');
+                section.style.marginBottom = "2rem";
+                section.innerHTML = `
+                    <h3 style="color: var(--primary); margin-bottom: 1rem;">${p.name}'s Contribution</h3>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+                        <div class="idea-card" style="font-size: 0.9rem;">${allSheets[p.id].idea1}</div>
+                        <div class="idea-card" style="font-size: 0.9rem;">${allSheets[p.id].idea2}</div>
+                        <div class="idea-card" style="font-size: 0.9rem;">${allSheets[p.id].idea3}</div>
+                    </div>
+                `;
+                container.appendChild(section);
+            });
+        }
+
+        function exportToPNG() {
+            // Import and call the shared export utility
+            if (typeof downloadAsPNG === 'function') {
+                downloadAsPNG();
+            } else {
+                notify("Export logic not found. Trying print...");
+                window.print();
+            }
         }
 
         // --- Utilities ---

@@ -395,7 +395,52 @@
     </div>
 
     <script>
-        // --- PeerJS & Network Logic ---
+        // --- Persistence Logic ---
+        const PERSIST_KEY = 'dt-635-session';
+        let roomID = "";
+
+        function saveSessionState() {
+            if (!roomID) return;
+            const state = {
+                roomID,
+                isHost,
+                myName,
+                problemStatement,
+                currentRound,
+                participants,
+                ideas: {
+                    idea1: document.getElementById('idea-1').value,
+                    idea2: document.getElementById('idea-2').value,
+                    idea3: document.getElementById('idea-3').value
+                }
+            };
+            localStorage.setItem(PERSIST_KEY, JSON.stringify(state));
+        }
+
+        function loadSessionState() {
+            const raw = localStorage.getItem(PERSIST_KEY);
+            return raw ? JSON.parse(raw) : null;
+        }
+
+        function clearSessionState() {
+            localStorage.removeItem(PERSIST_KEY);
+        }
+
+        window.addEventListener('beforeunload', (e) => {
+            if (roomID) {
+                saveSessionState();
+                const msg = "A session is active. Refreshing may cause a temporary disconnect.";
+                e.returnValue = msg;
+                return msg;
+            }
+        });
+
+        // Auto-save on typing
+        ['idea-1', 'idea-2', 'idea-3'].forEach(id => {
+            document.getElementById(id).addEventListener('input', saveSessionState);
+        });
+
+        // --- Core Variables ---
         let peer = null;
         let conn = null; // Connection to host (for clients)
         let connections = {}; // List of connections (for host)
@@ -544,20 +589,27 @@
         });
 
         function initPeer(customId = null, targetHostId = null) {
-            // If we're hosting, we try to use our 6-digit ID
+            console.log("Initializing peer. CustomId:", customId, "TargetHost:", targetHostId);
             peer = customId ? new Peer(customId) : new Peer();
 
             peer.on('open', (id) => {
                 myId = id;
-                console.log('My ID:', id);
+                console.log('My peer ID is: ' + id);
                 
                 if (isHost) {
+                    roomID = id;
                     document.getElementById('display-room-id').innerText = id;
-                    participants = [{ id: myId, name: myName, role: 'host' }];
-                    updateParticipantUI();
+                    document.getElementById('cloud-sync-status').innerText = "Cloud-Sync: ACTIVE";
                     generateQR(id);
+                    // If reclaiming, don't reset participants unless empty
+                    if (participants.length === 0) {
+                        participants = [{ id, name: myName, role: 'host' }];
+                    }
+                    updateParticipantUI();
                     showScreen('lobby');
-                } else {
+                    saveSessionState();
+                } else if (targetHostId) {
+                    roomID = targetHostId;
                     connectToHost(targetHostId);
                 }
             });
@@ -565,20 +617,16 @@
             peer.on('connection', (c) => {
                 if (isHost) handleHostIncoming(c);
             });
-
+            
             peer.on('error', (err) => {
-                console.error("PeerJS Error:", err);
-                if (err.type === 'peer-unavailable') {
-                    alert("Could not find Room " + targetHostId + ". Check the code.");
-                } else if (err.type === 'unavailable-id') {
-                    // If 6-digit ID taken, try another one
-                    if (isHost) {
-                        const nextId = Math.floor(100000 + Math.random() * 900000).toString();
-                        console.log("ID taken, retrying with:", nextId);
-                        initPeer(nextId);
-                    }
+                if (err.type === 'unavailable-id' && isHost) {
+                    notify("ID still active. Waiting to reclaim...");
+                    setTimeout(() => initPeer(customId), 2500);
                 } else {
-                    alert("Connection error: " + err.type);
+                    console.error("PeerJS Error:", err);
+                    if (err.type === 'peer-unavailable') {
+                        alert("Could not find Room " + targetHostId + ". Check the code.");
+                    }
                 }
             });
         }

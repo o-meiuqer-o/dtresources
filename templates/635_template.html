@@ -423,12 +423,8 @@
                     updateParticipantUI();
                     notify(`${data.name} joined!`);
                 } else if (data.type === 'ROUTE_SHEET') {
-                    // Forward sheet to the correct target
-                    if (data.to === myId) {
-                        receiveSheetData(data.content);
-                    } else if (connections[data.to]) {
-                        connections[data.to].send({ type: 'RECEIVE_SHEET', content: data.content });
-                    }
+                    // New synchronized handover: Host collects all into currentSheets
+                    handleSheetReceipt(c.peer, data.content);
                 }
             };
 
@@ -475,6 +471,15 @@
                     updateParticipantUI();
                 } else if (data.type === 'START') {
                     startSessionUI();
+                } else if (data.type === 'COLLECT') {
+                    // Host wants my sheet!
+                    const content = {
+                        idea1: document.getElementById('idea-1').value,
+                        idea2: document.getElementById('idea-2').value,
+                        idea3: document.getElementById('idea-3').value
+                    };
+                    conn.send({ type: 'ROUTE_SHEET', content: content });
+                    document.getElementById('transfer-status').innerText = "Sheet sent! Waiting for rotation...";
                 } else if (data.type === 'RECEIVE_SHEET') {
                     receiveSheetData(data.content);
                 } else if (data.type === 'ERROR') {
@@ -564,6 +569,8 @@
         }
 
         // --- Session Flow ---
+        let currentSheets = {}; // Store all sheets for rotation (Host only)
+
         document.getElementById('btn-start-session').addEventListener('click', () => {
             if (!isHost) return;
             Object.values(connections).forEach(c => c.send({ type: 'START' }));
@@ -573,37 +580,70 @@
         function startSessionUI() {
             document.getElementById('display-problem').innerText = problemStatement;
             showScreen('worksheet');
+            if (isHost) {
+                document.getElementById('btn-pass-ideas').style.display = 'block';
+                document.getElementById('btn-pass-ideas').innerText = "End Round & Pass All →";
+            } else {
+                document.getElementById('btn-pass-ideas').style.display = 'none';
+                document.getElementById('transfer-status').innerText = "Writing phase. Host will trigger the pass.";
+            }
             startTimer();
         }
 
-        function passSheet() {
-            const content = {
+        // Host triggers rotation
+        document.getElementById('btn-pass-ideas').addEventListener('click', () => {
+            if (!isHost) return;
+            notify("Collecting sheets...");
+            currentSheets = {};
+            // Gather host's own sheet
+            currentSheets[myId] = {
                 idea1: document.getElementById('idea-1').value,
                 idea2: document.getElementById('idea-2').value,
                 idea3: document.getElementById('idea-3').value
             };
+            
+            // Ask everyone else for their sheets
+            Object.values(connections).forEach(c => c.send({ type: 'COLLECT' }));
+            
+            // Check if we have everyone after a small delay (or on receipt)
+            // But we'll handle this in the 'on data' handler for better reliability
+        });
 
-            const myIndex = participants.findIndex(p => p.id === myId);
-            const nextIndex = (myIndex + 1) % participants.length;
-            const targetPeerId = participants[nextIndex].id;
-
-            if (isHost) {
-                if (targetPeerId === myId) receiveSheetData(content);
-                else {
-                    connections[targetPeerId].send({ type: 'RECEIVE_SHEET', content: content });
-                    document.getElementById('transfer-status').innerText = "Sheet passed!";
-                }
-            } else {
-                conn.send({ type: 'ROUTE_SHEET', to: targetPeerId, content: content });
-                document.getElementById('transfer-status').innerText = "Sheet passed!";
+        function handleSheetReceipt(fromId, content) {
+            currentSheets[fromId] = content;
+            console.log(`Received sheet from ${fromId}. Total: ${Object.keys(currentSheets).length}/${participants.length}`);
+            
+            if (Object.keys(currentSheets).length === participants.length) {
+                rotateAndDistribute();
             }
+        }
+
+        function rotateAndDistribute() {
+            notify("Rotating sheets!");
+            const rotatedData = {};
+            
+            for (let i = 0; i < participants.length; i++) {
+                const currentOwner = participants[i].id;
+                const nextOwner = participants[(i + 1) % participants.length].id;
+                rotatedData[nextOwner] = currentSheets[currentOwner];
+            }
+
+            // Send out the new sheets
+            participants.forEach(p => {
+                const sheet = rotatedData[p.id];
+                if (p.id === myId) {
+                    receiveSheetData(sheet);
+                } else if (connections[p.id]) {
+                    connections[p.id].send({ type: 'RECEIVE_SHEET', content: sheet });
+                }
+            });
         }
 
         function receiveSheetData(content) {
             currentRound++;
             if (currentRound > 6) {
                 notify("Workshop Finished!");
-                document.getElementById('transfer-status').innerText = "Session Complete!";
+                document.getElementById('transfer-status').innerText = "Session Complete! View Final Ideas.";
                 return;
             }
 
@@ -613,12 +653,16 @@
             const t2 = document.getElementById('idea-2');
             const t3 = document.getElementById('idea-3');
 
+            // Format previous ideas and clear for new entry
             t1.value = content.idea1 + "\n\n---\n";
             t2.value = content.idea2 + "\n\n---\n";
             t3.value = content.idea3 + "\n\n---\n";
 
-            document.getElementById('transfer-status').innerText = "New sheet received!";
-            [t1, t2, t3].forEach(t => t.scrollTop = t.scrollHeight);
+            document.getElementById('transfer-status').innerText = "New sheet received! Start Round " + currentRound;
+            [t1, t2, t3].forEach(t => {
+                t.scrollTop = t.scrollHeight;
+                // Maybe auto-focus first box?
+            });
             startTimer();
         }
 

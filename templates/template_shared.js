@@ -201,7 +201,15 @@ function downloadAsPNG() {
         tableContainer.style.overflow = 'visible';
     }
 
-    // 3. Expand textareas
+    // 3. Force body to full scroll width (unconstrain table) BEFORE adjusting textareas
+    const savedBodyMaxWidth = document.body.style.maxWidth;
+    const savedBodyWidth = document.body.style.width;
+    const computedW = document.body.scrollWidth;
+    document.body.style.maxWidth = 'none';
+    // Use the actual pixel width rather than max-content to prevent 100% width textareas from shrinking
+    document.body.style.width = Math.max(computedW, document.body.offsetWidth) + 'px';
+
+    // 4. Expand textareas based on the NEW body width
     const textareas = document.querySelectorAll('textarea');
     const savedHeights = [];
     textareas.forEach(t => {
@@ -210,13 +218,29 @@ function downloadAsPNG() {
         t.style.height = (t.scrollHeight + 4) + 'px';
     });
 
-    // 4. Force body to full scroll width (unconstrain table)
-    const savedBodyMaxWidth = document.body.style.maxWidth;
-    const savedBodyWidth = document.body.style.width;
-    document.body.style.maxWidth = 'none';
-    document.body.style.width = 'max-content';
+    // 5. Convert cut-off inputs to divs to prevent horizontal text clipping in the PNG
+    const inputsToRestore = [];
+    document.querySelectorAll('input[type="text"]').forEach(input => {
+        if (input.scrollWidth > input.clientWidth || input.value.length > 30) {
+            const div = document.createElement('div');
+            const style = window.getComputedStyle(input);
+            div.textContent = input.value || input.placeholder;
+            // Copy relevant styles to the div so it looks like the input
+            div.style.cssText = style.cssText;
+            div.style.height = 'auto';
+            div.style.minHeight = style.height;
+            div.style.whiteSpace = 'pre-wrap';
+            div.style.wordBreak = 'break-word';
+            div.style.overflow = 'visible';
+            // Reset box sizing to avoid extra padding issues
+            div.style.boxSizing = 'border-box';
+            input.parentElement.insertBefore(div, input);
+            input.style.display = 'none';
+            inputsToRestore.push({ input, div });
+        }
+    });
 
-    // 5. Special handling for vis-network (Root Cause Analysis)
+    // 6. Special handling for vis-network (Root Cause Analysis)
     let savedNetworkSize = null;
     let savedNetworkStyle = null;
     const networkDiv = document.getElementById('mynetwork');
@@ -260,7 +284,13 @@ function downloadAsPNG() {
         extraUi.forEach(el => el.style.display = '');
 
         if (tableContainer) tableContainer.style.overflow = savedOverflow;
+        
         textareas.forEach((t, i) => { t.style.height = savedHeights[i] || ''; });
+        
+        inputsToRestore.forEach(item => {
+            item.input.style.display = '';
+            item.div.remove();
+        });
         
         if (savedNetworkSize) {
             networkDiv.style.width = savedNetworkSize.width;

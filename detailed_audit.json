@@ -1,0 +1,2009 @@
+{
+  "introduction.html": {
+    "sections": [
+      {
+        "id": "cover",
+        "label": "Design as a Verb",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked the simple and straightforward message.",
+            "neg": "Found the concept of 'process' vague.",
+            "imp": "Include a simple example or analogy."
+          },
+          "engineering_student": {
+            "pos": "Appreciated the emphasis on process.",
+            "neg": "Wished for more technical insight.",
+            "imp": "Add a brief technical example."
+          },
+          "eager_student": {
+            "pos": "Intrigued by the idea of design as a journey.",
+            "neg": "Wanted more guidance on what to expect.",
+            "imp": "Provide an overview of what will be covered."
+          },
+          "veteran_teacher": {
+            "pos": "Valued the introduction of design as a dynamic activity.",
+            "neg": "Felt it was too brief for an educational platform.",
+            "imp": "Expand with educational examples."
+          },
+          "veteran_designer": {
+            "pos": "Agreed with notion of design as a process.",
+            "neg": "Lacked depth in explaining the design verb.",
+            "imp": "Include historical perspectives or quotes."
+          },
+          "design_philosopher": {
+            "pos": "Enjoyed the philosophical angle of design.",
+            "neg": "Missed philosophical context.",
+            "imp": "Incorporate a deeper dive into philosophical origins."
+          }
+        }
+      },
+      {
+        "id": "natural-instinct",
+        "label": "01: Natural Instinct",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Understood the connection with daily life.",
+            "neg": "Complex terms without definitions.",
+            "imp": "Simplify language or add definitions."
+          },
+          "engineering_student": {
+            "pos": "Made design thinking relatable.",
+            "neg": "Seemed too simplistic and obvious.",
+            "imp": "Include case studies or real-life applications."
+          },
+          "eager_student": {
+            "pos": "Appreciated the relatable examples.",
+            "neg": "Felt examples were limited.",
+            "imp": "Add more varied examples."
+          },
+          "veteran_teacher": {
+            "pos": "Valued focus on familiar concepts.",
+            "neg": "Lacked context and historical framework.",
+            "imp": "Provide background context for educators."
+          },
+          "veteran_designer": {
+            "pos": "Liked showing the familiarity of design thinking.",
+            "neg": "Oversimplified the designer's role.",
+            "imp": "Expand on how professionals use instincts differently."
+          },
+          "design_philosopher": {
+            "pos": "Enjoyed the notion of innate problem-solving.",
+            "neg": "Missed citing philosophical underpinnings.",
+            "imp": "Include philosophical sources or thinkers."
+          }
+        }
+      },
+      {
+        "id": "johnny-story",
+        "label": "02: The Process in Action",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Engaged with Johnny's story.",
+            "neg": "Struggled with connecting story to design thinking.",
+            "imp": "Add clear links between story steps and design principles."
+          },
+          "engineering_student": {
+            "pos": "Found the story relatable.",
+            "neg": "Too simplistic for deep understanding.",
+            "imp": "Include more technical analogies."
+          },
+          "eager_student": {
+            "pos": "Enjoyed a narrative approach to learning.",
+            "neg": "Wanted more depth in explanation.",
+            "imp": "Provide deeper explanation at each step."
+          },
+          "veteran_teacher": {
+            "pos": "Appreciated storytelling to teach concepts.",
+            "neg": "Lacks educational markers or prompts.",
+            "imp": "Include questions or activities after each story point."
+          },
+          "veteran_designer": {
+            "pos": "Liked using simple stories to illustrate design.",
+            "neg": "Missed professional design process connection.",
+            "imp": "Tie to how similar processes occur in real projects."
+          },
+          "design_philosopher": {
+            "pos": "Liked the ethical dilemma aspect.",
+            "neg": "Missed deeper philosophical exploration.",
+            "imp": "Discuss ethical components of design choices in stories."
+          }
+        }
+      },
+      {
+        "id": "empathy-loop",
+        "label": "03: Empathy & Iteration",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Related to examples with mother waking up kid.",
+            "neg": "Found iteration terms confusing.",
+            "imp": "Explain iteration or use simpler language."
+          },
+          "engineering_student": {
+            "pos": "Understood empathy's practical uses.",
+            "neg": "Saw examples as too basic.",
+            "imp": "Add layered examples with increasing complexity."
+          },
+          "eager_student": {
+            "pos": "Liked how it applies to many aspects of life.",
+            "neg": "Wanted more empirical examples.",
+            "imp": "Provide data-driven examples."
+          },
+          "veteran_teacher": {
+            "pos": "Examples effectively demonstrate empathy.",
+            "neg": "Misses historical views.",
+            "imp": "Incorporate history of empathy in education."
+          },
+          "veteran_designer": {
+            "pos": "Exploration of empathy crucial for design.",
+            "neg": "Negative: Too conceptual, lacks real-world cross-linking.",
+            "imp": "Link concepts to known industry practices."
+          },
+          "design_philosopher": {
+            "pos": "Interests in human-centric design logic.",
+            "neg": "Need for philosophical depth.",
+            "imp": "Add works of famous philosophers related to empathy."
+          }
+        }
+      },
+      {
+        "id": "the-attitude",
+        "label": "03.5: The Core Mindset",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Found Bruce Lee reference exciting.",
+            "neg": "Struggled with metaphorical language.",
+            "imp": "Clarify metaphors with plain language parallels."
+          },
+          "engineering_student": {
+            "pos": "Resonated with the notion of flexibility.",
+            "neg": "Lacked quantifiable examples.",
+            "imp": "Incorporate examples from engineering designs."
+          },
+          "eager_student": {
+            "pos": "Connected with the adaptable attitude.",
+            "neg": "Wanted more specific guidelines.",
+            "imp": "List clear actionable steps."
+          },
+          "veteran_teacher": {
+            "pos": "Appreciated focus on attitude and adaptability.",
+            "neg": "Less focus on pedagogy integration.",
+            "imp": "Discuss how to embed mindset in lessons."
+          },
+          "veteran_designer": {
+            "pos": "Affirms importance of designer mindset.",
+            "neg": "Overlooked industry challenges.",
+            "imp": "Address complexity and pressure in real settings."
+          },
+          "design_philosopher": {
+            "pos": "Appreciated philosophical mindset approach.",
+            "neg": "Lacked historical context of philosophy.",
+            "imp": "Integrate historical design mindset evolution."
+          }
+        }
+      },
+      {
+        "id": "biological-response",
+        "label": "04: Biological Foundation",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Fascinated by animal examples.",
+            "neg": "Confused biological and design thinking link.",
+            "imp": "Guide connections between biology and design."
+          },
+          "engineering_student": {
+            "pos": "Recognized the link science has with design.",
+            "neg": "Found the biology analogy weak.",
+            "imp": "Include real-world bio-design case studies."
+          },
+          "eager_student": {
+            "pos": "Interested in nature's problem-solving.",
+            "neg": "Need for more detail in explanations.",
+            "imp": "Expand on process behind animal behavior."
+          },
+          "veteran_teacher": {
+            "pos": "Liked biological connection for problems.",
+            "neg": "Short on educational applications.",
+            "imp": "Explain how biology can inform instructional design."
+          },
+          "veteran_designer": {
+            "pos": "Acknowledged cross-domain insights.",
+            "neg": "Lacked modern bio-inspired design examples.",
+            "imp": "Include recent examples of biomimicry."
+          },
+          "design_philosopher": {
+            "pos": "Liked the idea of biological problem-solving.",
+            "neg": "Overlook philosophic implications of nature-inspired design.",
+            "imp": "Discuss nature's design lesson in human context."
+          }
+        }
+      },
+      {
+        "id": "four-stages",
+        "label": "05: The Framework",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Clear breakdown of framework.",
+            "neg": "Complex terms without simple definitions.",
+            "imp": "Simplify terms or add a glossary."
+          },
+          "engineering_student": {
+            "pos": "Recognized the structured approach.",
+            "neg": "Wanted technical depth.",
+            "imp": "Incorporate engineering-specific applications."
+          },
+          "eager_student": {
+            "pos": "Appreciated clear stages of design.",
+            "neg": "Wished for more real-life context.",
+            "imp": "Provide examples per stage."
+          },
+          "veteran_teacher": {
+            "pos": "Useful structured model of design.",
+            "neg": "Highlighted lack of educational tie-ins.",
+            "imp": "Discuss how teachers can utilize this framework."
+          },
+          "veteran_designer": {
+            "pos": "Agreed with the methodological approach.",
+            "neg": "Felt too basic without deeper industry insights.",
+            "imp": "Include insider tips on utilising each stage."
+          },
+          "design_philosopher": {
+            "pos": "Considered principles logically sound.",
+            "neg": "Hoped for philosophical discussion.",
+            "imp": "Tie stages to philosophical theories of creativity."
+          }
+        }
+      },
+      {
+        "id": "conclusion",
+        "label": "06: Conclusion",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked the motivational quote.",
+            "neg": "Confused about what to do next.",
+            "imp": "Include clear action steps or further reading."
+          },
+          "engineering_student": {
+            "pos": "Found the call for creativity appealing.",
+            "neg": "Lacked specific engineering applications.",
+            "imp": "Conclude with engineering-centered cases."
+          },
+          "eager_student": {
+            "pos": "Inspired by the message of innovation.",
+            "neg": "Wanted more logical closure.",
+            "imp": "Suggest practical steps to implement learning."
+          },
+          "veteran_teacher": {
+            "pos": "Theoretical wrapping appreciated.",
+            "neg": "Lacked teaching cliffhangers or prompts.",
+            "imp": "Include questions for reflection or discussion."
+          },
+          "veteran_designer": {
+            "pos": "Encouraged by the innovation aspect.",
+            "neg": "Lacked future-oriented design insights.",
+            "imp": "Discuss future design possibilities and career pathways."
+          },
+          "design_philosopher": {
+            "pos": "Resonated with philosophical depth.",
+            "neg": "Hoped for a philosophical summary.",
+            "imp": "Bridge conclusions to philosophical ideologies."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Incomplete introduction to design process.",
+        "id": "cover",
+        "options": [
+          "Expand to include a simple real-world example.",
+          "Add a visual diagram illustrating design as a process.",
+          "Introduce key terms with a brief glossary."
+        ]
+      },
+      {
+        "gap": "Lack of clarity around design links to daily life.",
+        "id": "natural-instinct",
+        "options": [
+          "Include more diverse and relatable daily examples.",
+          "Provide a clear summary linking daily instincts to professional design.",
+          "Integrate a short video explaining concept in simple terms."
+        ]
+      },
+      {
+        "gap": "Limited storytelling depth in applying design thinking.",
+        "id": "johnny-story",
+        "options": [
+          "Add detailed steps for connecting story to design principles.",
+          "Provide a parallel example from a more mature context.",
+          "Include an interactive or discussion section around the story."
+        ]
+      },
+      {
+        "gap": "Ambiguity in empathy and iteration processes.",
+        "id": "empathy-loop",
+        "options": [
+          "Introduce simple analogies to explain iterations.",
+          "Create short case study demonstrations of empathy in action.",
+          "Embed a visual diagram or infographic to clarify process."
+        ]
+      },
+      {
+        "gap": "Confusion regarding metaphorical language.",
+        "id": "the-attitude",
+        "options": [
+          "Add explanatory side notes or annotations for metaphors.",
+          "Include a glossary of metaphorical terms.",
+          "Create a short guide on understanding metaphors used."
+        ]
+      },
+      {
+        "gap": "Insufficient link between biology and design thinking.",
+        "id": "biological-response",
+        "options": [
+          "Expand examples with real-world bio-design applications.",
+          "Introduce scenarios where biology influences modern design.",
+          "Incorporate interviews or quotes from bio-design experts."
+        ]
+      },
+      {
+        "gap": "Framework complexity without further support.",
+        "id": "four-stages",
+        "options": [
+          "Add a glossary of terms or simplified vocabulary section.",
+          "Include brief historical context for each framework stage.",
+          "Provide short interactive activities for each stage."
+        ]
+      },
+      {
+        "gap": "Undefined next steps in conclusion.",
+        "id": "conclusion",
+        "options": [
+          "Include clear actionable next steps for students.",
+          "Suggest additional resources or reading materials.",
+          "Provide a Q&A or instructor contact for guidance."
+        ]
+      }
+    ]
+  },
+  "foundations.html": {
+    "sections": [
+      {
+        "id": "cover",
+        "label": "Decision-Choreography",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav liked the idea of design being a trait everyone has.",
+            "neg": "Aarav found the terminology like 'Biological & Neuro-Philosophical Theory' too complex.",
+            "imp": "Simplify language or provide a glossary for difficult terms."
+          },
+          "forced_student": {
+            "pos": "Santhosh appreciated learning that design is accessible and not limited to professionals.",
+            "neg": "He struggled with connecting biological systems to design thinking.",
+            "imp": "Include simple, relatable examples of biological systems that influence design."
+          },
+          "eager_student": {
+            "pos": "Priya enjoyed the innovative approach of relating design to biological traits.",
+            "neg": "She found the section needed more concrete examples or case studies.",
+            "imp": "Provide examples or links to case studies that illustrate the concepts."
+          },
+          "veteran_teacher": {
+            "pos": "The teacher liked the integration of interdisciplinary ideas in design.",
+            "neg": "Concerned about students' ability to grasp advanced terminology.",
+            "imp": "Include a teacher's note or guide on how to introduce these concepts."
+          },
+          "veteran_designer": {
+            "pos": "Veteran Designers appreciated the philosophical angle.",
+            "neg": "Felt the section could benefit from visual elements to break text.",
+            "imp": "Add diagrams or infographics to visualize key points."
+          },
+          "design_philosopher": {
+            "pos": "The philosopher valued the depth and abstract nature of the section.",
+            "neg": "Concerned that the abstraction might lose less experienced audiences.",
+            "imp": "Balance abstract theory with practical examples to cater to diverse audiences."
+          }
+        }
+      },
+      {
+        "id": "grounding",
+        "label": "Grounding Summary",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav enjoyed connecting everyday activities to design.",
+            "neg": "The text seemed lengthy and hard to follow.",
+            "imp": "Break down information into bullet points for clarity."
+          },
+          "forced_student": {
+            "pos": "Santhosh found the concept of 'design as a biological trait' intriguing.",
+            "neg": "He felt the recall to last interaction wasn't clear.",
+            "imp": "Provide a brief summary of the previous context or a link to revisit."
+          },
+          "eager_student": {
+            "pos": "Priya appreciated the grounding in daily examples of design.",
+            "neg": "Was hoping for more challenging content.",
+            "imp": "Introduce a 'dive deeper' section with advanced resources."
+          },
+          "veteran_teacher": {
+            "pos": "The teacher liked the repetitive reinforcement of key ideas.",
+            "neg": "Worried about disengagement due to text-heavy content.",
+            "imp": "Introduce interactive elements such as quizzes or reflection exercises."
+          },
+          "veteran_designer": {
+            "pos": "Designers appreciated acknowledgment of non-professional design work.",
+            "neg": "Felt the section was overly simplistic.",
+            "imp": "Add a section on transforming everyday design into professional practice."
+          },
+          "design_philosopher": {
+            "pos": "Philosopher appreciated tying design to natural instincts.",
+            "neg": "Found lack of theoretical depth in comparisons.",
+            "imp": "Include references or readings on philosophical underpinnings."
+          }
+        }
+      },
+      {
+        "id": "biological-nature",
+        "label": "Biological Nature",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav found the concept of seeds making decisions interesting.",
+            "neg": "He struggled to understand how it relates to design.",
+            "imp": "Use simpler language and closer analogies to everyday life."
+          },
+          "forced_student": {
+            "pos": "Santhosh liked the mention of seeds as decision-makers.",
+            "neg": "The term 'biochemical logic' was confusing.",
+            "imp": "Explain technical terms or include a glossary."
+          },
+          "eager_student": {
+            "pos": "Priya enjoyed learning about decision-making in nature.",
+            "neg": "Wished for a deeper explanation of human decision making.",
+            "imp": "Expand content to include detailed exploration of human decision processes."
+          },
+          "veteran_teacher": {
+            "pos": "Teacher valued interdisciplinary approach with biology.",
+            "neg": "Concerned about student comprehension of complex biological concepts.",
+            "imp": "Provide supplementary materials or suggested reading."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated biological examples illustrating decision-making.",
+            "neg": "Felt more design linkages are needed.",
+            "imp": "Create a comparative analysis chart linking biology examples with design processes."
+          },
+          "design_philosopher": {
+            "pos": "Philosopher liked the exploration of decision-making beyond human cognition.",
+            "neg": "Concerned that the transition from biology to design wasn't explicit.",
+            "imp": "Strengthen narrative on how biological decision-making concepts translate to design."
+          }
+        }
+      },
+      {
+        "id": "proleptic-power",
+        "label": "Proleptic Power",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav loved the cat analogy\u2014it was easy to understand.",
+            "neg": "The term 'Proleptic Power' felt too complicated.",
+            "imp": "Simplify by explaining the term in more accessible language."
+          },
+          "forced_student": {
+            "pos": "Santhosh liked the practical example of the cat's wiggle.",
+            "neg": "Struggled with the transition from animal behavior to design thinking.",
+            "imp": "Provide more examples or detailed explanations on proleptic power in design."
+          },
+          "eager_student": {
+            "pos": "Priya appreciated the engaging animal example and wanted to know more.",
+            "neg": "Felt left expecting further connections to broader design concepts.",
+            "imp": "Include case studies or real-world applications for proleptic power."
+          },
+          "veteran_teacher": {
+            "pos": "Teacher found the analogy with animals engaging for students.",
+            "neg": "Concerned about students deriving shallow understanding.",
+            "imp": "Create guided exercises or projects using the animal analogy."
+          },
+          "veteran_designer": {
+            "pos": "Designers liked the concept illustrating forward-thinking in design.",
+            "neg": "Thought the section was not comprehensive enough.",
+            "imp": "Add layers by discussing different facets of proleptic power."
+          },
+          "design_philosopher": {
+            "pos": "Philosopher valued connection between biological and design foresight.",
+            "neg": "Concerned about oversimplification of complex concepts.",
+            "imp": "Delve into deeper philosophical discussions on foresight and planning."
+          }
+        }
+      },
+      {
+        "id": "transition",
+        "label": "The Transition Zone",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav enjoyed the simple examples of amoeba and crow.",
+            "neg": "Found the term 'Fluid Transition Zone' confusing.",
+            "imp": "Clarify terminology or replace with more common language."
+          },
+          "forced_student": {
+            "pos": "Santhosh appreciated reference to clear biological examples.",
+            "neg": "He found it hard to see the real-world application in design.",
+            "imp": "Use specific real-world case studies to illustrate the transition."
+          },
+          "eager_student": {
+            "pos": "Priya liked exploring different levels of decision-making.",
+            "neg": "Expected more discussion on how these transitions apply to her field of interest.",
+            "imp": "Provide examples specific to various fields or interests."
+          },
+          "veteran_teacher": {
+            "pos": "Teacher liked scaffolding from simple to complex systems.",
+            "neg": "Potential missteps in grasping intermediate concepts.",
+            "imp": "Provide worksheets or guides to reinforce learning."
+          },
+          "veteran_designer": {
+            "pos": "Designers enjoyed the link between design evolution and biology.",
+            "neg": "Content felt overly focused on science without clear design application.",
+            "imp": "Integrate specific design problems and solutions illustrating this transition."
+          },
+          "design_philosopher": {
+            "pos": "Philosopher appreciated exploration of cognitive evolution into design.",
+            "neg": "Felt absence of philosophical discussion on transitional mind states.",
+            "imp": "Include philosophical insights about cognitive transitions."
+          }
+        }
+      },
+      {
+        "id": "wicked-problems",
+        "label": "Wicked Problems",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav found the examples of different problems intriguing.",
+            "neg": "He didn't understand what made these problems 'wicked.'",
+            "imp": "Define 'wicked problems' clearly and use simpler examples."
+          },
+          "forced_student": {
+            "pos": "Santhosh saw value in identifying varied problem types.",
+            "neg": "Felt overwhelmed by the complexity of these problems.",
+            "imp": "Provide step-by-step guides or frameworks for approaching wicked problems."
+          },
+          "eager_student": {
+            "pos": "Priya appreciated learning about complex problem-solving.",
+            "neg": "Anticipated more methods to tackle such problems.",
+            "imp": "Include a toolkit or resources for managing wicked problems."
+          },
+          "veteran_teacher": {
+            "pos": "Teacher liked highlighting complexity in real-world problems.",
+            "neg": "Concern about helping students handle complexity effectively.",
+            "imp": "Equip with lesson plans or simulations tackling complex problems."
+          },
+          "veteran_designer": {
+            "pos": "Designers liked the focus on intricate design problems.",
+            "neg": "Sought actionable insights for dealing with such issues.",
+            "imp": "Add case studies where designers successfully navigated wicked problems."
+          },
+          "design_philosopher": {
+            "pos": "Philosopher valued discussion on multifaceted nature of problems.",
+            "neg": "Wished for deeper philosophical exploration of complexity.",
+            "imp": "Integrate philosophical debates on problem-solving methods."
+          }
+        }
+      },
+      {
+        "id": "prosthetics",
+        "label": "Cognitive Prosthetics",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav found the concept of 'mind exoskeletons' fascinating.",
+            "neg": "Struggled to understand how frameworks act like prosthetics.",
+            "imp": "Use simple analogies to describe cognitive prosthetics."
+          },
+          "forced_student": {
+            "pos": "Santhosh appreciated frameworks as support tools in design.",
+            "neg": "Felt unclear on using these tools in real scenarios.",
+            "imp": "Include interactive tools or examples using cognitive prosthetics."
+          },
+          "eager_student": {
+            "pos": "Priya appreciated learning about these frameworks succinctly.",
+            "neg": "Wanted more diversity in tool examples.",
+            "imp": "Provide a broader range of frameworks or suggest further resources."
+          },
+          "veteran_teacher": {
+            "pos": "Teacher liked introducing advanced cognitive tools.",
+            "neg": "Concern about effectively teaching these abstract concepts.",
+            "imp": "Develop teaching aids or tutorials on cognitive prosthetic application."
+          },
+          "veteran_designer": {
+            "pos": "Designers appreciated frameworks aiding in complex problem-solving.",
+            "neg": "Sought examples of these tools implemented in industry.",
+            "imp": "Include industry case studies showcasing framework usage."
+          },
+          "design_philosopher": {
+            "pos": "Philosopher appreciated the cognitive enhancement aspect.",
+            "neg": "Desired more theoretical discussion about the ethics of cognitive scaffolding.",
+            "imp": "Include ethical discussions on enhancement and dependency on tools."
+          }
+        }
+      },
+      {
+        "id": "next-module",
+        "label": "Ready to Begin?",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav liked the invitation to start a new module.",
+            "neg": "Little context on what the next step involves.",
+            "imp": "Provide a teaser or overview of the upcoming module."
+          },
+          "forced_student": {
+            "pos": "Santhosh found the transition to the next step straightforward.",
+            "neg": "Lacked motivation to proceed without clear purpose.",
+            "imp": "Include a motivational message or a preview of benefits from the next module."
+          },
+          "eager_student": {
+            "pos": "Priya was excited to continue to the next module.",
+            "neg": "Wanted a clear link to specific interests from the previous content.",
+            "imp": "Suggest personalized paths or tracks based on previous interaction."
+          },
+          "veteran_teacher": {
+            "pos": "Teacher liked the clear indication of module progression.",
+            "neg": "Felt missing prerequisite reminder or completion checklist.",
+            "imp": "Include checklist or criteria for module readiness before advancing."
+          },
+          "veteran_designer": {
+            "pos": "Designers appreciated the clear call to action.",
+            "neg": "Desired a richer overview of what's next.",
+            "imp": "Provide insights or highlights of pivotal topics in the next module."
+          },
+          "design_philosopher": {
+            "pos": "Philosopher liked the notion of progressive learning.",
+            "neg": "Felt anticipatory content could be deeper philosophically.",
+            "imp": "Include philosophical questions or contemplations for the upcoming module."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Complex language and advanced terminology across sections.",
+        "id": "cover",
+        "options": [
+          "Introduce a simplified language or glossary for difficult terms.",
+          "Incorporate definitions and footnotes throughout the text.",
+          "Use tooltips or links to external resources for intricate concepts."
+        ]
+      },
+      {
+        "gap": "Need for relatable examples that connect theory to practice.",
+        "id": "biological-nature",
+        "options": [
+          "Add real-world examples illustrating each biological concept's relevance to design.",
+          "Include interactive elements or case studies for deeper understanding.",
+          "Highlight examples from various disciplines to showcase applicability."
+        ]
+      },
+      {
+        "gap": "Need for increased interactivity and engagement.",
+        "id": "grounding",
+        "options": [
+          "Incorporate quizzes, interactive elements, or scenarios for student engagement.",
+          "Develop reflection exercises or short workshops to reinforce learning.",
+          "Include visuals like infographics to accompany text-heavy sections."
+        ]
+      }
+    ]
+  },
+  "finding_problem.html": {
+    "sections": [
+      {
+        "id": "intro",
+        "label": "What is a Problem?",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav liked the simple explanation of a problem as something people find unsatisfying.",
+            "neg": "The lack of a functioning video confused him.",
+            "imp": "Embed a working video or use a more interactive element to engage young students."
+          },
+          "forced_engineering_student": {
+            "pos": "Santhosh appreciated the clarity of defining a problem affecting multiple people.",
+            "neg": "He found the static nature of the explanation boring.",
+            "imp": "Incorporate interactive elements or case studies to make it more engaging."
+          },
+          "eager_student": {
+            "pos": "Priya liked the straightforward definition and the communal aspect of problems.",
+            "neg": "She was curious about specific examples and found them lacking.",
+            "imp": "Add examples or real-life scenarios to illustrate the concept."
+          },
+          "veteran_teacher": {
+            "pos": "The teacher appreciated the clear and concise definition meant for students.",
+            "neg": "Found the lack of video support unprofessional for an educational site.",
+            "imp": "Ensure media elements function correctly to maintain credibility."
+          },
+          "veteran_designer": {
+            "pos": "Valued the foundational approach to defining a problem.",
+            "neg": "Expected a deeper dive into problem types and contexts.",
+            "imp": "Include information on various problem types encountered in design."
+          },
+          "design_philosopher": {
+            "pos": "Liked the philosophical approach that problems arise from dissatisfaction.",
+            "neg": "Considered the description too narrow and lacking depth.",
+            "imp": "Expand the definition to explore philosophical underpinnings of 'problem'."
+          }
+        }
+      },
+      {
+        "id": "evolution",
+        "label": "The Evolution",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav got a sense that problems can affect multiple people.",
+            "neg": "The missing video led to misunderstandings.",
+            "imp": "Provide an alternative explanation or a fixed video."
+          },
+          "forced_engineering_student": {
+            "pos": "Santhosh found the implication of complexity interesting.",
+            "neg": "He wanted more examples of how problems evolve.",
+            "imp": "Include case studies or animations to show problem evolution."
+          },
+          "eager_student": {
+            "pos": "Priya appreciated the mention of complexity and community impact.",
+            "neg": "Thought it didn't offer enough depth about evolving problems.",
+            "imp": "Discuss specific scenarios where problems are seen evolving."
+          },
+          "veteran_teacher": {
+            "pos": "Found the attempt to convey complexity commendable.",
+            "neg": "Believed more context was needed for complete understanding.",
+            "imp": "Provide deeper contextual analysis with historical examples."
+          },
+          "veteran_designer": {
+            "pos": "Acknowledged the design-centric view of evolving problems.",
+            "neg": "Expected detailed exploration of design modalities.",
+            "imp": "Expand to cover design strategies addressing evolving problems."
+          },
+          "design_philosopher": {
+            "pos": "Liked the reference to wider societal impact.",
+            "neg": "Felt it missed philosophical exploration of collective problems.",
+            "imp": "Discuss collective consciousness and societal dynamics in problem evolution."
+          }
+        }
+      },
+      {
+        "id": "worth-solving",
+        "label": "Is it worth solving?",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav found the flowchart easy to follow.",
+            "neg": "Confused about what makes a problem worth solving.",
+            "imp": "Explain the significance of collective impact more clearly."
+          },
+          "forced_engineering_student": {
+            "pos": "Santhosh enjoyed the logical approach to decision-making.",
+            "neg": "Felt it oversimplified complex problems with too binary logic.",
+            "imp": "Introduce varied decision-making frameworks that consider other factors, like emotional impact."
+          },
+          "eager_student": {
+            "pos": "Priya liked the straightforward decision logic.",
+            "neg": "Wanted more details on what constitutes a 'many' user base.",
+            "imp": "Provide definitions or examples of what 'many' means."
+          },
+          "veteran_teacher": {
+            "pos": "Appreciated the teaching of decision logic.",
+            "neg": "Concerned the simplicity might mislead students on real-world complexity.",
+            "imp": "Introduce nuances and variables influencing problem-solving decisions."
+          },
+          "veteran_designer": {
+            "pos": "Valued the initiative to discuss the worth of problem-solving.",
+            "neg": "Thought it ignored design constraints and real-world limitations.",
+            "imp": "Integrate considerations of resource and feasibility constraints."
+          },
+          "design_philosopher": {
+            "pos": "Appreciated engagement with value judgment.",
+            "neg": "Felt the ethical ramifications of problem-solving were underexplored.",
+            "imp": "Discuss ethical considerations in deciding problem worthiness."
+          }
+        }
+      },
+      {
+        "id": "empathy",
+        "label": "What is Empathy?",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav liked learning about feelings and understanding others.",
+            "neg": "Some terms and language were difficult to grasp.",
+            "imp": "Use simpler language and add visuals to help explain concepts."
+          },
+          "forced_engineering_student": {
+            "pos": "Santhosh found the empathy concept applicable to real-world design.",
+            "neg": "He felt the section was too vague and lacked structure.",
+            "imp": "Provide case studies or role-playing exercises to cement understanding."
+          },
+          "eager_student": {
+            "pos": "Priya enjoyed the detailed explanation of empathy.",
+            "neg": "Felt it needed more real-world relevance.",
+            "imp": "Include examples of empathy in successful design projects."
+          },
+          "veteran_teacher": {
+            "pos": "Praised the in-depth look at empathy.",
+            "neg": "Concerned the abstract nature might alienate some students.",
+            "imp": "Support with concrete examples and classroom-based activities."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated empathy as a pillar in design thinking.",
+            "neg": "Expected more on how empathy can translate to design outcomes.",
+            "imp": "Expand on the actionable insights empathy leads to in design."
+          },
+          "design_philosopher": {
+            "pos": "Valued the analysis of empathy from a philosophical view.",
+            "neg": "Missed a discussion on the philosophical implications.",
+            "imp": "Incorporate philosophical texts or discussions about empathy's role in shaping ethics."
+          }
+        }
+      },
+      {
+        "id": "empathy-vs-sympathy",
+        "label": "Empathy vs. Sympathy",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Enjoyed the clear distinction with simple examples.",
+            "neg": "Struggled to see how it connects to real problems.",
+            "imp": "Use interactive content or stories to show real-world application."
+          },
+          "forced_engineering_student": {
+            "pos": "Appreciated the critical difference highlighted for designers.",
+            "neg": "Found it somewhat repetitive and basic.",
+            "imp": "Discuss implications of empathy and sympathy in design failures."
+          },
+          "eager_student": {
+            "pos": "Priya liked the clarity in differentiating empathy and sympathy.",
+            "neg": "Felt lacking in practical application.",
+            "imp": "Include exercises that emphasize this distinction in design challenges."
+          },
+          "veteran_teacher": {
+            "pos": "Important clarification often neglected in teaching.",
+            "neg": "Could have included more sophisticated examples.",
+            "imp": "Bring in case-based discussions on empathy vs. sympathy."
+          },
+          "veteran_designer": {
+            "pos": "Critical insight into how empathy drives design.",
+            "neg": "Lacked linkage to broader implications on design process.",
+            "imp": "Examine how empathy influences different design phases."
+          },
+          "design_philosopher": {
+            "pos": "Appreciated the introspection into fundamental emotions.",
+            "neg": "Needed deeper probing into philosophical backgrounds.",
+            "imp": "Link these concepts to larger philosophical works to enrich understanding."
+          }
+        }
+      },
+      {
+        "id": "story",
+        "label": "The Thirsty Crow",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav loved the simple, relatable story.",
+            "neg": "Had trouble connecting the story back to empathy.",
+            "imp": "Add connections back to empathy tools within the narrative."
+          },
+          "forced_engineering_student": {
+            "pos": "Saw it as a classic problem-solving story with a twist.",
+            "neg": "Thought it was somewhat childish and not directly linked to content.",
+            "imp": "Tie the story more explicitly to design thinking tools."
+          },
+          "eager_student": {
+            "pos": "Priya enjoyed the story and its use as a metaphor.",
+            "neg": "Wanted more explicit links to empathy in design.",
+            "imp": "Expand examples to show how stories can inspire empathy-driven design solutions."
+          },
+          "veteran_teacher": {
+            "pos": "Valued storytelling as a teaching tool.",
+            "neg": "Concerned that lessons weren\u2019t explicitly drawn out.",
+            "imp": "Pull out and discuss specific lessons from the story pertinent to empathy."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated the creative narrative approach.",
+            "neg": "Wanted clear takeaways on how stories aid empathy.",
+            "imp": "Build a clear bridge between narrative and practical design insights."
+          },
+          "design_philosopher": {
+            "pos": "Loved the allegorical presentation and implications of wisdom.",
+            "neg": "Missed deeper drawing on its philosophical richness.",
+            "imp": "Discuss the bigger philosophical lessons implied by the story."
+          }
+        }
+      },
+      {
+        "id": "tools",
+        "label": "Empathy Tools",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav liked discovering new tools and the interactive prompts.",
+            "neg": "The terms and tools were overwhelming.",
+            "imp": "Simplify language and offer introductory explanations or tutorials."
+          },
+          "forced_engineering_student": {
+            "pos": "Appreciated the variety and complexity of tools.",
+            "neg": "Felt tools were presented too theoretically.",
+            "imp": "Include practical examples or projects showcasing each tool in action."
+          },
+          "eager_student": {
+            "pos": "Priya enjoyed learning about new ways to think about empathy.",
+            "neg": "Wanted insights into which situations are best for each tool.",
+            "imp": "Provide case studies where each tool has been used effectively."
+          },
+          "veteran_teacher": {
+            "pos": "Liked the comprehensive toolkit for empathy.",
+            "neg": "Concerned about the depth of each tool's explanation.",
+            "imp": "Deliver a detailed guide or video for each tool."
+          },
+          "veteran_designer": {
+            "pos": "Valued the toolkit and its potential applicability.",
+            "neg": "Felt some tools lacked depth in description.",
+            "imp": "Dive deeper into how tools integrate into a broader design strategy."
+          },
+          "design_philosopher": {
+            "pos": "Appreciated the structured introduction to empathy tools",
+            "neg": "Missed a connection to the philosophical basis of these tools.",
+            "imp": "Explore the philosophical roots of some key tools to enrich their understanding."
+          }
+        }
+      },
+      {
+        "id": "problem-statement",
+        "label": "The Problem Statement",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked having a formula to follow.",
+            "neg": "The formula seemed complex without examples.",
+            "imp": "Provide a step-by-step breakdown and examples."
+          },
+          "forced_engineering_student": {
+            "pos": "Appreciated a logical template for framing issues.",
+            "neg": "Wished for greater detail on constructing effective statements.",
+            "imp": "Add workshops or guidelines on formulating high-quality problem statements."
+          },
+          "eager_student": {
+            "pos": "Priya liked the clear framework for identifying problems.",
+            "neg": "Wanted to see more examples.",
+            "imp": "Enrich the section with varied examples across industries."
+          },
+          "veteran_teacher": {
+            "pos": "Clear presentation helpful for student understanding.",
+            "neg": "A bit too formulaic without room for creativity.",
+            "imp": "Encourage innovation by showing diverse statement formats."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated emphasis on solution-agnostic context.",
+            "neg": "Wanted more linkage between statement and design steps.",
+            "imp": "Connect problem statements to subsequent design processes."
+          },
+          "design_philosopher": {
+            "pos": "Liked the philosophical foundation outside immediate solutions.",
+            "neg": "Limited exploration of the nature of defining problems.",
+            "imp": "Discuss philosophical implications of how we define issues."
+          }
+        }
+      },
+      {
+        "id": "evaluation",
+        "label": "Quality Test",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Understood the checklist format.",
+            "neg": "Didn\u2019t fully grasp why these questions mattered.",
+            "imp": "Explain the importance of each evaluation criteria."
+          },
+          "forced_engineering_student": {
+            "pos": "Appreciated the systematic approach to quality.",
+            "neg": "Desired examples of 'quality' and 'poor' problem statements.",
+            "imp": "Present contrasting examples to illustrate good and bad outcomes."
+          },
+          "eager_student": {
+            "pos": "Loved the checklist as a guide for refining problem statements.",
+            "neg": "Wanted more detailed explanations for each point.",
+            "imp": "Provide explanatory texts or videos for deeper understanding."
+          },
+          "veteran_teacher": {
+            "pos": "Valuable for structuring and teaching problem statement.",
+            "neg": "Feared students might over-rely on the checklist rather than critical thinking.",
+            "imp": "Use case studies showing re-evaluation and refinement processes."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated structuring aspect for design alignment.",
+            "neg": "Lacked context on iterative nature of evaluation.",
+            "imp": "Teach iterative design process integrating regular evaluation."
+          },
+          "design_philosopher": {
+            "pos": "Values critical examination of what constitutes quality.",
+            "neg": "Missed philosophical questioning of the criterias themselves.",
+            "imp": "Facilitate discussions exploring the philosophical grounding of these criteria."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Missing or non-functioning video elements across multiple sections causing confusion.",
+        "id": "video-gaps",
+        "options": [
+          "Ensure all video elements are functioning and supported across various browsers.",
+          "Provide alternative media such as GIFs or illustrations where videos are not essential.",
+          "Add explanatory text or interactive elements as alternative engagement methods."
+        ]
+      },
+      {
+        "gap": "Lack of real-life examples and contextual depth especially in complex sections.",
+        "id": "contextual-depth",
+        "options": [
+          "Integrate case studies from various fields to illustrate points clearly.",
+          "Incorporate interviews or quotes from experienced practitioners discussing real-world applications.",
+          "Use interactive tools or exercises that simulate real design challenges."
+        ]
+      },
+      {
+        "gap": "Over-reliance on text explanations without sufficient visual or interactive support.",
+        "id": "interactive-support",
+        "options": [
+          "Introduce infographics or diagrammatic representations for complex concepts.",
+          "Embed interactive quizzes or activities that reinforce learning.",
+          "Offer video walkthroughs explaining detailed sections or tools."
+        ]
+      },
+      {
+        "gap": "Philosophical and theoretical aspects lacking discussion or depth.",
+        "id": "philosophical-gap",
+        "options": [
+          "Incorporate philosophical readings or discussions linked to key design thinking concepts.",
+          "Host webinars featuring experts to talk about design thinking from a philosophical standpoint.",
+          "Create a discussion forum or blog series exploring deeper philosophical themes."
+        ]
+      },
+      {
+        "gap": "Insufficient connection of certain stories or examples back to design thinking principles.",
+        "id": "story-connection",
+        "options": [
+          "Explicitly draw out lessons or parallels from stories to design thinking tools.",
+          "Develop multimedia presentations highlighting connections between narratives and design insights.",
+          "Include guided prompts in narratives to aid readers in drawing connections."
+        ]
+      }
+    ]
+  },
+  "crow_cjm.html": {
+    "sections": [
+      {
+        "id": "N/A",
+        "label": "Customer Journey Map",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav found the story of the Thirsty Crow relatable and enjoyed the creative retelling as a Customer Journey Map.",
+            "neg": "He felt the language was a bit complex and didn't fully understand the terms like 'friction', 'insight', and 'delight'.",
+            "imp": "Simplify the language or provide a glossary explaining key terms for younger audiences."
+          },
+          "21yo_forced_engineering": {
+            "pos": "Santhosh appreciated the classic story being used in a new context, as it made a familiar concept interesting.",
+            "neg": "He felt that the concept of 'awareness' and 'friction' needed more concrete examples to fully engage.",
+            "imp": "Include real-world engineering examples alongside the fable to showcase practical application."
+          },
+          "21yo_eager_student": {
+            "pos": "Priya enjoyed the unique combination of a fable with modern design thinking elements, which made learning engaging.",
+            "neg": "She found the lack of visual elements like diagrams or supporting graphics disappointing.",
+            "imp": "Add visual elements such as diagrams or illustrations to complement the text."
+          },
+          "Veteran Teacher": {
+            "pos": "The veteran teacher liked the use of storytelling in education and recognized its potential to engage students of various ages.",
+            "neg": "She noted that the absence of curricular connections might make it less applicable in a structured syllabus.",
+            "imp": "Provide links or suggestions on how this content can be integrated into existing curricula."
+          },
+          "Veteran Designer": {
+            "pos": "The veteran designer appreciated the creative interpretation of the fable and its relevance to user experience.",
+            "neg": "He felt the journey map lacked depth in exploring more complex design thinking concepts.",
+            "imp": "Expand on the mapping elements to include more advanced design thinking methodologies."
+          },
+          "Design Philosopher": {
+            "pos": "The design philosopher appreciated the philosophical angle of understanding basic needs and creative problem-solving.",
+            "neg": "He felt the narrative was too simplistic and missed exploring deeper philosophical insights.",
+            "imp": "Incorporate discussions on the philosophical implications of the journey map approach."
+          }
+        }
+      },
+      {
+        "id": "N/A",
+        "label": "Key CJM Insights from the Crow's Journey",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav liked learning about problem-solving in a new context.",
+            "neg": "He struggled to connect the bullet points to the story.",
+            "imp": "Align insights more clearly with the story elements; perhaps use icons for easy association."
+          },
+          "21yo_forced_engineering": {
+            "pos": "Santhosh appreciated the direct explanation of friction and insight moments.",
+            "neg": "The abstract nature of the insights made them feel disconnected from practical scenarios.",
+            "imp": "Introduce case studies or scenarios that align with the points and show practical relevance."
+          },
+          "21yo_eager_student": {
+            "pos": "Priya found the insights thought-provoking and a good catalyst for deeper exploration.",
+            "neg": "She was disappointed by the lack of further reading or resources to expand understanding.",
+            "imp": "Include links to additional resources for students interested in exploring the insights further."
+          },
+          "Veteran Teacher": {
+            "pos": "The veteran teacher valued the clear focus on teaching problem-solving.",
+            "neg": "Lacked activities or reflective exercises to enhance classroom engagement.",
+            "imp": "Add classroom activities or discussion guides to deepen understanding and engagement."
+          },
+          "Veteran Designer": {
+            "pos": "The veteran designer saw the explanation of design principles as straightforward and applicable.",
+            "neg": "Felt the section was too brief for designers seeking depth in professional development.",
+            "imp": "Offer links to workshops or in-depth articles for advanced design practitioners."
+          },
+          "Design Philosopher": {
+            "pos": "The design philosopher appreciated the underlying message about turning problems into opportunities.",
+            "neg": "Missed reflections on cultural or historical contexts related to design practices.",
+            "imp": "Include a section discussing how these insights apply across different cultural or historical perspectives."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Complex language and lack of visual aids in explaining design concepts.",
+        "id": "Customer Journey Map",
+        "options": [
+          "Use simpler language or add a glossary for key terms.",
+          "Incorporate visual elements like diagrams to support the textual content.",
+          "Provide examples relating to different fields, especially for engineering students."
+        ]
+      },
+      {
+        "gap": "Insights section lacks practical connection and further reading resources.",
+        "id": "Key CJM Insights from the Crow's Journey",
+        "options": [
+          "Provide real-life case studies or scenarios to demonstrate insights.",
+          "Add links to resources or further reading materials.",
+          "Include interactive elements or classroom activities to enhance engagement."
+        ]
+      }
+    ]
+  },
+  "templates/empathy_map_template.html": {
+    "sections": [
+      {
+        "id": "introduction",
+        "label": "Introduction",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked the colorful graphics and simple language that make it engaging.",
+            "neg": "Found the explanation of empathy maps too brief and a bit confusing.",
+            "imp": "Include a straightforward analogy or story that explains empathy maps."
+          },
+          "forced_student": {
+            "pos": "Appreciated the clear structure and bullet points.",
+            "neg": "Felt the basic information did not provide enough technical depth.",
+            "imp": "Add links to more detailed resources for deeper understanding."
+          },
+          "eager_student": {
+            "pos": "Enjoyed the brief overview that set a clear premise for empathy maps.",
+            "neg": "Wanted more examples of empathy maps applied in real scenarios.",
+            "imp": "Incorporate case studies or examples of successful empathy maps."
+          },
+          "veteran_teacher": {
+            "pos": "Liked the educational objectives outlined at the beginning.",
+            "neg": "Noted a lack of alignment with standard curriculum structures.",
+            "imp": "Introduce curriculum alignment notes or educational standards."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated the emphasis on empathy in design thinking.",
+            "neg": "The section didn\u2019t address advanced applications.",
+            "imp": "Add a subsection for advanced practitioners with tips for refining empathy maps."
+          },
+          "design_philosopher": {
+            "pos": "Praised the philosophical underpinning that empathy is crucial in design.",
+            "neg": "Thought it lacked depth in discussing the implications of empathy.",
+            "imp": "Expand on the philosophical discourse about empathy's role in societal and cultural contexts."
+          }
+        }
+      },
+      {
+        "id": "components",
+        "label": "Empathy Map Components",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked the visual breakdown of each component in the empathy map.",
+            "neg": "Found the terminology used for components too advanced.",
+            "imp": "Use simpler language or provide definitions for complex terms."
+          },
+          "forced_student": {
+            "pos": "Found the categorization logical and easy to follow.",
+            "neg": "Felt it was too simplistic without technical challenges.",
+            "imp": "Add exercises or interactive components to challenge engagement."
+          },
+          "eager_student": {
+            "pos": "Valued the detailed explanation of each section of the empathy map.",
+            "neg": "Wanted interactive examples to see how components work together.",
+            "imp": "Include interactive empathy map builders or walkthroughs."
+          },
+          "veteran_teacher": {
+            "pos": "Clear layout of components made it easy to plan lessons around.",
+            "neg": "Did not see suggested methods to teach these components effectively.",
+            "imp": "Provide teaching tips or lesson plan suggestions for educators."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated the structured explanation of empathy map elements.",
+            "neg": "Desired deeper insight into the strategic use of each component.",
+            "imp": "Provide insights or case study references on the impact of each component."
+          },
+          "design_philosopher": {
+            "pos": "Impressed by the structured breakdown which aids a systematic approach to empathy.",
+            "neg": "The component division felt too rigid without addressing fluidity.",
+            "imp": "Discuss the fluid nature of empathy and how components overlap in practice."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Confusion about empathy map due to lack of detailed explanation",
+        "id": "introduction",
+        "options": [
+          "Add a relatable story or scenario that illustrates the concept of empathy maps.",
+          "Include a video introduction featuring an expert explaining the empathy map.",
+          "Create an FAQ section targeting common confusions with empathy maps."
+        ]
+      },
+      {
+        "gap": "Advanced terminology in empathy map components",
+        "id": "components",
+        "options": [
+          "Provide a glossary of terms used within the section.",
+          "Use tooltips or pop-ups to define complicated terms when hovered over.",
+          "Integrate a simplified section for younger or less experienced audiences."
+        ]
+      }
+    ]
+  },
+  "templates/journey_map_template.html": {
+    "sections": [
+      {
+        "id": "intro_section",
+        "label": "Introduction to Journey Mapping",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked the colorful visuals explaining what a journey map is.",
+            "neg": "Found some of the terminology difficult to understand.",
+            "imp": "Include a glossary of terms or hover definitions."
+          },
+          "17-21yo_Forced": {
+            "pos": "Appreciated the real-world applicability example.",
+            "neg": "Still unclear why this is relevant to engineering.",
+            "imp": "Add specific case studies or examples related to engineering projects."
+          },
+          "17-21yo_Eager": {
+            "pos": "Loved the interactive timeline showing journey map evolution.",
+            "neg": "Wanted more depth on how journey maps vary across industries.",
+            "imp": "Provide links to industry-specific journey maps."
+          },
+          "Veteran_Teacher": {
+            "pos": "Valued the clear step-by-step explanation.",
+            "neg": "The section lacks variety in terms of pedagogical approaches.",
+            "imp": "Incorporate videos or seminars featuring experienced mappers."
+          },
+          "Veteran_Designer": {
+            "pos": "Appreciated the emphasis on empathy and user perspective.",
+            "neg": "Disliked the oversimplified explanation as it lacks nuance.",
+            "imp": "Include advanced resources or readings on the intricacies of journey mapping."
+          },
+          "Design_Philosopher": {
+            "pos": "Found the focus on storytelling insightful.",
+            "neg": "Missing philosophical perspectives on mapping and its impacts.",
+            "imp": "Integrate discussions on the ethical implications of journey mapping."
+          }
+        }
+      },
+      {
+        "id": "downloadable_templates",
+        "label": "Downloadable Journey Map Templates",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Easy to click and download the templates.",
+            "neg": "The templates were overwhelming due to lack of guidance.",
+            "imp": "Add a simple tutorial video on how to use the templates."
+          },
+          "17-21yo_Forced": {
+            "pos": "Appreciated that there were multiple formats compatible with different software.",
+            "neg": "Unclear which template should be used for which scenario.",
+            "imp": "Provide a decision tree or guide to help choose the right template."
+          },
+          "17-21yo_Eager": {
+            "pos": "Liked the variety and depth of the template options.",
+            "neg": "Wanted templates to include more advanced features.",
+            "imp": "Offer a premium set of templates with advanced features and customizations."
+          },
+          "Veteran_Teacher": {
+            "pos": "Found the templates easy to integrate into lesson plans.",
+            "neg": "Concerns over whether the templates are updated with current best practices.",
+            "imp": "Regularly update templates based on industry feedback and trends."
+          },
+          "Veteran_Designer": {
+            "pos": "Appreciated the aesthetic quality of the templates.",
+            "neg": "Felt templates were too prescriptive, limiting creativity.",
+            "imp": "Encourage customization and offer blank templates for original design ideas."
+          },
+          "Design_Philosopher": {
+            "pos": "Liked the notion of templates as starting points for exploration.",
+            "neg": "Templates seem to cultivate a rigid approach rather than a creative one.",
+            "imp": "Promote templates as flexible tools, leaving space for philosophical inputs."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Terminology and Relevance in Introduction",
+        "id": "intro_section",
+        "options": [
+          "Add a glossary of terms with hover definitions for ease of understanding.",
+          "Include targeted examples linking journey mapping to various fields like engineering.",
+          "Provide pathways to advanced readings and industry-specific variations."
+        ]
+      },
+      {
+        "gap": "Guidance and Relevance of Templates",
+        "id": "downloadable_templates",
+        "options": [
+          "Create a short tutorial video to guide users on using templates.",
+          "Provide a decision tree or guide within the website for selecting templates.",
+          "Offer a 'Build Your Own' option where users can select elements to create a custom template."
+        ]
+      }
+    ]
+  },
+  "templates/persona_template.html": {
+    "sections": [
+      {
+        "id": "header",
+        "label": "Header",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "The colorful and dynamic design of the header caught Aarav's attention.",
+            "neg": "Aarav found the text heavy and difficult to quickly understand.",
+            "imp": "Include more visuals, such as icons, alongside text to make it more appealing for younger audiences."
+          },
+          "forced_student": {
+            "pos": "Santhosh appreciated the minimalistic design aesthetics of the header.",
+            "neg": "The purpose of the page was not immediately clear to Santhosh.",
+            "imp": "Add a concise tagline or subtitle to clarify the page's purpose."
+          },
+          "eager_student": {
+            "pos": "Priya liked the clear title in the header as it grabbed her interest immediately.",
+            "neg": "She felt the header was a bit oversimplified and lacked informative content.",
+            "imp": "Include a short description or a slogan to give more context."
+          },
+          "veteran_teacher": {
+            "pos": "The header was straightforward and easy to navigate, which the veteran teacher appreciated.",
+            "neg": "However, the font size was a bit too small for quick reading.",
+            "imp": "Increase font size for better readability, especially for older users."
+          },
+          "veteran_designer": {
+            "pos": "The alignment and balance of design elements were appealing to the veteran designer.",
+            "neg": "The visuals were more decorative than functional.",
+            "imp": "Incorporate functional graphics that align with the content's purpose."
+          },
+          "design_philosopher": {
+            "pos": "The design had aesthetic harmony which the design philosopher liked.",
+            "neg": "The elements lacked nuance and depth symbolically.",
+            "imp": "Integrate a subtle thematic design that conveys deeper meaning."
+          }
+        }
+      },
+      {
+        "id": "persona_template",
+        "label": "Persona Template",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav enjoyed the templates' interactive elements that allowed him to engage.",
+            "neg": "He found the terms and instructions rather difficult to comprehend.",
+            "imp": "Simplify the language used and break instructions into smaller steps."
+          },
+          "forced_student": {
+            "pos": "Santhosh appreciated the logical layout of the template.",
+            "neg": "He felt overloaded with the information he needed to fill out.",
+            "imp": "Provide examples or a sample completed template to reduce cognitive load."
+          },
+          "eager_student": {
+            "pos": "Priya liked the detailed templates as they offered comprehensive guidance.",
+            "neg": "The lack of interactive examples was a downside for her.",
+            "imp": "Include interactive examples or a video walkthrough."
+          },
+          "veteran_teacher": {
+            "pos": "The teacher found the templates thorough for a classroom setting.",
+            "neg": "Overlap in some sections caused confusion.",
+            "imp": "Merge similar sections to avoid redundancy."
+          },
+          "veteran_designer": {
+            "pos": "The templates were well-organized, according to design standards.",
+            "neg": "The aesthetics were too plain for inspiration.",
+            "imp": "Use design elements that encourage creativity in filling out templates."
+          },
+          "design_philosopher": {
+            "pos": "The structured nature of the templates appealed to philosophical principles of form.",
+            "neg": "Lacked interpretative flexibility.",
+            "imp": "Add optional sections for subjective interpretation and creative input."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Header lacks immediate clarity and engagement",
+        "id": "header",
+        "options": [
+          "Introduce a tagline or slogan under the header for clarity.",
+          "Integrate symbolically meaningful visuals within the header.",
+          "Enhance the font size and include icons to facilitate quicker understanding."
+        ]
+      },
+      {
+        "gap": "Persona Template has complex language and lacks interactive guidance",
+        "id": "persona_template",
+        "options": [
+          "Simplify the instructions and include an animated walkthrough.",
+          "Provide a few completed sample templates for reference.",
+          "Offer an interactive, step-by-step guide to fill in the template."
+        ]
+      }
+    ]
+  },
+  "templates/problem_canvas_template.html": {
+    "sections": [
+      {
+        "id": "intro",
+        "label": "Introduction",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "The colorful graphics caught Aarav\u2019s attention and made the introduction feel friendly.",
+            "neg": "The text was too dense, making it hard to grasp the concept quickly.",
+            "imp": "Incorporate bullet points to break up the information and include a short video summarizing the key points."
+          },
+          "17-21yo_forced": {
+            "pos": "Santhosh appreciated that the introduction mentioned real-world applications, making it seem relevant.",
+            "neg": "It was hard to see the immediate benefit, which made the topic less engaging.",
+            "imp": "Include a section dedicated to highlighting the specific benefits of mastering this concept."
+          },
+          "17-21yo_eager": {
+            "pos": "Priya loved the clear definitions provided within the introduction.",
+            "neg": "She felt there was not enough depth or links to external resources for further exploration.",
+            "imp": "Add links to advanced reading materials for those interested in delving deeper."
+          },
+          "Veteran Teacher": {
+            "pos": "The clear structure and objectives outlined at the beginning were appreciated.",
+            "neg": "Felt that the introduction did not cater to diverse learning styles.",
+            "imp": "Embed multimedia elements such as audio or interactive quizzes."
+          },
+          "Veteran Designer": {
+            "pos": "Valued the emphasis on the holistic view of ideas presented at the start.",
+            "neg": "Lacked a discussion on the integration with other design processes.",
+            "imp": "Provide a diagram or flowchart showing how the problem canvas fits into broader design processes."
+          },
+          "Design Philosopher": {
+            "pos": "Appreciated the philosophical nods to problem-solving practices.",
+            "neg": "Found it too focused on practical aspects, lacking theoretical context.",
+            "imp": "Include a sidebar with philosophical quotes or discussions on design thinking theories."
+          }
+        }
+      },
+      {
+        "id": "template_usage",
+        "label": "How to Use the Template",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "The step-by-step instructions made it easier to understand.",
+            "neg": "The language used was a bit too technical for a younger audience.",
+            "imp": "Simplify the language and include icons that represent each step visually."
+          },
+          "17-21yo_forced": {
+            "pos": "Santhosh liked the visual examples showing how the template looks when filled out.",
+            "neg": "He found the instructions a bit overwhelming with too many details.",
+            "imp": "Break down the instructions into smaller, easily digestible sections."
+          },
+          "17-21yo_eager": {
+            "pos": "Priya appreciated the inclusion of tool tips and hints throughout the usage guide.",
+            "neg": "Wanted more case study examples detailing template effectiveness.",
+            "imp": "Include real-world case studies highlighting successful implementations of the template."
+          },
+          "Veteran Teacher": {
+            "pos": "Liked the thoroughness of the instructions, making it easy to teach.",
+            "neg": "Found no specific adaptation suggestions for different classroom settings.",
+            "imp": "Add a section with tips on adapting the template for various teaching situations and age groups."
+          },
+          "Veteran Designer": {
+            "pos": "Appreciated the detailed breakdown of the sections within the template.",
+            "neg": "Felt there was a lack of emphasis on connecting the template back to the design lifecycle.",
+            "imp": "Incorporate sections on how to revisit and iterate on the canvas as part of ongoing design work."
+          },
+          "Design Philosopher": {
+            "pos": "Valued the structured approach to dissecting problems.",
+            "neg": "The pragmatism overshadowed potential philosophical underpinnings of each step.",
+            "imp": "Include an optional reading section linking each template section to different design thinking schools of thought."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Dense and overwhelming content in the introduction section, especially for younger and forced student personas.",
+        "id": "intro",
+        "options": [
+          "Introduce bullet points and visual hierarchy to break down content.",
+          "Add a short animated explainer video summarizing key concepts.",
+          "Implement an interactive mini-quiz at the end to reinforce the main points."
+        ]
+      },
+      {
+        "gap": "Language and accessibility of instructions for the 'How to Use the Template' section were challenging for younger audiences.",
+        "id": "template_usage",
+        "options": [
+          "Simplify the language used in instructions and augment them with visual cues like icons.",
+          "Divide the instructions into bite-sized sections with headings for easy navigation.",
+          "Enhance with multimedia elements like short videos demonstrating each step."
+        ]
+      },
+      {
+        "gap": "Lack of extended learning resources and related discussions for eager learners and design philosophers.",
+        "id": "intro,template_usage",
+        "options": [
+          "Include sidebar content or links to external reading and extended resources.",
+          "Develop a resource portal with case studies, readings, and related topics integrated into the page.",
+          "Offer downloadable PDFs or checklists that contain advanced content for further study."
+        ]
+      }
+    ]
+  },
+  "templates/problem_eval_template.html": {
+    "sections": [
+      {
+        "id": "header",
+        "label": "Header and Introduction",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked the colorful design and big, clear fonts.",
+            "neg": "Found some of the terminology confusing.",
+            "imp": "Simplify language or add tooltips explaining terms briefly."
+          },
+          "forced_eng_student": {
+            "pos": "Appreciated the concise introduction to what the template is about.",
+            "neg": "Lacked engagement; felt generic.",
+            "imp": "Include relatable examples or case studies to capture interest."
+          },
+          "eager_student": {
+            "pos": "Enjoyed the clarity in the description and the potential learning.",
+            "neg": "Wished there was more indication of how this fits into larger learning objectives.",
+            "imp": "Integrate a flowchart showing how this section aligns with broader goals."
+          },
+          "veteran_teacher": {
+            "pos": "Liked the overall organization and straightforward tone.",
+            "neg": "Missing pedagogical strategies or teaching suggestions.",
+            "imp": "Add a sidebar with tips for teaching this concept."
+          },
+          "veteran_designer": {
+            "pos": "Appreciated the visually appealing layout.",
+            "neg": "Too basic; lacks depth for professional application.",
+            "imp": "Provide links to more advanced resources for interested users."
+          },
+          "design_philosopher": {
+            "pos": "Enjoyed the section's attempt to engage.",
+            "neg": "Lacks philosophical depth or critical prompting questions.",
+            "imp": "Incorporate reflective questions for students to ponder about design thinking."
+          }
+        }
+      },
+      {
+        "id": "step_instructions",
+        "label": "Step-by-Step Instructions",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "The step-by-step instructions are easy to follow.",
+            "neg": "Steps are text-heavy and intimidating.",
+            "imp": "Introduce icons or illustrations for each step to make it less text-dense."
+          },
+          "forced_eng_student": {
+            "pos": "Clear steps helped in understanding the process.",
+            "neg": "Felt mechanical without real-world application.",
+            "imp": "Include real-world scenarios or problems to apply each step."
+          },
+          "eager_student": {
+            "pos": "Liked the structured approach.",
+            "neg": "Steps feel isolated from each other instead of part of a cohesive process.",
+            "imp": "Add transition explanations or flow triggers between steps."
+          },
+          "veteran_teacher": {
+            "pos": "Clear instruction set that can be easily adapted for lesson plans.",
+            "neg": "Overlooks diverse learning styles.",
+            "imp": "Include alternative activities or multimedia resources."
+          },
+          "veteran_designer": {
+            "pos": "Instructions well laid out with purpose.",
+            "neg": "Too simplistic for experienced designers.",
+            "imp": "Offer 'advanced tips' sections for each step for deeper exploration."
+          },
+          "design_philosopher": {
+            "pos": "Sequential logic appreciated.",
+            "neg": "Steps lack integration with design thinking's broader philosophical questions.",
+            "imp": "Connect steps to ethical considerations and societal impact discussions."
+          }
+        }
+      },
+      {
+        "id": "worksheet",
+        "label": "Interactive Worksheet",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Fun and interactive way to engage with the content.",
+            "neg": "Difficulty in understanding how to save progress.",
+            "imp": "Add a clear 'How to Use' guide with save/load functions."
+          },
+          "forced_eng_student": {
+            "pos": "Interactive element breaks monotony.",
+            "neg": "Feels juvenile for a college student.",
+            "imp": "Incorporate more challenging or thought-provoking questions."
+          },
+          "eager_student": {
+            "pos": "Engaging tool for active learning.",
+            "neg": "Lacks feedback mechanism to guide learning.",
+            "imp": "Include instant feedback or hints for input completion."
+          },
+          "veteran_teacher": {
+            "pos": "Liked as a student engagement tool.",
+            "neg": "Might not align with classroom resources or formats.",
+            "imp": "Allow export options that sync with common e-learning platforms."
+          },
+          "veteran_designer": {
+            "pos": "Creative way to apply learning.",
+            "neg": "Limited in scope and creativity.",
+            "imp": "Offer customization options to tailor it to professional practice needs."
+          },
+          "design_philosopher": {
+            "pos": "Excites creative thinking.",
+            "neg": "Lacks depth in exploring the philosophical implications of decisions made in the worksheet.",
+            "imp": "Add reflective prompts or forums to discuss decisions and their impacts."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Terminology in the Header and Introduction is too advanced for younger audiences.",
+        "id": "header",
+        "options": [
+          "Integrate tooltips or hover-over definitions for complex terms.",
+          "Include a glossary section that links within the text.",
+          "Simplify language and use analogies that are relatable for a 14-year-old."
+        ]
+      },
+      {
+        "gap": "Step-by-step Instructions lack interactive elements and feel too isolated.",
+        "id": "step_instructions",
+        "options": [
+          "Incorporate transition animations or videos that show processes live.",
+          "Create scenario-based examples that integrate all steps.",
+          "Design a flowchart that maps out the progression and links between steps."
+        ]
+      },
+      {
+        "gap": "Interactive Worksheet lacks saving instructions and feedback mechanism.",
+        "id": "worksheet",
+        "options": [
+          "Add a user-friendly guide with screenshots on using the worksheet, including saving work.",
+          "Integrate a feedback or hint system for common errors or inputs.",
+          "Incorporate auto-save features with the option for users to export their work in various formats."
+        ]
+      }
+    ]
+  },
+  "templates/proto_persona_template.html": {
+    "sections": [
+      {
+        "id": "intro_section",
+        "label": "Introduction to Proto Persona",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav liked the colorful graphics and simple examples.",
+            "neg": "He found some of the terminology confusing and not well-explained for someone new to design thinking.",
+            "imp": "Simplify language or include a glossary for younger audiences."
+          },
+          "17-21yo_forced": {
+            "pos": "Santhosh appreciated the concise explanation since he is not very interested in the topic.",
+            "neg": "He found the lack of technical depth unengaging.",
+            "imp": "Add links to technical resources for those interested in deeper learning."
+          },
+          "17-21yo_eager": {
+            "pos": "Priya loved the enthusiasm conveyed about design thinking and how proto personas can be powerful tools.",
+            "neg": "She felt the information could be more comprehensive.",
+            "imp": "Incorporate case studies or real-world examples."
+          },
+          "veteran_teacher": {
+            "pos": "The teacher liked the clarity of objectives presented right at the beginning.",
+            "neg": "Thought it lacked pedagogical depth.",
+            "imp": "Integrate teaching strategies and how to implement in classroom settings."
+          },
+          "veteran_designer": {
+            "pos": "Enjoyed the acknowledgment of proto personas as a quick tool for design processes.",
+            "neg": "Concerned it oversimplified proto personas.",
+            "imp": "Include links to detailed guides or advanced techniques."
+          },
+          "design_philosopher": {
+            "pos": "Appreciated the philosophical underpinning that proto personas foster creative thinking.",
+            "neg": "Critiqued the lack of theoretical context.",
+            "imp": "Discuss the evolution and critique of personas in design thinking over time."
+          }
+        }
+      },
+      {
+        "id": "template_section",
+        "label": "Proto Persona Template",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Aarav found the template easy to fill out due to the guiding questions.",
+            "neg": "He was unsure about the necessity of certain sections.",
+            "imp": "Provide examples or illustrative tutorials on how to use each section of the template."
+          },
+          "17-21yo_forced": {
+            "pos": "Santhosh liked that the template was straightforward, fitting his pragmatic approach.",
+            "neg": "Found it lacked connection to real-world applications.",
+            "imp": "Add scenarios or ask users to envision real-world products."
+          },
+          "17-21yo_eager": {
+            "pos": "Priya appreciated the structure and its potential to organize ideas easily.",
+            "neg": "Felt the detail for each section wasn't sufficient.",
+            "imp": "Enhance the template with pop-up tips or video explanations."
+          },
+          "veteran_teacher": {
+            "pos": "Liked how the template could guide students in learning and applying new concepts.",
+            "neg": "Worried students might get too stuck on specifics and miss big ideas.",
+            "imp": "Include a reflective section for users to think about the 'why' behind their answers."
+          },
+          "veteran_designer": {
+            "pos": "Found the layout visually appealing and user-friendly.",
+            "neg": "Thought it could standardize design thinking too much.",
+            "imp": "Encourage creativity by providing optional, adaptable parts of the template."
+          },
+          "design_philosopher": {
+            "pos": "Acknowledged the template as a valuable tool for initial ideation.",
+            "neg": "Worried about reducing complexity to pre-set fields.",
+            "imp": "Incorporate sections for open-ended exploration beyond predefined prompts."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Need for simpler language and additional resources in the introduction.",
+        "id": "intro_section",
+        "options": [
+          "Include a glossary of terms with simple definitions.",
+          "Add introductory videos explaining key concepts in a simple manner.",
+          "Create a child-friendly version of the intro with simplified language."
+        ]
+      },
+      {
+        "gap": "Desire for more comprehensive, practical applications in the template.",
+        "id": "template_section",
+        "options": [
+          "Include case studies alongside the template showing its use in real projects.",
+          "Add prompts that encourage users to apply the template to hypothetical scenarios.",
+          "Create a downloadable guide that accompanies the template for in-depth exploration."
+        ]
+      }
+    ]
+  },
+  "templates/root_cause_template.html": {
+    "sections": [
+      {
+        "id": "introduction",
+        "label": "Introduction",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "The introduction had simple language and a cool design layout.",
+            "neg": "There were too many technical terms he didn't understand.",
+            "imp": "Add a glossary or tooltips for difficult terms."
+          },
+          "forced_engineering_student": {
+            "pos": "It had a concise explanation of the root cause concept.",
+            "neg": "The connection to engineering wasn't clear.",
+            "imp": "Add a section on how it's applicable in engineering."
+          },
+          "eager_student": {
+            "pos": "Found the historical context of design thinking fascinating.",
+            "neg": "Wished for more interactive elements like quizzes.",
+            "imp": "Include interactive elements to engage readers."
+          },
+          "veteran_teacher": {
+            "pos": "Explanations were clear and straightforward.",
+            "neg": "Lacked a guide on how to use this in a classroom lesson plan.",
+            "imp": "Introduce a section on classroom integration."
+          },
+          "veteran_designer": {
+            "pos": "Liked the mention of iterative design processes.",
+            "neg": "Too basic for someone with design experience.",
+            "imp": "Offer advanced insights or link to deeper resources."
+          },
+          "design_philosopher": {
+            "pos": "Appreciated the philosophical underpinning of the concept.",
+            "neg": "Missed a deeper discussion of its impact on society.",
+            "imp": "Include a segment discussing broader societal impacts."
+          }
+        }
+      },
+      {
+        "id": "template_details",
+        "label": "Template Details",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "The visual parts of the template were colorful and engaging.",
+            "neg": "The formatting of the steps was confusing.",
+            "imp": "Use clearer step-by-step guides or numbers."
+          },
+          "forced_engineering_student": {
+            "pos": "Details help understand structure better.",
+            "neg": "Felt detached from practical application.",
+            "imp": "Incorporate real-world examples relating to engineering."
+          },
+          "eager_student": {
+            "pos": "Appreciated the depth in process explanation.",
+            "neg": "Too much text without any breaks or summaries.",
+            "imp": "Break up text with bullet points or summaries."
+          },
+          "veteran_teacher": {
+            "pos": "Template was ready to use in educational settings.",
+            "neg": "The educational objectives weren't explicitly stated.",
+            "imp": "Add clearly defined educational goals."
+          },
+          "veteran_designer": {
+            "pos": "Good structure for beginner designers.",
+            "neg": "Missing advanced design strategies.",
+            "imp": "Include links to resources for advanced strategies."
+          },
+          "design_philosopher": {
+            "pos": "Liked the adherence to design principles.",
+            "neg": "Too much focus on practicality.",
+            "imp": "Discuss the theoretical foundations more deeply."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Lack of interactive and engaging elements.",
+        "id": "introduction",
+        "options": [
+          "Add quizzes or interactive sections",
+          "Include multimedia elements like videos or animations",
+          "Implement a gamified quiz at the end of the section"
+        ]
+      },
+      {
+        "gap": "Difficult terminology for younger audiences.",
+        "id": "introduction",
+        "options": [
+          "Add a glossary or hover tooltips",
+          "Simplify language with age-appropriate synonyms",
+          "Create a 'For Students' section with simpler language"
+        ]
+      },
+      {
+        "gap": "Connection to specific fields like engineering.",
+        "id": "introduction",
+        "options": [
+          "Add practical examples related to engineering",
+          "Include case studies from various fields",
+          "Create field-specific subsections"
+        ]
+      }
+    ]
+  },
+  "templates/survey_template.html": {
+    "sections": [
+      {
+        "id": "survey_intro",
+        "label": "Survey Introduction",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Liked the colorful graphics and simple language.",
+            "neg": "Found some of the vocabulary advanced.",
+            "imp": "Simplify the language and use more images to explain terms."
+          },
+          "forced_17_21yo": {
+            "pos": "Appreciated the concise overview of what the survey is about.",
+            "neg": "Felt disconnected due to lack of real-world relevance.",
+            "imp": "Include examples that relate to their field of study."
+          },
+          "eager_17_21yo": {
+            "pos": "Enjoyed the clarity and purpose of the survey.",
+            "neg": "Wanted more depth into survey applications.",
+            "imp": "Add links to external resources for further learning."
+          },
+          "veteran_teacher": {
+            "pos": "Appreciated the structured introduction.",
+            "neg": "Felt the educational aim wasn't clear.",
+            "imp": "Include clear educational objectives upfront."
+          },
+          "veteran_designer": {
+            "pos": "Liked the use of visual hierarchy in the design.",
+            "neg": "Some design elements felt outdated.",
+            "imp": "Refresh the design elements to be more modern."
+          },
+          "design_philosopher": {
+            "pos": "Appreciated the mention of empathy in surveys.",
+            "neg": "Felt that the introduction lacked philosophical context.",
+            "imp": "Incorporate a section on the philosophical underpinnings of survey design."
+          }
+        }
+      },
+      {
+        "id": "survey_instructions",
+        "label": "Survey Instructions",
+        "persona_reviews": {
+          "14yo": {
+            "pos": "Clear step-by-step instructions.",
+            "neg": "Too text-heavy.",
+            "imp": "Add visual aids or a short video to guide through the steps."
+          },
+          "forced_17_21yo": {
+            "pos": "Appreciated the straightforward instructions.",
+            "neg": "Instructions felt too basic and obvious.",
+            "imp": "Include tips for common pitfalls or advanced settings."
+          },
+          "eager_17_21yo": {
+            "pos": "Liked the logical flow of instruction.",
+            "neg": "Wanted interactive elements to test understanding.",
+            "imp": "Add quizzes or interactive checkpoints to engage more deeply."
+          },
+          "veteran_teacher": {
+            "pos": "Found the structure helpful for students.",
+            "neg": "Lacked differentiation for varied skill levels.",
+            "imp": "Segment instructions for beginners and advanced users."
+          },
+          "veteran_designer": {
+            "pos": "Instructions were spatially well-organized.",
+            "neg": "Felt that instructional design could engage more creative thinking.",
+            "imp": "Introduce scenarios or challenges in the instruction."
+          },
+          "design_philosopher": {
+            "pos": "Included aspects of logic and empathy in instructions.",
+            "neg": "Missed philosophical insights on information processing.",
+            "imp": "Add a discussion prompt on the cognitive and emotional aspects of design."
+          }
+        }
+      }
+    ],
+    "fixer_insights": [
+      {
+        "gap": "Advanced vocabulary beyond user level knowledge (14yo)",
+        "id": "survey_intro",
+        "options": [
+          "Introduce a glossary for difficult terms, easily accessible from the section.",
+          "Use tooltips to define difficult terms inline as they're used.",
+          "Create a parallel simplified version of the section for younger audiences."
+        ]
+      },
+      {
+        "gap": "Lack of real-world examples related to student field (forced 17-21yo)",
+        "id": "survey_intro",
+        "options": [
+          "Include a carousel or slider with industry-specific examples.",
+          "Create downloadable field-specific case studies.",
+          "Host virtual sessions with field experts to answer questions."
+        ]
+      },
+      {
+        "gap": "Visual appeal of design elements (veteran designer)",
+        "id": "survey_intro",
+        "options": [
+          "Update the design template to a modern UI/UX framework.",
+          "Consult with a design team to refresh the visual elements.",
+          "Implement user feedback loops to continually update designs."
+        ]
+      },
+      {
+        "gap": "Instruction material engagement (eager 17-21yo)",
+        "id": "survey_instructions",
+        "options": [
+          "Integrate interactive walkthroughs or modules.",
+          "Create gamified tasks with rewards for progression.",
+          "Use branching scenarios to offer different challenges."
+        ]
+      }
+    ]
+  }
+}

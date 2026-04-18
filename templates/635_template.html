@@ -54,7 +54,6 @@
             font-size: 1.1rem;
         }
 
-        /* Glassmorphism Cards */
         .card {
             background: var(--card-bg);
             -webkit-backdrop-filter: blur(12px);
@@ -69,7 +68,6 @@
 
         .card.active { display: block; }
 
-        /* Join Screen */
         .setup-grid {
             display: grid;
             grid-template-columns: 1.2fr 0.8fr;
@@ -125,7 +123,6 @@
         .btn-secondary { background: rgba(255, 255, 255, 0.1); }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.2); box-shadow: none; }
 
-        /* Lobby */
         .lobby-info { text-align: center; margin-bottom: 2rem; }
         .room-badge {
             display: inline-block;
@@ -166,7 +163,6 @@
             margin: 0 auto 1.5rem;
         }
 
-        /* Worksheet */
         .worksheet-header {
             display: flex;
             justify-content: space-between;
@@ -201,46 +197,17 @@
         }
         .idea-card:focus-within { transform: scale(1.02); background: rgba(255, 255, 255, 0.06); }
         .idea-card h4 { font-size: 0.75rem; font-weight: 800; color: var(--primary); margin-bottom: 1rem; text-transform: uppercase; }
-        .idea-card textarea { min-height: 200px; background: transparent; border: none; padding: 0; resize: none; line-height: 1.6; }
+        .idea-card textarea { min-height: 200px; background: transparent; border: none; padding: 0; resize: none; line-height: 1.6; color: white; width: 100%; }
 
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes popIn {
-            from { opacity: 0; transform: scale(0.5); }
-            to { opacity: 1; transform: scale(1); }
-        }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
 
-        .status-msg {
-            text-align: center;
-            font-size: 0.875rem;
-            color: var(--text-muted);
-            margin-top: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .setup-grid, .idea-grid { grid-template-columns: 1fr; }
-            body { padding: 1rem; }
-            h1 { font-size: 1.8rem; }
-        }
+        .status-msg { text-align: center; font-size: 0.875rem; color: var(--text-muted); margin-top: 1rem; }
 
         #notification {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            background: var(--primary);
-            padding: 1rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-            transform: translateX(200%);
-            transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
-            z-index: 1000;
+            position: fixed; top: 2rem; right: 2rem; background: var(--primary); padding: 1rem 2rem; border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3); transform: translateX(200%); transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 1000;
         }
         #notification.show { transform: translateX(0); }
     </style>
@@ -261,18 +228,13 @@
                 <div class="setup-form">
                     <div class="form-group">
                         <label>Your Name</label>
-                        <input type="text" id="input-name" placeholder="E.g. Elon Musk">
+                        <input type="text" id="input-name" placeholder="E.g. Participant Name">
                     </div>
-                    
-                    <div id="host-options">
-                        <div class="form-group">
-                            <label>Problem Statement</label>
-                            <textarea id="host-problem" placeholder="How might we..." rows="3">How might we improve the public transportation experience in rural areas?</textarea>
-                        </div>
-                        <button class="btn" id="btn-create-room">
-                            <span>🚀 Host New Session</span>
-                        </button>
+                    <div class="form-group">
+                        <label>Problem Statement</label>
+                        <textarea id="host-problem" placeholder="How might we..." rows="3">How might we improve the user experience of collaborative tools?</textarea>
                     </div>
+                    <button class="btn" id="btn-create-room">🚀 Host New Session</button>
 
                     <div style="margin: 1.5rem 0; text-align: center; color: var(--text-muted); position: relative;">
                         <span style="background: var(--bg); padding: 0 1rem; position: relative; z-index: 1;">OR JOIN EXISTING</span>
@@ -280,96 +242,71 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Room ID / Host ID</label>
-                        <input type="text" id="input-room-id" placeholder="Enter ID from host">
+                        <label>Room ID</label>
+                        <input type="text" id="input-room-id" placeholder="6-digit Room ID">
                     </div>
-                    <button class="btn btn-secondary" id="btn-join-room">
-                        <span>🤝 Join Session</span>
-                    </button>
+                    <button class="btn btn-secondary" id="btn-join-room">🤝 Join Session</button>
                 </div>
-                
                 <div class="setup-info" style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--glass-border);">
                     <h3 style="margin-bottom: 1rem; font-size: 1rem; color: var(--primary);">HOW IT WORKS</h3>
                     <ul style="font-size: 0.875rem; color: var(--text-muted); padding-left: 1.2rem;">
-                        <li style="margin-bottom: 0.5rem;"><strong>6</strong> participants per session.</li>
-                        <li style="margin-bottom: 0.5rem;"><strong>3</strong> ideas written by each in every round.</li>
-                        <li style="margin-bottom: 0.5rem;">After each round, your <strong>Ideas Pass</strong> to the next person wirelessly!</li>
+                        <li style="margin-bottom: 0.5rem;"><strong>6</strong> participants, <strong>3</strong> ideas each, <strong>5</strong> minutes per round.</li>
+                        <li style="margin-bottom: 0.5rem;">Sheets pass around until everyone has built on every idea.</li>
+                        <li style="margin-bottom: 0.5rem;">Results are flattened and randomized for <strong>100% anonymity</strong>.</li>
                     </ul>
-                    <p style="margin-top: 1.5rem; font-size: 0.75rem; opacity: 0.6;">Connect to the same WiFi/Hotspot for best results. No server required.</p>
                 </div>
             </div>
+        </div>
+
+        <!-- Universal Session Header (Visible after join/host) -->
+        <div id="active-session-bar" style="display: none; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; padding: 0.75rem 1.25rem; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid var(--glass-border); animation: fadeInDown 0.4s ease-out;">
+            <div style="display: flex; align-items: center; gap: 1rem;">
+                <div style="display: flex; flex-direction: column;">
+                    <span style="font-size: 0.6rem; text-transform: uppercase; color: var(--text-muted); font-weight: 800; letter-spacing: 0.05em;">Active Session</span>
+                    <span id="header-room-id" style="font-family: monospace; color: var(--primary); font-weight: 800; font-size: 1.1rem;">------</span>
+                </div>
+            </div>
+            <button class="btn btn-secondary" onclick="endSessionPermanently()" style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem; height: auto; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2);">🚪 Exit & Reset</button>
         </div>
 
         <!-- Lobby Screen -->
         <div id="screen-lobby" class="card">
             <div class="lobby-info">
-                <h2>Waiting for Collaborators</h2>
-                <p class="status-msg">Share this code or QR with your team:</p>
+                <h2>Lobby Ready</h2>
                 <div class="room-badge" id="display-room-id">----</div>
-                
                 <div class="qrcode-container" id="qrcode" style="margin: 2rem auto;"></div>
-
-                <div id="url-config" style="max-width:320px; margin: 1rem auto; background: rgba(99, 102, 241, 0.1); padding: 1rem; border-radius: 12px; border: 1px solid var(--primary); border-style: dashed;">
-                    <p style="font-size:0.65rem; color: #818cf8; font-weight: 800; letter-spacing: 0.05em;">🌐 CLOUD HANDSHAKE READY</p>
-                    <p style="font-size:0.6rem; color: var(--text-muted); margin-top: 4px;" id="cloud-sync-status">Cloud-Sync: INITIALIZING...</p>
-                </div>
-
+                <p id="cloud-sync-status" class="status-msg">Cloud-Sync: INITIALIZING...</p>
                 <p id="participant-count-msg" style="font-weight: 600; margin-top: 2rem;">Connected: 1 / 6</p>
             </div>
-
-            <div class="participant-list" id="participant-list">
-                <!-- List will be populated dynamically -->
-            </div>
-
+            <div class="participant-list" id="participant-list"></div>
             <div style="max-width: 400px; margin: 0 auto;">
-                <button class="btn" id="btn-start-session" disabled>
-                    <span>🎮 Start Brainwriting</span>
-                </button>
-                <p id="host-only-msg" class="status-msg" style="display: none;">Only the host can start the session.</p>
+                <button class="btn" id="btn-start-session" disabled>🎮 Start Session</button>
             </div>
         </div>
 
+        <!-- Worksheet Screen -->
         <div id="screen-worksheet" class="card">
             <div class="worksheet-header">
                 <div class="info-group">
-                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                        <p class="round-info" style="margin: 0;">Round <span id="display-round">1</span> of <span id="display-total-rounds">?</span></p>
-                        <button class="btn btn-secondary" onclick="endSessionPermanently()" style="padding: 0.25rem 0.75rem; font-size: 0.7rem; width: auto; border-radius: 8px; opacity: 0.6; height: auto;">🚪 Abort & Reset</button>
-                    </div>
+                    <p class="round-info" style="margin: 0;">Round <span id="display-round">1</span> of <span id="display-total-rounds">?</span></p>
                     <h2 id="display-problem" style="font-size: 1.25rem;">Problem Statement</h2>
                 </div>
                 <div class="timer-box">
-                    <p style="font-size: 0.75rem; color: #f87171; text-transform: uppercase; font-weight: 700;">Remaining</p>
                     <div class="timer" id="display-timer">05:00</div>
                 </div>
             </div>
-
-            <!-- History Section -->
             <div id="idea-history" style="margin-bottom: 2rem; display: none;">
-                <h3 style="font-size: 0.8rem; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Previous Collaborators' Ideas</h3>
-                <div id="history-container" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; opacity: 0.8;"></div>
+                <h3 style="font-size: 0.8rem; color: var(--primary); text-transform: uppercase; margin-bottom: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem;">Previous Ideas on this Sheet</h3>
+                <div id="history-container"></div>
             </div>
-
             <div class="idea-grid">
-                <div class="idea-card" style="border-left: 4px solid var(--primary);">
-                    <h4>Your Idea 1</h4>
-                    <textarea id="idea-1" placeholder="Type your first idea here..."></textarea>
-                </div>
-                <div class="idea-card" style="border-left: 4px solid var(--primary);">
-                    <h4>Your Idea 2</h4>
-                    <textarea id="idea-2" placeholder="Build on previous concepts..."></textarea>
-                </div>
-                <div class="idea-card" style="border-left: 4px solid var(--primary);">
-                    <h4>Your Idea 3</h4>
-                    <textarea id="idea-3" placeholder="Push for something radical..."></textarea>
-                </div>
+                <div class="idea-card"><h4>Idea 1</h4><textarea id="idea-1"></textarea></div>
+                <div class="idea-card"><h4>Idea 2</h4><textarea id="idea-2"></textarea></div>
+                <div class="idea-card"><h4>Idea 3</h4><textarea id="idea-3"></textarea></div>
             </div>
-
             <div style="margin-top: 2rem; display: flex; justify-content: space-between; align-items: center;">
-                <p id="transfer-status" style="color: var(--text-muted); font-size: 0.875rem; background: rgba(255,255,255,0.05); padding: 0.5rem 1rem; border-radius: 8px;">Waiting for host to signal next round...</p>
-                <button class="btn" id="btn-pass-ideas" style="width: auto; padding: 0.8rem 2rem; display: none;">
-                    <span>Pass Sheet →</span>
-                </button>
+                <p id="transfer-status" style="color: var(--text-muted); font-size: 0.875rem;">Waiting for round to end...</p>
+                <button class="btn" id="btn-pass-ideas" style="width: auto; padding: 0.8rem 2rem; display: none;">Pass All →</button>
             </div>
         </div>
 
@@ -378,421 +315,184 @@
             <div class="worksheet-header">
                 <h2>Brainwriting Results</h2>
                 <div style="display: flex; gap: 1rem;">
-                    <button class="btn btn-secondary" onclick="exportToPNG()" style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem;">📸 Save as PNG</button>
-                    <button class="btn btn-secondary" onclick="window.print()" style="width: auto; padding: 0.5rem 1rem; font-size: 0.8rem;">📄 Print PDF</button>
+                    <button class="btn btn-secondary" onclick="exportToPNG()">📸 Save PNG</button>
+                    <button class="btn btn-secondary" onclick="window.print()">📄 Export PDF</button>
                 </div>
             </div>
-            
-            <div id="final-results-container" style="margin-top: 2rem;">
-                <!-- Tables will be generated here -->
-            </div>
-
+            <div id="final-results-container" style="margin-top: 2rem;"></div>
             <div style="margin-top: 3rem; text-align: center;">
-                <button class="btn" onclick="endSessionPermanently()" style="width: auto; padding: 0.8rem 2rem;">
-                    <span>🏁 End Session for All</span>
-                </button>
+                <button class="btn" onclick="endSessionPermanently()" style="width: auto; padding: 0.8rem 2rem;">End Session</button>
             </div>
         </div>
     </div>
 
     <script>
-        // --- Persistence Logic ---
         const PERSIST_KEY = 'dt-635-session';
-        let roomID = "";
+        let peer = null, conn = null, connections = {}, participants = [], mySheetHistory = [];
+        let myId = null, myName = "", isHost = false, roomID = "", problemStatement = "";
+        let currentRound = 1, totalRounds = 1, timerSeconds = 300, timerInterval = null, currentSheets = {};
 
         function saveSessionState() {
             if (!roomID) return;
-            const state = {
-                roomID,
-                isHost,
-                myName,
-                problemStatement,
-                currentRound,
-                participants,
-                ideas: {
-                    idea1: document.getElementById('idea-1').value,
-                    idea2: document.getElementById('idea-2').value,
-                    idea3: document.getElementById('idea-3').value
-                }
-            };
-            localStorage.setItem(PERSIST_KEY, JSON.stringify(state));
+            localStorage.setItem(PERSIST_KEY, JSON.stringify({ roomID, isHost, myName, problemStatement, currentRound, participants, 
+                ideas: { i1: document.getElementById('idea-1').value, i2: document.getElementById('idea-2').value, i3: document.getElementById('idea-3').value } 
+            }));
         }
-
-        function loadSessionState() {
-            const raw = localStorage.getItem(PERSIST_KEY);
-            return raw ? JSON.parse(raw) : null;
-        }
-
-        function clearSessionState() {
-            localStorage.removeItem(PERSIST_KEY);
-        }
-
-        window.addEventListener('beforeunload', (e) => {
-            if (roomID) {
-                saveSessionState();
-                const msg = "A session is active. Refreshing may cause a temporary disconnect.";
-                e.returnValue = msg;
-                return msg;
+        function clearSessionState() { localStorage.removeItem(PERSIST_KEY); }
+        function notify(msg) { const n = document.getElementById('notification'); n.innerText = msg; n.classList.add('show'); setTimeout(() => n.classList.remove('show'), 3000); }
+        function showScreen(name) { 
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active')); 
+            document.getElementById('screen-' + name).classList.add('active'); 
+            
+            // Toggle universal header bar
+            const bar = document.getElementById('active-session-bar');
+            if (name === 'join') {
+                bar.style.display = 'none';
+            } else {
+                bar.style.display = 'flex';
+                document.getElementById('header-room-id').innerText = roomID || '------';
             }
-        });
-
-        ['idea-1', 'idea-2', 'idea-3'].forEach(id => {
-            document.getElementById(id).addEventListener('input', saveSessionState);
-        });
-
-        // --- PeerJS & Network ---
-        let peer = null;
-        let conn = null; 
-        let connections = {}; 
-        let participants = [];
-        let myId = null;
-        let myName = "";
-        let isHost = false;
-        let problemStatement = "";
-        
-        let currentRound = 1;
-        let timerSeconds = 300;
-        let timerInterval = null;
-
-        const screens = {
-            join: document.getElementById('screen-join'),
-            lobby: document.getElementById('screen-lobby'),
-            worksheet: document.getElementById('screen-worksheet'),
-            review: document.getElementById('screen-review')
-        };
-
-        function showScreen(name) {
-            Object.values(screens).forEach(s => s.classList.remove('active'));
-            if (screens[name]) screens[name].classList.add('active');
         }
 
-        function notify(msg) {
-            const n = document.getElementById('notification');
-            n.innerText = msg;
-            n.classList.add('show');
-            setTimeout(() => n.classList.remove('show'), 3000);
-        }
-
-        function handleHostIncoming(c) {
-            const onData = (data) => {
-                if (data.type === 'IDENTIFY') {
-                    if (participants.length >= 6) {
-                        c.send({ type: 'ERROR', message: 'Room Full (Max 6)' });
-                        setTimeout(() => c.close(), 500);
-                        return;
-                    }
-                    participants.push({ id: c.peer, name: data.name, role: 'client' });
-                    connections[c.peer] = c;
-                    broadcastParticipants();
-                    updateParticipantUI();
-                    notify(`${data.name} joined!`);
-                } else if (data.type === 'ROUTE_SHEET') {
-                    handleSheetReceipt(c.peer, data.content);
-                }
-            };
-            c.on('data', onData);
-            c.on('close', () => {
-                participants = participants.filter(p => p.id !== c.peer);
-                delete connections[c.peer];
-                broadcastParticipants();
-                updateParticipantUI();
+        function initPeer(customId = null, targetHostId = null) {
+            if (peer) peer.destroy();
+            peer = customId ? new Peer(customId) : new Peer();
+            peer.on('open', (id) => {
+                myId = id;
+                if (isHost) {
+                    roomID = id; document.getElementById('display-room-id').innerText = id;
+                    document.getElementById('cloud-sync-status').innerText = "Cloud-Sync: ACTIVE";
+                    generateQR(id);
+                    if (participants.length === 0) participants = [{ id, name: myName, role: 'host' }];
+                    updateParticipantUI(); showScreen('lobby'); saveSessionState();
+                } else if (targetHostId) { roomID = targetHostId; connectToHost(targetHostId); }
             });
-        }
-
-        function broadcastParticipants() {
-            const data = { type: 'SYNC_LOBBY', participants, problem: problemStatement };
-            Object.values(connections).forEach(c => c.send(data));
+            peer.on('connection', (c) => {
+                c.on('data', (data) => {
+                    if (data.type === 'IDENTIFY') {
+                        participants.push({ id: c.peer, name: data.name, role: 'client' });
+                        connections[c.peer] = c; broadcastParticipants(); updateParticipantUI();
+                    } else if (data.type === 'ROUTE_SHEET') handleSheetReceipt(c.peer, data.content);
+                });
+            });
+            peer.on('error', (err) => {
+                if (err.type === 'unavailable-id' && isHost) {
+                    const nextId = Math.floor(100000 + Math.random() * 900000).toString();
+                    setTimeout(() => initPeer(nextId), 1500);
+                }
+            });
         }
 
         function connectToHost(hostId) {
             conn = peer.connect(hostId);
-            conn.on('open', () => {
-                conn.send({ type: 'IDENTIFY', name: myName });
-                document.getElementById('display-room-id').innerText = hostId;
-                document.getElementById('host-only-msg').style.display = 'block';
-                showScreen('lobby');
-            });
+            conn.on('open', () => { conn.send({ type: 'IDENTIFY', name: myName }); showScreen('lobby'); });
             conn.on('data', (data) => {
-                if (data.type === 'SYNC_LOBBY') {
-                    participants = data.participants;
-                    problemStatement = data.problem;
-                    updateParticipantUI();
-                } else if (data.type === 'START') {
-                    startSessionUI();
-                } else if (data.type === 'COLLECT') {
-                    const content = {
-                        idea1: document.getElementById('idea-1').value,
-                        idea2: document.getElementById('idea-2').value,
-                        idea3: document.getElementById('idea-3').value
-                    };
-                    conn.send({ type: 'ROUTE_SHEET', content: content });
-                    document.getElementById('transfer-status').innerText = "Sheet sent! Waiting for rotation...";
-                } else if (data.type === 'RECEIVE_SHEET') {
-                    receiveSheetData(data.content);
-                } else if (data.type === 'SHOW_REVIEW') {
-                    showReviewUI(data.allSheets);
-                } else if (data.type === 'ERROR') {
-                    alert(data.message);
-                    clearSessionState();
-                    window.location.reload();
-                }
-            });
-            conn.on('close', () => {
-                notify("Host disconnected.");
+                if (data.type === 'SYNC_LOBBY') { participants = data.participants; problemStatement = data.problem; updateParticipantUI(); }
+                else if (data.type === 'START') startSessionUI();
+                else if (data.type === 'COLLECT') conn.send({ type: 'ROUTE_SHEET', content: { idea1: document.getElementById('idea-1').value, idea2: document.getElementById('idea-2').value, idea3: document.getElementById('idea-3').value, history: mySheetHistory } });
+                else if (data.type === 'RECEIVE_SHEET') receiveSheetData(data.content);
+                else if (data.type === 'SHOW_REVIEW') showReviewUI(data.allSheets);
             });
         }
 
-        function initPeer(customId = null, targetHostId = null) {
-            if (peer) {
-                console.log("Destroying existing peer...");
-                peer.destroy();
-            }
-            
-            console.log("Initializing peer. ID:", customId, "Targeting Host:", targetHostId);
-            peer = customId ? new Peer(customId) : new Peer();
-
-            peer.on('open', (id) => {
-                myId = id;
-                console.log('Peer successfully opened. My ID:', id);
-                
-                if (isHost) {
-                    roomID = id;
-                    document.getElementById('display-room-id').innerText = id;
-                    document.getElementById('cloud-sync-status').innerText = "Cloud-Sync: ACTIVE";
-                    generateQR(id);
-                    if (participants.length === 0) {
-                        participants = [{ id, name: myName, role: 'host' }];
-                    }
-                    updateParticipantUI();
-                    showScreen('lobby');
-                    saveSessionState();
-                } else if (targetHostId) {
-                    roomID = targetHostId;
-                    connectToHost(targetHostId);
-                }
-            });
-
-            peer.on('connection', handleHostIncoming);
-            
-            peer.on('error', (err) => {
-                console.error("PeerJS Error Event:", err.type, err);
-                if (err.type === 'unavailable-id') {
-                    if (isHost) {
-                        notify("ID collision or reclaimed. Retrying with new...");
-                        const fallbackId = Math.floor(100000 + Math.random() * 900000).toString();
-                        setTimeout(() => initPeer(fallbackId), 1500);
-                    }
-                } else if (err.type === 'peer-unavailable') {
-                    notify("Host not found. Check the Room ID.");
-                } else {
-                    notify("Network/Peer Error: " + err.type);
-                }
-            });
-        }
-
+        function broadcastParticipants() { Object.values(connections).forEach(c => c.send({ type: 'SYNC_LOBBY', participants, problem: problemStatement })); }
         function updateParticipantUI() {
-            const list = document.getElementById('participant-list');
-            list.innerHTML = participants.map(p => `
-                <div class="participant-card" style="${p.id === myId ? 'border-color: var(--primary);' : ''}">
-                    <span class="avatar">👤</span>
-                    <span>${p.name}${p.id === myId ? ' (You)' : ''}</span>
-                    ${p.role === 'host' ? '<div style="font-size: 0.6rem; color: var(--primary); font-weight: 800; margin-top:2px;">HOST</div>' : ''}
-                </div>
-            `).join('');
+            document.getElementById('participant-list').innerHTML = participants.map(p => `<div class="participant-card"><span>${p.name}${p.id === myId ? ' (You)' : ''}</span></div>`).join('');
             document.getElementById('participant-count-msg').innerText = `Connected: ${participants.length} / 6`;
             document.getElementById('btn-start-session').disabled = !isHost || participants.length < 2;
         }
 
-        // --- Session Flow ---
-        let totalRounds = 1;
-        let currentSheets = {};
-
-        document.getElementById('btn-create-room').addEventListener('click', () => {
-            console.log("Create Room clicked. Clearing old session...");
-            clearSessionState(); // Clear any cached state before starting fresh
-            
-            myName = document.getElementById('input-name').value || "Host";
-            problemStatement = document.getElementById('host-problem').value;
-            isHost = true;
-            participants = [];
-            connections = {}; // Reset connections
-            
-            const randomId = Math.floor(100000 + Math.random() * 900000).toString();
-            initPeer(randomId);
+        document.getElementById('btn-create-room').addEventListener('click', () => { 
+            clearSessionState(); myName = document.getElementById('input-name').value || "Host"; 
+            problemStatement = document.getElementById('host-problem').value; isHost = true;
+            initPeer(Math.floor(100000 + Math.random() * 900000).toString());
         });
-
-        document.getElementById('btn-join-room').addEventListener('click', () => {
-            const hostId = document.getElementById('input-room-id').value.trim();
-            if (!hostId) return alert("Please enter Room ID");
-            myName = document.getElementById('input-name').value || "Collaborator";
-            isHost = false;
-            initPeer(null, hostId);
+        document.getElementById('btn-join-room').addEventListener('click', () => { 
+            isHost = false; myName = document.getElementById('input-name').value || "Joiner"; 
+            initPeer(null, document.getElementById('input-room-id').value.trim()); 
         });
-
-        document.getElementById('btn-start-session').addEventListener('click', () => {
-            if (!isHost) return;
-            Object.values(connections).forEach(c => c.send({ type: 'START' }));
-            startSessionUI();
+        document.getElementById('btn-start-session').addEventListener('click', () => { 
+            Object.values(connections).forEach(c => c.send({ type: 'START' })); startSessionUI(); 
         });
 
         function startSessionUI() {
-            totalRounds = participants.length;
+            totalRounds = participants.length; showScreen('worksheet'); 
             document.getElementById('display-total-rounds').innerText = totalRounds;
             document.getElementById('display-problem').innerText = problemStatement;
-            showScreen('worksheet');
-            if (isHost) {
-                document.getElementById('btn-pass-ideas').style.display = 'block';
-                document.getElementById('btn-pass-ideas').innerText = "End Round & Pass All →";
-            }
+            if (isHost) document.getElementById('btn-pass-ideas').style.display = 'block';
             startTimer();
         }
 
         document.getElementById('btn-pass-ideas').addEventListener('click', () => {
-            if (!isHost) return;
-            notify("Collecting sheets...");
-            currentSheets = {};
-            currentSheets[myId] = {
-                idea1: document.getElementById('idea-1').value,
-                idea2: document.getElementById('idea-2').value,
-                idea3: document.getElementById('idea-3').value
-            };
+            currentSheets = {}; currentSheets[myId] = { idea1: document.getElementById('idea-1').value, idea2: document.getElementById('idea-2').value, idea3: document.getElementById('idea-3').value, history: mySheetHistory };
             Object.values(connections).forEach(c => c.send({ type: 'COLLECT' }));
         });
 
         function handleSheetReceipt(fromId, content) {
             currentSheets[fromId] = content;
             if (Object.keys(currentSheets).length === participants.length) {
-                if (currentRound >= totalRounds) finalizeSession();
-                else rotateAndDistribute();
+                if (currentRound >= totalRounds) {
+                    const finalData = { type: 'SHOW_REVIEW', allSheets: currentSheets };
+                    Object.values(connections).forEach(c => c.send(finalData)); showReviewUI(currentSheets);
+                } else rotateAndDistribute();
             }
         }
 
         function rotateAndDistribute() {
-            const rotatedData = {};
-            for (let i = 0; i < participants.length; i++) {
-                const nextOwner = participants[(i + 1) % participants.length].id;
-                rotatedData[nextOwner] = currentSheets[participants[i].id];
-            }
-            participants.forEach(p => {
-                const sheet = rotatedData[p.id];
-                if (p.id === myId) receiveSheetData(sheet);
-                else if (connections[p.id]) connections[p.id].send({ type: 'RECEIVE_SHEET', content: sheet });
+            const rotated = {};
+            for (let i = 0; i < participants.length; i++) rotated[participants[(i + 1) % participants.length].id] = currentSheets[participants[i].id];
+            participants.forEach(p => { 
+                if (p.id === myId) receiveSheetData(rotated[p.id]); 
+                else if (connections[p.id]) connections[p.id].send({ type: 'RECEIVE_SHEET', content: rotated[p.id] });
             });
         }
 
-        function finalizeSession() {
-            const finalData = { type: 'SHOW_REVIEW', allSheets: currentSheets };
-            Object.values(connections).forEach(c => c.send(finalData));
-            showReviewUI(currentSheets);
-        }
-
         function receiveSheetData(content) {
-            currentRound++;
-            document.getElementById('display-round').innerText = currentRound;
-            const hist = document.getElementById('history-container');
-            document.getElementById('idea-history').style.display = 'block';
-            const entry = document.createElement('div');
-            entry.style.gridColumn = "1/span 3";
-            entry.className = "idea-grid"; // reuse grid styles
-            entry.style.background = "rgba(255,255,255,0.03)";
-            entry.style.padding = "1rem";
-            entry.style.borderRadius = "12px";
-            entry.style.marginBottom = "1rem";
-            entry.innerHTML = `<div style="grid-column:1/span 3; font-size:0.6rem; opacity:0.5;">ROUND ${currentRound-1}</div>
-                <div style="font-size:0.85rem; white-space:pre-wrap;">${content.idea1}</div>
-                <div style="font-size:0.85rem; white-space:pre-wrap;">${content.idea2}</div>
-                <div style="font-size:0.85rem; white-space:pre-wrap;">${content.idea3}</div>`;
-            hist.appendChild(entry);
-            document.getElementById('idea-1').value = "";
-            document.getElementById('idea-2').value = "";
-            document.getElementById('idea-3').value = "";
+            currentRound++; document.getElementById('display-round').innerText = currentRound;
+            mySheetHistory = content.history || [];
+            if (content.idea1 || content.idea2 || content.idea3) mySheetHistory.push({ idea1: content.idea1, idea2: content.idea2, idea3: content.idea3 });
+            const hist = document.getElementById('history-container'); hist.innerHTML = "";
+            document.getElementById('idea-history').style.display = mySheetHistory.length ? 'block' : 'none';
+            mySheetHistory.forEach((r, i) => {
+                const e = document.createElement('div'); e.className = "idea-grid"; e.style.marginBottom = "1rem";
+                e.innerHTML = `<div style="grid-column:1/span 3; font-size:0.6rem; opacity:0.5;">ROUND ${i+1}</div><div>${r.idea1}</div><div>${r.idea2}</div><div>${r.idea3}</div>`;
+                hist.appendChild(e);
+            });
+            document.getElementById('idea-1').value = ""; document.getElementById('idea-2').value = ""; document.getElementById('idea-3').value = "";
             startTimer();
         }
 
         function showReviewUI(allSheets) {
-            showScreen('review');
-            const container = document.getElementById('final-results-container');
-            container.innerHTML = participants.map(p => `
-                <div style="margin-bottom:2rem;">
-                    <h3 style="color:var(--primary);">${p.name}'s Contribution</h3>
-                    <div class="idea-grid">
-                        <div class="idea-card">${allSheets[p.id].idea1}</div>
-                        <div class="idea-card">${allSheets[p.id].idea2}</div>
-                        <div class="idea-card">${allSheets[p.id].idea3}</div>
-                    </div>
-                </div>
-            `).join('');
+            showScreen('review'); let allIdeas = [];
+            Object.values(allSheets).forEach(s => { 
+                allIdeas.push(s.idea1, s.idea2, s.idea3); 
+                if (s.history) s.history.forEach(r => allIdeas.push(r.idea1, r.idea2, r.idea3));
+            });
+            allIdeas = allIdeas.filter(id => id.trim()).sort(() => Math.random() - 0.5);
+            document.getElementById('final-results-container').innerHTML = `<div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:1.5rem;">${allIdeas.map(i => `<div class="idea-card">${i}</div>`).join('')}</div>`;
         }
 
-        // --- Timer ---
         function startTimer() {
-            clearInterval(timerInterval);
-            timerSeconds = 300;
+            clearInterval(timerInterval); timerSeconds = 300;
             timerInterval = setInterval(() => {
-                timerSeconds--;
-                const m = Math.floor(timerSeconds/60).toString().padStart(2,'0');
-                const s = (timerSeconds % 60).toString().padStart(2,'0');
+                timerSeconds--; const m = Math.floor(timerSeconds/60).toString().padStart(2,'0'), s = (timerSeconds%60).toString().padStart(2,'0');
                 document.getElementById('display-timer').innerText = `${m}:${s}`;
-                if (timerSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    notify("Time is Up! Pass your sheets.");
-                }
+                if (timerSeconds <= 0) clearInterval(timerInterval);
             }, 1000);
         }
 
-        // --- Utilities ---
         function generateQR(roomID) {
-            const qrContainer = document.getElementById("qrcode");
-            qrContainer.innerHTML = "";
-            
-            // Dynamically determine the join URL based on current hosting (local or cloud)
             const baseUrl = window.location.href.split('?')[0];
-            const joinUrl = `${baseUrl}?room=${roomID}`;
-            
-            new QRCode(qrContainer, {
-                text: joinUrl,
-                width: 180, 
-                height: 180, 
-                colorDark: "#000000", 
-                colorLight: "#ffffff"
-            });
-            console.log("QR Code generated for:", joinUrl);
+            new QRCode(document.getElementById("qrcode"), { text: `${baseUrl}?room=${roomID}`, width: 180, height: 180 });
         }
-
-        function exitSession() {
-            clearSessionState();
-            window.location.reload();
-        }
-
-        function endSessionPermanently() {
-            if (confirm("End session and clear all data?")) exitSession();
-        }
-
-        function exportToPNG() {
-            if (typeof downloadAsPNG === 'function') downloadAsPNG();
-            else window.print();
-        }
+        function endSessionPermanently() { if (confirm("End session?")) { clearSessionState(); window.location.reload(); } }
+        function exportToPNG() { if (typeof downloadAsPNG === 'function') downloadAsPNG(); else window.print(); }
 
         window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const autoJoinId = urlParams.get('room');
-            if (autoJoinId) {
-                document.getElementById('input-room-id').value = autoJoinId;
-                notify("Auto-joining room: " + autoJoinId);
-            }
-
-            const saved = loadSessionState();
-            if (saved && saved.roomID) {
-                roomID = saved.roomID; isHost = saved.isHost; myName = saved.myName;
-                problemStatement = saved.problemStatement; currentRound = saved.currentRound;
-                participants = saved.participants || [];
-                if (saved.ideas) {
-                    document.getElementById('idea-1').value = saved.ideas.idea1 || "";
-                    document.getElementById('idea-2').value = saved.ideas.idea2 || "";
-                    document.getElementById('idea-3').value = saved.ideas.idea3 || "";
-                }
-                initPeer(isHost ? roomID : null, isHost ? null : roomID);
-            }
+            const urlParams = new URLSearchParams(window.location.search), autoJoinId = urlParams.get('room');
+            if (autoJoinId) { document.getElementById('screen-join').classList.add('active'); document.getElementById('input-room-id').value = autoJoinId; }
+            const saved = JSON.parse(localStorage.getItem(PERSIST_KEY));
+            if (saved) { roomID = saved.roomID; isHost = saved.isHost; myName = saved.myName; problemStatement = saved.problemStatement; initPeer(isHost ? roomID : null, isHost ? null : roomID); }
         };
     </script>
 </body>

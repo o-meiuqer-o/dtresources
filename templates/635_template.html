@@ -742,10 +742,19 @@
         function generateQR(roomID) {
             const qrContainer = document.getElementById("qrcode");
             qrContainer.innerHTML = "";
+            
+            // Dynamically determine the join URL based on current hosting (local or cloud)
+            const baseUrl = window.location.href.split('?')[0];
+            const joinUrl = `${baseUrl}?room=${roomID}`;
+            
             new QRCode(qrContainer, {
-                text: `https://muef2246.github.io/dtresources/templates/635_template.html?room=${roomID}`,
-                width: 180, height: 180, colorDark: "#000000", colorLight: "#ffffff"
+                text: joinUrl,
+                width: 180, 
+                height: 180, 
+                colorDark: "#000000", 
+                colorLight: "#ffffff"
             });
+            console.log("QR Code generated for:", joinUrl);
         }
 
         function exitSession() {

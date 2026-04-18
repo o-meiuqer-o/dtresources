@@ -209,34 +209,41 @@ function downloadAsPNG() {
     // Use the actual pixel width rather than max-content to prevent 100% width textareas from shrinking
     document.body.style.width = Math.max(computedW, document.body.offsetWidth) + 'px';
 
-    // 4. Expand textareas based on the NEW body width
-    const textareas = document.querySelectorAll('textarea');
-    const savedHeights = [];
-    textareas.forEach(t => {
-        savedHeights.push(t.style.height);
-        t.style.height = 'auto';
-        t.style.height = (t.scrollHeight + 4) + 'px';
-    });
-
-    // 5. Convert cut-off inputs to divs to prevent horizontal text clipping in the PNG
+    // 4 & 5. Convert ALL textareas and cut-off inputs to divs
+    // html2canvas notoriously struggles with natively rendering <textarea> contents (especially manual resizes or newlines),
+    // so we permanently solve this by swapping them for identical-looking <div> elements before the screenshot.
     const inputsToRestore = [];
-    document.querySelectorAll('input[type="text"]').forEach(input => {
-        if (input.scrollWidth > input.clientWidth || input.value.length > 30) {
+    document.querySelectorAll('input[type="text"], textarea').forEach(el => {
+        if (el.tagName === 'TEXTAREA' || el.scrollWidth > el.clientWidth || el.value.length > 30) {
             const div = document.createElement('div');
-            const style = window.getComputedStyle(input);
-            div.textContent = input.value || input.placeholder;
-            // Copy relevant styles to the div so it looks like the input
+            const style = window.getComputedStyle(el);
+            div.textContent = el.value || el.placeholder || '';
+            
+            // Copy computed styles
             div.style.cssText = style.cssText;
+            
+            // Explicitly force auto height and wrap
             div.style.height = 'auto';
-            div.style.minHeight = style.height;
+            div.style.minHeight = style.height; // At least as tall as it was drawn
             div.style.whiteSpace = 'pre-wrap';
             div.style.wordBreak = 'break-word';
             div.style.overflow = 'visible';
-            // Reset box sizing to avoid extra padding issues
             div.style.boxSizing = 'border-box';
-            input.parentElement.insertBefore(div, input);
-            input.style.display = 'none';
-            inputsToRestore.push({ input, div });
+            
+            // Ensure core visual styles carry over cleanly
+            div.style.padding = style.padding;
+            div.style.border = style.border;
+            div.style.borderRadius = style.borderRadius;
+            div.style.font = style.font;
+            div.style.color = style.color;
+            div.style.background = style.background;
+
+            el.parentElement.insertBefore(div, el);
+            
+            // Hide original
+            const savedDisplay = el.style.display;
+            el.style.display = 'none';
+            inputsToRestore.push({ el, div, savedDisplay });
         }
     });
 
@@ -285,10 +292,8 @@ function downloadAsPNG() {
 
         if (tableContainer) tableContainer.style.overflow = savedOverflow;
         
-        textareas.forEach((t, i) => { t.style.height = savedHeights[i] || ''; });
-        
         inputsToRestore.forEach(item => {
-            item.input.style.display = '';
+            item.el.style.display = item.savedDisplay || '';
             item.div.remove();
         });
         

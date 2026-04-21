@@ -210,6 +210,9 @@ function downloadAsPNG() {
         tableContainer.style.overflow = 'visible';
     }
 
+    // Hook for templates to prepare for export (e.g. redraw graphs)
+    if (typeof window.onBeforeExport === 'function') window.onBeforeExport();
+
     // 3. Force body to full scroll width (unconstrain table) BEFORE adjusting textareas
     const savedBodyMaxWidth = document.body.style.maxWidth;
     const savedBodyWidth = document.body.style.width;
@@ -323,6 +326,9 @@ function downloadAsPNG() {
                 });
             }, 50);
         }
+
+        // Hook for templates to restore after export
+        if (typeof window.onAfterExport === 'function') window.onAfterExport();
 
         btn.innerHTML = originalText;
         btn.disabled = false;

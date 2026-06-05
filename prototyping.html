@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 05: Software Prototyping | Design Thinking</title>
+    <meta name="description"
+        content="Software prototyping using AI tools — build real coded interfaces from text prompts using Antigravity. Part of the Design Thinking course.">
+
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧪</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ── Module-level accent (purple-blue) ── */
+        :root {
+            --proto-accent: #7c3aed;
+            --proto-blue: #2563eb;
+        }
+
+        .proto-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--proto-accent), var(--proto-blue));
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Cross-reference callout ── */
+        .xref-callout {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            max-width: 700px;
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .xref-callout .xr-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
+        .xref-callout h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; color: #1e40af; text-align: left; }
+        .xref-callout p { font-size: 0.82rem; color: #3b5bdb; text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
+        .xref-callout a { color: #1d4ed8; font-weight: 600; }
+
+        /* ── Software prototyping spectrum bar ── */
+        .spectrum-bar {
+            display: flex;
+            width: 100%;
+            max-width: 820px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 2rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+        }
+        .spectrum-zone {
+            flex: 1;
+            padding: 1.4rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+        .spectrum-zone.z1 { background: #f1f5f9; }
+        .spectrum-zone.z2 { background: #e0e7ff; }
+        .spectrum-zone.z3 { background: linear-gradient(135deg, #ede9fe, #dbeafe); }
+        .spectrum-zone h3 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; color: #374151; }
+        .spectrum-zone .sz-tool { font-size: 0.72rem; color: #6b7280; margin-top: 0.3rem; }
+        .spectrum-zone .sz-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
+        .spectrum-zone.z3 .sz-tool { color: #5b21b6; font-weight: 600; }
+        .spectrum-zone.z3 h3 { color: #4c1d95; }
+        .ag-star-badge {
+            display: inline-block;
+            background: linear-gradient(90deg, #7c3aed, #2563eb);
+            color: white;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.1rem 0.5rem;
+            border-radius: 10px;
+            text-transform: uppercase;
+            margin-top: 0.3rem;
+        }
+
+        /* ── Antigravity dark card ── */
+        .ag-card {
+            background: linear-gradient(160deg, #0d0d14 60%, #1a1040);
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 900px;
+            color: white;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .ag-card::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 280px; height: 280px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+            pointer-events: none;
+        }
+        .ag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(124,58,237,0.25);
+            border: 1px solid rgba(124,58,237,0.5);
+            color: #c4b5fd;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+        }
+        .ag-card h2 { color: white; font-size: 1.7rem; margin-bottom: 0.5rem; }
+        .ag-card > p { color: rgba(255,255,255,0.65); text-align: left; max-width: 100%; margin-bottom: 2rem; font-size: 0.95rem; }
+
+        /* Guide step grid */
+        .guide-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        .gsc {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .gsc:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+        .gsc-num {
+            font-size: 1.4rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.4rem;
+        }
+        .gsc h4 { font-size: 0.88rem; font-weight: 700; color: white; margin-bottom: 0.35rem; }
+        .gsc p { font-size: 0.78rem; color: rgba(255,255,255,0.55); text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
+
+        /* Screenshot */
+        .ss-frame {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.45);
+            border: 1px solid rgba(255,255,255,0.07);
+        }
+        .ss-frame img { width: 100%; display: block; }
+        .ss-caption { font-size: 0.72rem; color: rgba(255,255,255,0.35); text-align: center; margin-top: -0.75rem; margin-bottom: 1rem; font-style: italic; }
+
+        /* Prompt cards */
+        .prompt-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 10px;
+            padding: 1.1rem 1.4rem;
+            margin-bottom: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: #e2e8f0;
+            position: relative;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .prompt-card:hover { border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.08); }
+        .prompt-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #a78bfa;
+            margin-bottom: 0.35rem;
+        }
+        .copy-hint {
+            position: absolute; top: 0.85rem; right: 0.85rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.62rem;
+            color: rgba(255,255,255,0.28);
+            transition: color 0.2s;
+            pointer-events: none;
+        }
+        .prompt-card:hover .copy-hint { color: #a78bfa; }
+
+        /* Section divider inside dark card */
+        .ag-divider {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            margin: 2rem 0;
+        }
+        .ag-section-title {
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.4rem;
+        }
+        .ag-section-sub {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.82rem;
+            text-align: left;
+            max-width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Coming soon cards ── */
+        .coming-soon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+        .cs-card {
+            background: white;
+            border: 2px dashed rgba(0,0,0,0.12);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            opacity: 0.6;
+            pointer-events: none;
+            position: relative;
+        }
+        .cs-card .cs-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .cs-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-color); }
+        .cs-card p { font-size: 0.85rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.5; }
+        .cs-badge {
+            display: inline-block;
+            background: #f3f4f6;
+            color: #6b7280;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
+
+        /* ── "Why code?" reasoning row ── */
+        .reason-row {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 820px;
+            margin-top: 2rem;
+        }
+        .reason-pill {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 30px;
+            padding: 0.6rem 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        .reason-pill .rp-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--proto-accent), var(--proto-blue));
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="global-nav">
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> &gt; <a href="foundations.html">Module 01</a> &gt; <a href="introduction.html">Module 02</a> &gt; <a href="finding_problem.html">Module 03</a> &gt; <a href="ideation.html">Module 04</a> &gt; <span>Module 05: Software Prototyping</span>
+        </div>
+        <div class="nav-links">
+            <div class="teacher-mode-control">
+                <span>Teacher Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="teacher-mode-checkbox" aria-label="Toggle Teacher Mode">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <a href="ideation.html" class="nav-pill">← Back</a>
+        </div>
+    </nav>
+
+    <div class="scroll-container">
+
+        <!-- ══ COVER ══ -->
+        <section id="cover">
+            <div class="proto-tag">Module 05 · Software Prototyping</div>
+            <h1>Build It to Test It</h1>
+            <p style="color:#666; margin-top:1rem;">Turning your ideated solution into a working, testable software interface — fast. This module covers coded prototyping and AI-assisted UI generation.</p>
+            <div class="xref-callout" style="margin-top: 2rem;">
+                <div class="xr-icon">📚</div>
+                <div>
+                    <h4>Prototyping foundations covered separately</h4>
+                    <p>Fidelity levels, wireframing theory, Figma workflow, usability testing, and A/B testing are covered in the companion <a href="https://o-meiuqer-o.github.io/hcicourse/#method-prototyping" target="_blank">UI/UX Course — Phase 3: Design & Prototype</a>. This module focuses specifically on <strong>software implementation</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ 01: SOFTWARE PROTOTYPING LANDSCAPE ══ -->
+        <section id="sw-landscape">
+            <span class="section-label">01: The Landscape</span>
+            <h2>Software Prototyping Approaches</h2>
+            <p>Software prototypes live on a spectrum from static mocks to fully functional builds. Each stage serves a different purpose in the design-to-development pipeline.</p>
+
+            <div class="spectrum-bar">
+                <div class="spectrum-zone z1">
+                    <div class="sz-icon">🎨</div>
+                    <h3>Design Tool<br>Prototype</h3>
+                    <p class="sz-tool">Figma, Sketch<br>Clickable, no real code</p>
+                </div>
+                <div class="spectrum-zone z2">
+                    <div class="sz-icon">🖼️</div>
+                    <h3>Static Coded<br>Mockup</h3>
+                    <p class="sz-tool">HTML + CSS<br>Looks real, no logic</p>
+                </div>
+                <div class="spectrum-zone z3">
+                    <div class="sz-icon">⚡</div>
+                    <h3>AI-Generated<br>Prototype</h3>
+                    <p class="sz-tool">Antigravity → instant HTML/CSS/JS</p>
+                    <div class="ag-star-badge">This module</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem; text-align: center;">
+                <p style="color: #666; font-size: 0.9rem; max-width: 580px;">Design tool prototypes are ideal for early flow validation. Coded prototypes are used when you need real browser behaviour, device testing, or a handoff-ready reference for developers.</p>
+            </div>
+
+            <div class="reason-row">
+                <div class="reason-pill"><span class="rp-dot"></span>Real scroll &amp; hover states</div>
+                <div class="reason-pill"><span class="rp-dot"></span>Works on any device immediately</div>
+                <div class="reason-pill"><span class="rp-dot"></span>Animations feel authentic</div>
+                <div class="reason-pill"><span class="rp-dot"></span>Developer-ready reference</div>
+                <div class="reason-pill"><span class="rp-dot"></span>No tool licences required to share</div>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Ask students: "Why would you build a coded prototype instead of just showing a Figma prototype?" — Answers should converge on: authentic interaction states, device portability, and dev-handoff fidelity. The question surfaces real trade-offs, not a false hierarchy.
+            </div>
+        </section>
+
+        <!-- ══ 02: ANTIGRAVITY GUIDE ══ -->
+        <section id="antigravity-guide">
+            <span class="section-label">02: The Tool</span>
+            <h2>Prototyping with Antigravity AI</h2>
+            <p>Antigravity converts a plain-English description of a UI into working HTML/CSS/JS code — typically in under 30 seconds. No design tool export, no manual coding required.</p>
+
+            <div class="ag-card">
+                <div class="ag-badge">⚡ Antigravity AI — User Guide</div>
+                <h2>Describe → Generate → Test</h2>
+                <p>Type what you want to build. Antigravity writes the code, and you open it directly in a browser for testing. Iterate by sending follow-up messages in the same conversation.</p>
+
+                <!-- Workflow image -->
+                <div class="ss-frame">
+                    <img src="images/antigravity_workflow_steps.png" alt="4-step AI prototyping workflow: prompt, generate, preview, test">
+                </div>
+                <p class="ss-caption">Prompt → Generate → Preview → Test. Each loop takes minutes, not hours.</p>
+
+                <!-- How to use it — 4 steps -->
+                <div class="guide-steps">
+                    <div class="gsc">
+                        <div class="gsc-num">01</div>
+                        <h4>Start a new conversation</h4>
+                        <p>Open Antigravity. Each prototype project gets its own conversation — this keeps the AI's context clean.</p>
+                    </div>
+                    <div class="gsc">
+                        <div class="gsc-num">02</div>
+                        <h4>Write your prompt</h4>
+                        <p>Describe the screen, its purpose, components, colours, and feel. Be specific — see templates below.</p>
+                    </div>
+                    <div class="gsc">
+                        <div class="gsc-num">03</div>
+                        <h4>Open in browser</h4>
+                        <p>Antigravity creates the file. Click to open or save as <code>.html</code> and open in Chrome/Edge for a live preview.</p>
+                    </div>
+                    <div class="gsc">
+                        <div class="gsc-num">04</div>
+                        <h4>Iterate in chat</h4>
+                        <p>Send follow-up messages to change colours, add states, adjust layout, or make it responsive. No re-prompting from scratch.</p>
+                    </div>
+                </div>
+
+                <!-- Interface screenshot -->
+                <hr class="ag-divider">
+                <p class="ag-section-title">What it looks like</p>
+                <div class="ss-frame">
+                    <img src="images/antigravity_chat_prototype.png" alt="Antigravity chat interface showing a prototype being generated">
+                </div>
+                <p class="ss-caption">Left: your chat prompts. Right: the generated live preview in a browser frame.</p>
+
+                <!-- Starter prompts -->
+                <hr class="ag-divider">
+                <p class="ag-section-title">📋 Starter Prompts — Copy &amp; Paste</p>
+                <p class="ag-section-sub">Click any card to copy the prompt, then paste it into Antigravity and customise for your project.</p>
+
+                <div class="prompt-card" id="p1" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🔐 Login / Auth Screen</div>
+                    <div class="prompt-text">Create a mobile login screen as a single HTML file. Dark background, purple accent. Include: app logo placeholder, email input, password input with show/hide toggle, 'Sign In' gradient button, 'Forgot password' link, Google SSO option. Make it feel premium and modern.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="p2" onclick="copyPrompt(this)">
+                    <div class="prompt-label">📊 Dashboard / Home Screen</div>
+                    <div class="prompt-text">Design a mobile app home dashboard as a single HTML file. App: a personal finance tracker. Include: greeting header with user name, a balance card with a show/hide amount toggle, 4 quick-action icon buttons (Send, Receive, Pay, Invest), and a recent transactions list (3 items, with merchant name, category icon, amount in red/green). White background, navy accent.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="p3" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🛍️ Product Detail Page</div>
+                    <div class="prompt-text">Build a product detail screen for a premium e-commerce app selling wireless headphones. Single HTML file. Include: large hero image placeholder, product name and brand label, 4.5-star rating with review count, price with a 20% off badge, 3-option colour selector, quantity stepper, 'Add to Cart' full-width button, and a collapsible 'Product Details' accordion section. Minimal white design, amber accent.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="p4" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🏋️ Onboarding Screen (Step 1/3)</div>
+                    <div class="prompt-text">Create onboarding screen 1 of 3 for a fitness app as a single HTML file. Full-screen gradient background (dark charcoal to deep orange). Include: 3-dot progress indicator (first dot active), a large illustration placeholder (400x300), bold headline 'Train smarter, not harder', a 16px subtitle, a full-width 'Next' button, and a 'Skip' ghost link. Animate the illustration with a subtle float effect.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="p5" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🗺️ Multi-screen Flow (3 screens)</div>
+                    <div class="prompt-text">Build a 3-screen mobile checkout flow as a single HTML file with JS navigation between screens. Screen 1: Bag review (item cards, subtotal). Screen 2: Delivery address form. Screen 3: Order confirmation with animated success checkmark. Use a clean white UI with a teal accent. Include a progress stepper at the top showing which step the user is on. Screens should transition with a slide animation.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <!-- Refinement prompts -->
+                <hr class="ag-divider">
+                <p class="ag-section-title">💬 Refinement Prompts — After First Generation</p>
+                <p class="ag-section-sub">Send these as follow-up messages in the same Antigravity conversation to iterate on the prototype.</p>
+
+                <div class="prompt-card" id="r1" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🎨 Restyle</div>
+                    <div class="prompt-text">Change the primary button to a coral red gradient. Increase the heading font to 22px. Add subtle box-shadows to the input fields (0 2px 8px rgba(0,0,0,0.08)). Keep everything else the same.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="r2" onclick="copyPrompt(this)">
+                    <div class="prompt-label">✨ Add Micro-Interactions</div>
+                    <div class="prompt-text">Add hover and active states to all interactive elements. Cards should lift 6px on hover with a shadow increase. Buttons should scale to 0.97 on press. Add a 0.25s ease transition to everything. Input fields should show a coloured focus ring.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="r3" onclick="copyPrompt(this)">
+                    <div class="prompt-label">📱 Make Responsive</div>
+                    <div class="prompt-text">Make this fully responsive. On screens under 640px: stack all columns to single column, increase all tap targets to minimum 44px height, reduce headings by 15%, and add 16px horizontal padding to the body. Use a mobile-first approach with CSS media queries.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="r4" onclick="copyPrompt(this)">
+                    <div class="prompt-label">⏳ Add Loading & Success States</div>
+                    <div class="prompt-text">Add interaction states to the primary submit button: (1) Default state (current), (2) Loading — show a spinner, change label to 'Processing...', disable the button, (3) Success — green background, checkmark icon, label 'Done!'. Transition automatically from loading → success after 1.5 seconds. Wire this to a button click.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" id="r5" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🌙 Dark Mode Toggle</div>
+                    <div class="prompt-text">Add a dark mode toggle button in the top-right corner (moon/sun icon). When activated, invert the background to #0d0d14, use white text, darken all cards to #1a1a2e, and adjust input field backgrounds to #1e1e2e. Store the preference in localStorage so it persists on refresh. Animate the transition with a 0.4s ease.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <!-- Prompt quality guide -->
+                <hr class="ag-divider">
+                <p class="ag-section-title">🎯 Writing Better Prompts</p>
+                <div class="ss-frame">
+                    <img src="images/antigravity_prompt_tips.png" alt="Good vs bad prompt comparison">
+                </div>
+                <p class="ss-caption">Specific context + named components + colour/tone direction = dramatically better output.</p>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
+                    <div style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; padding: 1rem;">
+                        <div style="font-size: 0.7rem; font-weight: 700; color: #f87171; text-transform: uppercase; margin-bottom: 0.4rem;">❌ Too vague</div>
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #fca5a5;">"make a login page"</div>
+                    </div>
+                    <div style="background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); border-radius: 10px; padding: 1rem;">
+                        <div style="font-size: 0.7rem; font-weight: 700; color: #6ee7b7; text-transform: uppercase; margin-bottom: 0.4rem;">✅ Specific</div>
+                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #a7f3d0;">"Login screen for a meditation app, calm blue tones, email + password + Google SSO, centered card layout, 400px max width"</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1rem; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem;">
+                    <div style="font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Prompt anatomy checklist</div>
+                    <div style="font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.8;">
+                        ✦ <strong style="color: white;">App context</strong> — what kind of app, who uses it<br>
+                        ✦ <strong style="color: white;">Screen purpose</strong> — what task it enables<br>
+                        ✦ <strong style="color: white;">Named components</strong> — list each UI element<br>
+                        ✦ <strong style="color: white;">Visual direction</strong> — colours, style, feel<br>
+                        ✦ <strong style="color: white;">Output format</strong> — "single HTML file" or "HTML + CSS"
+                    </div>
+                </div>
+            </div><!-- end .ag-card -->
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Run this live in class — open Antigravity, paste a starter prompt, and show the output in under 60 seconds. Then ask a student to describe their own project screen and prompt it live. The gap between "vague prompt" and "specific prompt" outputs is the most memorable lesson here.
+            </div>
+        </section>
+
+        <!-- ══ 03: COMING SOON ══ -->
+        <section id="coming-soon">
+            <span class="section-label">03: More to Come</span>
+            <h2>Other Prototyping Domains</h2>
+            <p>Software is just one lens. Design Thinking applies across mediums. Future modules will cover physical prototyping for electronics and mechanical systems.</p>
+
+            <div class="coming-soon-grid">
+                <div class="cs-card">
+                    <div class="cs-icon">🔌</div>
+                    <div class="cs-badge">Coming Soon</div>
+                    <h3>Electronics Prototyping</h3>
+                    <p>Breadboards, Arduino, Raspberry Pi — building hardware prototypes to test physical interactions and embedded system concepts.</p>
+                </div>
+                <div class="cs-card">
+                    <div class="cs-icon">⚙️</div>
+                    <div class="cs-badge">Coming Soon</div>
+                    <h3>Mechanical Prototyping</h3>
+                    <p>3D printing, foam modelling, and CAD tools — testing form, fit, and ergonomics before committing to manufacturing.</p>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- end .scroll-container -->
+
+    <div class="teacher-mode-indicator">TEACHER MODE ACTIVE</div>
+    <script src="nav.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function copyPrompt(card) {
+            const textEl = card.querySelector('.prompt-text');
+            if (!textEl) return;
+            const text = textEl.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const hint = card.querySelector('.copy-hint');
+                const orig = hint.textContent;
+                hint.textContent = '✓ Copied!';
+                hint.style.color = '#6ee7b7';
+                setTimeout(() => { hint.textContent = orig; hint.style.color = ''; }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>

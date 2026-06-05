@@ -71,6 +71,21 @@
                 { label: 'Lateral Methods', anchor: 'lateral-thinking' },
             ],
         },
+        {
+            label: 'Module 05: Prototyping',
+            icon: '🧪',
+            href: 'prototyping.html',
+            sections: [
+                { label: 'Cover', anchor: 'cover' },
+                { label: 'What Is a Prototype?', anchor: 'what-is-prototype' },
+                { label: 'The Fidelity Spectrum', anchor: 'fidelity' },
+                { label: 'The Process', anchor: 'proto-process' },
+                { label: 'Prototyping Methods', anchor: 'proto-types' },
+                { label: 'Antigravity AI Guide', anchor: 'antigravity-guide' },
+                { label: 'Choosing Tools', anchor: 'proto-tools' },
+                { label: 'Testing Your Prototype', anchor: 'usability-testing' },
+            ],
+        },
     ];
 
     // ─── State ───────────────────────────────────────────────────────────────
@@ -154,8 +169,8 @@
                     a.addEventListener('click', (e) => {
                         e.preventDefault();
                         scrollToSection(s.anchor);
-                        // On mobile, close sidebar after clicking
-                        if (window.innerWidth < 1024) closeSidebar();
+                        // Close sidebar after clicking, on all devices
+                        closeSidebar();
                     });
                     li.appendChild(a);
                     sectionList.appendChild(li);

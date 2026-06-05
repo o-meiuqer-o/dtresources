@@ -2133,34 +2133,11 @@ img {
     transform: translateX(0);
 }
 
-/* ── Desktop: always-visible sidebar at ≥ 1024px ── */
-@media (min-width: 1024px) {
-    .course-sidebar {
-        transform: translateX(-100%);
-    }
-
-    .course-sidebar.open {
-        transform: translateX(0);
-    }
-
-    /* Push main content when sidebar is open */
-    body.sidebar-open .scroll-container {
-        padding-left: 280px;
-        box-sizing: border-box;
-        transition: padding-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    body.sidebar-open .global-nav {
-        left: 280px;
-        width: calc(100% - 280px);
-        transition: left 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-                    width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-
-    /* Hide overlay on desktop (no backdrop needed) */
-    .nav-overlay {
-        display: none;
-    }
+/* ── Sidebar: pure overlay on ALL screen sizes ── */
+/* No content pushing — sidebar floats above the page */
+body.sidebar-open .scroll-container,
+body.sidebar-open .global-nav {
+    /* intentionally no shift — sidebar is an overlay */
 }
 
 /* ============================================================

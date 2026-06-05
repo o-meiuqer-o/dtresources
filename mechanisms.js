@@ -564,7 +564,11 @@ document.addEventListener('DOMContentLoaded', () => {
     anims.push(new QuickReturn('mech-quick-return'));
     anims.push(new RackPinion('mech-rack-pinion'));
     anims.push(new CamTiming('mech-cam-timing'));
-    anims.push(new JansenGait('mech-jansen-gait'));\n    anims.push(new GearTrain('mech-gear-1to1', [{cx:150, cy:100, r:40, teeth:16, offset:0}, {cx:230, cy:100, r:40, teeth:16, offset:Math.PI/16}]));\n    anims.push(new GearTrain('mech-gear-speed', [{cx:140, cy:100, r:60, teeth:24, offset:0}, {cx:230, cy:100, r:30, teeth:12, offset:Math.PI/12}]));\n    anims.push(new GearTrain('mech-gear-torque', [{cx:140, cy:100, r:30, teeth:12, offset:0}, {cx:230, cy:100, r:60, teeth:24, offset:Math.PI/24}]));\n    anims.push(new GearTrain('mech-gear-idler', [{cx:120, cy:100, r:30, teeth:12, offset:0}, {cx:180, cy:100, r:30, teeth:12, offset:Math.PI/12}, {cx:240, cy:100, r:30, teeth:12, offset:0}]));
+    anims.push(new JansenGait('mech-jansen-gait'));
+    anims.push(new GearTrain('mech-gear-1to1', [{cx:150, cy:100, r:40, teeth:16, offset:0}, {cx:230, cy:100, r:40, teeth:16, offset:Math.PI/16}]));
+    anims.push(new GearTrain('mech-gear-speed', [{cx:140, cy:100, r:60, teeth:24, offset:0}, {cx:230, cy:100, r:30, teeth:12, offset:Math.PI/12}]));
+    anims.push(new GearTrain('mech-gear-torque', [{cx:140, cy:100, r:30, teeth:12, offset:0}, {cx:230, cy:100, r:60, teeth:24, offset:Math.PI/24}]));
+    anims.push(new GearTrain('mech-gear-idler', [{cx:120, cy:100, r:30, teeth:12, offset:0}, {cx:180, cy:100, r:30, teeth:12, offset:Math.PI/12}, {cx:240, cy:100, r:30, teeth:12, offset:0}]));
 
     function loop() {
         anims.forEach(anim => anim.update());

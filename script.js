@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     // Modal Framework
-    const toolCards = document.querySelectorAll('.tool-card');
+    const toolCards = document.querySelectorAll('.tool-card, .concept-card');
     const modals = document.querySelectorAll('.modal-overlay');
     const closeButtons = document.querySelectorAll('.modal-close');
 

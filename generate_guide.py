@@ -449,6 +449,6 @@ html_out.append('            </div>')
 html_out.append('        </section>')
 
 with open('figma_guide_formatted.html', 'w', encoding='utf-8') as f:
-    f.write('\\n'.join(html_out))
+    f.write('\n'.join(html_out))
 
 print('Done generating HTML')

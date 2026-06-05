@@ -94,12 +94,7 @@
             sections: [
                 { label: 'Cover', anchor: 'cover' },
                 { label: '3D Modeling', anchor: 'fusion360' },
-                { label: 'Movement Conversions', anchor: 'movement-conversions' },
-                { label: 'Slider-Crank', anchor: 'slider-crank' },
-                { label: 'Four-Bar Linkage', anchor: 'four-bar' },
-                { label: 'Quick Return', anchor: 'quick-return' },
-                { label: 'Rack and Pinion', anchor: 'rack-pinion' },
-                { label: 'Cam Timing', anchor: 'cam-timing' },
+                { label: 'Movement Conversions', anchor: 'movement-conversions' }
             ],
         },
     ];

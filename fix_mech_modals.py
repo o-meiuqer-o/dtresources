@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+import io
+
+# We will regenerate mech_prototyping.html to implement the grid of concept cards and modals.
+html_content = """<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -247,4 +250,7 @@
     <script src="script.js"></script>
     <script src="nav.js"></script>
 </body>
-</html>
+</html>"""
+
+with io.open('mech_prototyping.html', 'w', encoding='utf-8') as f:
+    f.write(html_content)

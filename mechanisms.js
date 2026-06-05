@@ -497,7 +497,8 @@ document.addEventListener('DOMContentLoaded', () => {
     anims.push(new FourBar('mech-four-bar'));
     anims.push(new QuickReturn('mech-quick-return'));
     anims.push(new RackPinion('mech-rack-pinion'));
-    anims.push(new CamTiming('mech-cam-timing'));\n    anims.push(new JansenGait('mech-jansen-gait'));
+    anims.push(new CamTiming('mech-cam-timing'));
+    anims.push(new JansenGait('mech-jansen-gait'));
 
     function loop() {
         anims.forEach(anim => anim.update());

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 06: Mechanical Prototyping</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="global-nav">
+        <!-- nav.js will inject the sidebar/hamburger menu here -->
+        <div class="nav-right">
+            <span class="user-profile">D. Thinker</span>
+        </div>
+    </nav>
+
+    <div class="scroll-container">
+        <main class="content-wrapper">
+            
+            <!-- ══ COVER ══ -->
+            <section id="cover">
+                <div class="module-tag">Module 06 · Mechanical Prototyping</div>
+                <h1>Bringing Ideas into the Physical World</h1>
+                <p style="color:#666; margin-top:1rem;">While software prototyping creates the illusion of functionality on a screen, mechanical prototyping builds real mechanisms that move, bear loads, and interact with the physical environment.</p>
+
+                <div class="tool-strip">
+                    <div class="tool-strip-card" style="display:flex; flex-direction:column;">
+                        <div class="ts-tag" style="background:#0696D7; color:white;">CAD Software</div>
+                        <div class="ts-logo" style="color:#0696D7;">🛠️</div>
+                        <h3>Autodesk Fusion 360</h3>
+                        <p style="font-weight:600; color:#0696D7; margin-bottom:0.5rem;">3D Modeling</p>
+                        <p>Industry-standard cloud CAD for designing functional parts, simulating motion, and preparing for 3D printing.</p>
+                        <div style="margin-top:auto; padding-top:1rem; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+                            <a href="#fusion360" class="nav-pill" style="font-size:0.8rem; background:#0696D7; color:white; border:none; padding: 5px 10px; flex:1; text-align:center;">Read Guide</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══ FUSION 360 ══ -->
+            <section id="fusion360" style="padding-top: 4rem;">
+                <span class="section-label">01: 3D Modeling</span>
+                <h2>Mastering Fusion 360</h2>
+                <p>Before cutting material or firing up a 3D printer, complex mechanisms must be modeled, assembled, and simulated in CAD. Fusion 360 is the premier tool for this workflow.</p>
+                
+                <div class="card" style="margin-top: 2rem;">
+                    <h3>Official Learning Paths</h3>
+                    <p style="margin-bottom: 1.5rem;">The most effective way to learn Fusion is through Autodesk's official, structured tutorials.</p>
+                    <ul class="method-list">
+                        <li>
+                            <div class="method-title">Fusion Quick Start Guide</div>
+                            <div class="method-desc">A 10-step workflow covering the interface, sketching, extruding, and basic assemblies. Perfect for absolute beginners.</div>
+                            <a href="https://help.autodesk.com/view/fusion360/ENU/courses/" target="_blank" class="nav-pill" style="margin-top:0.5rem; display:inline-block; font-size:0.8rem;">Start Learning ↗</a>
+                        </li>
+                        <li>
+                            <div class="method-title">Learn Fusion for CAD in 90 Minutes</div>
+                            <div class="method-desc">A hands-on, project-based course where you design a functional bike pedal from scratch.</div>
+                            <a href="https://help.autodesk.com/view/fusion360/ENU/courses/" target="_blank" class="nav-pill" style="margin-top:0.5rem; display:inline-block; font-size:0.8rem;">Start Project ↗</a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ══ MOVEMENT CONVERSIONS ══ -->
+            <section id="movement-conversions" style="padding-top: 4rem;">
+                <span class="section-label">02: Kinematics</span>
+                <h2>Movement Conversions</h2>
+                <p>Mechanical design often requires taking an input motion (like a spinning motor) and converting it into a completely different output motion. Understanding these foundational mechanisms is critical for physical prototyping.</p>
+            </section>
+
+            <!-- Circular to Reciprocating -->
+            <section id="slider-crank" style="padding-top: 2rem;">
+                <div class="card">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem;">Circular to Reciprocating</h3>
+                    <p>The <strong>Slider-Crank mechanism</strong> converts continuous rotational motion into linear, back-and-forth (reciprocating) motion.</p>
+                    
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; background: #f9f9f9; border: 1px solid #eaeaea;">
+                        <img src="assets/mechanisms/circular_reciprocating.png" alt="Slider Crank Mechanism Diagram" style="width: 100%; display: block;">
+                    </div>
+                    
+                    <h4>How it works:</h4>
+                    <ul>
+                        <li><strong>Driving Gear / Crank:</strong> Rotates in a continuous circle.</li>
+                        <li><strong>Connecting Rod:</strong> Links the rotating crank to the slider. As the crank turns, it pushes and pulls the rod.</li>
+                        <li><strong>Slider:</strong> Constrained within a channel, it is forced to move in a straight line back and forth.</li>
+                    </ul>
+                    <p class="source">Examples: Car engines (pistons), manual water pumps, automated saws.</p>
+                </div>
+            </section>
+
+            <!-- Circular to Oscillation -->
+            <section id="four-bar" style="padding-top: 2rem;">
+                <div class="card">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem;">Circular to Oscillation & Gait</h3>
+                    <p>A <strong>Four-Bar Linkage</strong> can be configured to convert circular motion into a sweeping, oscillating motion, or even a complex walking gait (like Jansen's or Klann's linkage).</p>
+                    
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; background: #f9f9f9; border: 1px solid #eaeaea;">
+                        <img src="assets/mechanisms/circular_oscillation.png" alt="Four-Bar Linkage Diagram" style="width: 100%; display: block;">
+                    </div>
+                    
+                    <h4>How it works:</h4>
+                    <ul>
+                        <li><strong>Driving Crank:</strong> Makes a full continuous rotation.</li>
+                        <li><strong>Coupler:</strong> Connects the crank to the rocker, transmitting the force.</li>
+                        <li><strong>Rocker:</strong> Because of its pivot and length, it cannot complete a full circle, so it swings (oscillates) back and forth.</li>
+                    </ul>
+                    <p class="source">Examples: Windshield wipers, oil pump jacks, kinetic walking robots.</p>
+                </div>
+            </section>
+
+            <!-- Quick Return -->
+            <section id="quick-return" style="padding-top: 2rem;">
+                <div class="card">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem;">Quick Return Mechanism</h3>
+                    <p>The <strong>Crank and Slotted Lever</strong> mechanism creates a stroke that moves slowly forward (for cutting or doing work) and rapidly backwards (to reset efficiently).</p>
+                    
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; background: #f9f9f9; border: 1px solid #eaeaea;">
+                        <img src="assets/mechanisms/quick_return.png" alt="Quick Return Mechanism Diagram" style="width: 100%; display: block;">
+                    </div>
+                    
+                    <h4>How it works:</h4>
+                    <ul>
+                        <li><strong>Driving Crank:</strong> A small wheel that rotates at a constant speed, sliding a pin inside a lever.</li>
+                        <li><strong>Slotted Lever:</strong> Pivots at the bottom. The pin pushes it. It takes more than half a rotation of the crank to push the lever forward, and less than half to pull it back.</li>
+                        <li><strong>Ram:</strong> Attached to the top of the lever, it performs the linear work.</li>
+                    </ul>
+                    <p class="source">Examples: Shaper machines, automated assembly arms, specialized cutting tools.</p>
+                </div>
+            </section>
+
+            <!-- Circular to Linear -->
+            <section id="rack-pinion" style="padding-top: 2rem;">
+                <div class="card">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem;">Circular to Linear</h3>
+                    <p>The <strong>Rack and Pinion</strong> mechanism provides precise conversion of rotational motion into direct linear translation along a fixed axis.</p>
+                    
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; background: #f9f9f9; border: 1px solid #eaeaea;">
+                        <img src="assets/mechanisms/circular_linear.png" alt="Rack and Pinion Diagram" style="width: 100%; display: block;">
+                    </div>
+                    
+                    <h4>How it works:</h4>
+                    <ul>
+                        <li><strong>Driving Gear (Pinion):</strong> A standard circular gear that rotates.</li>
+                        <li><strong>Rack:</strong> A flat bar with teeth cut into it. As the pinion turns, its teeth engage the rack, driving it in a straight line.</li>
+                    </ul>
+                    <p class="source">Examples: Car steering systems, CNC machine axes, sliding gates.</p>
+                </div>
+            </section>
+
+            <!-- Timing by Cams -->
+            <section id="cam-timing" style="padding-top: 2rem; padding-bottom: 4rem;">
+                <div class="card">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem;">Timing by Cams</h3>
+                    <p><strong>Cam and Follower</strong> mechanisms act as physical memory. The shape of the cam physically programs exactly when and how far the follower will move.</p>
+                    
+                    <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; background: #f9f9f9; border: 1px solid #eaeaea;">
+                        <img src="assets/mechanisms/cam_timing.png" alt="Cam and Follower Diagram" style="width: 100%; display: block;">
+                    </div>
+                    
+                    <h4>How it works:</h4>
+                    <ul>
+                        <li><strong>Driving Cam:</strong> A non-circular (often teardrop or egg-shaped) piece of metal that rotates on an axis.</li>
+                        <li><strong>Follower:</strong> A rod or lever that rests against the edge of the cam. As the "lobe" (the bump) of the cam comes around, it pushes the follower up.</li>
+                    </ul>
+                    <p class="source">Examples: Internal combustion engine valves, automated sewing machines, automata.</p>
+                </div>
+            </section>
+
+            <!-- ══ NAVIGATION PILLS ══ -->
+            <div style="display:flex; justify-content:space-between; margin-top:2rem; padding-bottom:4rem;">
+                <a href="prototyping.html" class="nav-pill">← Previous: Software Prototyping</a>
+            </div>
+            
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="nav.js"></script>
+</body>
+</html>

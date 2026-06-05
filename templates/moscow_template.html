@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MoSCoW Prioritisation Template</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; padding: 2rem; max-width: 960px; margin: 0 auto; color: #1d1d1f; }
+        h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .subtitle { color: #666; margin-bottom: 2rem; font-size: 0.9rem; }
+        .field { margin-bottom: 1.5rem; }
+        .field label { display: block; font-weight: 600; margin-bottom: 0.5rem; font-size: 0.9rem; }
+        .field input, .field textarea { width: 100%; border: 1px solid #ddd; border-radius: 6px; padding: 0.75rem; font-size: 0.9rem; font-family: inherit; }
+        .field textarea { resize: vertical; min-height: 80px; }
+        .note { background: #f9f9fb; padding: 1rem; border-radius: 8px; font-size: 0.85rem; color: #555; margin-bottom: 1.5rem; }
+        .section-title { font-size: 1.1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #5e5ce6; }
+        .moscow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 1rem; }
+        .moscow-card { border-radius: 12px; padding: 1.5rem; border: 2px solid transparent; display: flex; flex-direction: column; gap: 0.75rem; }
+        .moscow-card .card-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.25rem; }
+        .moscow-card .badge { font-size: 1.4rem; font-weight: 900; min-width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: #fff; }
+        .moscow-card h3 { font-size: 1rem; font-weight: 700; margin: 0; }
+        .moscow-card p { font-size: 0.78rem; color: #666; line-height: 1.5; }
+        .moscow-card textarea { width: 100%; border: 1px solid #e0e0e0; border-radius: 8px; padding: 0.75rem; min-height: 120px; font-size: 0.85rem; font-family: inherit; resize: vertical; background: #fff; }
+
+        /* Must Have */
+        .card-must { background: #fff5f5; border-color: #ff3b30; }
+        .card-must .badge { background: #ff3b30; }
+        .card-must h3 { color: #c0392b; }
+        .card-must textarea:focus { outline: 2px solid #ff3b30; }
+
+        /* Should Have */
+        .card-should { background: #fff9ec; border-color: #ff9500; }
+        .card-should .badge { background: #ff9500; }
+        .card-should h3 { color: #b8651a; }
+        .card-should textarea:focus { outline: 2px solid #ff9500; }
+
+        /* Could Have */
+        .card-could { background: #f0f9ff; border-color: #0a84ff; }
+        .card-could .badge { background: #0a84ff; }
+        .card-could h3 { color: #0062c4; }
+        .card-could textarea:focus { outline: 2px solid #0a84ff; }
+
+        /* Won't Have */
+        .card-wont { background: #f5f5f7; border-color: #8e8e93; }
+        .card-wont .badge { background: #8e8e93; }
+        .card-wont h3 { color: #555; }
+        .card-wont textarea:focus { outline: 2px solid #8e8e93; }
+
+        .legend { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; font-size: 0.8rem; }
+        .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+
+        @media print { body { padding: 1rem; } }
+        @media (max-width: 640px) { .moscow-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <h1>MoSCoW Prioritisation Matrix</h1>
+    <p class="subtitle">Design Thinking — Convergent Ideation &amp; Prioritisation Phase</p>
+
+    <div class="field">
+        <label>Project / Feature Set</label>
+        <input type="text" placeholder="What product, feature list, or backlog are we prioritising?">
+    </div>
+
+    <div class="note">MoSCoW is a <strong>convergent prioritisation</strong> method. After generating many ideas (e.g., through SCAMPER or 6-3-5), use this matrix to agree on <em>what to build, when</em>. Every idea should land in exactly one quadrant.</div>
+
+    <div class="section-title">The MoSCoW Matrix</div>
+
+    <div class="moscow-grid">
+
+        <!-- Must Have -->
+        <div class="moscow-card card-must">
+            <div class="card-header">
+                <div class="badge">M</div>
+                <div>
+                    <h3>Must Have</h3>
+                    <p style="margin:0; font-size:0.75rem; color:#c0392b;">Non-negotiable — ship without this and the product fails</p>
+                </div>
+            </div>
+            <p>These are the minimum viable requirements. If any Must Have is not delivered, the release is considered a failure. Ask: <em>"Would we cancel launch without this?"</em></p>
+            <textarea placeholder="List Must Have features / requirements here, one per line…"></textarea>
+        </div>
+
+        <!-- Should Have -->
+        <div class="moscow-card card-should">
+            <div class="card-header">
+                <div class="badge">S</div>
+                <div>
+                    <h3>Should Have</h3>
+                    <p style="margin:0; font-size:0.75rem; color:#b8651a;">Important but not vital — painful to omit, not fatal</p>
+                </div>
+            </div>
+            <p>High-value items that are expected but can be worked around for this iteration. They should be included if time and budget allow. Ask: <em>"Will users be significantly dissatisfied without this?"</em></p>
+            <textarea placeholder="List Should Have features / requirements here, one per line…"></textarea>
+        </div>
+
+        <!-- Could Have -->
+        <div class="moscow-card card-could">
+            <div class="card-header">
+                <div class="badge">C</div>
+                <div>
+                    <h3>Could Have</h3>
+                    <p style="margin:0; font-size:0.75rem; color:#0062c4;">Nice-to-have — small positive impact if included</p>
+                </div>
+            </div>
+            <p>"Delighters" — desirable but not necessary. Included only when resources remain after Must and Should items are completed. The first to be cut when time is tight. Ask: <em>"Would most users notice if this was missing?"</em></p>
+            <textarea placeholder="List Could Have features / requirements here, one per line…"></textarea>
+        </div>
+
+        <!-- Won't Have -->
+        <div class="moscow-card card-wont">
+            <div class="card-header">
+                <div class="badge">W</div>
+                <div>
+                    <h3>Won't Have (this time)</h3>
+                    <p style="margin:0; font-size:0.75rem; color:#555;">Out of scope now — agreed to defer, not abandon</p>
+                </div>
+            </div>
+            <p>Explicitly out of scope for <em>this release</em>. Recording these prevents scope creep and sets stakeholder expectations clearly. These may become Must Haves in a future iteration. Ask: <em>"Can we revisit this next sprint?"</em></p>
+            <textarea placeholder="List Won't Have features / requirements here, one per line…"></textarea>
+        </div>
+
+    </div>
+
+    <div class="section-title">Prioritisation Rationale</div>
+    <div class="field">
+        <label>Key Trade-offs &amp; Decisions</label>
+        <textarea placeholder="Summarise the main debates and decisions made during prioritisation. Who was consulted? What user evidence drove the choices?"></textarea>
+    </div>
+
+    <div class="field">
+        <label>Next Steps</label>
+        <textarea placeholder="What happens to the Won't Haves? When will they be reviewed? What is the delivery timeline for Must Haves?"></textarea>
+    </div>
+
+    <script src="template_shared.js"></script>
+</body>
+</html>

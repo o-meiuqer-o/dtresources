@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Module 05: Software Prototyping | Design Thinking</title>
     <meta name="description"
-        content="Software prototyping using AI tools — build real coded interfaces from text prompts using Antigravity. Part of the Design Thinking course.">
+        content="Figma prototyping and AI-assisted UI generation — building interactive software prototypes as part of the Design Thinking process.">
 
     <meta name="theme-color" content="#f5f5f7">
     <link rel="icon"
@@ -14,18 +14,20 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Poppins:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <style>
-        /* ── Module-level accent (purple-blue) ── */
+        /* ── Figma red-purple accent palette ── */
         :root {
-            --proto-accent: #7c3aed;
-            --proto-blue: #2563eb;
+            --figma-red: #f24e1e;
+            --figma-purple: #a259ff;
+            --figma-blue: #1abcfe;
+            --figma-green: #0acf83;
         }
 
-        .proto-tag {
+        .module-tag {
             display: inline-block;
-            background: linear-gradient(135deg, var(--proto-accent), var(--proto-blue));
+            background: linear-gradient(135deg, var(--figma-purple), var(--figma-red));
             color: white;
             font-size: 0.75rem;
             font-weight: 700;
@@ -36,262 +38,359 @@
             margin-bottom: 1rem;
         }
 
-        /* ── Cross-reference callout ── */
-        .xref-callout {
+        /* ── Two-tool comparison strip ── */
+        .tool-strip {
             display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            background: #eff6ff;
-            border: 1.5px solid #bfdbfe;
-            border-radius: 12px;
-            padding: 1.25rem 1.5rem;
-            max-width: 700px;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
             width: 100%;
-            margin-top: 1.5rem;
-        }
-        .xref-callout .xr-icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 0.1rem; }
-        .xref-callout h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.25rem; color: #1e40af; text-align: left; }
-        .xref-callout p { font-size: 0.82rem; color: #3b5bdb; text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
-        .xref-callout a { color: #1d4ed8; font-weight: 600; }
-
-        /* ── Software prototyping spectrum bar ── */
-        .spectrum-bar {
-            display: flex;
-            width: 100%;
-            max-width: 820px;
-            border-radius: 12px;
-            overflow: hidden;
+            max-width: 800px;
             margin-top: 2rem;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.06);
         }
-        .spectrum-zone {
+
+        .tool-strip-card {
             flex: 1;
-            padding: 1.4rem 1rem;
+            min-width: 220px;
+            background: white;
+            border-radius: 16px;
+            padding: 1.75rem 1.5rem;
+            border: 1.5px solid rgba(0,0,0,0.07);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
             text-align: center;
-            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
-        .spectrum-zone.z1 { background: #f1f5f9; }
-        .spectrum-zone.z2 { background: #e0e7ff; }
-        .spectrum-zone.z3 { background: linear-gradient(135deg, #ede9fe, #dbeafe); }
-        .spectrum-zone h3 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; color: #374151; }
-        .spectrum-zone .sz-tool { font-size: 0.72rem; color: #6b7280; margin-top: 0.3rem; }
-        .spectrum-zone .sz-icon { font-size: 1.5rem; margin-bottom: 0.4rem; }
-        .spectrum-zone.z3 .sz-tool { color: #5b21b6; font-weight: 600; }
-        .spectrum-zone.z3 h3 { color: #4c1d95; }
-        .ag-star-badge {
+
+        .tool-strip-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        .tool-strip-card .ts-logo { font-size: 2.2rem; margin-bottom: 0.75rem; }
+        .tool-strip-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-color); }
+        .tool-strip-card p { font-size: 0.82rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.55; }
+        .tool-strip-card .ts-tag {
             display: inline-block;
-            background: linear-gradient(90deg, #7c3aed, #2563eb);
-            color: white;
-            font-size: 0.6rem;
+            font-size: 0.65rem;
             font-weight: 700;
-            padding: 0.1rem 0.5rem;
+            padding: 0.15rem 0.55rem;
             border-radius: 10px;
             text-transform: uppercase;
-            margin-top: 0.3rem;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.6rem;
+        }
+        .ts-tag.figma-tag { background: #fff0eb; color: #c73e1d; }
+        .ts-tag.ag-tag    { background: #ede9fe; color: #5b21b6; }
+        .ts-tag.when-tag  { background: #f0f9ff; color: #1d4ed8; }
+
+        /* ── Figma Prototype Workflow ── */
+        .figma-flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            max-width: 860px;
+            margin-top: 2rem;
+            overflow-x: auto;
         }
 
-        /* ── Antigravity dark card ── */
-        .ag-card {
-            background: linear-gradient(160deg, #0d0d14 60%, #1a1040);
-            border-radius: 20px;
-            padding: 3rem;
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            flex: 1;
+            min-width: 120px;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            position: relative;
+        }
+
+        .flow-step:first-child { border-radius: 12px 0 0 12px; }
+        .flow-step:last-child  { border-radius: 0 12px 12px 0; }
+
+        .flow-step .fs-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+        .flow-step .fs-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--figma-purple);
+            margin-bottom: 0.25rem;
+        }
+        .flow-step p { font-size: 0.75rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.4; }
+
+        .flow-arrow {
+            font-size: 1.1rem;
+            color: #ccc;
+            flex-shrink: 0;
+            padding: 0 0.25rem;
+        }
+
+        /* ── Figma concept cards (clickable) ── */
+        .concept-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
             width: 100%;
-            max-width: 900px;
+            max-width: 860px;
+            margin-top: 2rem;
+        }
+
+        .concept-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.4rem;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+            border-color: var(--figma-purple);
+        }
+
+        .concept-card .cc-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+        .concept-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--text-color); text-align: left; }
+        .concept-card p { font-size: 0.8rem; color: #666; text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
+        .concept-card .cc-cta { font-size: 0.72rem; color: var(--figma-purple); font-weight: 600; margin-top: 0.6rem; opacity: 0.7; transition: opacity 0.2s; }
+        .concept-card:hover .cc-cta { opacity: 1; }
+
+        /* ── Figma shortcut table ── */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 820px;
+            margin-top: 1.5rem;
+        }
+
+        .shortcut-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            border: 1px solid rgba(0,0,0,0.06);
+            font-size: 0.85rem;
+        }
+
+        .shortcut-row .sr-action { color: #444; font-weight: 500; }
+        .sr-keys {
+            display: flex;
+            gap: 4px;
+        }
+        .key {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-bottom: 3px solid #d1d5db;
+            border-radius: 5px;
+            padding: 2px 7px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #374151;
+            white-space: nowrap;
+        }
+
+        /* ── Interaction type picker ── */
+        .interaction-picker {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 860px;
+            margin-top: 2rem;
+        }
+
+        .ip-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            border: 2px solid transparent;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .ip-card:hover { border-color: var(--figma-purple); transform: scale(1.03); }
+        .ip-card .ip-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .ip-card h4 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text-color); }
+        .ip-card p  { font-size: 0.75rem; color: #777; max-width: 100%; text-align: center; margin: 0; line-height: 1.4; }
+
+        /* ── Antigravity handoff card ── */
+        .ag-strip {
+            background: linear-gradient(150deg, #0d0d14, #160d33);
+            border-radius: 18px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 860px;
             color: white;
             margin-top: 2rem;
             position: relative;
             overflow: hidden;
         }
-        .ag-card::before {
+
+        .ag-strip::before {
             content: '';
             position: absolute;
-            top: -80px; right: -80px;
-            width: 280px; height: 280px;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(124,58,237,0.2), transparent 70%);
+            background: radial-gradient(circle, rgba(162,89,255,0.2), transparent 70%);
             pointer-events: none;
         }
-        .ag-badge {
+
+        .ag-strip .as-badge {
             display: inline-flex;
             align-items: center;
             gap: 0.4rem;
-            background: rgba(124,58,237,0.25);
-            border: 1px solid rgba(124,58,237,0.5);
+            background: rgba(162,89,255,0.2);
+            border: 1px solid rgba(162,89,255,0.45);
             color: #c4b5fd;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 0.3rem 0.9rem;
+            padding: 0.25rem 0.8rem;
             border-radius: 20px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
-        .ag-card h2 { color: white; font-size: 1.7rem; margin-bottom: 0.5rem; }
-        .ag-card > p { color: rgba(255,255,255,0.65); text-align: left; max-width: 100%; margin-bottom: 2rem; font-size: 0.95rem; }
 
-        /* Guide step grid */
-        .guide-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        .gsc {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            padding: 1.25rem;
-            transition: all 0.3s ease;
-        }
-        .gsc:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
-        .gsc-num {
-            font-size: 1.4rem;
-            font-weight: 800;
-            background: linear-gradient(90deg, #a78bfa, #60a5fa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.4rem;
-        }
-        .gsc h4 { font-size: 0.88rem; font-weight: 700; color: white; margin-bottom: 0.35rem; }
-        .gsc p { font-size: 0.78rem; color: rgba(255,255,255,0.55); text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
+        .ag-strip h2 { color: white; font-size: 1.5rem; margin-bottom: 0.4rem; }
+        .ag-strip > p { color: rgba(255,255,255,0.6); font-size: 0.9rem; text-align: left; max-width: 100%; margin-bottom: 1.75rem; }
 
-        /* Screenshot */
-        .ss-frame {
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 1.5rem 0;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.45);
-            border: 1px solid rgba(255,255,255,0.07);
-        }
-        .ss-frame img { width: 100%; display: block; }
-        .ss-caption { font-size: 0.72rem; color: rgba(255,255,255,0.35); text-align: center; margin-top: -0.75rem; margin-bottom: 1rem; font-style: italic; }
-
-        /* Prompt cards */
         .prompt-card {
             background: rgba(255,255,255,0.04);
             border: 1px solid rgba(255,255,255,0.09);
             border-radius: 10px;
-            padding: 1.1rem 1.4rem;
-            margin-bottom: 0.85rem;
+            padding: 1rem 1.25rem 1rem 1.25rem;
+            margin-bottom: 0.75rem;
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.82rem;
+            font-size: 0.8rem;
             color: #e2e8f0;
             position: relative;
             cursor: pointer;
             transition: border-color 0.2s, background 0.2s;
         }
-        .prompt-card:hover { border-color: rgba(124,58,237,0.55); background: rgba(124,58,237,0.08); }
+        .prompt-card:hover { border-color: rgba(162,89,255,0.5); background: rgba(162,89,255,0.07); }
         .prompt-label {
             font-family: 'Inter', sans-serif;
-            font-size: 0.65rem;
+            font-size: 0.63rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.08em;
             color: #a78bfa;
-            margin-bottom: 0.35rem;
+            margin-bottom: 0.3rem;
         }
         .copy-hint {
-            position: absolute; top: 0.85rem; right: 0.85rem;
+            position: absolute; top: 0.8rem; right: 0.9rem;
             font-family: 'Inter', sans-serif;
-            font-size: 0.62rem;
-            color: rgba(255,255,255,0.28);
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.25);
             transition: color 0.2s;
             pointer-events: none;
         }
         .prompt-card:hover .copy-hint { color: #a78bfa; }
 
-        /* Section divider inside dark card */
-        .ag-divider {
-            border: none;
-            border-top: 1px solid rgba(255,255,255,0.07);
-            margin: 2rem 0;
-        }
-        .ag-section-title {
-            color: white;
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 0.4rem;
-        }
-        .ag-section-sub {
-            color: rgba(255,255,255,0.5);
+        .ag-note {
+            background: rgba(255,255,255,0.04);
+            border-left: 3px solid rgba(162,89,255,0.6);
+            border-radius: 0 8px 8px 0;
+            padding: 0.9rem 1.1rem;
             font-size: 0.82rem;
-            text-align: left;
-            max-width: 100%;
-            margin-bottom: 1rem;
+            color: rgba(255,255,255,0.65);
+            margin-top: 1.25rem;
+            line-height: 1.6;
         }
+        .ag-note strong { color: white; }
+
+        /* ── HCI course reference strip ── */
+        .hci-ref-strip {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: linear-gradient(90deg, #eff6ff, #f5f3ff);
+            border: 1.5px solid #c7d2fe;
+            border-radius: 14px;
+            padding: 1.25rem 1.75rem;
+            max-width: 820px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        .hci-ref-strip .hrs-icon { font-size: 2rem; flex-shrink: 0; }
+        .hci-ref-strip h4 { font-size: 0.9rem; font-weight: 700; color: #3730a3; margin-bottom: 0.2rem; text-align: left; }
+        .hci-ref-strip p  { font-size: 0.82rem; color: #4338ca; text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
+        .hci-ref-strip a  { font-weight: 700; color: #4f46e5; text-decoration: underline; }
+
+        .hci-module-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .hci-pill {
+            background: white;
+            border: 1px solid #c7d2fe;
+            color: #4338ca;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .hci-pill:hover { background: #4f46e5; color: white; border-color: #4f46e5; }
 
         /* ── Coming soon cards ── */
         .coming-soon-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             width: 100%;
-            max-width: 800px;
+            max-width: 760px;
             margin-top: 2rem;
         }
+
         .cs-card {
             background: white;
             border: 2px dashed rgba(0,0,0,0.12);
             border-radius: 16px;
             padding: 2rem;
             text-align: center;
-            opacity: 0.6;
-            pointer-events: none;
-            position: relative;
+            opacity: 0.55;
         }
-        .cs-card .cs-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-        .cs-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-color); }
-        .cs-card p { font-size: 0.85rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.5; }
-        .cs-badge {
+        .cs-card .cs-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+        .cs-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-color); }
+        .cs-card p  { font-size: 0.82rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.5; }
+        .cs-soon-tag {
             display: inline-block;
             background: #f3f4f6;
-            color: #6b7280;
-            font-size: 0.65rem;
+            color: #9ca3af;
+            font-size: 0.62rem;
             font-weight: 700;
-            padding: 0.2rem 0.6rem;
+            padding: 0.15rem 0.55rem;
             border-radius: 10px;
             text-transform: uppercase;
             letter-spacing: 0.06em;
-            margin-bottom: 0.75rem;
-        }
-
-        /* ── "Why code?" reasoning row ── */
-        .reason-row {
-            display: flex;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            width: 100%;
-            max-width: 820px;
-            margin-top: 2rem;
-        }
-        .reason-pill {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            background: white;
-            border: 1px solid rgba(0,0,0,0.07);
-            border-radius: 30px;
-            padding: 0.6rem 1.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            font-size: 0.85rem;
-            font-weight: 500;
-        }
-        .reason-pill .rp-dot {
-            width: 8px; height: 8px; border-radius: 50%;
-            background: linear-gradient(135deg, var(--proto-accent), var(--proto-blue));
-            flex-shrink: 0;
+            margin-bottom: 0.65rem;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Navigation -->
     <nav class="global-nav">
         <div class="breadcrumbs">
-            <a href="index.html">Home</a> &gt; <a href="foundations.html">Module 01</a> &gt; <a href="introduction.html">Module 02</a> &gt; <a href="finding_problem.html">Module 03</a> &gt; <a href="ideation.html">Module 04</a> &gt; <span>Module 05: Software Prototyping</span>
+            <a href="index.html">Home</a> &gt; <a href="ideation.html">Module 04</a> &gt; <span>Module 05: Software Prototyping</span>
         </div>
         <div class="nav-links">
             <div class="teacher-mode-control">
@@ -309,237 +408,496 @@
 
         <!-- ══ COVER ══ -->
         <section id="cover">
-            <div class="proto-tag">Module 05 · Software Prototyping</div>
-            <h1>Build It to Test It</h1>
-            <p style="color:#666; margin-top:1rem;">Turning your ideated solution into a working, testable software interface — fast. This module covers coded prototyping and AI-assisted UI generation.</p>
-            <div class="xref-callout" style="margin-top: 2rem;">
-                <div class="xr-icon">📚</div>
+            <div class="module-tag">Module 05 · Software Prototyping</div>
+            <h1>Making Ideas Clickable</h1>
+            <p style="color:#666; margin-top:1rem;">Two tools, one goal — turning your design into something a real user can interact with. Figma for click-through prototypes. Antigravity for coded ones.</p>
+
+            <div class="tool-strip">
+                <div class="tool-strip-card">
+                    <div class="ts-tag figma-tag">Primary Tool</div>
+                    <div class="ts-logo">🎨</div>
+                    <h3>Figma Prototyping</h3>
+                    <p>Link frames into interactive flows. No code. Instant sharing. The industry standard for clickable UI prototypes.</p>
+                </div>
+                <div class="tool-strip-card">
+                    <div class="ts-tag ag-tag">AI-Powered</div>
+                    <div class="ts-logo">⚡</div>
+                    <h3>Antigravity AI</h3>
+                    <p>Describe a UI in plain English, get working HTML/CSS/JS. Real browser interactions, zero Figma required.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ 01: FIGMA PROTOTYPE WORKFLOW ══ -->
+        <section id="figma-workflow">
+            <span class="section-label">01: The Workflow</span>
+            <h2>Figma Prototyping in 5 Steps</h2>
+            <p>The complete pipeline from static designs to a shareable, clickable prototype — adapted from the <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod5" target="_blank" style="color:var(--accent-color); font-weight:600;">HCI Course Figma Guide</a>.</p>
+
+            <div class="figma-flow">
+                <div class="flow-step">
+                    <div class="fs-icon">🖼️</div>
+                    <div class="fs-label">Design</div>
+                    <p>Create frames for each screen in Figma</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">🔗</div>
+                    <div class="fs-label">Connect</div>
+                    <p>Switch to Prototype tab. Drag hotspot arrows between frames</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">⚙️</div>
+                    <div class="fs-label">Configure</div>
+                    <p>Set trigger (On Click), action (Navigate To), and animation</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">▶️</div>
+                    <div class="fs-label">Preview</div>
+                    <p>Press ▶ or Shift+Space. Test in the Figma Prototype player</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">🔗</div>
+                    <div class="fs-label">Share</div>
+                    <p>Copy share link → send to testers. Works in any browser</p>
+                </div>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Walk through the 5 steps on a projected screen using a real student file. The moment they see a frame-to-frame connection "snap" into place and a button actually navigate — that's the aha moment. Let them build their first connection themselves immediately after.
+            </div>
+        </section>
+
+        <!-- ══ 02: KEY CONCEPTS ══ -->
+        <section id="figma-concepts">
+            <span class="section-label">02: Key Concepts</span>
+            <h2>What to Know Before You Click</h2>
+            <p>Six concepts that separate a beginner Figma prototype from a professional one. Click each to learn more.</p>
+
+            <div class="concept-row">
+                <div class="concept-card" data-modal="modal-frames">
+                    <div class="cc-icon">🖼️</div>
+                    <h3>Frames as Screens</h3>
+                    <p>In Figma, each screen of your app is a Frame. Prototype connections always go from one Frame to another.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-hotspots">
+                    <div class="cc-icon">🎯</div>
+                    <h3>Hotspots</h3>
+                    <p>The interactive zone on a frame. Any element — button, image, icon — can be a hotspot that triggers a navigation action.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-triggers">
+                    <div class="cc-icon">👆</div>
+                    <h3>Triggers</h3>
+                    <p>What the user does to activate the connection. On Click is most common — but also On Hover, On Drag, Key Press, and more.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-animations">
+                    <div class="cc-icon">✨</div>
+                    <h3>Transitions & Animations</h3>
+                    <p>How Figma moves between screens. Instant, Dissolve, Smart Animate, Move In/Out — each signals a different navigation intent.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-overflow">
+                    <div class="cc-icon">📜</div>
+                    <h3>Scrolling & Overflow</h3>
+                    <p>Frames can scroll vertically or horizontally. Fix elements (nav bars, footers) so they stay while content scrolls beneath them.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-components">
+                    <div class="cc-icon">🧩</div>
+                    <h3>Interactive Components</h3>
+                    <p>Components with variants can swap states — toggles, checkboxes, hover states — without navigating to a new frame at all.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+            </div>
+
+            <!-- HCI course reference -->
+            <div class="hci-ref-strip">
+                <div class="hrs-icon">📚</div>
                 <div>
-                    <h4>Prototyping foundations covered separately</h4>
-                    <p>Fidelity levels, wireframing theory, Figma workflow, usability testing, and A/B testing are covered in the companion <a href="https://o-meiuqer-o.github.io/hcicourse/#method-prototyping" target="_blank">UI/UX Course — Phase 3: Design & Prototype</a>. This module focuses specifically on <strong>software implementation</strong>.</p>
+                    <h4>Step-by-step tutorials in the HCI Course</h4>
+                    <p>The detailed how-to for each of these concepts is in the companion course. Go there for hands-on exercises.</p>
+                    <div class="hci-module-pills">
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod5" target="_blank" class="hci-pill">Module 5: Prototyping</a>
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod7" target="_blank" class="hci-pill">Module 7: Advanced Prototyping</a>
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod8" target="_blank" class="hci-pill">Module 8: Scrolling</a>
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod9" target="_blank" class="hci-pill">Module 9: Advanced Scrolling</a>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- ══ 01: SOFTWARE PROTOTYPING LANDSCAPE ══ -->
-        <section id="sw-landscape">
-            <span class="section-label">01: The Landscape</span>
-            <h2>Software Prototyping Approaches</h2>
-            <p>Software prototypes live on a spectrum from static mocks to fully functional builds. Each stage serves a different purpose in the design-to-development pipeline.</p>
+        <!-- ══ 03: INTERACTION TYPES ══ -->
+        <section id="interactions">
+            <span class="section-label">03: Interactions</span>
+            <h2>Choosing the Right Trigger</h2>
+            <p>Not every interaction is a tap. Picking the correct trigger makes your prototype feel native — and catches usability issues that "On Click only" prototypes miss.</p>
 
-            <div class="spectrum-bar">
-                <div class="spectrum-zone z1">
-                    <div class="sz-icon">🎨</div>
-                    <h3>Design Tool<br>Prototype</h3>
-                    <p class="sz-tool">Figma, Sketch<br>Clickable, no real code</p>
+            <div class="interaction-picker">
+                <div class="ip-card" data-modal="modal-trig-click">
+                    <div class="ip-icon">👆</div>
+                    <h4>On Click</h4>
+                    <p>Standard tap/click. The default for almost all navigation.</p>
                 </div>
-                <div class="spectrum-zone z2">
-                    <div class="sz-icon">🖼️</div>
-                    <h3>Static Coded<br>Mockup</h3>
-                    <p class="sz-tool">HTML + CSS<br>Looks real, no logic</p>
+                <div class="ip-card" data-modal="modal-trig-hover">
+                    <div class="ip-icon">🖱️</div>
+                    <h4>On Hover</h4>
+                    <p>Reveals tooltips, dropdowns, or sub-menus on desktop.</p>
                 </div>
-                <div class="spectrum-zone z3">
-                    <div class="sz-icon">⚡</div>
-                    <h3>AI-Generated<br>Prototype</h3>
-                    <p class="sz-tool">Antigravity → instant HTML/CSS/JS</p>
-                    <div class="ag-star-badge">This module</div>
+                <div class="ip-card" data-modal="modal-trig-drag">
+                    <div class="ip-icon">✌️</div>
+                    <h4>On Drag</h4>
+                    <p>Swipe-to-navigate carousels, drawers, and card stacks.</p>
                 </div>
-            </div>
-
-            <div style="margin-top: 2rem; text-align: center;">
-                <p style="color: #666; font-size: 0.9rem; max-width: 580px;">Design tool prototypes are ideal for early flow validation. Coded prototypes are used when you need real browser behaviour, device testing, or a handoff-ready reference for developers.</p>
-            </div>
-
-            <div class="reason-row">
-                <div class="reason-pill"><span class="rp-dot"></span>Real scroll &amp; hover states</div>
-                <div class="reason-pill"><span class="rp-dot"></span>Works on any device immediately</div>
-                <div class="reason-pill"><span class="rp-dot"></span>Animations feel authentic</div>
-                <div class="reason-pill"><span class="rp-dot"></span>Developer-ready reference</div>
-                <div class="reason-pill"><span class="rp-dot"></span>No tool licences required to share</div>
+                <div class="ip-card" data-modal="modal-trig-afterdelay">
+                    <div class="ip-icon">⏱️</div>
+                    <h4>After Delay</h4>
+                    <p>Auto-advances — splash screens, loading states, onboarding.</p>
+                </div>
+                <div class="ip-card" data-modal="modal-trig-key">
+                    <div class="ip-icon">⌨️</div>
+                    <h4>Key / Gamepad</h4>
+                    <p>Keyboard shortcuts for desktop apps and accessibility testing.</p>
+                </div>
             </div>
 
             <div class="teacher-cue">
-                <strong>Teaching Tip:</strong> Ask students: "Why would you build a coded prototype instead of just showing a Figma prototype?" — Answers should converge on: authentic interaction states, device portability, and dev-handoff fidelity. The question surfaces real trade-offs, not a false hierarchy.
+                <strong>Teaching Tip:</strong> Ask: "How does Instagram's story tap-advance work in Figma?" (After Delay + Navigate). "How does a bottom sheet swipe up?" (On Drag + Move In). Getting students to map real app interactions to Figma triggers builds mental models for both tools at once.
             </div>
         </section>
 
-        <!-- ══ 02: ANTIGRAVITY GUIDE ══ -->
+        <!-- ══ 04: SMART ANIMATE ══ -->
+        <section id="smart-animate">
+            <span class="section-label">04: Smart Animate</span>
+            <h2>Smart Animate — Figma's Secret Weapon</h2>
+            <p>Smart Animate automatically interpolates between matching layers across two frames, producing fluid transitions that look like real app animations — with zero code.</p>
+
+            <div class="grid-container grid-2" style="max-width: 700px;">
+                <div class="card" style="text-align:left;">
+                    <span style="font-size:1.6rem;">✅</span>
+                    <h3 style="margin-top:0.5rem; font-size:0.95rem; text-align:left;">When it works</h3>
+                    <ul style="font-size:0.82rem; color:#555; padding-left:1.2rem; margin-top:0.5rem; line-height:1.7;">
+                        <li>Layer names match exactly across both frames</li>
+                        <li>Elements change position, size, or opacity</li>
+                        <li>Used with Components and Auto Layout</li>
+                    </ul>
+                </div>
+                <div class="card" style="text-align:left;">
+                    <span style="font-size:1.6rem;">❌</span>
+                    <h3 style="margin-top:0.5rem; font-size:0.95rem; text-align:left;">When it breaks</h3>
+                    <ul style="font-size:0.82rem; color:#555; padding-left:1.2rem; margin-top:0.5rem; line-height:1.7;">
+                        <li>Layer names differ between frames</li>
+                        <li>Layers are in different groups/frames</li>
+                        <li>Too many mismatched layers (becomes chaotic)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="background: linear-gradient(135deg, #fdf4ff, #ede9fe); border-left-color: var(--figma-purple); margin-top: 2rem; max-width:720px;">
+                <p>💡 <strong>The naming rule:</strong> If a button called "CTA Button" moves from bottom to top between two frames, Figma will animate it flying up — automatically. Rename it to "Button" on one frame and the magic breaks. Layer naming IS the prototype logic.</p>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Live demo — duplicate a frame, move a card element to a different position, set Smart Animate, hit play. The gasps when it animates smoothly are reliable every time. Then break it on purpose by renaming a layer — showing exactly why naming discipline matters.
+            </div>
+        </section>
+
+        <!-- ══ 05: KEYBOARD SHORTCUTS ══ -->
+        <section id="shortcuts">
+            <span class="section-label">05: Speed</span>
+            <h2>Prototype Faster with Shortcuts</h2>
+            <p>These shortcuts cut prototype-building time in half. Worth 10 minutes of deliberate practice before any hands-on session.</p>
+
+            <div class="shortcut-grid">
+                <div class="shortcut-row">
+                    <span class="sr-action">Switch to Prototype tab</span>
+                    <div class="sr-keys"><span class="key">Shift</span><span class="key">E</span></div>
+                </div>
+                <div class="shortcut-row">
+                    <span class="sr-action">Preview prototype</span>
+                    <div class="sr-keys"><span class="key">Shift</span><span class="key">Space</span></div>
+                </div>
+                <div class="shortcut-row">
+                    <span class="sr-action">Select all on canvas</span>
+                    <div class="sr-keys"><span class="key">Ctrl</span><span class="key">A</span></div>
+                </div>
+                <div class="shortcut-row">
+                    <span class="sr-action">Duplicate frame</span>
+                    <div class="sr-keys"><span class="key">Ctrl</span><span class="key">D</span></div>
+                </div>
+                <div class="shortcut-row">
+                    <span class="sr-action">Create component</span>
+                    <div class="sr-keys"><span class="key">Ctrl</span><span class="key">Alt</span><span class="key">K</span></div>
+                </div>
+                <div class="shortcut-row">
+                    <span class="sr-action">Frame selection</span>
+                    <div class="sr-keys"><span class="key">Ctrl</span><span class="key">Alt</span><span class="key">G</span></div>
+                </div>
+                <div class="shortcut-row">
+                    <span class="sr-action">Zoom to fit</span>
+                    <div class="sr-keys"><span class="key">Shift</span><span class="key">1</span></div>
+                </div>
+                <div class="shortcut-row">
+                    <span class="sr-action">Reset prototype connections</span>
+                    <div class="sr-keys"><span class="key">—</span><span class="key"> right-click → Remove Link</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ 06: ANTIGRAVITY — CODED PROTOTYPES ══ -->
         <section id="antigravity-guide">
-            <span class="section-label">02: The Tool</span>
-            <h2>Prototyping with Antigravity AI</h2>
-            <p>Antigravity converts a plain-English description of a UI into working HTML/CSS/JS code — typically in under 30 seconds. No design tool export, no manual coding required.</p>
+            <span class="section-label">06: Beyond Figma</span>
+            <h2>When Figma Isn't Enough</h2>
+            <p>Some interactions can't be prototyped in Figma — real form validation, dynamic data, complex animations, device APIs. That's when you reach for a coded prototype. Antigravity generates one from a prompt.</p>
 
-            <div class="ag-card">
-                <div class="ag-badge">⚡ Antigravity AI — User Guide</div>
-                <h2>Describe → Generate → Test</h2>
-                <p>Type what you want to build. Antigravity writes the code, and you open it directly in a browser for testing. Iterate by sending follow-up messages in the same conversation.</p>
-
-                <!-- Workflow image -->
-                <div class="ss-frame">
-                    <img src="images/antigravity_workflow_steps.png" alt="4-step AI prototyping workflow: prompt, generate, preview, test">
+            <div class="tool-strip" style="margin-top: 1.5rem;">
+                <div class="tool-strip-card">
+                    <div class="ts-tag figma-tag">Use Figma when…</div>
+                    <ul style="text-align:left; font-size:0.82rem; color:#555; line-height:1.75; padding-left:1.2rem; margin-top:0.5rem;">
+                        <li>Testing navigation flows</li>
+                        <li>Stakeholder reviews and sign-off</li>
+                        <li>Design system exploration</li>
+                        <li>Designer-to-developer handoff</li>
+                    </ul>
                 </div>
-                <p class="ss-caption">Prompt → Generate → Preview → Test. Each loop takes minutes, not hours.</p>
-
-                <!-- How to use it — 4 steps -->
-                <div class="guide-steps">
-                    <div class="gsc">
-                        <div class="gsc-num">01</div>
-                        <h4>Start a new conversation</h4>
-                        <p>Open Antigravity. Each prototype project gets its own conversation — this keeps the AI's context clean.</p>
-                    </div>
-                    <div class="gsc">
-                        <div class="gsc-num">02</div>
-                        <h4>Write your prompt</h4>
-                        <p>Describe the screen, its purpose, components, colours, and feel. Be specific — see templates below.</p>
-                    </div>
-                    <div class="gsc">
-                        <div class="gsc-num">03</div>
-                        <h4>Open in browser</h4>
-                        <p>Antigravity creates the file. Click to open or save as <code>.html</code> and open in Chrome/Edge for a live preview.</p>
-                    </div>
-                    <div class="gsc">
-                        <div class="gsc-num">04</div>
-                        <h4>Iterate in chat</h4>
-                        <p>Send follow-up messages to change colours, add states, adjust layout, or make it responsive. No re-prompting from scratch.</p>
-                    </div>
+                <div class="tool-strip-card">
+                    <div class="ts-tag when-tag">Use Antigravity when…</div>
+                    <ul style="text-align:left; font-size:0.82rem; color:#555; line-height:1.75; padding-left:1.2rem; margin-top:0.5rem;">
+                        <li>Real hover / focus states needed</li>
+                        <li>Testing on actual mobile devices</li>
+                        <li>Animations Figma can't render</li>
+                        <li>Giving devs a code reference</li>
+                    </ul>
                 </div>
+            </div>
 
-                <!-- Interface screenshot -->
-                <hr class="ag-divider">
-                <p class="ag-section-title">What it looks like</p>
-                <div class="ss-frame">
-                    <img src="images/antigravity_chat_prototype.png" alt="Antigravity chat interface showing a prototype being generated">
-                </div>
-                <p class="ss-caption">Left: your chat prompts. Right: the generated live preview in a browser frame.</p>
+            <div class="ag-strip">
+                <div class="as-badge">⚡ Antigravity AI — Prototyping Guide</div>
+                <h2>Describe It. Get a Working Screen.</h2>
+                <p>Paste any of these into Antigravity. It outputs a single HTML file you can open in a browser and test immediately — or hand to a developer as a reference.</p>
 
-                <!-- Starter prompts -->
-                <hr class="ag-divider">
-                <p class="ag-section-title">📋 Starter Prompts — Copy &amp; Paste</p>
-                <p class="ag-section-sub">Click any card to copy the prompt, then paste it into Antigravity and customise for your project.</p>
-
-                <div class="prompt-card" id="p1" onclick="copyPrompt(this)">
-                    <div class="prompt-label">🔐 Login / Auth Screen</div>
-                    <div class="prompt-text">Create a mobile login screen as a single HTML file. Dark background, purple accent. Include: app logo placeholder, email input, password input with show/hide toggle, 'Sign In' gradient button, 'Forgot password' link, Google SSO option. Make it feel premium and modern.</div>
+                <div class="prompt-card" onclick="copyPrompt(this)">
+                    <div class="prompt-label">📱 Replicate a Figma screen in code</div>
+                    <div class="prompt-text">Build a mobile login screen as a single HTML file. Dark background #0d0d14, purple gradient button (#7c3aed → #2563eb). Include: centred logo placeholder (80×80px circle), email input with label, password input with show/hide eye toggle, a 'Sign In' button with loading state on click (spinner + 'Signing in...' text), 'Forgot password' link, and 'Continue with Google' outlined button. Inter font, 390px max-width, border-radius 12px on inputs.</div>
                     <div class="copy-hint">Click to copy</div>
                 </div>
 
-                <div class="prompt-card" id="p2" onclick="copyPrompt(this)">
-                    <div class="prompt-label">📊 Dashboard / Home Screen</div>
-                    <div class="prompt-text">Design a mobile app home dashboard as a single HTML file. App: a personal finance tracker. Include: greeting header with user name, a balance card with a show/hide amount toggle, 4 quick-action icon buttons (Send, Receive, Pay, Invest), and a recent transactions list (3 items, with merchant name, category icon, amount in red/green). White background, navy accent.</div>
+                <div class="prompt-card" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🔄 Add real interaction states Figma can't do</div>
+                    <div class="prompt-text">Take a standard form with Name, Email, and Message fields plus a Submit button. Add: (1) real-time validation with red error messages that appear as the user types, (2) Submit button disabled until all fields are valid, (3) loading spinner on submit for 2 seconds, (4) success state with green checkmark and 'Message sent!' replacing the form. Single HTML file, clean white UI.</div>
                     <div class="copy-hint">Click to copy</div>
                 </div>
 
-                <div class="prompt-card" id="p3" onclick="copyPrompt(this)">
-                    <div class="prompt-label">🛍️ Product Detail Page</div>
-                    <div class="prompt-text">Build a product detail screen for a premium e-commerce app selling wireless headphones. Single HTML file. Include: large hero image placeholder, product name and brand label, 4.5-star rating with review count, price with a 20% off badge, 3-option colour selector, quantity stepper, 'Add to Cart' full-width button, and a collapsible 'Product Details' accordion section. Minimal white design, amber accent.</div>
+                <div class="prompt-card" onclick="copyPrompt(this)">
+                    <div class="prompt-label">✨ Test an animation Figma Smart Animate can't render</div>
+                    <div class="prompt-text">Create a card flip interaction — clicking a product card flips it with a 3D CSS transform (rotateY 180deg, 0.6s ease) to reveal a 'back' side with product details and an Add to Cart button. Include 3 cards in a row. Clean white layout, teal accent. Single HTML file.</div>
                     <div class="copy-hint">Click to copy</div>
                 </div>
 
-                <div class="prompt-card" id="p4" onclick="copyPrompt(this)">
-                    <div class="prompt-label">🏋️ Onboarding Screen (Step 1/3)</div>
-                    <div class="prompt-text">Create onboarding screen 1 of 3 for a fitness app as a single HTML file. Full-screen gradient background (dark charcoal to deep orange). Include: 3-dot progress indicator (first dot active), a large illustration placeholder (400x300), bold headline 'Train smarter, not harder', a 16px subtitle, a full-width 'Next' button, and a 'Skip' ghost link. Animate the illustration with a subtle float effect.</div>
-                    <div class="copy-hint">Click to copy</div>
+                <div class="ag-note">
+                    <strong>Workflow tip:</strong> Start in Figma → get stakeholder approval on layout and aesthetics → use Antigravity to generate the coded version for device testing, complex interaction validation, or developer handoff reference. The two tools are complementary, not competing.
                 </div>
-
-                <div class="prompt-card" id="p5" onclick="copyPrompt(this)">
-                    <div class="prompt-label">🗺️ Multi-screen Flow (3 screens)</div>
-                    <div class="prompt-text">Build a 3-screen mobile checkout flow as a single HTML file with JS navigation between screens. Screen 1: Bag review (item cards, subtotal). Screen 2: Delivery address form. Screen 3: Order confirmation with animated success checkmark. Use a clean white UI with a teal accent. Include a progress stepper at the top showing which step the user is on. Screens should transition with a slide animation.</div>
-                    <div class="copy-hint">Click to copy</div>
-                </div>
-
-                <!-- Refinement prompts -->
-                <hr class="ag-divider">
-                <p class="ag-section-title">💬 Refinement Prompts — After First Generation</p>
-                <p class="ag-section-sub">Send these as follow-up messages in the same Antigravity conversation to iterate on the prototype.</p>
-
-                <div class="prompt-card" id="r1" onclick="copyPrompt(this)">
-                    <div class="prompt-label">🎨 Restyle</div>
-                    <div class="prompt-text">Change the primary button to a coral red gradient. Increase the heading font to 22px. Add subtle box-shadows to the input fields (0 2px 8px rgba(0,0,0,0.08)). Keep everything else the same.</div>
-                    <div class="copy-hint">Click to copy</div>
-                </div>
-
-                <div class="prompt-card" id="r2" onclick="copyPrompt(this)">
-                    <div class="prompt-label">✨ Add Micro-Interactions</div>
-                    <div class="prompt-text">Add hover and active states to all interactive elements. Cards should lift 6px on hover with a shadow increase. Buttons should scale to 0.97 on press. Add a 0.25s ease transition to everything. Input fields should show a coloured focus ring.</div>
-                    <div class="copy-hint">Click to copy</div>
-                </div>
-
-                <div class="prompt-card" id="r3" onclick="copyPrompt(this)">
-                    <div class="prompt-label">📱 Make Responsive</div>
-                    <div class="prompt-text">Make this fully responsive. On screens under 640px: stack all columns to single column, increase all tap targets to minimum 44px height, reduce headings by 15%, and add 16px horizontal padding to the body. Use a mobile-first approach with CSS media queries.</div>
-                    <div class="copy-hint">Click to copy</div>
-                </div>
-
-                <div class="prompt-card" id="r4" onclick="copyPrompt(this)">
-                    <div class="prompt-label">⏳ Add Loading & Success States</div>
-                    <div class="prompt-text">Add interaction states to the primary submit button: (1) Default state (current), (2) Loading — show a spinner, change label to 'Processing...', disable the button, (3) Success — green background, checkmark icon, label 'Done!'. Transition automatically from loading → success after 1.5 seconds. Wire this to a button click.</div>
-                    <div class="copy-hint">Click to copy</div>
-                </div>
-
-                <div class="prompt-card" id="r5" onclick="copyPrompt(this)">
-                    <div class="prompt-label">🌙 Dark Mode Toggle</div>
-                    <div class="prompt-text">Add a dark mode toggle button in the top-right corner (moon/sun icon). When activated, invert the background to #0d0d14, use white text, darken all cards to #1a1a2e, and adjust input field backgrounds to #1e1e2e. Store the preference in localStorage so it persists on refresh. Animate the transition with a 0.4s ease.</div>
-                    <div class="copy-hint">Click to copy</div>
-                </div>
-
-                <!-- Prompt quality guide -->
-                <hr class="ag-divider">
-                <p class="ag-section-title">🎯 Writing Better Prompts</p>
-                <div class="ss-frame">
-                    <img src="images/antigravity_prompt_tips.png" alt="Good vs bad prompt comparison">
-                </div>
-                <p class="ss-caption">Specific context + named components + colour/tone direction = dramatically better output.</p>
-
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1rem;">
-                    <div style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 10px; padding: 1rem;">
-                        <div style="font-size: 0.7rem; font-weight: 700; color: #f87171; text-transform: uppercase; margin-bottom: 0.4rem;">❌ Too vague</div>
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #fca5a5;">"make a login page"</div>
-                    </div>
-                    <div style="background: rgba(52,211,153,0.1); border: 1px solid rgba(52,211,153,0.3); border-radius: 10px; padding: 1rem;">
-                        <div style="font-size: 0.7rem; font-weight: 700; color: #6ee7b7; text-transform: uppercase; margin-bottom: 0.4rem;">✅ Specific</div>
-                        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; color: #a7f3d0;">"Login screen for a meditation app, calm blue tones, email + password + Google SSO, centered card layout, 400px max width"</div>
-                    </div>
-                </div>
-                <div style="margin-top: 1rem; background: rgba(255,255,255,0.04); border-radius: 10px; padding: 1rem;">
-                    <div style="font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem;">Prompt anatomy checklist</div>
-                    <div style="font-size: 0.82rem; color: rgba(255,255,255,0.7); line-height: 1.8;">
-                        ✦ <strong style="color: white;">App context</strong> — what kind of app, who uses it<br>
-                        ✦ <strong style="color: white;">Screen purpose</strong> — what task it enables<br>
-                        ✦ <strong style="color: white;">Named components</strong> — list each UI element<br>
-                        ✦ <strong style="color: white;">Visual direction</strong> — colours, style, feel<br>
-                        ✦ <strong style="color: white;">Output format</strong> — "single HTML file" or "HTML + CSS"
-                    </div>
-                </div>
-            </div><!-- end .ag-card -->
+            </div>
 
             <div class="teacher-cue">
-                <strong>Teaching Tip:</strong> Run this live in class — open Antigravity, paste a starter prompt, and show the output in under 60 seconds. Then ask a student to describe their own project screen and prompt it live. The gap between "vague prompt" and "specific prompt" outputs is the most memorable lesson here.
+                <strong>Teaching Tip:</strong> Ask students to pick the hardest interaction in their current Figma prototype — the one that Smart Animate can't quite nail — and prompt Antigravity to build just that interaction. Comparing the Figma version to the coded version makes the tool selection logic viscerally clear.
             </div>
         </section>
 
-        <!-- ══ 03: COMING SOON ══ -->
+        <!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->\n        <section id="figma-guide" style="padding-top: 4rem; padding-bottom: 4rem;">\n            <span class="section-label">Figma Masterclass</span>\n            <h2>A Guide to Figma</h2>\n            <p style="margin-bottom: 2rem;">This section documents the successful steps for getting started with UX design in Figma, from understanding the interface to building advanced interactive prototypes.</p>\n            </div>\n        </section>
+
+        <!-- ══ 07: COMING SOON ══ -->
         <section id="coming-soon">
-            <span class="section-label">03: More to Come</span>
-            <h2>Other Prototyping Domains</h2>
-            <p>Software is just one lens. Design Thinking applies across mediums. Future modules will cover physical prototyping for electronics and mechanical systems.</p>
+            <span class="section-label">More Domains</span>
+            <h2>Prototyping Beyond Software</h2>
+            <p>Design Thinking doesn't stop at screens. Future modules will bring the same iterative prototyping logic to physical mediums.</p>
 
             <div class="coming-soon-grid">
                 <div class="cs-card">
                     <div class="cs-icon">🔌</div>
-                    <div class="cs-badge">Coming Soon</div>
+                    <div class="cs-soon-tag">Coming Soon</div>
                     <h3>Electronics Prototyping</h3>
-                    <p>Breadboards, Arduino, Raspberry Pi — building hardware prototypes to test physical interactions and embedded system concepts.</p>
+                    <p>Breadboards, Arduino, sensors — validating embedded interactions and physical UIs before hardware is committed.</p>
                 </div>
                 <div class="cs-card">
                     <div class="cs-icon">⚙️</div>
-                    <div class="cs-badge">Coming Soon</div>
+                    <div class="cs-soon-tag">Coming Soon</div>
                     <h3>Mechanical Prototyping</h3>
-                    <p>3D printing, foam modelling, and CAD tools — testing form, fit, and ergonomics before committing to manufacturing.</p>
+                    <p>3D printing, foam modelling, and CAD — testing form, fit, and ergonomics in the physical world.</p>
                 </div>
             </div>
         </section>
 
-    </div><!-- end .scroll-container -->
+    </div><!-- /.scroll-container -->
+
+    <!-- ══ MODALS ══ -->
+
+    <!-- Concept modals -->
+    <div class="modal-overlay" id="modal-frames">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>🖼️ Frames as Screens</h2>
+            <p class="modal-subtitle">One frame = one screen state in your prototype.</p>
+            <div class="modal-section">
+                <h3>How to think about it</h3>
+                <p>Every screen in your app — the home screen, a modal, an error state, a success confirmation — gets its own Frame in Figma. Prototype connections always start from an element <em>inside</em> a frame and point to another frame as the destination.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Practical rule</h3>
+                <p>If a user action changes what they see significantly — it needs a new frame. A tooltip appearing? Use an interactive component instead. A new page loading? New frame.</p>
+            </div>
+            <div class="modal-highlight">
+                <p>📐 <strong>Set your device frame:</strong> In the right panel, under Frame, choose a device preset (iPhone 15, Pixel 8, etc.) so your prototype plays at the correct size in the preview player.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-hotspots">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>🎯 Hotspots</h2>
+            <p class="modal-subtitle">The interactive zone — any element can be one.</p>
+            <div class="modal-section">
+                <h3>Creating a hotspot</h3>
+                <div class="modal-steps">
+                    <div class="modal-step"><div class="step-number">1</div><div>Select any element (button, image, text, icon) inside a frame.</div></div>
+                    <div class="modal-step"><div class="step-number">2</div><div>Switch to the <strong>Prototype</strong> tab in the right panel (or press <kbd>Shift+E</kbd>).</div></div>
+                    <div class="modal-step"><div class="step-number">3</div><div>Hover over the element — a blue ⊕ handle appears on the right edge. Drag it to the destination frame.</div></div>
+                </div>
+            </div>
+            <div class="modal-warning">
+                <p>⚠️ <strong>Tip:</strong> You can draw a hotspot over an empty area too — useful for testing if users discover hidden tappable zones (and they often won't, which is a usability finding).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-triggers">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>👆 Triggers</h2>
+            <p class="modal-subtitle">What the user does to fire the interaction.</p>
+            <div class="modal-section">
+                <ul>
+                    <li><strong>On Click</strong> — tap or mouse click. Use for almost all navigation.</li>
+                    <li><strong>On Hover</strong> — cursor enters the element's bounds. Desktop only — menus, tooltips.</li>
+                    <li><strong>On Drag</strong> — click and drag. Carousels, bottom sheets, swipe-to-delete.</li>
+                    <li><strong>After Delay</strong> — triggers automatically after N milliseconds. Splash screens, loading states, auto-advancing onboarding.</li>
+                    <li><strong>Mouse Enter / Leave</strong> — more precise hover control for desktop UIs.</li>
+                    <li><strong>Key / Gamepad</strong> — keyboard shortcut triggers. Useful for desktop app or kiosk prototyping.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-animations">
+        <div class="modal-content" style="max-width:600px;">
+            <button class="modal-close">✕</button>
+            <h2>✨ Transitions & Animations</h2>
+            <p class="modal-subtitle">Choose the transition that matches the navigation intent.</p>
+            <div class="modal-section">
+                <ul>
+                    <li><strong>Instant</strong> — cut. No transition. Use for testing flow logic before investing in animation.</li>
+                    <li><strong>Dissolve</strong> — crossfade. Modal overlays, overlay states, gentle screen changes.</li>
+                    <li><strong>Smart Animate</strong> — matches and interpolates layers by name. Best for hero transitions, expanding cards, tab switches.</li>
+                    <li><strong>Move In / Move Out</strong> — slide directionally. Simulates push navigation (next page) or back navigation.</li>
+                    <li><strong>Push</strong> — both screens move together, one pushing the other off. Standard mobile page push.</li>
+                    <li><strong>Slide In / Slide Out</strong> — new screen slides over the current one. Bottom sheets, drawers, modals.</li>
+                </ul>
+            </div>
+            <div class="modal-highlight">
+                <p>💡 <strong>Animation direction tells a story.</strong> Moving right = going forward. Moving left = going back. Moving up = drawer or bottom sheet. Users read direction as hierarchy.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overflow">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>📜 Scrolling & Overflow</h2>
+            <p class="modal-subtitle">Make your prototype scroll like the real app.</p>
+            <div class="modal-section">
+                <h3>Enabling scroll</h3>
+                <div class="modal-steps">
+                    <div class="modal-step"><div class="step-number">1</div><div>Select the Frame. In the right panel, find <strong>Prototype → Overflow</strong>.</div></div>
+                    <div class="modal-step"><div class="step-number">2</div><div>Set to <strong>Vertical Scrolling</strong> (or Horizontal for carousels).</div></div>
+                    <div class="modal-step"><div class="step-number">3</div><div>Make the content inside the frame taller than the frame itself — the overflow becomes scrollable in preview.</div></div>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3>Fixed elements (sticky nav / tab bar)</h3>
+                <p>Select an element (e.g. a nav bar), then in the right panel enable <strong>Fix position when scrolling</strong>. It stays put while the rest of the frame scrolls beneath it.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-components">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>🧩 Interactive Components</h2>
+            <p class="modal-subtitle">State changes without navigating to a new frame.</p>
+            <div class="modal-section">
+                <h3>What they solve</h3>
+                <p>A toggle switching on/off, a checkbox being checked, a button hovering — these are <em>state changes</em>, not page navigations. Without interactive components, you'd need a separate frame for every possible UI state. With them, you keep the logic inside the component.</p>
+            </div>
+            <div class="modal-section">
+                <h3>How to build one</h3>
+                <div class="modal-steps">
+                    <div class="modal-step"><div class="step-number">1</div><div>Create a component and add <strong>Variants</strong> — one per state (Default, Hover, Active, Disabled).</div></div>
+                    <div class="modal-step"><div class="step-number">2</div><div>In the Prototype panel, draw connections between variants (e.g. Default → Hover on Mouse Enter).</div></div>
+                    <div class="modal-step"><div class="step-number">3</div><div>When an instance of this component is used in any frame, it carries those interactions automatically.</div></div>
+                </div>
+            </div>
+            <div class="modal-highlight">
+                <p>🔗 <strong>Full tutorial:</strong> <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod6" target="_blank" style="color:var(--accent-color);">HCI Course — Module 6: Advanced Components</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trigger modals -->
+    <div class="modal-overlay" id="modal-trig-click">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>👆 On Click</h2>
+            <div class="modal-section"><h3>When to use it</h3><p>The default for nearly all app navigation — buttons, list items, cards, icons. On mobile this corresponds to a tap. On desktop, a single left-click.</p></div>
+            <div class="modal-highlight"><p>💡 <strong>Test assumption:</strong> If users don't click your element during testing, it's either not discoverable or doesn't look interactive. That's usability data.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-hover">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>🖱️ On Hover</h2>
+            <div class="modal-section"><h3>When to use it</h3><p>Desktop-only interactions: dropdown menus appearing on hover, tooltips, image overlays, and revealing secondary actions. Never rely on hover for mobile prototypes — there's no hover state on touch screens.</p></div>
+            <div class="modal-warning"><p>⚠️ Do not test hover-dependent interactions on a phone. The flows will be completely broken for mobile users.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-drag">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>✌️ On Drag</h2>
+            <div class="modal-section"><h3>Best for</h3><ul><li>Carousel / image gallery swipe</li><li>Bottom sheet drag-up to expand</li><li>Card stack swipe (Tinder-style)</li><li>Side drawer / hamburger menu slide-in</li></ul></div>
+            <div class="modal-section"><h3>How to set it</h3><p>Select trigger → On Drag. Choose direction (Left, Right, Up, Down). Pair with a Move In / Slide animation in the matching direction for maximum realism.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-afterdelay">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>⏱️ After Delay</h2>
+            <div class="modal-section"><h3>Best for</h3><ul><li>Splash / launch screen (auto-advance after 2s)</li><li>Simulated loading state (skeleton → content)</li><li>Auto-advancing onboarding slides</li><li>Toast notification auto-dismiss</li></ul></div>
+            <div class="modal-section"><h3>Setting the delay</h3><p>In the interaction panel, set After Delay and enter milliseconds (e.g. 2000 = 2 seconds). Chain multiple delays to simulate a loading sequence.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-key">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>⌨️ Key / Gamepad</h2>
+            <div class="modal-section"><h3>When to use it</h3><p>Desktop app prototypes where keyboard shortcuts are core to the UX (Ctrl+S = save, Escape = close modal). Also useful for testing kiosk interfaces or screen-reader navigation patterns.</p></div>
+            <div class="modal-section"><h3>How to set it</h3><p>Select trigger → Key/Gamepad → click the key field and press the actual keyboard key you want to bind. Works in Figma's Preview player, not in embedded share links.</p></div>
+        </div>
+    </div>
 
     <div class="teacher-mode-indicator">TEACHER MODE ACTIVE</div>
     <script src="nav.js"></script>
@@ -548,8 +906,7 @@
         function copyPrompt(card) {
             const textEl = card.querySelector('.prompt-text');
             if (!textEl) return;
-            const text = textEl.innerText;
-            navigator.clipboard.writeText(text).then(() => {
+            navigator.clipboard.writeText(textEl.innerText).then(() => {
                 const hint = card.querySelector('.copy-hint');
                 const orig = hint.textContent;
                 hint.textContent = '✓ Copied!';
@@ -559,5 +916,4 @@
         }
     </script>
 </body>
-
 </html>

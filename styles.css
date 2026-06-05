@@ -2354,3 +2354,372 @@ body.sidebar-open .global-nav {
     box-sizing: border-box;
 }
 
+/* Extracted from prototyping.html */
+
+        /* ── Figma red-purple accent palette ── */
+        :root {
+            --figma-red: #f24e1e;
+            --figma-purple: #a259ff;
+            --figma-blue: #1abcfe;
+            --figma-green: #0acf83;
+        }
+
+        .module-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--figma-purple), var(--figma-red));
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            padding: 0.3rem 0.9rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        /* ── Two-tool comparison strip ── */
+        .tool-strip {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 2rem;
+        }
+
+        .tool-strip-card {
+            flex: 1;
+            min-width: 220px;
+            background: white;
+            border-radius: 16px;
+            padding: 1.75rem 1.5rem;
+            border: 1.5px solid rgba(0,0,0,0.07);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .tool-strip-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+        }
+
+        .tool-strip-card .ts-logo { font-size: 2.2rem; margin-bottom: 0.75rem; }
+        .tool-strip-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-color); }
+        .tool-strip-card p { font-size: 0.82rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.55; }
+        .tool-strip-card .ts-tag {
+            display: inline-block;
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.6rem;
+        }
+        .ts-tag.figma-tag { background: #fff0eb; color: #c73e1d; }
+        .ts-tag.ag-tag    { background: #ede9fe; color: #5b21b6; }
+        .ts-tag.when-tag  { background: #f0f9ff; color: #1d4ed8; }
+
+        /* ── Figma Prototype Workflow ── */
+        .figma-flow {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: 100%;
+            max-width: 860px;
+            margin-top: 2rem;
+            overflow-x: auto;
+        }
+
+        .flow-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            flex: 1;
+            min-width: 120px;
+            background: white;
+            border: 1px solid rgba(0,0,0,0.06);
+            position: relative;
+        }
+
+        .flow-step:first-child { border-radius: 12px 0 0 12px; }
+        .flow-step:last-child  { border-radius: 0 12px 12px 0; }
+
+        .flow-step .fs-icon { font-size: 1.6rem; margin-bottom: 0.5rem; }
+        .flow-step .fs-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--figma-purple);
+            margin-bottom: 0.25rem;
+        }
+        .flow-step p { font-size: 0.75rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.4; }
+
+        .flow-arrow {
+            font-size: 1.1rem;
+            color: #ccc;
+            flex-shrink: 0;
+            padding: 0 0.25rem;
+        }
+
+        /* ── Figma concept cards (clickable) ── */
+        .concept-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 860px;
+            margin-top: 2rem;
+        }
+
+        .concept-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.4rem;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 28px rgba(0,0,0,0.07);
+            border-color: var(--figma-purple);
+        }
+
+        .concept-card .cc-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+        .concept-card h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 0.3rem; color: var(--text-color); text-align: left; }
+        .concept-card p { font-size: 0.8rem; color: #666; text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
+        .concept-card .cc-cta { font-size: 0.72rem; color: var(--figma-purple); font-weight: 600; margin-top: 0.6rem; opacity: 0.7; transition: opacity 0.2s; }
+        .concept-card:hover .cc-cta { opacity: 1; }
+
+        /* ── Figma shortcut table ── */
+        .shortcut-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 820px;
+            margin-top: 1.5rem;
+        }
+
+        .shortcut-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-radius: 8px;
+            padding: 0.7rem 1rem;
+            border: 1px solid rgba(0,0,0,0.06);
+            font-size: 0.85rem;
+        }
+
+        .shortcut-row .sr-action { color: #444; font-weight: 500; }
+        .sr-keys {
+            display: flex;
+            gap: 4px;
+        }
+        .key {
+            background: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-bottom: 3px solid #d1d5db;
+            border-radius: 5px;
+            padding: 2px 7px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: #374151;
+            white-space: nowrap;
+        }
+
+        /* ── Interaction type picker ── */
+        .interaction-picker {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            width: 100%;
+            max-width: 860px;
+            margin-top: 2rem;
+        }
+
+        .ip-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.25rem 1rem;
+            border: 2px solid transparent;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .ip-card:hover { border-color: var(--figma-purple); transform: scale(1.03); }
+        .ip-card .ip-icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        .ip-card h4 { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--text-color); }
+        .ip-card p  { font-size: 0.75rem; color: #777; max-width: 100%; text-align: center; margin: 0; line-height: 1.4; }
+
+        /* ── Antigravity handoff card ── */
+        .ag-strip {
+            background: linear-gradient(150deg, #0d0d14, #160d33);
+            border-radius: 18px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 860px;
+            color: white;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ag-strip::before {
+            content: '';
+            position: absolute;
+            top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(162,89,255,0.2), transparent 70%);
+            pointer-events: none;
+        }
+
+        .ag-strip .as-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(162,89,255,0.2);
+            border: 1px solid rgba(162,89,255,0.45);
+            color: #c4b5fd;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.8rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+        }
+
+        .ag-strip h2 { color: white; font-size: 1.5rem; margin-bottom: 0.4rem; }
+        .ag-strip > p { color: rgba(255,255,255,0.6); font-size: 0.9rem; text-align: left; max-width: 100%; margin-bottom: 1.75rem; }
+
+        .prompt-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 10px;
+            padding: 1rem 1.25rem 1rem 1.25rem;
+            margin-bottom: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: #e2e8f0;
+            position: relative;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .prompt-card:hover { border-color: rgba(162,89,255,0.5); background: rgba(162,89,255,0.07); }
+        .prompt-label {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.63rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #a78bfa;
+            margin-bottom: 0.3rem;
+        }
+        .copy-hint {
+            position: absolute; top: 0.8rem; right: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.25);
+            transition: color 0.2s;
+            pointer-events: none;
+        }
+        .prompt-card:hover .copy-hint { color: #a78bfa; }
+
+        .ag-note {
+            background: rgba(255,255,255,0.04);
+            border-left: 3px solid rgba(162,89,255,0.6);
+            border-radius: 0 8px 8px 0;
+            padding: 0.9rem 1.1rem;
+            font-size: 0.82rem;
+            color: rgba(255,255,255,0.65);
+            margin-top: 1.25rem;
+            line-height: 1.6;
+        }
+        .ag-note strong { color: white; }
+
+        /* ── HCI course reference strip ── */
+        .hci-ref-strip {
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            background: linear-gradient(90deg, #eff6ff, #f5f3ff);
+            border: 1.5px solid #c7d2fe;
+            border-radius: 14px;
+            padding: 1.25rem 1.75rem;
+            max-width: 820px;
+            width: 100%;
+            margin-top: 2rem;
+        }
+        .hci-ref-strip .hrs-icon { font-size: 2rem; flex-shrink: 0; }
+        .hci-ref-strip h4 { font-size: 0.9rem; font-weight: 700; color: #3730a3; margin-bottom: 0.2rem; text-align: left; }
+        .hci-ref-strip p  { font-size: 0.82rem; color: #4338ca; text-align: left; max-width: 100%; margin: 0; line-height: 1.5; }
+        .hci-ref-strip a  { font-weight: 700; color: #4f46e5; text-decoration: underline; }
+
+        .hci-module-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+        .hci-pill {
+            background: white;
+            border: 1px solid #c7d2fe;
+            color: #4338ca;
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .hci-pill:hover { background: #4f46e5; color: white; border-color: #4f46e5; }
+
+        /* ── Coming soon cards ── */
+        .coming-soon-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 760px;
+            margin-top: 2rem;
+        }
+
+        .cs-card {
+            background: white;
+            border: 2px dashed rgba(0,0,0,0.12);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            opacity: 0.55;
+        }
+        .cs-card .cs-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+        .cs-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--text-color); }
+        .cs-card p  { font-size: 0.82rem; color: #666; text-align: center; max-width: 100%; margin: 0; line-height: 1.5; }
+        .cs-soon-tag {
+            display: inline-block;
+            background: #f3f4f6;
+            color: #9ca3af;
+            font-size: 0.62rem;
+            font-weight: 700;
+            padding: 0.15rem 0.55rem;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.65rem;
+        }
+    

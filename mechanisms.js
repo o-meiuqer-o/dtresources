@@ -489,6 +489,72 @@ class JansenGait extends Mechanism {
         this.drawCircle(foot.x, foot.y, 8, THEME.accent, THEME.dark);
     }
 }
+
+class GearTrain extends Mechanism {
+    constructor(canvasId, gearsConfig) {
+        super(canvasId);
+        this.gears = gearsConfig;
+        this.slider = document.getElementById('mech-gears-slider');
+        if (this.slider) {
+            this.slider.addEventListener('input', (e) => {
+                this.isPlaying = false;
+                this.theta = parseFloat(e.target.value);
+                this.draw();
+            });
+        }
+    }
+
+    drawGear(cx, cy, r, teeth, angle) {
+        // draw teeth
+        for(let i = 0; i < teeth; i++) {
+            const a = i * (Math.PI * 2 / teeth);
+            this.ctx.save();
+            this.ctx.translate(cx, cy);
+            this.ctx.rotate(angle + a);
+            this.ctx.beginPath();
+            // Blocky teeth
+            this.ctx.rect(r - 5, -r*Math.PI/teeth*0.6, 12, r*Math.PI/teeth*1.2);
+            this.ctx.fillStyle = THEME.shapes;
+            this.ctx.fill();
+            this.ctx.lineWidth = THEME.strokeWidth;
+            this.ctx.strokeStyle = THEME.dark;
+            this.ctx.stroke();
+            this.ctx.restore();
+        }
+        
+        // base circle
+        this.drawCircle(cx, cy, r - 3, THEME.bg, null);
+        this.drawCircle(cx, cy, r - 3, null, THEME.dark);
+        this.drawCircle(cx, cy, r - 8, THEME.shapes, THEME.dark);
+        
+        // axis / shaft
+        this.drawCircle(cx, cy, 6, THEME.dark, null);
+        
+        // reference marker to show rotation visually
+        this.ctx.save();
+        this.ctx.translate(cx, cy);
+        this.ctx.rotate(angle);
+        this.drawCircle(r/2, 0, 5, THEME.accent, THEME.dark);
+        this.ctx.restore();
+    }
+
+    draw() {
+        super.draw();
+        
+        let currentAngle = this.theta;
+        for(let i=0; i<this.gears.length; i++) {
+            let g = this.gears[i];
+            
+            if (i > 0) {
+                let prev = this.gears[i-1];
+                // basic ratio inversion
+                currentAngle = -(prev.r / g.r) * currentAngle;
+            }
+            
+            this.drawGear(g.cx, g.cy, g.r, g.teeth, currentAngle + g.offset);
+        }
+    }
+}
 // Initialization
 const anims = [];
 
@@ -498,7 +564,7 @@ document.addEventListener('DOMContentLoaded', () => {
     anims.push(new QuickReturn('mech-quick-return'));
     anims.push(new RackPinion('mech-rack-pinion'));
     anims.push(new CamTiming('mech-cam-timing'));
-    anims.push(new JansenGait('mech-jansen-gait'));
+    anims.push(new JansenGait('mech-jansen-gait'));\n    anims.push(new GearTrain('mech-gear-1to1', [{cx:150, cy:100, r:40, teeth:16, offset:0}, {cx:230, cy:100, r:40, teeth:16, offset:Math.PI/16}]));\n    anims.push(new GearTrain('mech-gear-speed', [{cx:140, cy:100, r:60, teeth:24, offset:0}, {cx:230, cy:100, r:30, teeth:12, offset:Math.PI/12}]));\n    anims.push(new GearTrain('mech-gear-torque', [{cx:140, cy:100, r:30, teeth:12, offset:0}, {cx:230, cy:100, r:60, teeth:24, offset:Math.PI/24}]));\n    anims.push(new GearTrain('mech-gear-idler', [{cx:120, cy:100, r:30, teeth:12, offset:0}, {cx:180, cy:100, r:30, teeth:12, offset:Math.PI/12}, {cx:240, cy:100, r:30, teeth:12, offset:0}]));
 
     function loop() {
         anims.forEach(anim => anim.update());

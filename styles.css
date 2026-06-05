@@ -316,7 +316,7 @@ body.teacher-mode-active .teacher-mode-indicator {
 
 section {
     min-height: 60vh;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -2145,8 +2145,9 @@ img {
 
     /* Push main content when sidebar is open */
     body.sidebar-open .scroll-container {
-        margin-left: 280px;
-        transition: margin-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        padding-left: 280px;
+        box-sizing: border-box;
+        transition: padding-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     body.sidebar-open .global-nav {
@@ -2372,6 +2373,7 @@ img {
    SCROLL-CONTAINER transition base (for push effect)
    ============================================================ */
 .scroll-container {
-    transition: margin-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    transition: padding-left 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    box-sizing: border-box;
 }
 

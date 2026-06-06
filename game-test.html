@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Gearing Game Prototype - Level 1</title>
+  <!-- Load React from CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Load Babel to compile JSX on the fly in the browser -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; background: #2c3e50; font-family: sans-serif; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useRef, useEffect, useMemo } = React;
+
+    // Mathematically generate the gear SVG path
+    function generateGearPath(cx, cy, teeth, radius, addendum, dedendum) {
+      const points = [];
+      const angleStep = (Math.PI * 2) / teeth;
+      for (let i = 0; i < teeth; i++) {
+        const angle = i * angleStep;
+        const nextAngle = (i + 1) * angleStep;
+        const rOuter = radius + addendum;
+        const rInner = radius - dedendum;
+        points.push(`${cx + Math.cos(angle) * rInner},${cy + Math.sin(angle) * rInner}`);
+        points.push(`${cx + Math.cos(angle + angleStep * 0.2) * rInner},${cy + Math.sin(angle + angleStep * 0.2) * rInner}`);
+        points.push(`${cx + Math.cos(angle + angleStep * 0.4) * rOuter},${cy + Math.sin(angle + angleStep * 0.4) * rOuter}`);
+        points.push(`${cx + Math.cos(angle + angleStep * 0.6) * rOuter},${cy + Math.sin(angle + angleStep * 0.6) * rOuter}`);
+        points.push(`${cx + Math.cos(angle + angleStep * 0.8) * rInner},${cy + Math.sin(angle + angleStep * 0.8) * rInner}`);
+        points.push(`${cx + Math.cos(nextAngle) * rInner},${cy + Math.sin(nextAngle) * rInner}`);
+      }
+      return `M ${points.join(' L ')} Z`;
+    }
+
+    function Gear({ x, y, teeth = 12, radius = 50, rotation = 0, color = "#555", id, onPointerDown }) {
+      const path = generateGearPath(x, y, teeth, radius, 10, 10);
+      return (
+        <g 
+          transform={`rotate(${rotation}, ${x}, ${y})`} 
+          id={id}
+          onPointerDown={onPointerDown}
+          style={{ cursor: 'grab' }}
+        >
+          <path d={path} fill={color} stroke="#333" strokeWidth="2" />
+          <circle cx={x} cy={y} r={radius * 0.2} fill="#222" />
+          <circle cx={x} cy={y} r={radius * 0.1} fill="#fff" />
+        </g>
+      );
+    }
+
+    // Target Reference Component showing the solved animation
+    function TargetReference() {
+      const [rotation, setRotation] = useState(0);
+      
+      useEffect(() => {
+        let animationId;
+        const animate = () => {
+          setRotation(prev => prev + 1.5); // 1.5 degrees per frame
+          animationId = requestAnimationFrame(animate);
+        };
+        animate();
+        return () => cancelAnimationFrame(animationId);
+      }, []);
+
+      // The small gear has 12 teeth, large has 18.
+      // Ratio = 12/18 = 2/3 speed, opposite direction.
+      const r1 = rotation;
+      const r2 = -rotation * (12/18);
+      // Offset the second gear slightly so the teeth interlock instead of colliding
+      const gear2Offset = (360 / 18) / 2; 
+
+      return (
+        <div style={{ position: 'absolute', top: 20, right: 20, background: 'rgba(0,0,0,0.6)', padding: '15px', borderRadius: '10px', border: '2px solid #7f8c8d', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
+          <h3 style={{ color: 'white', marginTop: 0, fontSize: '16px', textAlign: 'center' }}>Target Reference</h3>
+          <svg width="200" height="150" viewBox="0 0 200 150">
+            <g transform="scale(0.8) translate(30, 20)">
+               <Gear x={50} y={50} teeth={12} radius={40} color="#e74c3c" rotation={r1} />
+               <Gear x={150} y={50} teeth={18} radius={60} color="#3498db" rotation={r2 + gear2Offset} />
+            </g>
+          </svg>
+        </div>
+      );
+    }
+
+    function GameBoard() {
+      // Initial positions: gears are on the "shelf" on the left
+      const [gears, setGears] = useState([
+        { id: 'g1', x: 100, y: 150, teeth: 12, radius: 40, color: '#e74c3c', startRot: 0 },
+        { id: 'g2', x: 100, y: 350, teeth: 18, radius: 60, color: '#3498db', startRot: 0 },
+      ]);
+      
+      // Pegs are where the gears need to be placed
+      const pegs = [
+        { id: 'p1', x: 400, y: 250, requiredTeeth: 12 },
+        { id: 'p2', x: 500, y: 250, requiredTeeth: 18 },
+      ];
+
+      const [draggingId, setDraggingId] = useState(null);
+      const svgRef = useRef(null);
+      const [boardRotation, setBoardRotation] = useState(0);
+
+      // Check if all pegs have the correct gear
+      const isSolved = useMemo(() => {
+        let solved = true;
+        for (const peg of pegs) {
+          const gearAtPeg = gears.find(g => g.x === peg.x && g.y === peg.y);
+          if (!gearAtPeg || gearAtPeg.teeth !== peg.requiredTeeth) {
+            solved = false;
+          }
+        }
+        return solved;
+      }, [gears]);
+
+      // Animate the board when solved
+      useEffect(() => {
+        let animationId;
+        if (isSolved) {
+          const animate = () => {
+            setBoardRotation(prev => prev + 1.5);
+            animationId = requestAnimationFrame(animate);
+          };
+          animate();
+        } else {
+          setBoardRotation(0); // Reset animation if unsolved
+        }
+        return () => {
+          if (animationId) cancelAnimationFrame(animationId);
+        };
+      }, [isSolved]);
+
+      const handlePointerDown = (e, id) => {
+        if (isSolved) return; // Prevent dragging once solved
+        setDraggingId(id);
+        e.target.setPointerCapture(e.pointerId);
+      };
+
+      const handlePointerMove = (e) => {
+        if (!draggingId) return;
+        const svg = svgRef.current;
+        if (!svg) return;
+        const pt = svg.createSVGPoint();
+        pt.x = e.clientX;
+        pt.y = e.clientY;
+        const cursorPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+
+        setGears(gears.map(g => g.id === draggingId ? { ...g, x: cursorPt.x, y: cursorPt.y } : g));
+      };
+
+      const handlePointerUp = (e) => {
+        if (!draggingId) return;
+        let snappedGears = [...gears];
+        const gear = snappedGears.find(g => g.id === draggingId);
+        
+        // Snapping logic
+        for (const peg of pegs) {
+          const dist = Math.hypot(gear.x - peg.x, gear.y - peg.y);
+          if (dist < 50) { 
+            gear.x = peg.x;
+            gear.y = peg.y;
+            break;
+          }
+        }
+        setGears(snappedGears);
+        setDraggingId(null);
+      };
+
+      return (
+        <div style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+          
+          <TargetReference />
+          
+          <div style={{ position: 'absolute', top: 20, left: 20, color: 'white' }}>
+            <h1>Level 1: Simple Gear Train</h1>
+            <p>Drag the gears from the shelf onto the pegs to match the target reference.</p>
+            {isSolved && <div style={{ color: '#2ecc71', fontSize: '24px', fontWeight: 'bold', marginTop: '10px' }}>Puzzle Solved! Great job!</div>}
+          </div>
+
+          <svg 
+            ref={svgRef}
+            width="100%" 
+            height="100%" 
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+          >
+            {/* Draw Shelf Area */}
+            <rect x="0" y="0" width="200" height="100%" fill="rgba(0,0,0,0.2)" />
+            <text x="100" y="70" fill="white" textAnchor="middle" fontSize="20" opacity="0.5">Parts Shelf</text>
+
+            {/* Draw pegs */}
+            {pegs.map(p => (
+              <g key={p.id} transform={`translate(${p.x}, ${p.y})`}>
+                <circle r={12} fill="#7f8c8d" />
+                <circle r={6} fill="#2c3e50" />
+              </g>
+            ))}
+
+            {/* Draw gears */}
+            {gears.map(g => {
+              // Calculate dynamic rotation
+              let currentRotation = g.startRot;
+              if (isSolved) {
+                // If this gear is on peg 1 (12 teeth), it drives. If peg 2 (18 teeth), it's driven.
+                if (g.x === pegs[0].x && g.y === pegs[0].y) {
+                  currentRotation = boardRotation;
+                } else if (g.x === pegs[1].x && g.y === pegs[1].y) {
+                  const gear2Offset = (360 / 18) / 2;
+                  currentRotation = (-boardRotation * (12/18)) + gear2Offset;
+                }
+              }
+
+              return (
+                <Gear 
+                  key={g.id} 
+                  {...g} 
+                  rotation={currentRotation}
+                  onPointerDown={(e) => handlePointerDown(e, g.id)} 
+                />
+              );
+            })}
+          </svg>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<GameBoard />);
+  </script>
+</body>
+</html>

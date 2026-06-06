@@ -258,22 +258,13 @@
                 <button class="modal-close">&times;</button>
             </div>
             <div class="modal-body" style="padding:0;">
-                <div style="display:flex; border-bottom: 1px solid #eaeaea; width:100%;">
-                    <div style="flex:1; border-right: 1px solid #eaeaea;">
-                        <div style="text-align:center; font-size:0.7rem; font-weight:bold; color:#666; padding-top:10px;">BASIC OSCILLATION</div>
-                        <canvas id="mech-four-bar" width="350" height="400" style="width: 100%; display: block;"></canvas>
-                    </div>
-                    <div style="flex:1;">
-                        <div style="text-align:center; font-size:0.7rem; font-weight:bold; color:#666; padding-top:10px;">COMPLEX GAIT (Jansen Linkage)</div>
-                        <canvas id="mech-jansen-gait" width="350" height="400" style="width: 100%; display: block;"></canvas>
-                    </div>
-                </div>
+                <canvas id="mech-four-bar" width="700" height="400" style="width: 100%; display: block; border-bottom: 1px solid #eaeaea;"></canvas>
                 <div style="padding: 10px 20px; background: #eee; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 10px;">
                     <span style="font-size: 0.8rem; font-weight: 600; color: #666;">MANUAL SCRUB</span>
                     <input type="range" id="mech-four-bar-slider" min="0" max="18.84" step="0.01" value="0" style="flex: 1;">
                 </div>
                 <div style="padding: 2rem;">
-                    <p>A <strong>Four-Bar Linkage</strong> can be configured to convert circular motion into a sweeping, oscillating motion, or even a complex walking gait.</p>
+                    <p>A <strong>Four-Bar Linkage</strong> can be configured to convert circular motion into a sweeping, oscillating motion.</p>
                     <h4 style="margin-top: 1rem;">How it works:</h4>
                     <ul style="margin-top: 0.5rem; margin-bottom: 1rem; padding-left: 1.2rem;">
                         <li><strong>Driving Crank:</strong> Makes a full continuous rotation.</li>

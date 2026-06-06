@@ -841,7 +841,7 @@ document.addEventListener('DOMContentLoaded', () => {
     anims.push(new BeltDrive('mech-belt-standard', false));
     anims.push(new BeltDrive('mech-belt-crossed', true));
     anims.push(new ChainDrive('mech-chain'));
-    anims.push(new JansenGait('mech-jansen-gait'));
+
     anims.push(new GearTrain('mech-gear-1to1', [{cx:150, cy:100, r:40, teeth:16, offset:0}, {cx:230, cy:100, r:40, teeth:16, offset:Math.PI/16}]));
     anims.push(new GearTrain('mech-gear-speed', [{cx:140, cy:100, r:60, teeth:24, offset:0}, {cx:230, cy:100, r:30, teeth:12, offset:Math.PI/12}]));
     anims.push(new GearTrain('mech-gear-torque', [{cx:140, cy:100, r:30, teeth:12, offset:0}, {cx:230, cy:100, r:60, teeth:24, offset:Math.PI/24}]));

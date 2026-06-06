@@ -16,7 +16,6 @@
   <script type="text/babel">
     const { useState, useRef, useEffect, useMemo } = React;
 
-    // Mathematically generate the gear SVG path
     function generateGearPath(cx, cy, teeth, radius, addendum, dedendum) {
       const points = [];
       const angleStep = (Math.PI * 2) / teeth;
@@ -51,34 +50,48 @@
       );
     }
 
-    // Target Reference Component showing the solved animation
+    // Target Reference: Shows the OUTSIDE of the machine (no gears visible)
     function TargetReference() {
       const [rotation, setRotation] = useState(0);
       
       useEffect(() => {
         let animationId;
         const animate = () => {
-          setRotation(prev => prev + 1.5); // 1.5 degrees per frame
+          setRotation(prev => prev + 1.5); // Input speed
           animationId = requestAnimationFrame(animate);
         };
         animate();
         return () => cancelAnimationFrame(animationId);
       }, []);
 
-      // The small gear has 12 teeth, large has 18.
-      // Ratio = 12/18 = 2/3 speed, opposite direction.
       const r1 = rotation;
-      const r2 = -rotation * (12/18);
-      // Offset the second gear slightly so the teeth interlock instead of colliding
-      const gear2Offset = (360 / 18) / 2; 
+      const r2 = -rotation * (12/18); // Output speed
 
       return (
         <div style={{ position: 'absolute', top: 20, right: 20, background: 'rgba(0,0,0,0.6)', padding: '15px', borderRadius: '10px', border: '2px solid #7f8c8d', boxShadow: '0 4px 6px rgba(0,0,0,0.3)' }}>
-          <h3 style={{ color: 'white', marginTop: 0, fontSize: '16px', textAlign: 'center' }}>Target Reference</h3>
+          <h3 style={{ color: 'white', marginTop: 0, fontSize: '16px', textAlign: 'center' }}>Target Product (Outside)</h3>
           <svg width="200" height="150" viewBox="0 0 200 150">
             <g transform="scale(0.8) translate(30, 20)">
-               <Gear x={50} y={50} teeth={12} radius={40} color="#e74c3c" rotation={r1} />
-               <Gear x={150} y={50} teeth={18} radius={60} color="#3498db" rotation={r2 + gear2Offset} />
+               {/* Opaque Casing hiding the internal gears */}
+               <rect x="0" y="0" width="200" height="100" fill="#95a5a6" rx="10" />
+               <text x="100" y="90" fill="#7f8c8d" fontSize="12" textAnchor="middle" fontWeight="bold">GEARBOX CASING</text>
+               <text x="50" y="-10" fill="#ecf0f1" fontSize="14" textAnchor="middle">Input</text>
+               <text x="150" y="-10" fill="#ecf0f1" fontSize="14" textAnchor="middle">Output</text>
+               
+               {/* Input: Crank on the left */}
+               <g transform={`translate(50, 50) rotate(${r1})`}>
+                 <circle r="15" fill="#34495e" />
+                 <rect x="-5" y="0" width="10" height="30" fill="#2c3e50" />
+                 <circle cx="0" cy="30" r="8" fill="#e74c3c" />
+               </g>
+
+               {/* Output: Spinning Fan/Dial on the right */}
+               <g transform={`translate(150, 50) rotate(${r2})`}>
+                 <circle r="25" fill="#ecf0f1" stroke="#bdc3c7" strokeWidth="4" />
+                 <line x1="0" y1="-25" x2="0" y2="25" stroke="#e67e22" strokeWidth="4" />
+                 <line x1="-25" y1="0" x2="25" y2="0" stroke="#e67e22" strokeWidth="4" />
+                 <circle r="5" fill="#d35400" />
+               </g>
             </g>
           </svg>
         </div>
@@ -86,23 +99,20 @@
     }
 
     function GameBoard() {
-      // Initial positions: gears are on the "shelf" on the left
       const [gears, setGears] = useState([
         { id: 'g1', x: 100, y: 150, teeth: 12, radius: 40, color: '#e74c3c', startRot: 0 },
         { id: 'g2', x: 100, y: 350, teeth: 18, radius: 60, color: '#3498db', startRot: 0 },
       ]);
       
-      // Pegs are where the gears need to be placed
       const pegs = [
-        { id: 'p1', x: 400, y: 250, requiredTeeth: 12 },
-        { id: 'p2', x: 500, y: 250, requiredTeeth: 18 },
+        { id: 'p1', x: 400, y: 350, requiredTeeth: 12 },
+        { id: 'p2', x: 500, y: 350, requiredTeeth: 18 },
       ];
 
       const [draggingId, setDraggingId] = useState(null);
       const svgRef = useRef(null);
       const [boardRotation, setBoardRotation] = useState(0);
 
-      // Check if all pegs have the correct gear
       const isSolved = useMemo(() => {
         let solved = true;
         for (const peg of pegs) {
@@ -114,25 +124,26 @@
         return solved;
       }, [gears]);
 
-      // Animate the board when solved
+      // Independent input rotation for the constantly moving input crank
+      const [inputRotation, setInputRotation] = useState(0);
+
       useEffect(() => {
         let animationId;
-        if (isSolved) {
-          const animate = () => {
+        const animate = () => {
+          setInputRotation(prev => prev + 1.5);
+          if (isSolved) {
             setBoardRotation(prev => prev + 1.5);
-            animationId = requestAnimationFrame(animate);
-          };
-          animate();
-        } else {
-          setBoardRotation(0); // Reset animation if unsolved
-        }
+          }
+          animationId = requestAnimationFrame(animate);
+        };
+        animate();
         return () => {
           if (animationId) cancelAnimationFrame(animationId);
         };
       }, [isSolved]);
 
       const handlePointerDown = (e, id) => {
-        if (isSolved) return; // Prevent dragging once solved
+        if (isSolved) return; 
         setDraggingId(id);
         e.target.setPointerCapture(e.pointerId);
       };
@@ -154,7 +165,6 @@
         let snappedGears = [...gears];
         const gear = snappedGears.find(g => g.id === draggingId);
         
-        // Snapping logic
         for (const peg of pegs) {
           const dist = Math.hypot(gear.x - peg.x, gear.y - peg.y);
           if (dist < 50) { 
@@ -173,9 +183,9 @@
           <TargetReference />
           
           <div style={{ position: 'absolute', top: 20, left: 20, color: 'white' }}>
-            <h1>Level 1: Simple Gear Train</h1>
-            <p>Drag the gears from the shelf onto the pegs to match the target reference.</p>
-            {isSolved && <div style={{ color: '#2ecc71', fontSize: '24px', fontWeight: 'bold', marginTop: '10px' }}>Puzzle Solved! Great job!</div>}
+            <h1>Level 1: X-Ray View</h1>
+            <p>Drag the gears from the shelf onto the pegs to connect the input to the output.</p>
+            {isSolved && <div style={{ color: '#2ecc71', fontSize: '24px', fontWeight: 'bold', marginTop: '10px' }}>Mechanism Connected!</div>}
           </div>
 
           <svg 
@@ -189,26 +199,38 @@
             <rect x="0" y="0" width="200" height="100%" fill="rgba(0,0,0,0.2)" />
             <text x="100" y="70" fill="white" textAnchor="middle" fontSize="20" opacity="0.5">Parts Shelf</text>
 
-            {/* Draw pegs */}
-            {pegs.map(p => (
-              <g key={p.id} transform={`translate(${p.x}, ${p.y})`}>
-                <circle r={12} fill="#7f8c8d" />
-                <circle r={6} fill="#2c3e50" />
+            {/* Draw Input Crank (always spinning in X-Ray view) */}
+            <g transform={`translate(${pegs[0].x}, ${pegs[0].y})`}>
+              <circle r="45" fill="none" stroke="#e74c3c" strokeWidth="2" strokeDasharray="5,5" opacity="0.3" />
+              <text y="-55" fill="#e74c3c" fontSize="14" textAnchor="middle">Input Motor</text>
+              <g transform={`rotate(${inputRotation})`} opacity="0.5">
+                 <rect x="-5" y="0" width="10" height="30" fill="#e74c3c" />
               </g>
-            ))}
+              <circle r={12} fill="#7f8c8d" />
+            </g>
+
+            {/* Draw Output Peg (only spins when solved) */}
+            <g transform={`translate(${pegs[1].x}, ${pegs[1].y})`}>
+              <circle r="65" fill="none" stroke="#e67e22" strokeWidth="2" strokeDasharray="5,5" opacity="0.3" />
+              <text y="-75" fill="#e67e22" fontSize="14" textAnchor="middle">Output Dial</text>
+              <g transform={`rotate(${isSolved ? -boardRotation * (12/18) : 0})`} opacity="0.5">
+                 <line x1="0" y1="-25" x2="0" y2="25" stroke="#e67e22" strokeWidth="4" />
+                 <line x1="-25" y1="0" x2="25" y2="0" stroke="#e67e22" strokeWidth="4" />
+              </g>
+              <circle r={12} fill="#7f8c8d" />
+            </g>
 
             {/* Draw gears */}
             {gears.map(g => {
-              // Calculate dynamic rotation
               let currentRotation = g.startRot;
-              if (isSolved) {
-                // If this gear is on peg 1 (12 teeth), it drives. If peg 2 (18 teeth), it's driven.
-                if (g.x === pegs[0].x && g.y === pegs[0].y) {
-                  currentRotation = boardRotation;
-                } else if (g.x === pegs[1].x && g.y === pegs[1].y) {
-                  const gear2Offset = (360 / 18) / 2;
-                  currentRotation = (-boardRotation * (12/18)) + gear2Offset;
-                }
+              // If gear is placed on input peg, it spins with the input
+              if (g.x === pegs[0].x && g.y === pegs[0].y) {
+                currentRotation = inputRotation;
+              } 
+              // If placed on output peg, it only spins if mechanism is fully solved
+              else if (g.x === pegs[1].x && g.y === pegs[1].y && isSolved) {
+                const gear2Offset = (360 / 18) / 2;
+                currentRotation = (-boardRotation * (12/18)) + gear2Offset;
               }
 
               return (

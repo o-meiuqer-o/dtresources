@@ -436,7 +436,7 @@ class JansenGait extends Mechanism {
         const p2 = circleIntersect(P, l.b, p1, l.j, -1);
         const p3 = circleIntersect(P, l.c, p1, l.k, 1);
         const p4 = circleIntersect(p2, l.e, P, l.d, -1);
-        const p5 = circleIntersect(p3, l.f, p2, l.e, 1); // wait, link e connects p2 to p5? In Jansen it's often a solid triangle. Let's assume a solid triangle or just intersections.
+        const p5 = circleIntersect(p3, l.f, p2, l.i, 1); // wait, link e connects p2 to p5? In Jansen it's often a solid triangle. Let's assume a solid triangle or just intersections.
         const foot = circleIntersect(p4, l.h, p5, l.g, -1);
 
         // Ground plane
@@ -555,6 +555,279 @@ class GearTrain extends Mechanism {
         }
     }
 }
+
+class Hydraulics extends Mechanism {
+    draw() {
+        super.draw();
+        
+        const cx = this.width / 2;
+        const cy = this.height / 2;
+        
+        // Settings
+        const w1 = 30; // Area 1 (input)
+        const w2 = 120; // Area 2 (output)
+        const h1 = 150; // Max depth 1
+        const h2 = 150; // Max depth 2
+        
+        // Piston positions (mapped to slider: sin wave)
+        const stroke1 = (Math.sin(this.theta - Math.PI/2) + 1) / 2 * 100; // 0 to 100
+        const stroke2 = stroke1 * (w1 / w2); // Pascal's principle: stroke inversely proportional to area
+        
+        const px1 = cx - 100;
+        const py1 = cy - 20; // top of cylinder 1
+        
+        const px2 = cx + 100;
+        const py2 = cy - 20; // top of cylinder 2
+        
+        // Draw fluid
+        this.ctx.fillStyle = '#0696D7'; // Blue fluid
+        this.ctx.beginPath();
+        // Left column
+        this.ctx.moveTo(px1 - w1/2, py1 + stroke1);
+        this.ctx.lineTo(px1 + w1/2, py1 + stroke1);
+        this.ctx.lineTo(px1 + w1/2, py1 + h1);
+        // Connect to right
+        this.ctx.lineTo(px2 - w2/2, py2 + h2);
+        this.ctx.lineTo(px2 - w2/2, py2 + h2 - stroke2);
+        this.ctx.lineTo(px2 + w2/2, py2 + h2 - stroke2);
+        this.ctx.lineTo(px2 + w2/2, py2 + h2);
+        // Bottom pipe
+        this.ctx.lineTo(px2 + w2/2, py2 + h2 + 30);
+        this.ctx.lineTo(px1 - w1/2, py1 + h1 + 30);
+        this.ctx.closePath();
+        this.ctx.fill();
+        
+        // Draw Cylinders & Pipes (outline)
+        this.ctx.beginPath();
+        this.ctx.moveTo(px1 - w1/2, py1 - 20);
+        this.ctx.lineTo(px1 - w1/2, py1 + h1 + 30);
+        this.ctx.lineTo(px2 + w2/2, py2 + h2 + 30);
+        this.ctx.lineTo(px2 + w2/2, py2 - 20);
+        this.ctx.lineWidth = 4;
+        this.ctx.strokeStyle = THEME.dark;
+        this.ctx.stroke();
+
+        this.ctx.beginPath();
+        this.ctx.moveTo(px1 + w1/2, py1 - 20);
+        this.ctx.lineTo(px1 + w1/2, py1 + h1);
+        this.ctx.lineTo(px2 - w2/2, py2 + h2);
+        this.ctx.lineTo(px2 - w2/2, py2 - 20);
+        this.ctx.stroke();
+        
+        // Draw Input Piston
+        this.drawRectCentered(px1, py1 + stroke1 - 10, w1, 20, THEME.dark, null);
+        this.drawRectCentered(px1, py1 + stroke1 - 40, 6, 60, THEME.shapes, THEME.dark); // shaft
+        
+        // Draw Output Piston
+        this.drawRectCentered(px2, py2 + h2 - stroke2 - 10, w2, 20, THEME.dark, null);
+        this.drawRectCentered(px2, py2 + h2 - stroke2 - 40, 20, 60, THEME.shapes, THEME.dark); // shaft
+        
+        // Draw "Car" Weight on Output
+        const carY = py2 + h2 - stroke2 - 80;
+        this.drawRectCentered(px2, carY, 100, 40, THEME.shapes, THEME.dark); // car body
+        this.drawRectCentered(px2, carY - 30, 60, 20, THEME.shapes, THEME.dark); // car top
+        this.drawCircle(px2 - 30, carY + 20, 10, THEME.dark, null); // wheel
+        this.drawCircle(px2 + 30, carY + 20, 10, THEME.dark, null); // wheel
+        
+        // Force Vectors (Arrows) to illustrate advantage
+        const drawArrow = (x, y, len, width, color) => {
+            this.ctx.beginPath();
+            this.ctx.moveTo(x, y);
+            this.ctx.lineTo(x, y + len);
+            this.ctx.strokeStyle = color;
+            this.ctx.lineWidth = width;
+            this.ctx.stroke();
+            // Arrowhead
+            this.ctx.beginPath();
+            if (len > 0) { // pointing down
+                this.ctx.moveTo(x - width*1.5, y + len - 8);
+                this.ctx.lineTo(x + width*1.5, y + len - 8);
+                this.ctx.lineTo(x, y + len + 2);
+            } else { // pointing up
+                this.ctx.moveTo(x - width*1.5, y + len + 8);
+                this.ctx.lineTo(x + width*1.5, y + len + 8);
+                this.ctx.lineTo(x, y + len - 2);
+            }
+            this.ctx.fillStyle = color;
+            this.ctx.fill();
+        }
+        
+        // Input force (small arrow down)
+        drawArrow(px1, py1 - 80, 40, 3, THEME.accent);
+        
+        // Output force (large arrow up)
+        drawArrow(px2, py2 - 20 - stroke2, -80, 8, THEME.accent);
+    }
+}
+
+class BeltDrive extends Mechanism {
+    constructor(canvasId, crossed = false) {
+        super(canvasId);
+        this.crossed = crossed;
+        this.slider = document.getElementById('mech-belts-slider');
+        if (this.slider) {
+            this.slider.addEventListener('input', (e) => {
+                this.isPlaying = false;
+                this.theta = parseFloat(e.target.value);
+                this.draw();
+            });
+        }
+    }
+    
+    draw() {
+        super.draw();
+        
+        const cx1 = 100;
+        const cy = this.height / 2;
+        const r1 = 50;
+        
+        const cx2 = 250;
+        const r2 = 30;
+        
+        const angle1 = this.theta;
+        const ratio = r1 / r2;
+        const angle2 = this.crossed ? -this.theta * ratio : this.theta * ratio;
+        
+        // Belt Path
+        this.ctx.beginPath();
+        if (this.crossed) {
+            // Crossed belt (figure 8)
+            // Approximate tangent angles
+            const dist = cx2 - cx1;
+            const theta = Math.asin((r1 + r2) / dist);
+            
+            // From top left to bottom right
+            this.ctx.moveTo(cx1 + r1 * Math.sin(theta), cy - r1 * Math.cos(theta));
+            this.ctx.lineTo(cx2 - r2 * Math.sin(theta), cy + r2 * Math.cos(theta));
+            
+            // From bottom left to top right
+            this.ctx.moveTo(cx1 + r1 * Math.sin(theta), cy + r1 * Math.cos(theta));
+            this.ctx.lineTo(cx2 - r2 * Math.sin(theta), cy - r2 * Math.cos(theta));
+            
+            this.ctx.strokeStyle = THEME.dark;
+            this.ctx.lineWidth = 4;
+            this.ctx.stroke();
+            
+            // We just draw the straight segments as crossed lines, then the pulleys over top.
+        } else {
+            // Standard parallel belt
+            this.ctx.moveTo(cx1, cy - r1);
+            this.ctx.lineTo(cx2, cy - r2);
+            this.ctx.moveTo(cx1, cy + r1);
+            this.ctx.lineTo(cx2, cy + r2);
+            this.ctx.strokeStyle = THEME.dark;
+            this.ctx.lineWidth = 4;
+            this.ctx.stroke();
+        }
+        
+        // Pulleys
+        const drawPulley = (x, y, r, angle) => {
+            this.drawCircle(x, y, r, THEME.shapes, THEME.dark);
+            this.drawCircle(x, y, r - 5, THEME.bg, THEME.lines);
+            // Spindle/shaft
+            this.drawCircle(x, y, 6, THEME.dark, null);
+            // Visual rotation marker
+            this.ctx.save();
+            this.ctx.translate(x, y);
+            this.ctx.rotate(angle);
+            this.drawCircle(r - 12, 0, 4, THEME.accent, THEME.dark);
+            this.ctx.restore();
+        };
+        
+        drawPulley(cx1, cy, r1, angle1);
+        drawPulley(cx2, cy, r2, angle2);
+    }
+}
+
+class ChainDrive extends Mechanism {
+    constructor(canvasId) {
+        super(canvasId);
+        this.slider = document.getElementById('mech-belts-slider');
+        if (this.slider) {
+            this.slider.addEventListener('input', (e) => {
+                this.isPlaying = false;
+                this.theta = parseFloat(e.target.value);
+                this.draw();
+            });
+        }
+    }
+    
+    draw() {
+        super.draw();
+        
+        const cx1 = 100;
+        const cy = this.height / 2;
+        const r1 = 50;
+        const teeth1 = 16;
+        
+        const cx2 = 250;
+        const r2 = 30;
+        const teeth2 = 10;
+        
+        const angle1 = this.theta;
+        const ratio = r1 / r2;
+        const angle2 = this.theta * ratio;
+        
+        // Sprockets
+        const drawSprocket = (x, y, r, teeth, angle) => {
+            for(let i = 0; i < teeth; i++) {
+                const a = i * (Math.PI * 2 / teeth);
+                this.ctx.save();
+                this.ctx.translate(x, y);
+                this.ctx.rotate(angle + a);
+                this.ctx.beginPath();
+                this.ctx.moveTo(r-2, -3);
+                this.ctx.lineTo(r+4, -2);
+                this.ctx.lineTo(r+4, 2);
+                this.ctx.lineTo(r-2, 3);
+                this.ctx.fillStyle = THEME.dark;
+                this.ctx.fill();
+                this.ctx.restore();
+            }
+            this.drawCircle(x, y, r - 2, THEME.shapes, THEME.dark);
+            this.drawCircle(x, y, r - 10, THEME.bg, THEME.lines);
+            this.drawCircle(x, y, 6, THEME.dark, null);
+            
+            // Visual rotation marker
+            this.ctx.save();
+            this.ctx.translate(x, y);
+            this.ctx.rotate(angle);
+            this.drawCircle(r - 16, 0, 4, THEME.accent, THEME.dark);
+            this.ctx.restore();
+        };
+        
+        // Simple Chain lines (top and bottom)
+        this.ctx.beginPath();
+        // Top line
+        this.ctx.moveTo(cx1, cy - r1 - 2);
+        this.ctx.lineTo(cx2, cy - r2 - 2);
+        // Bottom line
+        this.ctx.moveTo(cx1, cy + r1 + 2);
+        this.ctx.lineTo(cx2, cy + r2 + 2);
+        
+        this.ctx.strokeStyle = THEME.lines;
+        this.ctx.lineWidth = 6;
+        this.ctx.stroke();
+        
+        // Draw tiny chain links on the top and bottom lines to simulate chain
+        // We'll just draw a dashed line on top for chain texture
+        this.ctx.beginPath();
+        this.ctx.moveTo(cx1, cy - r1 - 2);
+        this.ctx.lineTo(cx2, cy - r2 - 2);
+        this.ctx.moveTo(cx1, cy + r1 + 2);
+        this.ctx.lineTo(cx2, cy + r2 + 2);
+        this.ctx.strokeStyle = THEME.dark;
+        this.ctx.lineWidth = 2;
+        this.ctx.setLineDash([8, 4]); // dash, space
+        // animate dash offset
+        this.ctx.lineDashOffset = -this.theta * r1;
+        this.ctx.stroke();
+        this.ctx.setLineDash([]); // reset
+        
+        drawSprocket(cx1, cy, r1, teeth1, angle1);
+        drawSprocket(cx2, cy, r2, teeth2, angle2);
+    }
+}
 // Initialization
 const anims = [];
 
@@ -564,6 +837,10 @@ document.addEventListener('DOMContentLoaded', () => {
     anims.push(new QuickReturn('mech-quick-return'));
     anims.push(new RackPinion('mech-rack-pinion'));
     anims.push(new CamTiming('mech-cam-timing'));
+    anims.push(new Hydraulics('mech-hydraulics'));
+    anims.push(new BeltDrive('mech-belt-standard', false));
+    anims.push(new BeltDrive('mech-belt-crossed', true));
+    anims.push(new ChainDrive('mech-chain'));
     anims.push(new JansenGait('mech-jansen-gait'));
     anims.push(new GearTrain('mech-gear-1to1', [{cx:150, cy:100, r:40, teeth:16, offset:0}, {cx:230, cy:100, r:40, teeth:16, offset:Math.PI/16}]));
     anims.push(new GearTrain('mech-gear-speed', [{cx:140, cy:100, r:60, teeth:24, offset:0}, {cx:230, cy:100, r:30, teeth:12, offset:Math.PI/12}]));

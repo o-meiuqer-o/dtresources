@@ -79,7 +79,14 @@
                 </div>
             </section>
 
-            <!-- ══ MOVEMENT CONVERSIONS (CONCEPT CARDS) ══ -->
+            <!-- ══ MOVEMENT CONVERSIONS (CONCEPT CARDS) ══ -->\n
+                    <div class="concept-card" data-modal="modal-hydraulics">
+                        <div class="cc-icon">💧</div>
+                        <h3>Hydraulics</h3>
+                        <p>Fluid power. Trading distance for massive physical force.</p>
+                        <div class="cc-cta">View Animation →</div>
+                    </div>
+
             <section id="movement-conversions" style="padding-top: 4rem; padding-bottom: 4rem;">
                 <span class="section-label">02: Kinematics</span>
                 <h2>Movement Conversions</h2>
@@ -93,6 +100,20 @@
                         <p>Speed vs. Torque. The foundation of mechanical advantage.</p>
                         <div class="cc-cta">View Animation →</div>
                     </div>
+                    <div class="concept-card" data-modal="modal-belts">
+                        <div class="cc-icon">⛓️</div>
+                        <h3>Belts & Chains</h3>
+                        <p>Distance transmission. Connecting shafts safely and securely.</p>
+                        <div class="cc-cta">View Animation →</div>
+                    </div>
+
+                    <div class="concept-card" data-modal="modal-hydraulics">
+                        <div class="cc-icon">💧</div>
+                        <h3>Hydraulics</h3>
+                        <p>Fluid power. Trading distance for massive physical force.</p>
+                        <div class="cc-cta">View Animation →</div>
+                    </div>
+
 
                     <div class="concept-card" data-modal="modal-slider-crank">
                         <div class="cc-icon">⚙️</div>
@@ -139,7 +160,70 @@
         </main>
     </div>
 
-    <!-- ══ MODALS ══ -->
+    <!-- ══ MODALS ══ -->\n
+    <div class="modal-overlay" id="modal-belts">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h3>Belts and Chains</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+                <div style="display:flex; border-bottom: 1px solid #eaeaea;">
+                    <div style="flex:1; border-right: 1px solid #eaeaea; padding-bottom: 10px;">
+                        <div style="text-align:center; font-size:0.7rem; font-weight:bold; color:#666; padding-top:10px;">STANDARD BELT (Same Direction)</div>
+                        <canvas id="mech-belt-standard" width="350" height="200" style="width: 100%; display: block;"></canvas>
+                    </div>
+                    <div style="flex:1; border-right: 1px solid #eaeaea; padding-bottom: 10px;">
+                        <div style="text-align:center; font-size:0.7rem; font-weight:bold; color:#666; padding-top:10px;">CROSSED BELT (Reverse Direction)</div>
+                        <canvas id="mech-belt-crossed" width="350" height="200" style="width: 100%; display: block;"></canvas>
+                    </div>
+                    <div style="flex:1; padding-bottom: 10px;">
+                        <div style="text-align:center; font-size:0.7rem; font-weight:bold; color:#666; padding-top:10px;">CHAIN DRIVE (No Slippage)</div>
+                        <canvas id="mech-chain" width="350" height="200" style="width: 100%; display: block;"></canvas>
+                    </div>
+                </div>
+                <div style="padding: 10px 20px; background: #eee; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 0.8rem; font-weight: 600; color: #666;">MANUAL SCRUB</span>
+                    <input type="range" id="mech-belts-slider" min="0" max="6.28" step="0.01" value="0" style="flex: 1;">
+                </div>
+                <div style="padding: 2rem;">
+                    <p>When you need to transfer power between two shafts that are far apart, gears become impractical. <strong>Belts and Chains</strong> are used to span distances.</p>
+                    <h4 style="margin-top: 1rem;">Key Differences:</h4>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 1rem; padding-left: 1.2rem;">
+                        <li><strong>Standard Belt:</strong> Smooth and quiet. Output shaft rotates in the <em>same</em> direction as the input. Belts can intentionally slip if the system jams, acting as a mechanical fuse.</li>
+                        <li><strong>Crossed Belt:</strong> By twisting the belt in a Figure-8, the output shaft will rotate in the <em>opposite</em> direction, eliminating the need for an idler gear.</li>
+                        <li><strong>Chain Drive:</strong> Uses interlocking teeth (sprockets) and chain links. Chains are louder and require lubrication, but they provide <em>positive engagement</em> (zero slippage), making them perfect for high-torque applications like bicycles or motorcycles.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+\n
+    <div class="modal-overlay" id="modal-hydraulics">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>Hydraulic Force Transmission</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" style="padding:0;">
+                <canvas id="mech-hydraulics" width="700" height="400" style="width: 100%; display: block; border-bottom: 1px solid #eaeaea;"></canvas>
+                <div style="padding: 10px 20px; background: #eee; border-bottom: 1px solid #ddd; display: flex; align-items: center; gap: 10px;">
+                    <span style="font-size: 0.8rem; font-weight: 600; color: #666;">MANUAL PUMP</span>
+                    <input type="range" id="mech-hydraulics-slider" min="0" max="6.28" step="0.01" value="0" style="flex: 1;">
+                </div>
+                <div style="padding: 2rem;">
+                    <p><strong>Hydraulics</strong> use incompressible fluids to transmit force. They act as a fluid gear system, obeying Pascal's Principle: pressure applied to a confined fluid is transmitted undiminished in every direction.</p>
+                    <h4 style="margin-top: 1rem;">How it works:</h4>
+                    <ul style="margin-top: 0.5rem; margin-bottom: 1rem; padding-left: 1.2rem;">
+                        <li><strong>Input (Small Area):</strong> A small force is applied to a small piston. It pushes the fluid a very <em>long</em> distance.</li>
+                        <li><strong>Output (Large Area):</strong> The displaced fluid pushes against a much larger piston. Because the area is larger, the resulting lifting force is massive, but the piston only moves a <em>short</em> distance.</li>
+                    </ul>
+                    <p class="source">Examples: Car brakes, heavy excavators, hydraulic car lifts, robotic actuators.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="modal-overlay" id="modal-slider-crank">
         <div class="modal-content" style="max-width: 700px;">

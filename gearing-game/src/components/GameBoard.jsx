@@ -299,7 +299,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
     const cursorPt = pt.matrixTransform(svg.getScreenCTM().inverse());
 
     if (shelfDragStart) {
-       const dy = (cursorPt.y - shelfDragStart.y) * 3.6;
+       const dy = (cursorPt.y - shelfDragStart.y) * 7.2;
        let newScroll = shelfDragStart.scrollY + dy;
        const totalContentHeight = level.shelfGears.length * 150 + 150; 
        const visibleHeight = 420; 

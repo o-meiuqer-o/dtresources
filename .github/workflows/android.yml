@@ -39,6 +39,10 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Make gradlew executable
+        working-directory: ./gearing-game/android
+        run: chmod +x gradlew
+
       - name: Build APK
         working-directory: ./gearing-game/android
         run: ./gradlew assembleDebug

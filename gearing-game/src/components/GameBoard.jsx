@@ -21,7 +21,7 @@ function TargetReference({ targetConfig }) {
   const r2 = rotation * (targetConfig.outputSpeed / targetConfig.inputSpeed);
 
   return (
-    <g transform="translate(1050, 20)">
+    <g transform="translate(1050, 90)">
       <rect x="0" y="0" width="204" height="150" fill="rgba(0,0,0,0.4)" rx="15" />
       <text x="102" y="25" fill="white" fontSize="14" textAnchor="middle" textTransform="uppercase" letterSpacing="1">Target Product</text>
       
@@ -499,7 +499,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
         </foreignObject>
 
         {/* UI Overlay Buttons */}
-        <foreignObject x="1100" y="650" width="160" height="50">
+        <foreignObject x="1100" y="20" width="160" height="50">
           <div xmlns="http://www.w3.org/1999/xhtml" style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end', paddingRight: '20px' }}>
             <button onClick={toggleAudio} style={{ width: '40px', height: '40px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', cursor: 'pointer', fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(5px)' }}>
               {isAudioMuted ? '🔇' : '🔊'}
@@ -509,6 +509,23 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             </button>
           </div>
         </foreignObject>
+
+        {/* Mobile Tutorial Overlays */}
+        {(level.id === 1 || level.id === 2) && ('ontouchstart' in window || navigator.maxTouchPoints > 0) && (
+          <g>
+            {/* Shelf Scroll Hint */}
+            <rect x="20" y="320" width="210" height="40" fill="rgba(52, 152, 219, 0.8)" rx="20" />
+            <text x="125" y="346" fill="white" fontSize="14" fontWeight="bold" textAnchor="middle">↑ SWIPE TO SCROLL ↓</text>
+            
+            {/* Drag Hint */}
+            <rect x="20" y="100" width="210" height="40" fill="rgba(231, 76, 60, 0.8)" rx="20" />
+            <text x="125" y="126" fill="white" fontSize="14" fontWeight="bold" textAnchor="middle">TAP &amp; DRAG TO MOVE</text>
+
+            {/* Place Hint */}
+            <rect x="420" y="300" width="200" height="40" fill="rgba(46, 204, 113, 0.8)" rx="20" />
+            <text x="520" y="326" fill="white" fontSize="14" fontWeight="bold" textAnchor="middle">DRAG TO HIGHLIGHTS</text>
+          </g>
+        )}
 
         {/* Draw Placed Belts (behind gears) */}
         {gears.filter(g => !g.isOnShelf && (g.type === 'belt' || g.type === 'crossed_belt')).map(g => {
@@ -660,6 +677,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             if (!g.sliderId) {
               return (
                 <g key={g.id} transform={`translate(${g.x}, ${g.y})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                  <rect x={-g.length/2 - 20} y="-30" width={g.length + 40} height="60" fill="transparent" />
                   <line x1={-g.length/2} y1="0" x2={g.length/2} y2="0" stroke={g.color} strokeWidth="10" strokeLinecap="round" />
                   <circle cx={-g.length/2} cy="0" r="5" fill="#2c3e50" />
                   <circle cx={g.length/2} cy="0" r="5" fill="#2c3e50" />
@@ -720,6 +738,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             if (g.type === 'linkage') {
               return (
                 <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                  <rect x={-g.length/2 - 20} y="-30" width={g.length + 40} height="60" fill="transparent" />
                   <line x1={-g.length/2} y1="0" x2={g.length/2} y2="0" stroke={g.color} strokeWidth="10" strokeLinecap="round" />
                   <circle cx={-g.length/2} cy="0" r="5" fill="#2c3e50" />
                   <circle cx={g.length/2} cy="0" r="5" fill="#2c3e50" />
@@ -730,6 +749,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             if (g.type === 'belt') {
               return (
                 <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                  <rect x="-60" y="-30" width="120" height="60" fill="transparent" />
                   <rect x="-40" y="-10" width="80" height="20" fill="none" stroke={g.color} strokeWidth="6" rx="10" />
                   <text y="-20" fill="white" fontSize="12" textAnchor="middle">Standard Belt</text>
                 </g>
@@ -738,9 +758,8 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             if (g.type === 'crossed_belt') {
               return (
                 <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
-                  <path d="M -30 -10 L 30 10 M -30 10 L 30 -10" stroke={g.color} strokeWidth="6" />
-                  <circle cx="-30" cy="0" r="10" fill="none" stroke={g.color} strokeWidth="6" />
-                  <circle cx="30" cy="0" r="10" fill="none" stroke={g.color} strokeWidth="6" />
+                  <rect x="-60" y="-30" width="120" height="60" fill="transparent" />
+                  <path d="M -40 -10 L 40 10 M -40 10 L 40 -10 M -40 -10 A 10 10 0 0 0 -40 10 M 40 -10 A 10 10 0 0 1 40 10" fill="none" stroke={g.color} strokeWidth="6" />
                   <text y="-20" fill="white" fontSize="12" textAnchor="middle">Crossed Belt</text>
                 </g>
               );

@@ -222,13 +222,17 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
   const starString = "★".repeat(stars) + "☆".repeat(3 - stars);
 
   useEffect(() => {
+    let timeout;
     if (isSolved) {
-      setShowLesson(true);
       audio.stopMotor();
       audio.playSuccess();
+      timeout = setTimeout(() => {
+        setShowLesson(true);
+      }, 3500); // Wait 3.5 seconds for celebration
     } else {
       setShowLesson(false);
     }
+    return () => clearTimeout(timeout);
   }, [isSolved]);
 
   useEffect(() => {

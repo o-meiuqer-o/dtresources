@@ -14,13 +14,12 @@ function App() {
     if (levels.find(l => l.id === nextId)) {
       setCurrentLevelId(nextId);
     } else {
-      // Game completed
       setCurrentLevelId(null); 
     }
   };
 
   return (
-    <div style={{ width: '100vw', height: '100vh', background: '#2c3e50', overflow: 'hidden', margin: 0, padding: 0 }}>
+    <div className="app-container">
       {currentLevel ? (
         <GameBoard 
           key={currentLevel.id}

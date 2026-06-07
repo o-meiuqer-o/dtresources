@@ -3,30 +3,40 @@ import { levels } from '../levels';
 
 export default function LevelSelect({ onSelectLevel }) {
   return (
-    <div style={{ padding: '40px', color: 'white', maxWidth: '800px', margin: '0 auto' }}>
-      <h1>Mechanical Gearing Simulator</h1>
-      <p style={{ fontSize: '18px', color: '#bdc3c7' }}>
-        Select a level to practice your understanding of gear trains and mechanical linkages.
-      </p>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', height: '100%', overflowY: 'auto', padding: '40px', color: 'white' }}>
+      <h1 style={{ fontSize: '48px', marginBottom: '10px', textShadow: '0 4px 10px rgba(0,0,0,0.5)' }}>Gearing Game</h1>
+      <p style={{ fontSize: '20px', marginBottom: '40px', opacity: 0.8 }}>Select a level to begin</p>
       
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))', gap: '15px', width: '60%', maxWidth: '800px' }}>
         {levels.map(level => (
           <div 
             key={level.id} 
+            onClick={() => onSelectLevel(level)}
             style={{ 
-              background: '#34495e', 
-              padding: '20px', 
-              borderRadius: '10px',
+              aspectRatio: '1',
+              background: 'linear-gradient(135deg, #2980b9, #8e44ad)', 
+              borderRadius: '12px',
               cursor: 'pointer',
               border: '2px solid transparent',
-              transition: 'border 0.2s'
+              boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'transform 0.1s, box-shadow 0.1s, border 0.1s'
             }}
-            onMouseOver={(e) => e.currentTarget.style.border = '2px solid #3498db'}
-            onMouseOut={(e) => e.currentTarget.style.border = '2px solid transparent'}
-            onClick={() => onSelectLevel(level)}
+            onMouseOver={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 6px 15px rgba(0,0,0,0.4)';
+              e.currentTarget.style.border = '2px solid #f1c40f';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.3)';
+              e.currentTarget.style.border = '2px solid transparent';
+            }}
           >
-            <h2>{level.title}</h2>
-            <p>{level.description}</p>
+            <div style={{ fontSize: '32px', fontWeight: 'bold', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>{level.id}</div>
           </div>
         ))}
       </div>

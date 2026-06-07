@@ -264,6 +264,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
   }, [isSolved, level, isDragging]);
 
   const handlePointerDown = (e, id) => {
+    e.stopPropagation();
     if (isSolved) return; 
     audio.startBGM();
     audio.playGrab();
@@ -298,7 +299,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
     const cursorPt = pt.matrixTransform(svg.getScreenCTM().inverse());
 
     if (shelfDragStart) {
-       const dy = (cursorPt.y - shelfDragStart.y) * 1.8;
+       const dy = (cursorPt.y - shelfDragStart.y) * 3.6;
        let newScroll = shelfDragStart.scrollY + dy;
        const totalContentHeight = level.shelfGears.length * 150 + 150; 
        const visibleHeight = 420; 
@@ -680,44 +681,8 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
           </g>
         ))}
 
-        {/* Draw gears & linkages on the board */}
-        {gears.filter(g => !g.isOnShelf && g.type !== 'belt' && g.type !== 'crossed_belt').map(g => {
-          if (g.type === 'linkage') {
-            if (!g.sliderId) {
-              return (
-                <g key={g.id} transform={`translate(${g.x}, ${g.y})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
-                  <rect x={-g.length/2 - 20} y="-30" width={g.length + 40} height="60" fill="transparent" />
-                  <line x1={-g.length/2} y1="0" x2={g.length/2} y2="0" stroke={g.color} strokeWidth="10" strokeLinecap="round" />
-                  <circle cx={-g.length/2} cy="0" r="5" fill="#2c3e50" />
-                  <circle cx={g.length/2} cy="0" r="5" fill="#2c3e50" />
-                </g>
-              );
-            } else {
-              const slider = sliders.find(s => s.id === g.sliderId);
-              const pegIndex = pegs.findIndex(p => p.id === slider.pegId);
-              const peg = pegs[pegIndex];
-              let gearRotation = 0;
-              if (isSolved) {
-                gearRotation = peg.type === 'input' ? inputRotation : pegRotations[pegIndex];
-              } else {
-                gearRotation = peg.type === 'input' ? inputRotation : 0;
-              }
-              const rad = (gearRotation * Math.PI) / 180;
-              const px = peg.x + (peg.pinOffset || 0) * Math.cos(rad);
-              const py = peg.y + (peg.pinOffset || 0) * Math.sin(rad);
-              const sx = px + Math.sqrt(Math.abs(g.length ** 2 - (slider.y - py) ** 2));
-              const sy = slider.y;
-
-              return (
-                <g key={g.id} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
-                  <line x1={px} y1={py} x2={sx} y2={sy} stroke={g.color} strokeWidth="10" strokeLinecap="round" />
-                  <circle cx={px} cy={py} r="5" fill="#2c3e50" />
-                  <circle cx={sx} cy={sy} r="5" fill="#2c3e50" />
-                </g>
-              );
-            }
-          }
-
+        {/* Draw gears & cams on the board */}
+        {gears.filter(g => !g.isOnShelf && g.type !== 'belt' && g.type !== 'crossed_belt' && g.type !== 'linkage').map(g => {
           let currentRotation = g.startRot;
           const pegIndex = pegs.findIndex(p => p.x === g.x && p.y === g.y);
           if (pegIndex !== -1) {
@@ -740,6 +705,43 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
               dragStyle={getDragStyle(g.id)}
             />
           );
+        })}
+
+        {/* Draw linkages on the board (on top of gears) */}
+        {gears.filter(g => !g.isOnShelf && g.type === 'linkage').map(g => {
+          if (!g.sliderId) {
+            return (
+              <g key={g.id} transform={`translate(${g.x}, ${g.y})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
+                <rect x={-g.length/2 - 20} y="-30" width={g.length + 40} height="60" fill="transparent" />
+                <line x1={-g.length/2} y1="0" x2={g.length/2} y2="0" stroke={g.color} strokeWidth="10" strokeLinecap="round" />
+                <circle cx={-g.length/2} cy="0" r="5" fill="#2c3e50" />
+                <circle cx={g.length/2} cy="0" r="5" fill="#2c3e50" />
+              </g>
+            );
+          } else {
+            const slider = sliders.find(s => s.id === g.sliderId);
+            const pegIndex = pegs.findIndex(p => p.id === slider.pegId);
+            const peg = pegs[pegIndex];
+            let gearRotation = 0;
+            if (isSolved) {
+              gearRotation = peg.type === 'input' ? inputRotation : pegRotations[pegIndex];
+            } else {
+              gearRotation = peg.type === 'input' ? inputRotation : 0;
+            }
+            const rad = (gearRotation * Math.PI) / 180;
+            const px = peg.x + (peg.pinOffset || 0) * Math.cos(rad);
+            const py = peg.y + (peg.pinOffset || 0) * Math.sin(rad);
+            const sx = px + Math.sqrt(Math.abs(g.length ** 2 - (slider.y - py) ** 2));
+            const sy = slider.y;
+
+            return (
+              <g key={g.id} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
+                <line x1={px} y1={py} x2={sx} y2={sy} stroke={g.color} strokeWidth="10" strokeLinecap="round" />
+                <circle cx={px} cy={py} r="5" fill="#2c3e50" />
+                <circle cx={sx} cy={sy} r="5" fill="#2c3e50" />
+              </g>
+            );
+          }
         })}
 
         {/* Draw items on the shelf (scrollable, clipped) */}

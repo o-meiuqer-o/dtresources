@@ -36,7 +36,7 @@ export default function Gear({ x, y, teeth, radius, color, rotation, isOnShelf, 
   if (type === 'cam') {
     return (
       <g transform={`translate(${x}, ${y})`} onPointerDown={onPointerDown} style={dragStyle || { cursor: isOnShelf ? 'grab' : 'pointer' }}>
-        <circle r="60" fill="transparent" />
+        <circle r={isOnShelf ? "30" : "60"} fill="transparent" />
         <g transform={`rotate(${rotation})`}>
           <path d="M -30 0 A 30 30 0 1 0 30 0 C 30 -30, 15 -60, 0 -60 C -15 -60, -30 -30, -30 0" fill={color} stroke="#2c3e50" strokeWidth="4" />
           <circle r="6" fill="#ecf0f1" />
@@ -56,7 +56,7 @@ export default function Gear({ x, y, teeth, radius, color, rotation, isOnShelf, 
       onPointerDown={onPointerDown}
       style={dragStyle || { cursor: 'grab', ...style }}
     >
-      <circle cx={x} cy={y} r={Math.max((radius || 50) + 20, 50)} fill="transparent" />
+      <circle cx={x} cy={y} r={Math.max((radius || 50) + (isOnShelf ? 0 : 20), 40)} fill="transparent" />
       <path d={path} fill={color} stroke="#333" strokeWidth="2" />
       <circle cx={x} cy={y} r={radius * 0.2} fill="#222" />
       <circle cx={x} cy={y} r={radius * 0.1} fill="#fff" />

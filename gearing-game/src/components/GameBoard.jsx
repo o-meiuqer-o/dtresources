@@ -490,13 +490,23 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
       <svg ref={svgRef} width="100%" height="100%" viewBox="0 0 1280 720" preserveAspectRatio="xMidYMid meet" onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onWheel={handleWheel} style={{ display: 'block', background: 'rgba(0,0,0,0.1)' }}>
         <defs>
           <clipPath id="shelfClip">
-            <rect x="0" y="300" width="250" height="420" />
+            <rect x="0" y="300" width="330" height="420" />
           </clipPath>
         </defs>
 
         <TargetReference targetConfig={level.target} />
 
-        <rect x="0" y="0" width="250" height="720" fill="rgba(0,0,0,0.3)" onPointerDown={handleShelfPointerDown} style={{ cursor: 'ns-resize' }} />
+        <rect x="0" y="0" width="330" height="720" fill="rgba(0,0,0,0.3)" onPointerDown={handleShelfPointerDown} style={{ cursor: 'ns-resize' }} />
+        
+        {/* Scroll Zone Visual Indicator */}
+        <rect x="250" y="300" width="80" height="420" fill="rgba(255,255,255,0.05)" style={{ pointerEvents: 'none' }} />
+        <g style={{ pointerEvents: 'none' }} opacity="0.6">
+           <path d="M 290 320 L 280 335 L 300 335 Z" fill="#bdc3c7" />
+           <line x1="290" y1="335" x2="290" y2="685" stroke="#bdc3c7" strokeWidth="4" strokeDasharray="10,10" />
+           <path d="M 290 700 L 280 685 L 300 685 Z" fill="#bdc3c7" />
+           <text x="290" y="510" fill="#bdc3c7" fontSize="16" transform="rotate(-90 290 510)" textAnchor="middle" letterSpacing="4" fontWeight="bold">SCROLL ZONE</text>
+        </g>
+
         <foreignObject x="20" y="20" width="210" height="280">
           <div xmlns="http://www.w3.org/1999/xhtml" style={{ color: 'white' }}>
             <button onClick={onBack} style={{ marginBottom: '15px', padding: '8px 12px', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', borderRadius: '6px', cursor: 'pointer', fontSize: '14px', backdropFilter: 'blur(5px)' }}>&larr; Menu</button>
@@ -750,7 +760,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             if (g.type === 'linkage') {
               return (
                 <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
-                  <rect x={-g.length/2 - 20} y="-30" width={g.length + 40} height="60" fill="transparent" />
+                  <rect x={-g.length/2 - 10} y="-20" width={g.length + 20} height="40" fill="transparent" />
                   <line x1={-g.length/2} y1="0" x2={g.length/2} y2="0" stroke={g.color} strokeWidth="10" strokeLinecap="round" />
                   <circle cx={-g.length/2} cy="0" r="5" fill="#2c3e50" />
                   <circle cx={g.length/2} cy="0" r="5" fill="#2c3e50" />
@@ -761,7 +771,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             if (g.type === 'belt') {
               return (
                 <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
-                  <rect x="-60" y="-30" width="120" height="60" fill="transparent" />
+                  <rect x="-45" y="-15" width="90" height="30" fill="transparent" />
                   <rect x="-40" y="-10" width="80" height="20" fill="none" stroke={g.color} strokeWidth="6" rx="10" />
                   <text y="-20" fill="white" fontSize="12" textAnchor="middle">Standard Belt</text>
                 </g>
@@ -770,7 +780,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             if (g.type === 'crossed_belt') {
               return (
                 <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
-                  <rect x="-60" y="-30" width="120" height="60" fill="transparent" />
+                  <rect x="-45" y="-15" width="90" height="30" fill="transparent" />
                   <path d="M -40 -10 L 40 10 M -40 10 L 40 -10 M -40 -10 A 10 10 0 0 0 -40 10 M 40 -10 A 10 10 0 0 1 40 10" fill="none" stroke={g.color} strokeWidth="6" />
                   <text y="-20" fill="white" fontSize="12" textAnchor="middle">Crossed Belt</text>
                 </g>

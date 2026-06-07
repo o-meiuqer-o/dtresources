@@ -32,10 +32,10 @@ export function generateGearPath(cx, cy, teeth, radius, addendum, dedendum) {
   return `M ${points.join(' L ')} Z`;
 }
 
-export default function Gear({ x, y, teeth, radius, color, rotation, isOnShelf, onPointerDown, type, pinOffset, id, style }) {
+export default function Gear({ x, y, teeth, radius, color, rotation, isOnShelf, onPointerDown, type, pinOffset, id, style, dragStyle }) {
   if (type === 'cam') {
     return (
-      <g transform={`translate(${x}, ${y})`} onPointerDown={onPointerDown} style={{ cursor: isOnShelf ? 'grab' : 'pointer' }}>
+      <g transform={`translate(${x}, ${y})`} onPointerDown={onPointerDown} style={dragStyle || { cursor: isOnShelf ? 'grab' : 'pointer' }}>
         <circle r="60" fill="transparent" />
         <g transform={`rotate(${rotation})`}>
           <path d="M -30 0 A 30 30 0 1 0 30 0 C 30 -30, 15 -60, 0 -60 C -15 -60, -30 -30, -30 0" fill={color} stroke="#2c3e50" strokeWidth="4" />
@@ -54,7 +54,7 @@ export default function Gear({ x, y, teeth, radius, color, rotation, isOnShelf, 
       transform={`rotate(${rotation || 0}, ${x}, ${y})`} 
       id={id}
       onPointerDown={onPointerDown}
-      style={{ cursor: 'grab', ...style }}
+      style={dragStyle || { cursor: 'grab', ...style }}
     >
       <circle cx={x} cy={y} r={Math.max((radius || 50) + 20, 50)} fill="transparent" />
       <path d={path} fill={color} stroke="#333" strokeWidth="2" />

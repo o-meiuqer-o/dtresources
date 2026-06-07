@@ -298,7 +298,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
     const cursorPt = pt.matrixTransform(svg.getScreenCTM().inverse());
 
     if (shelfDragStart) {
-       const dy = cursorPt.y - shelfDragStart.y;
+       const dy = (cursorPt.y - shelfDragStart.y) * 1.8;
        let newScroll = shelfDragStart.scrollY + dy;
        const totalContentHeight = level.shelfGears.length * 150 + 150; 
        const visibleHeight = 420; 
@@ -449,6 +449,15 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
     }
   };
 
+  const getDragStyle = (id) => {
+    const isSelected = draggingId === id;
+    return {
+      cursor: isSelected ? 'grabbing' : 'grab',
+      filter: isSelected ? 'drop-shadow(0px 0px 8px #f1c40f) drop-shadow(0px 0px 15px rgba(241,196,15,0.8))' : 'none',
+      transition: 'filter 0.2s'
+    };
+  };
+
   const toggleAudio = () => {
     const muted = audio.toggleMute();
     setIsAudioMuted(muted);
@@ -531,7 +540,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
         {gears.filter(g => !g.isOnShelf && (g.type === 'belt' || g.type === 'crossed_belt')).map(g => {
            if (!g.beltId) {
               return (
-                 <g key={g.id} transform={`translate(${g.x}, ${g.y})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                 <g key={g.id} transform={`translate(${g.x}, ${g.y})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
                     <rect x="-40" y="-10" width="80" height="20" fill="none" stroke={g.color} strokeWidth="6" rx="10" />
                  </g>
               );
@@ -676,7 +685,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
           if (g.type === 'linkage') {
             if (!g.sliderId) {
               return (
-                <g key={g.id} transform={`translate(${g.x}, ${g.y})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                <g key={g.id} transform={`translate(${g.x}, ${g.y})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
                   <rect x={-g.length/2 - 20} y="-30" width={g.length + 40} height="60" fill="transparent" />
                   <line x1={-g.length/2} y1="0" x2={g.length/2} y2="0" stroke={g.color} strokeWidth="10" strokeLinecap="round" />
                   <circle cx={-g.length/2} cy="0" r="5" fill="#2c3e50" />
@@ -700,7 +709,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
               const sy = slider.y;
 
               return (
-                <g key={g.id} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                <g key={g.id} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
                   <line x1={px} y1={py} x2={sx} y2={sy} stroke={g.color} strokeWidth="10" strokeLinecap="round" />
                   <circle cx={px} cy={py} r="5" fill="#2c3e50" />
                   <circle cx={sx} cy={sy} r="5" fill="#2c3e50" />
@@ -728,6 +737,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
               rotation={currentRotation}
               pinOffset={pegs[pegIndex]?.pinOffset}
               onPointerDown={(e) => handlePointerDown(e, g.id)} 
+              dragStyle={getDragStyle(g.id)}
             />
           );
         })}
@@ -737,7 +747,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
           {gears.filter(g => g.isOnShelf).map(g => {
             if (g.type === 'linkage') {
               return (
-                <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
                   <rect x={-g.length/2 - 20} y="-30" width={g.length + 40} height="60" fill="transparent" />
                   <line x1={-g.length/2} y1="0" x2={g.length/2} y2="0" stroke={g.color} strokeWidth="10" strokeLinecap="round" />
                   <circle cx={-g.length/2} cy="0" r="5" fill="#2c3e50" />
@@ -748,7 +758,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             }
             if (g.type === 'belt') {
               return (
-                <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
                   <rect x="-60" y="-30" width="120" height="60" fill="transparent" />
                   <rect x="-40" y="-10" width="80" height="20" fill="none" stroke={g.color} strokeWidth="6" rx="10" />
                   <text y="-20" fill="white" fontSize="12" textAnchor="middle">Standard Belt</text>
@@ -757,7 +767,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             }
             if (g.type === 'crossed_belt') {
               return (
-                <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={{ cursor: 'grab' }}>
+                <g key={g.id} transform={`translate(${g.x}, ${g.y + shelfScrollY})`} onPointerDown={(e) => handlePointerDown(e, g.id)} style={getDragStyle(g.id)}>
                   <rect x="-60" y="-30" width="120" height="60" fill="transparent" />
                   <path d="M -40 -10 L 40 10 M -40 10 L 40 -10 M -40 -10 A 10 10 0 0 0 -40 10 M 40 -10 A 10 10 0 0 1 40 10" fill="none" stroke={g.color} strokeWidth="6" />
                   <text y="-20" fill="white" fontSize="12" textAnchor="middle">Crossed Belt</text>
@@ -771,6 +781,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
                 y={g.y + shelfScrollY}
                 rotation={g.startRot}
                 onPointerDown={(e) => handlePointerDown(e, g.id)} 
+                dragStyle={getDragStyle(g.id)}
               />
             );
           })}

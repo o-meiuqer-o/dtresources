@@ -77,18 +77,23 @@
             href: 'prototyping.html',
             sections: [
                 { label: 'Cover', anchor: 'cover' },
-                { label: 'The Workflow', anchor: 'figma-workflow' },
-                { label: 'Key Concepts', anchor: 'figma-concepts' },
-                { label: 'Interactions', anchor: 'interactions' },
-                { label: 'Smart Animate', anchor: 'smart-animate' },
-                { label: 'Speed Shortcuts', anchor: 'shortcuts' },
-                { label: 'Figma Guide', anchor: 'figma-guide' },
-                { label: 'Beyond Figma', anchor: 'antigravity-guide' },
-                { label: 'More Domains', anchor: 'coming-soon' },
             ],
         },
         {
-            label: 'Module 06: Mech Prototyping',
+            label: 'Module 05.1: Software Prototyping',
+            icon: '💻',
+            href: 'software_prototyping.html',
+            sections: [
+                { label: 'Cover', anchor: 'software-cover' },
+                { label: 'Key Concepts', anchor: 'figma-concepts' },
+                { label: 'Interactions', anchor: 'interactions' },
+                { label: 'The Workflow', anchor: 'figma-workflow' },
+                { label: 'Smart Animate', anchor: 'smart-animate' },
+                { label: 'Beyond Figma', anchor: 'antigravity-guide' },
+            ],
+        },
+        {
+            label: 'Module 05.2: Mech Prototyping',
             icon: '⚙️',
             href: 'mech_prototyping.html',
             sections: [

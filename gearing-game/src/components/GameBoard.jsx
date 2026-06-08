@@ -158,11 +158,16 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
   const svgRef = useRef(null);
   const [boardRotation, setBoardRotation] = useState(0);
   const [showLesson, setShowLesson] = useState(false);
+  const [showStartInstruction, setShowStartInstruction] = useState(true);
   const [startTime] = useState(Date.now());
   const [endTime, setEndTime] = useState(null);
 
   const [windowDim, setWindowDim] = useState({ w: window.innerWidth, h: window.innerHeight });
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    setShowStartInstruction(true);
+  }, [level]);
   const [isAudioMuted, setIsAudioMuted] = useState(false);
   
   useEffect(() => {
@@ -802,6 +807,36 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             );
           })}
         </g>
+        {/* Overlay for Level Start Instruction */}
+        {showStartInstruction && !isSolved && (
+          <g style={{ pointerEvents: 'all' }} onPointerDown={(e) => { e.stopPropagation(); setShowStartInstruction(false); }}>
+            <rect x="0" y="0" width="1280" height="720" fill="rgba(0,0,0,0.6)" />
+            
+            {/* Highlight Shelf */}
+            <rect x="0" y="0" width="330" height="720" fill="none" stroke="#f1c40f" strokeWidth="6" strokeDasharray="10 5" />
+            <text x="350" y="360" fill="#f1c40f" fontSize="24" fontWeight="bold" textAnchor="start" transform="translate(0, 0)">⬅ 1. GRAB PARTS</text>
+            
+            {/* Highlight Target Reference */}
+            <rect x="1050" y="90" width="204" height="150" fill="none" rx="15" stroke="#f1c40f" strokeWidth="6" strokeDasharray="10 5" />
+            <text x="1152" y="70" fill="#f1c40f" fontSize="18" fontWeight="bold" textAnchor="middle">2. OBSERVE TARGET ⬇</text>
+
+            <foreignObject x="380" y="250" width="600" height="200">
+              <div style={{ backgroundColor: '#2c3e50', padding: '30px', borderRadius: '15px', color: 'white', textAlign: 'center', border: '4px solid #f1c40f', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', fontFamily: 'system-ui, sans-serif' }}>
+                <h2 style={{ margin: '0 0 15px 0', fontSize: '28px', color: '#f1c40f', textTransform: 'uppercase' }}>Mission Brief</h2>
+                <p style={{ fontSize: '20px', lineHeight: '1.5', margin: '0 0 25px 0' }}>
+                  Place the gears from the shelf strategically to replicate the movement of the target object.
+                </p>
+                <button 
+                  onPointerDown={(e) => { e.stopPropagation(); setShowStartInstruction(false); }}
+                  className="btn-primary" 
+                  style={{ fontSize: '20px', padding: '10px 30px', backgroundColor: '#e67e22', border: 'none', borderRadius: '8px', cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
+                >
+                  Let's Go!
+                </button>
+              </div>
+            </foreignObject>
+          </g>
+        )}
       </svg>
     </div>
   );

@@ -41,76 +41,36 @@
 
         <!-- ══ COVER ══ -->
         <section id="cover">
-            <div class="module-tag">Module 05 · Software Prototyping</div>
-            <h1>Making Ideas Clickable</h1>
-            <p style="color:#666; margin-top:1rem;">Two tools, one goal — turning your design into something a real user can interact with. Figma for click-through prototypes. Antigravity for coded ones.</p>
+            <div class="module-tag">Module 05 · Prototyping</div>
+            <h1>The Scope of Prototyping</h1>
+            <p style="color:#666; margin-top:1rem;">Prototyping is the act of making ideas tangible. The scope of prototyping is vast, spanning from digital interfaces to physical objects and electronic systems. While a few of these will be discussed in detail within our limitations, all serve the same goal: communicating intent and testing assumptions.</p>
 
-            <div class="tool-strip">
-                <div class="tool-strip-card" style="display:flex; flex-direction:column;">
-                    <div class="ts-tag figma-tag">Prototype</div>
-                    <div class="ts-logo">🎨</div>
-                    <h3>Design Tool</h3>
-                    <p style="font-weight:600; color:var(--figma-purple); margin-bottom:0.5rem;">Figma, Sketch</p>
-                    <p>Clickable, no real code</p>
-                    <div style="margin-top:auto; padding-top:1rem; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
-                        <a href="https://o-meiuqer-o.github.io/hcicourse/#part3" target="_blank" class="nav-pill" style="font-size:0.8rem; background:var(--figma-purple); color:white; border:none; padding: 5px 10px; flex:1; text-align:center;">Read Guide</a>
-                        <a href="https://www.figma.com/downloads/" target="_blank" class="nav-pill" style="font-size:0.8rem; padding: 5px 10px; flex:1; text-align:center;">Download</a>
-                    </div>
+            <div class="grid-container grid-3" style="margin-top: 2rem;">
+                <div class="card pillar-card" style="cursor: default;">
+                    <div class="pillar-image" style="background: #eef2ff; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius: 8px; height: 120px; margin-bottom: 1rem;">💻</div>
+                    <h3 style="color: var(--accent-color);">Software Prototyping</h3>
+                    <p>Digital interfaces and interactions.</p>
                 </div>
-                <div class="tool-strip-card" style="display:flex; flex-direction:column;">
-                    <div class="ts-tag ag-tag">AI-Powered</div>
-                    <div class="ts-logo">⚡</div>
-                    <h3>Antigravity AI</h3>
-                    <p>Describe a UI in plain English, get working HTML/CSS/JS. Real browser interactions, zero Figma required.</p>
-                    <div style="margin-top:auto; padding-top:1rem; display:flex; justify-content:center;">
-                        <a href="https://github.com/google/antigravity" target="_blank" class="nav-pill" style="font-size:0.8rem; padding: 5px 10px; width:100%; text-align:center;">Download Extension</a>
-                    </div>
+                <div class="card pillar-card" onclick="window.location.href='mech_prototyping.html'" style="cursor: pointer;">
+                    <div class="pillar-image" style="background: #fff5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius: 8px; height: 120px; margin-bottom: 1rem;">⚙️</div>
+                    <h3 style="color: var(--accent-color);">Mechanical Prototyping</h3>
+                    <p>Physical mechanisms and kinematics. →</p>
+                </div>
+                <div class="card pillar-card">
+                    <div class="pillar-image" style="background: #f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius: 8px; height: 120px; margin-bottom: 1rem; filter: grayscale(1); opacity: 0.5;">⚡</div>
+                    <h3 style="color: #666;">Electronics Prototyping</h3>
+                    <p>Coming Soon...</p>
                 </div>
             </div>
         </section>
 
-        <!-- ══ 01: FIGMA PROTOTYPE WORKFLOW ══ -->
-        <section id="figma-workflow">
-            <span class="section-label">01: The Workflow</span>
-            <h2>Figma Prototyping in 5 Steps</h2>
-            <p>The complete pipeline from static designs to a shareable, clickable prototype — adapted from the <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod5" target="_blank" style="color:var(--accent-color); font-weight:600;">HCI Course Figma Guide</a>.</p>
-
-            <div class="figma-flow">
-                <div class="flow-step">
-                    <div class="fs-icon">🖼️</div>
-                    <div class="fs-label">Design</div>
-                    <p>Create frames for each screen in Figma</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <div class="fs-icon">🔗</div>
-                    <div class="fs-label">Connect</div>
-                    <p>Switch to Prototype tab. Drag hotspot arrows between frames</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <div class="fs-icon">⚙️</div>
-                    <div class="fs-label">Configure</div>
-                    <p>Set trigger (On Click), action (Navigate To), and animation</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <div class="fs-icon">▶️</div>
-                    <div class="fs-label">Preview</div>
-                    <p>Press ▶ or Shift+Space. Test in the Figma Prototype player</p>
-                </div>
-                <div class="flow-arrow">→</div>
-                <div class="flow-step">
-                    <div class="fs-icon">🔗</div>
-                    <div class="fs-label">Share</div>
-                    <p>Copy share link → send to testers. Works in any browser</p>
-                </div>
-            </div>
-
-            <div class="teacher-cue">
-                <strong>Teaching Tip:</strong> Walk through the 5 steps on a projected screen using a real student file. The moment they see a frame-to-frame connection "snap" into place and a button actually navigate — that's the aha moment. Let them build their first connection themselves immediately after.
-            </div>
+        <!-- ══ SOFTWARE COVER ══ -->
+        <section id="software-cover" style="padding-top: 4rem;">
+            <h2>Software Prototyping</h2>
+            <p style="margin-bottom: 2rem;">Two tools, one goal — turning your digital design into something a real user can interact with. Figma for click-through prototypes. Antigravity for coded ones.</p>
         </section>
+
+
 
         <!-- ══ 02: KEY CONCEPTS ══ -->
         <section id="figma-concepts">
@@ -215,6 +175,49 @@
 
             <div class="teacher-cue">
                 <strong>Teaching Tip:</strong> Ask: "How does Instagram's story tap-advance work in Figma?" (After Delay + Navigate). "How does a bottom sheet swipe up?" (On Drag + Move In). Getting students to map real app interactions to Figma triggers builds mental models for both tools at once.
+            </div>
+        </section>
+
+        <!-- ══ 01: FIGMA PROTOTYPE WORKFLOW ══ -->
+        <section id="figma-workflow" style="padding-top: 4rem;">
+            <span class="section-label">01: The Workflow</span>
+            <h2>Figma Prototyping in 5 Steps</h2>
+            <p>The complete pipeline from static designs to a shareable, clickable prototype — adapted from the <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod5" target="_blank" style="color:var(--accent-color); font-weight:600;">HCI Course Figma Guide</a>.</p>
+
+            <div class="figma-flow">
+                <div class="flow-step">
+                    <div class="fs-icon">🖼️</div>
+                    <div class="fs-label">Design</div>
+                    <p>Create frames for each screen in Figma</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">🔗</div>
+                    <div class="fs-label">Connect</div>
+                    <p>Switch to Prototype tab. Drag hotspot arrows between frames</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">⚙️</div>
+                    <div class="fs-label">Configure</div>
+                    <p>Set trigger (On Click), action (Navigate To), and animation</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">▶️</div>
+                    <div class="fs-label">Preview</div>
+                    <p>Press ▶ or Shift+Space. Test in the Figma Prototype player</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">🔗</div>
+                    <div class="fs-label">Share</div>
+                    <p>Copy share link → send to testers. Works in any browser</p>
+                </div>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Walk through the 5 steps on a projected screen using a real student file. The moment they see a frame-to-frame connection "snap" into place and a button actually navigate — that's the aha moment. Let them build their first connection themselves immediately after.
             </div>
         </section>
 
@@ -354,17 +357,32 @@
             <div class="teacher-cue">
                 <strong>Teaching Tip:</strong> Ask students to pick the hardest interaction in their current Figma prototype — the one that Smart Animate can't quite nail — and prompt Antigravity to build just that interaction. Comparing the Figma version to the coded version makes the tool selection logic viscerally clear.
             </div>
-        </section>
 
-                <!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->
-        <section id="figma-guide" style="padding-top: 4rem; padding-bottom: 4rem;">
-            <span class="section-label">Figma Masterclass</span>
-            <h2>A Guide to Figma</h2>
-            <p style="margin-bottom: 2rem;">This section documents the successful steps for getting started with UX design in Figma, from understanding the interface to building advanced interactive prototypes.</p>
+            <div class="tool-strip" style="margin-top: 4rem;">
+                <div class="tool-strip-card" style="display:flex; flex-direction:column;">
+                    <div class="ts-tag figma-tag">Prototype</div>
+                    <div class="ts-logo">🎨</div>
+                    <h3>Design Tool</h3>
+                    <p style="font-weight:600; color:var(--figma-purple); margin-bottom:0.5rem;">Figma, Sketch</p>
+                    <p>Clickable, no real code</p>
+                    <div style="margin-top:auto; padding-top:1rem; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#part3" target="_blank" class="nav-pill" style="font-size:0.8rem; background:var(--figma-purple); color:white; border:none; padding: 5px 10px; flex:1; text-align:center;">Read Guide</a>
+                        <a href="https://www.figma.com/downloads/" target="_blank" class="nav-pill" style="font-size:0.8rem; padding: 5px 10px; flex:1; text-align:center;">Download</a>
+                    </div>
+                </div>
+                <div class="tool-strip-card" style="display:flex; flex-direction:column;">
+                    <div class="ts-tag ag-tag">AI-Powered</div>
+                    <div class="ts-logo">⚡</div>
+                    <h3>Antigravity AI</h3>
+                    <p>Describe a UI in plain English, get working HTML/CSS/JS. Real browser interactions, zero Figma required.</p>
+                    <div style="margin-top:auto; padding-top:1rem; display:flex; justify-content:center;">
+                        <a href="https://github.com/google/antigravity" target="_blank" class="nav-pill" style="font-size:0.8rem; padding: 5px 10px; width:100%; text-align:center;">Download Extension</a>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- ══ 07: BEYOND SOFTWARE ══ -->
+        <!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->
         <section id="coming-soon" style="padding-bottom: 6rem;">
             <span class="section-label">More Domains</span>
             <h2>Prototyping Beyond Software</h2>
@@ -616,6 +634,8 @@
             </div>
         </div>
     </div>
+
+
 
 </body>
 </html>

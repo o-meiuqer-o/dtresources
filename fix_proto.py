@@ -1,100 +1,81 @@
-import io
+import re
 
-with io.open('figma_guide_formatted.html', 'r', encoding='utf-8') as f:
-    fresh_guide = f.read()
+with open("prototyping.html", "r", encoding="utf-8") as f:
+    content = f.read()
 
-modal_html = """
-    <div class="modal-overlay" id="modal-glossary">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>📖 Glossary of Terms</h3>
-                <button class="modal-close">&times;</button>
-            </div>
-            <div class="modal-body" style="max-height: 70vh; overflow-y: auto; text-align: left;">
-                <h4>Glossary</h4>
-                <ul>
-                    <li><strong>UI (User Interface):</strong> The visual part of an application that the user interacts with.</li>
-                    <li><strong>Component:</strong> A reusable, self-contained piece of the UI, like a button or a search bar.</li>
-                    <li><strong>State:</strong> The visual appearance of a component based on user interaction (e.g., hover, disabled).</li>
-                </ul>
-                <hr>
-                <h4>A.1 Element: Buttons</h4>
-                <p>Clickable elements that allow a user to trigger an action, like submitting a form, confirming a choice, or navigating.</p>
-                <ul>
-                    <li>The most important action on a page should be the most prominent button (Primary).</li>
-                    <li>Button labels should be clear, action-oriented verbs (e.g., "Save", "Submit", "Cancel").</li>
-                    <li>Ensure buttons have clear 'hover' and 'disabled' states.</li>
-                </ul>
-                <hr>
-                <h4>A.2 Element: Input Fields</h4>
-                <p>Form elements that allow users to enter information, such as text, numbers, or selections.</p>
-                <ul>
-                    <li>Always use a clear label for each input field.</li>
-                    <li>Use placeholder text as a hint, not as a label.</li>
-                    <li>Use the correct input type for the required data (e.g., 'password' type to mask text).</li>
-                </ul>
-                <hr>
-                <h4>A.3 Element: Navigation</h4>
-                <p>A collection of links and components that help users move between different sections of an application.</p>
-                <hr>
-                <h4>A.4 Element: Cards</h4>
-                <p>Rectangular containers that group related information into a digestible chunk. They are a common way to display a collection of items.</p>
-                <hr>
-                <h4>A.5 Element: Modals (Pop-ups)</h4>
-                <p>A dialog box or pop-up window that appears on top of the main page content, requiring the user to interact with it before they can return to the page.</p>
-                <ul>
-                    <li>Use them sparingly, as they interrupt the user's flow.</li>
-                    <li>They are best used for critical actions, confirmations, or short forms.</li>
-                    <li>Always provide a clear way to close the modal (an 'X' button or a 'Cancel' button).</li>
-                </ul>
-                <hr>
-                <h4>A.6 Grid & Sizing Conventions</h4>
-                <p><strong>Grid & Layout:</strong></p>
-                <ul>
-                    <li><strong>8-Point Grid System:</strong> All sizes, margins, and padding should be in multiples of 8 (e.g., 8, 16, 24, 32pt).</li>
-                    <li><strong>Columns:</strong> Mobile designs typically use a 4-column grid.</li>
-                    <li><strong>Margins:</strong> Space on the left/right edges. Standard is 16pt.</li>
-                    <li><strong>Gutters:</strong> Space *between* columns. Standard is 16pt.</li>
-                </ul>
-                <p><strong>Sizing & Spacing (Tap Targets):</strong></p>
-                <ul>
-                    <li><strong>Minimum Tap Target:</strong> Any interactive element must have a minimum tappable area of 44 x 44pt.</li>
-                    <li><strong>Buttons (Height):</strong> 44pt, 48pt, or 56pt.</li>
-                    <li><strong>Icons (Visual Size):</strong> 24 x 24pt (but ensure the tappable area is at least 44x44pt).</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-"""
+# 1. Extract tool-strip
+tool_strip_match = re.search(r'(<div class="tool-strip">.*?</div>\s*</div>\s*</div>)', content, re.DOTALL)
+if tool_strip_match:
+    tool_strip_html = tool_strip_match.group(1)
+    content = content.replace(tool_strip_html, "")
+else:
+    # Let's try more robust extraction for tool-strip
+    tool_strip_match = re.search(r'(<div class="tool-strip">.*?</div>\s*</div>\s*)</section>', content, re.DOTALL)
+    if tool_strip_match:
+        tool_strip_html = tool_strip_match.group(1)
+        content = content.replace(tool_strip_html, "")
+    else:
+        print("Could not extract tool-strip")
 
-concept_card_html = """                <div class="concept-card" data-modal="modal-glossary">
-                    <div class="cc-icon">📖</div>
-                    <h3>Glossary of Terms</h3>
-                    <p>A quick reference guide for common UI elements, grids, sizing conventions, and design components.</p>
-                    <div class="cc-cta">Learn more →</div>
+# 2. Extract figma-workflow
+workflow_match = re.search(r'(<!-- ══ 01: FIGMA PROTOTYPE WORKFLOW ══ -->.*?</section>)', content, re.DOTALL)
+if workflow_match:
+    workflow_html = workflow_match.group(1)
+    content = content.replace(workflow_html, "")
+else:
+    print("Could not extract figma-workflow")
+
+# 3. Modify cover section
+cover_new = """        <!-- ══ COVER ══ -->
+        <section id="cover">
+            <div class="module-tag">Module 05 · Prototyping</div>
+            <h1>The Scope of Prototyping</h1>
+            <p style="color:#666; margin-top:1rem;">Prototyping is the act of making ideas tangible. The scope of prototyping is vast, spanning from digital interfaces to physical objects and electronic systems. While a few of these will be discussed in detail within our limitations, all serve the same goal: communicating intent and testing assumptions.</p>
+
+            <div class="grid-container grid-3" style="margin-top: 2rem;">
+                <div class="card pillar-card" style="cursor: default;">
+                    <div class="pillar-image" style="background: #eef2ff; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius: 8px; height: 120px; margin-bottom: 1rem;">💻</div>
+                    <h3 style="color: var(--accent-color);">Software Prototyping</h3>
+                    <p>Digital interfaces and interactions.</p>
                 </div>
-            </div>"""
+                <div class="card pillar-card" onclick="window.location.href='mech_prototyping.html'" style="cursor: pointer;">
+                    <div class="pillar-image" style="background: #fff5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius: 8px; height: 120px; margin-bottom: 1rem;">⚙️</div>
+                    <h3 style="color: var(--accent-color);">Mechanical Prototyping</h3>
+                    <p>Physical mechanisms and kinematics. →</p>
+                </div>
+                <div class="card pillar-card">
+                    <div class="pillar-image" style="background: #f5f5f5; display:flex; align-items:center; justify-content:center; font-size:3rem; border-radius: 8px; height: 120px; margin-bottom: 1rem; filter: grayscale(1); opacity: 0.5;">⚡</div>
+                    <h3 style="color: #666;">Electronics Prototyping</h3>
+                    <p>Coming Soon...</p>
+                </div>
+            </div>
+        </section>
 
-with io.open('prototyping.html', 'r', encoding='utf-8') as f:
-    proto_html = f.read()
+        <!-- ══ SOFTWARE COVER ══ -->
+        <section id="software-cover" style="padding-top: 4rem;">
+            <h2>Software Prototyping</h2>
+            <p style="margin-bottom: 2rem;">Two tools, one goal — turning your digital design into something a real user can interact with. Figma for click-through prototypes. Antigravity for coded ones.</p>
+        </section>"""
 
-start_marker = '<!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->'
-end_marker = '<!-- ══ 07: COMING SOON ══ -->'
+content = re.sub(r'<!-- ══ COVER ══ -->.*?</section>', cover_new, content, flags=re.DOTALL)
 
-idx1 = proto_html.find(start_marker)
-idx2 = proto_html.find(end_marker)
+# 4. Insert figma-workflow before smart-animate
+if workflow_match:
+    content = content.replace('<!-- ══ 04: SMART ANIMATE ══ -->', workflow_html + '\n\n        <!-- ══ 04: SMART ANIMATE ══ -->')
 
-if idx1 != -1 and idx2 != -1:
-    proto_html = proto_html[:idx1] + fresh_guide + '\n\n        ' + proto_html[idx2:]
+# 5. Insert tool-strip at the end of antigravity-guide
+if tool_strip_match:
+    content = content.replace('<!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->', tool_strip_html + '\n        </section>\n\n        <!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->')
+    # wait, the antigravity-guide ends with </section>.
+    content = content.replace('</section>\n\n                <!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->', tool_strip_html + '\n        </section>\n\n                <!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->')
 
-proto_html = proto_html.replace(
-    '<div class="concept-card" data-modal="modal-components">\n                    <div class="cc-icon">🧩</div>\n                    <h3>Interactive Components</h3>\n                    <p>Components with variants can swap states — toggles, checkboxes, hover states — without navigating to a new frame at all.</p>\n                    <div class="cc-cta">Learn more →</div>\n                </div>\n            </div>',
-    '<div class="concept-card" data-modal="modal-components">\n                    <div class="cc-icon">🧩</div>\n                    <h3>Interactive Components</h3>\n                    <p>Components with variants can swap states — toggles, checkboxes, hover states — without navigating to a new frame at all.</p>\n                    <div class="cc-cta">Learn more →</div>\n                </div>\n' + concept_card_html
-)
+# 6. Remove Figma Masterclass
+content = re.sub(r'<!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->.*?</section>', '', content, flags=re.DOTALL)
 
-proto_html = proto_html.replace('</body>', modal_html + '\n</body>')
+# 7. Update Next button
+#     <a href="mech_prototyping.html" class="nav-pill" style="font-size: 1.1rem; padding: 12px 24px;">Module 06: Mechanical Prototyping →</a>
+next_btn = '<a href="mech_prototyping.html" class="download-btn" style="margin-top: 2rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Next: Module 06: Mechanical Prototyping →</a>'
+content = re.sub(r'<a href="mech_prototyping\.html" class="nav-pill".*?</a>', next_btn, content)
 
-with io.open('prototyping.html', 'w', encoding='utf-8') as f:
-    f.write(proto_html)
-
-print('Updated prototyping.html successfully!')
+with open("prototyping.html", "w", encoding="utf-8") as f:
+    f.write(content)

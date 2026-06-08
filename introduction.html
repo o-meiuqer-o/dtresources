@@ -84,6 +84,11 @@
             <p style="color: #666; margin-top: 1rem;">How we transformed survival into the choreography of design.</p>
         </section>
 
+        <section id="genesis-intro" style="padding-bottom: 2rem;">
+            <h2>The Architecture of Decision Making</h2>
+            <p>Design thinking isn't a modern invention; it's the formalization of how humans have always solved problems. To understand the frameworks we use today, we must first look at the primal scenarios of friction and empathy. The following interactive games simulate fundamental human interactions that act as the genesis of all design logic. Play through them to see how natural instincts align with professional design strategies.</p>
+        </section>
+
         <!-- 1. JOHNNY'S DILEMMA (INTERACTIVE GAME) -->
         <section id="johnny-story">
             <span class="section-label">01: Johnny's Dilemma</span>
@@ -185,22 +190,55 @@
             </div>
         </section>
 
-        <!-- 3. DOCTOR'S LOOP (STILL HERE AS COMPLEMENT) -->
+        <!-- 3. DOCTOR'S LOOP (INTERACTIVE GAME) -->
         <section id="doctor-section">
             <span class="section-label">03: Doctor's Loop</span>
-            <h2>Doctor's Loop</h2>
-            <div class="grid-container grid-3">
-                <div class="card">
-                    <h4>Assess</h4>
-                    <p>Gathering symptoms to find the root cause (Empathy).</p>
+            <h2>The Doctor's Loop</h2>
+            <div class="highlight-box" style="margin-bottom: 2rem;">
+                 <p><strong>Context & Complexity:</strong> A doctor doesn't just guess a diagnosis; they follow a strict loop of Assess (Empathy), Prescribe (Prototyping), and Follow-up (Iteration). In this scenario, a patient walks in with a mysterious headache. How you navigate their symptoms dictates their recovery.</p>
+                 <p><strong>Please select an option in the game below to see the outcome.</strong></p>
+            </div>
+
+            <div class="game-container" id="doctor-game">
+                <div class="game-screen active" data-step="1">
+                    <h3>The Assessment</h3>
+                    <div class="game-visual" style="background-image: url('images/doctor_1_clarity.png');"></div>
+                    <p>A patient complains of severe migraines. What is your first step?</p>
+                    <div class="game-choices">
+                        <button class="choice-btn" onclick="makeChoice('doctor-game', 1, 2)">Assume it's stress and prescribe painkillers.</button>
+                        <button class="choice-btn" onclick="makeChoice('doctor-game', 1, 3)">Ask about their sleep, diet, and screen time.</button>
+                    </div>
                 </div>
-                <div class="card">
-                    <h4>Prescribe</h4>
-                    <p>The first prototype of a solution (Execution).</p>
+
+                <div class="game-screen" data-step="2">
+                    <h3>Outcome: The Shallow Fix</h3>
+                    <div class="game-visual" style="background-image: url('images/doctor_3_iteration.png');"></div>
+                    <p><strong>Prescription Failed.</strong> The painkillers masked the symptom, but the migraines returned. You failed to assess the root cause (Lack of Empathy).</p>
+                    <button class="choice-btn" onclick="resetGame('doctor-game')">Iterate Strategy →</button>
                 </div>
-                <div class="card">
-                    <h4>Follow-up</h4>
-                    <p>The feedback loop (Iteration).</p>
+
+                <div class="game-screen" data-step="3">
+                    <h3>The Prescription</h3>
+                    <div class="game-visual" style="background-image: url('images/doctor_2_ideation.png');"></div>
+                    <p>You discover they stare at a screen for 12 hours a day with poor posture. What is your prototype solution?</p>
+                    <div class="game-choices">
+                        <button class="choice-btn" onclick="makeChoice('doctor-game', 3, 4)">Tell them to quit their job.</button>
+                        <button class="choice-btn" onclick="makeChoice('doctor-game', 3, 5)">Prescribe screen breaks, ergonomic adjustments, and follow up in a week.</button>
+                    </div>
+                </div>
+                
+                <div class="game-screen" data-step="4">
+                    <h3>Outcome: Unrealistic Prototype</h3>
+                    <div class="game-visual" style="background-image: url('images/doctor_3_iteration.png');"></div>
+                    <p><strong>System Rejected.</strong> Quitting their job isn't a viable solution for their livelihood. Your prototype didn't account for the user's constraints.</p>
+                    <button class="choice-btn" onclick="resetGame('doctor-game')">Refine Solution →</button>
+                </div>
+
+                <div class="game-screen" data-step="5">
+                    <h3>Outcome: The Healing Loop</h3>
+                    <div class="game-visual" style="background-image: url('images/doctor_3_iteration.png');"></div>
+                    <p><strong>Iteration Success.</strong> The patient returns a week later. The migraines are gone. You successfully completed the loop: Assess (Empathy) → Prescribe (Execution) → Follow-up (Iteration).</p>
+                    <button class="choice-btn" onclick="resetGame('doctor-game')">Restart</button>
                 </div>
             </div>
         </section>

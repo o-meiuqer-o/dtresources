@@ -135,19 +135,6 @@ function TargetReference({ targetConfig }) {
   );
 }
 
-export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
-  const [gears, setGears] = useState(() => {
-    return level.shelfGears.map((g, index) => ({
-      ...g,
-      x: 125,
-      y: 400 + index * 150,
-      startRot: 0,
-      isOnShelf: true,
-      sliderId: null,
-      beltId: null
-    }));
-  });
-export default function GameBoard({ level, onBack, onNextLevel, isLastLevel, skipIntro }) {
   const { pegs, sliders = [], belts: beltsConfig = [] } = level;
   
   const [gears, setGears] = useState(() => getInitialGears(level));

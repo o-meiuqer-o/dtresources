@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 05.1: Software Prototyping | Design Thinking</title>
+    <meta name="description"
+        content="Figma prototyping and AI-assisted UI generation — building interactive software prototypes as part of the Design Thinking process.">
+
+    <meta name="theme-color" content="#f5f5f7">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧪</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    
+</head>
+
+<body>
+
+    <nav class="global-nav">
+        <div class="breadcrumbs">
+            <a href="index.html">Home</a> &gt; <a href="prototyping.html">Module 05</a> &gt; <span>Module 05.1: Software Prototyping</span>
+        </div>
+        <div class="nav-links">
+            <div class="teacher-mode-control">
+                <span>Teacher Mode</span>
+                <label class="switch">
+                    <input type="checkbox" id="teacher-mode-checkbox" aria-label="Toggle Teacher Mode">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <a href="ideation.html" class="nav-pill">← Back</a>
+        </div>
+    </nav>
+
+    <div class="scroll-container">
+
+
+
+        <!-- ══ SOFTWARE COVER ══ -->
+        <section id="software-cover" style="padding-top: 4rem;">
+            <h2>Software Prototyping</h2>
+            <p style="margin-bottom: 2rem;">Two tools, one goal — turning your digital design into something a real user can interact with. Figma for click-through prototypes. Antigravity for coded ones.</p>
+        </section>
+
+
+
+        <!-- ══ 02: KEY CONCEPTS ══ -->
+        <section id="figma-concepts">
+            <span class="section-label">02: Key Concepts</span>
+            <h2>What to Know Before You Click</h2>
+            <p>Six concepts that separate a beginner Figma prototype from a professional one. Click each to learn more.</p>
+
+            <div class="concept-row">
+                <div class="concept-card" data-modal="modal-frames">
+                    <div class="cc-icon">🖼️</div>
+                    <h3>Frames as Screens</h3>
+                    <p>In Figma, each screen of your app is a Frame. Prototype connections always go from one Frame to another.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-hotspots">
+                    <div class="cc-icon">🎯</div>
+                    <h3>Hotspots</h3>
+                    <p>The interactive zone on a frame. Any element — button, image, icon — can be a hotspot that triggers a navigation action.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-triggers">
+                    <div class="cc-icon">👆</div>
+                    <h3>Triggers</h3>
+                    <p>What the user does to activate the connection. On Click is most common — but also On Hover, On Drag, Key Press, and more.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-animations">
+                    <div class="cc-icon">✨</div>
+                    <h3>Transitions & Animations</h3>
+                    <p>How Figma moves between screens. Instant, Dissolve, Smart Animate, Move In/Out — each signals a different navigation intent.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-overflow">
+                    <div class="cc-icon">📜</div>
+                    <h3>Scrolling & Overflow</h3>
+                    <p>Frames can scroll vertically or horizontally. Fix elements (nav bars, footers) so they stay while content scrolls beneath them.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-components">
+                    <div class="cc-icon">🧩</div>
+                    <h3>Interactive Components</h3>
+                    <p>Components with variants can swap states — toggles, checkboxes, hover states — without navigating to a new frame at all.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+                <div class="concept-card" data-modal="modal-glossary">
+                    <div class="cc-icon">📖</div>
+                    <h3>Glossary of Terms</h3>
+                    <p>A quick reference guide for common UI elements, grids, sizing conventions, and design components.</p>
+                    <div class="cc-cta">Learn more →</div>
+                </div>
+            </div>
+
+
+        </section>
+
+        <!-- ══ 03: INTERACTION TYPES ══ -->
+        <section id="interactions">
+            <span class="section-label">03: Interactions</span>
+            <h2>Choosing the Right Trigger</h2>
+            <p>Not every interaction is a tap. Picking the correct trigger makes your prototype feel native — and catches usability issues that "On Click only" prototypes miss.</p>
+
+            <div class="interaction-picker">
+                <div class="ip-card" data-modal="modal-trig-click">
+                    <div class="ip-icon">👆</div>
+                    <h4>On Click</h4>
+                    <p>Standard tap/click. The default for almost all navigation.</p>
+                </div>
+                <div class="ip-card" data-modal="modal-trig-hover">
+                    <div class="ip-icon">🖱️</div>
+                    <h4>On Hover</h4>
+                    <p>Reveals tooltips, dropdowns, or sub-menus on desktop.</p>
+                </div>
+                <div class="ip-card" data-modal="modal-trig-drag">
+                    <div class="ip-icon">✌️</div>
+                    <h4>On Drag</h4>
+                    <p>Swipe-to-navigate carousels, drawers, and card stacks.</p>
+                </div>
+                <div class="ip-card" data-modal="modal-trig-afterdelay">
+                    <div class="ip-icon">⏱️</div>
+                    <h4>After Delay</h4>
+                    <p>Auto-advances — splash screens, loading states, onboarding.</p>
+                </div>
+                <div class="ip-card" data-modal="modal-trig-key">
+                    <div class="ip-icon">⌨️</div>
+                    <h4>Key / Gamepad</h4>
+                    <p>Keyboard shortcuts for desktop apps and accessibility testing.</p>
+                </div>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Ask: "How does Instagram's story tap-advance work in Figma?" (After Delay + Navigate). "How does a bottom sheet swipe up?" (On Drag + Move In). Getting students to map real app interactions to Figma triggers builds mental models for both tools at once.
+            </div>
+        </section>
+
+        <!-- ══ 01: FIGMA PROTOTYPE WORKFLOW ══ -->
+        <section id="figma-workflow" style="padding-top: 4rem;">
+            <span class="section-label">01: The Workflow</span>
+            <h2>Figma Prototyping in 5 Steps</h2>
+            <p>The complete pipeline from static designs to a shareable, clickable prototype — adapted from the <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod5" target="_blank" style="color:var(--accent-color); font-weight:600;">HCI Course Figma Guide</a>.</p>
+
+            <div class="figma-flow">
+                <div class="flow-step">
+                    <div class="fs-icon">🖼️</div>
+                    <div class="fs-label">Design</div>
+                    <p>Create frames for each screen in Figma</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">🔗</div>
+                    <div class="fs-label">Connect</div>
+                    <p>Switch to Prototype tab. Drag hotspot arrows between frames</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">⚙️</div>
+                    <div class="fs-label">Configure</div>
+                    <p>Set trigger (On Click), action (Navigate To), and animation</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">▶️</div>
+                    <div class="fs-label">Preview</div>
+                    <p>Press ▶ or Shift+Space. Test in the Figma Prototype player</p>
+                </div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step">
+                    <div class="fs-icon">🔗</div>
+                    <div class="fs-label">Share</div>
+                    <p>Copy share link → send to testers. Works in any browser</p>
+                </div>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Walk through the 5 steps on a projected screen using a real student file. The moment they see a frame-to-frame connection "snap" into place and a button actually navigate — that's the aha moment. Let them build their first connection themselves immediately after.
+            </div>
+
+            <!-- HCI course reference -->
+            <div class="hci-ref-strip" style="margin-top: 2rem;">
+                <div class="hrs-icon">📚</div>
+                <div>
+                    <h4>Step-by-step tutorials in the HCI Course</h4>
+                    <p>The detailed how-to for each of these concepts is in the companion course. Go there for hands-on exercises.</p>
+                    <div class="hci-module-pills">
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod5" target="_blank" class="hci-pill">Module 5: Prototyping</a>
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod7" target="_blank" class="hci-pill">Module 7: Advanced Prototyping</a>
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod8" target="_blank" class="hci-pill">Module 8: Scrolling</a>
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod9" target="_blank" class="hci-pill">Module 9: Advanced Scrolling</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ 04: SMART ANIMATE ══ -->
+        <section id="smart-animate">
+            <span class="section-label">04: Smart Animate</span>
+            <h2>Smart Animate — Figma's Secret Weapon</h2>
+            <p>Smart Animate automatically interpolates between matching layers across two frames, producing fluid transitions that look like real app animations — with zero code.</p>
+
+            <div class="grid-container grid-2" style="max-width: 700px;">
+                <div class="card" style="text-align:left;">
+                    <span style="font-size:1.6rem;">✅</span>
+                    <h3 style="margin-top:0.5rem; font-size:0.95rem; text-align:left;">When it works</h3>
+                    <ul style="font-size:0.82rem; color:#555; padding-left:1.2rem; margin-top:0.5rem; line-height:1.7;">
+                        <li>Layer names match exactly across both frames</li>
+                        <li>Elements change position, size, or opacity</li>
+                        <li>Used with Components and Auto Layout</li>
+                    </ul>
+                </div>
+                <div class="card" style="text-align:left;">
+                    <span style="font-size:1.6rem;">❌</span>
+                    <h3 style="margin-top:0.5rem; font-size:0.95rem; text-align:left;">When it breaks</h3>
+                    <ul style="font-size:0.82rem; color:#555; padding-left:1.2rem; margin-top:0.5rem; line-height:1.7;">
+                        <li>Layer names differ between frames</li>
+                        <li>Layers are in different groups/frames</li>
+                        <li>Too many mismatched layers (becomes chaotic)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="background: linear-gradient(135deg, #fdf4ff, #ede9fe); border-left-color: var(--figma-purple); margin-top: 2rem; max-width:720px;">
+                <p>💡 <strong>The naming rule:</strong> If a button called "CTA Button" moves from bottom to top between two frames, Figma will animate it flying up — automatically. Rename it to "Button" on one frame and the magic breaks. Layer naming IS the prototype logic.</p>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Live demo — duplicate a frame, move a card element to a different position, set Smart Animate, hit play. The gasps when it animates smoothly are reliable every time. Then break it on purpose by renaming a layer — showing exactly why naming discipline matters.
+            </div>
+        </section>
+
+
+
+        <!-- ══ 06: ANTIGRAVITY — CODED PROTOTYPES ══ -->
+        <section id="antigravity-guide">
+            <span class="section-label">06: Beyond Figma</span>
+            <h2>When Figma Isn't Enough</h2>
+            <p>Some interactions can't be prototyped in Figma — real form validation, dynamic data, complex animations, device APIs. That's when you reach for a coded prototype. Antigravity generates one from a prompt.</p>
+
+            <div class="tool-strip" style="margin-top: 1.5rem;">
+                <div class="tool-strip-card">
+                    <div class="ts-tag figma-tag">Use Figma when…</div>
+                    <ul style="text-align:left; font-size:0.82rem; color:#555; line-height:1.75; padding-left:1.2rem; margin-top:0.5rem;">
+                        <li>Testing navigation flows</li>
+                        <li>Stakeholder reviews and sign-off</li>
+                        <li>Design system exploration</li>
+                        <li>Designer-to-developer handoff</li>
+                    </ul>
+                </div>
+                <div class="tool-strip-card">
+                    <div class="ts-tag when-tag">Use Antigravity when…</div>
+                    <ul style="text-align:left; font-size:0.82rem; color:#555; line-height:1.75; padding-left:1.2rem; margin-top:0.5rem;">
+                        <li>Real hover / focus states needed</li>
+                        <li>Testing on actual mobile devices</li>
+                        <li>Animations Figma can't render</li>
+                        <li>Giving devs a code reference</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="ag-strip">
+                <div class="as-badge">⚡ Antigravity AI — Prototyping Guide</div>
+                <h2>Describe It. Get a Working Screen.</h2>
+                <p>Paste any of these into Antigravity. It outputs a single HTML file you can open in a browser and test immediately — or hand to a developer as a reference.</p>
+                
+                <div class="video-container" style="margin: 2rem 0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+                    <iframe width="100%" height="450" src="https://www.youtube.com/embed?listType=search&list=Google+Antigravity+AI+tutorial" title="Antigravity AI Tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                
+                <div class="ag-note" style="margin-bottom: 1.5rem;">
+                    <strong>Using the Agent Manager:</strong> To create these coded prototypes, you'll use Antigravity's Agent Manager. Simply open the extension, navigate to the Agent Manager, create a new subagent (e.g., a 'Frontend Developer' agent), and feed it one of the prompts below. The agent will autonomously write and refine the HTML, CSS, and JS.
+                </div>
+
+                <div class="prompt-card" onclick="copyPrompt(this)">
+                    <div class="prompt-label">📱 Replicate a Figma screen in code</div>
+                    <div class="prompt-text">Build a mobile login screen as a single HTML file. Dark background #0d0d14, purple gradient button (#7c3aed → #2563eb). Include: centred logo placeholder (80×80px circle), email input with label, password input with show/hide eye toggle, a 'Sign In' button with loading state on click (spinner + 'Signing in...' text), 'Forgot password' link, and 'Continue with Google' outlined button. Inter font, 390px max-width, border-radius 12px on inputs.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" onclick="copyPrompt(this)">
+                    <div class="prompt-label">🔄 Add real interaction states Figma can't do</div>
+                    <div class="prompt-text">Take a standard form with Name, Email, and Message fields plus a Submit button. Add: (1) real-time validation with red error messages that appear as the user types, (2) Submit button disabled until all fields are valid, (3) loading spinner on submit for 2 seconds, (4) success state with green checkmark and 'Message sent!' replacing the form. Single HTML file, clean white UI.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="prompt-card" onclick="copyPrompt(this)">
+                    <div class="prompt-label">✨ Test an animation Figma Smart Animate can't render</div>
+                    <div class="prompt-text">Create a card flip interaction — clicking a product card flips it with a 3D CSS transform (rotateY 180deg, 0.6s ease) to reveal a 'back' side with product details and an Add to Cart button. Include 3 cards in a row. Clean white layout, teal accent. Single HTML file.</div>
+                    <div class="copy-hint">Click to copy</div>
+                </div>
+
+                <div class="ag-note">
+                    <strong>Workflow tip:</strong> Start in Figma → get stakeholder approval on layout and aesthetics → use Antigravity to generate the coded version for device testing, complex interaction validation, or developer handoff reference. The two tools are complementary, not competing.
+                </div>
+            </div>
+
+            <div class="teacher-cue">
+                <strong>Teaching Tip:</strong> Ask students to pick the hardest interaction in their current Figma prototype — the one that Smart Animate can't quite nail — and prompt Antigravity to build just that interaction. Comparing the Figma version to the coded version makes the tool selection logic viscerally clear.
+            </div>
+
+            <div class="tool-strip" style="margin-top: 4rem;">
+                <div class="tool-strip-card" style="display:flex; flex-direction:column;">
+                    <div class="ts-tag figma-tag">Prototype</div>
+                    <div class="ts-logo">🎨</div>
+                    <h3>Design Tool</h3>
+                    <p style="font-weight:600; color:var(--figma-purple); margin-bottom:0.5rem;">Figma, Sketch</p>
+                    <p>Clickable, no real code</p>
+                    <div style="margin-top:auto; padding-top:1rem; display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+                        <a href="https://o-meiuqer-o.github.io/hcicourse/#part3" target="_blank" class="nav-pill" style="font-size:0.8rem; background:var(--figma-purple); color:white; border:none; padding: 5px 10px; flex:1; text-align:center;">Read Guide</a>
+                        <a href="https://www.figma.com/downloads/" target="_blank" class="nav-pill" style="font-size:0.8rem; padding: 5px 10px; flex:1; text-align:center;">Download</a>
+                    </div>
+                </div>
+                <div class="tool-strip-card" style="display:flex; flex-direction:column;">
+                    <div class="ts-tag ag-tag">AI-Powered</div>
+                    <div class="ts-logo">⚡</div>
+                    <h3>Antigravity AI</h3>
+                    <p>Describe a UI in plain English, get working HTML/CSS/JS. Real browser interactions, zero Figma required.</p>
+                    <div style="margin-top:auto; padding-top:1rem; display:flex; justify-content:center;">
+                        <a href="https://github.com/google/antigravity" target="_blank" class="nav-pill" style="font-size:0.8rem; padding: 5px 10px; width:100%; text-align:center;">Download Extension</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ 07: BEYOND SOFTWARE ══ -->
+        <section id="coming-soon" style="padding-bottom: 6rem; text-align: center;">
+            <span class="section-label">More Domains</span>
+            <h2>Ready to build mechanisms?</h2>
+            <p style="margin-bottom: 2rem;">Design Thinking doesn't stop at screens. Click below to explore Fusion 360, kinematics, and physical mechanisms.</p>
+            <a href="mech_prototyping.html" class="download-btn" style="margin-top: 1rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Next: Module 05.2: Mechanical Prototyping →</a>
+        </section>
+
+    </div><!-- /.scroll-container -->
+
+    <!-- ══ MODALS ══ -->
+
+    <!-- Concept modals -->
+    <div class="modal-overlay" id="modal-frames">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>🖼️ Frames as Screens</h2>
+            <p class="modal-subtitle">One frame = one screen state in your prototype.</p>
+            <div class="modal-section">
+                <h3>How to think about it</h3>
+                <p>Every screen in your app — the home screen, a modal, an error state, a success confirmation — gets its own Frame in Figma. Prototype connections always start from an element <em>inside</em> a frame and point to another frame as the destination.</p>
+            </div>
+            <div class="modal-section">
+                <h3>Practical rule</h3>
+                <p>If a user action changes what they see significantly — it needs a new frame. A tooltip appearing? Use an interactive component instead. A new page loading? New frame.</p>
+            </div>
+            <div class="modal-highlight">
+                <p>📐 <strong>Set your device frame:</strong> In the right panel, under Frame, choose a device preset (iPhone 15, Pixel 8, etc.) so your prototype plays at the correct size in the preview player.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-hotspots">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>🎯 Hotspots</h2>
+            <p class="modal-subtitle">The interactive zone — any element can be one.</p>
+            <div class="modal-section">
+                <h3>Creating a hotspot</h3>
+                <div class="modal-steps">
+                    <div class="modal-step"><div class="step-number">1</div><div>Select any element (button, image, text, icon) inside a frame.</div></div>
+                    <div class="modal-step"><div class="step-number">2</div><div>Switch to the <strong>Prototype</strong> tab in the right panel (or press <kbd>Shift+E</kbd>).</div></div>
+                    <div class="modal-step"><div class="step-number">3</div><div>Hover over the element — a blue ⊕ handle appears on the right edge. Drag it to the destination frame.</div></div>
+                </div>
+            </div>
+            <div class="modal-warning">
+                <p>⚠️ <strong>Tip:</strong> You can draw a hotspot over an empty area too — useful for testing if users discover hidden tappable zones (and they often won't, which is a usability finding).</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-triggers">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>👆 Triggers</h2>
+            <p class="modal-subtitle">What the user does to fire the interaction.</p>
+            <div class="modal-section">
+                <ul>
+                    <li><strong>On Click</strong> — tap or mouse click. Use for almost all navigation.</li>
+                    <li><strong>On Hover</strong> — cursor enters the element's bounds. Desktop only — menus, tooltips.</li>
+                    <li><strong>On Drag</strong> — click and drag. Carousels, bottom sheets, swipe-to-delete.</li>
+                    <li><strong>After Delay</strong> — triggers automatically after N milliseconds. Splash screens, loading states, auto-advancing onboarding.</li>
+                    <li><strong>Mouse Enter / Leave</strong> — more precise hover control for desktop UIs.</li>
+                    <li><strong>Key / Gamepad</strong> — keyboard shortcut triggers. Useful for desktop app or kiosk prototyping.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-animations">
+        <div class="modal-content" style="max-width:600px;">
+            <button class="modal-close">✕</button>
+            <h2>✨ Transitions & Animations</h2>
+            <p class="modal-subtitle">Choose the transition that matches the navigation intent.</p>
+            <div class="modal-section">
+                <ul>
+                    <li><strong>Instant</strong> — cut. No transition. Use for testing flow logic before investing in animation.</li>
+                    <li><strong>Dissolve</strong> — crossfade. Modal overlays, overlay states, gentle screen changes.</li>
+                    <li><strong>Smart Animate</strong> — matches and interpolates layers by name. Best for hero transitions, expanding cards, tab switches.</li>
+                    <li><strong>Move In / Move Out</strong> — slide directionally. Simulates push navigation (next page) or back navigation.</li>
+                    <li><strong>Push</strong> — both screens move together, one pushing the other off. Standard mobile page push.</li>
+                    <li><strong>Slide In / Slide Out</strong> — new screen slides over the current one. Bottom sheets, drawers, modals.</li>
+                </ul>
+            </div>
+            <div class="modal-highlight">
+                <p>💡 <strong>Animation direction tells a story.</strong> Moving right = going forward. Moving left = going back. Moving up = drawer or bottom sheet. Users read direction as hierarchy.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-overflow">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>📜 Scrolling & Overflow</h2>
+            <p class="modal-subtitle">Make your prototype scroll like the real app.</p>
+            <div class="modal-section">
+                <h3>Enabling scroll</h3>
+                <div class="modal-steps">
+                    <div class="modal-step"><div class="step-number">1</div><div>Select the Frame. In the right panel, find <strong>Prototype → Overflow</strong>.</div></div>
+                    <div class="modal-step"><div class="step-number">2</div><div>Set to <strong>Vertical Scrolling</strong> (or Horizontal for carousels).</div></div>
+                    <div class="modal-step"><div class="step-number">3</div><div>Make the content inside the frame taller than the frame itself — the overflow becomes scrollable in preview.</div></div>
+                </div>
+            </div>
+            <div class="modal-section">
+                <h3>Fixed elements (sticky nav / tab bar)</h3>
+                <p>Select an element (e.g. a nav bar), then in the right panel enable <strong>Fix position when scrolling</strong>. It stays put while the rest of the frame scrolls beneath it.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-components">
+        <div class="modal-content">
+            <button class="modal-close">✕</button>
+            <h2>🧩 Interactive Components</h2>
+            <p class="modal-subtitle">State changes without navigating to a new frame.</p>
+            <div class="modal-section">
+                <h3>What they solve</h3>
+                <p>A toggle switching on/off, a checkbox being checked, a button hovering — these are <em>state changes</em>, not page navigations. Without interactive components, you'd need a separate frame for every possible UI state. With them, you keep the logic inside the component.</p>
+            </div>
+            <div class="modal-section">
+                <h3>How to build one</h3>
+                <div class="modal-steps">
+                    <div class="modal-step"><div class="step-number">1</div><div>Create a component and add <strong>Variants</strong> — one per state (Default, Hover, Active, Disabled).</div></div>
+                    <div class="modal-step"><div class="step-number">2</div><div>In the Prototype panel, draw connections between variants (e.g. Default → Hover on Mouse Enter).</div></div>
+                    <div class="modal-step"><div class="step-number">3</div><div>When an instance of this component is used in any frame, it carries those interactions automatically.</div></div>
+                </div>
+            </div>
+            <div class="modal-highlight">
+                <p>🔗 <strong>Full tutorial:</strong> <a href="https://o-meiuqer-o.github.io/hcicourse/#figma-mod6" target="_blank" style="color:var(--accent-color);">HCI Course — Module 6: Advanced Components</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trigger modals -->
+    <div class="modal-overlay" id="modal-trig-click">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>👆 On Click</h2>
+            <div class="modal-section"><h3>When to use it</h3><p>The default for nearly all app navigation — buttons, list items, cards, icons. On mobile this corresponds to a tap. On desktop, a single left-click.</p></div>
+            <div class="modal-highlight"><p>💡 <strong>Test assumption:</strong> If users don't click your element during testing, it's either not discoverable or doesn't look interactive. That's usability data.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-hover">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>🖱️ On Hover</h2>
+            <div class="modal-section"><h3>When to use it</h3><p>Desktop-only interactions: dropdown menus appearing on hover, tooltips, image overlays, and revealing secondary actions. Never rely on hover for mobile prototypes — there's no hover state on touch screens.</p></div>
+            <div class="modal-warning"><p>⚠️ Do not test hover-dependent interactions on a phone. The flows will be completely broken for mobile users.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-drag">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>✌️ On Drag</h2>
+            <div class="modal-section"><h3>Best for</h3><ul><li>Carousel / image gallery swipe</li><li>Bottom sheet drag-up to expand</li><li>Card stack swipe (Tinder-style)</li><li>Side drawer / hamburger menu slide-in</li></ul></div>
+            <div class="modal-section"><h3>How to set it</h3><p>Select trigger → On Drag. Choose direction (Left, Right, Up, Down). Pair with a Move In / Slide animation in the matching direction for maximum realism.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-afterdelay">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>⏱️ After Delay</h2>
+            <div class="modal-section"><h3>Best for</h3><ul><li>Splash / launch screen (auto-advance after 2s)</li><li>Simulated loading state (skeleton → content)</li><li>Auto-advancing onboarding slides</li><li>Toast notification auto-dismiss</li></ul></div>
+            <div class="modal-section"><h3>Setting the delay</h3><p>In the interaction panel, set After Delay and enter milliseconds (e.g. 2000 = 2 seconds). Chain multiple delays to simulate a loading sequence.</p></div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal-trig-key">
+        <div class="modal-content"><button class="modal-close">✕</button>
+            <h2>⌨️ Key / Gamepad</h2>
+            <div class="modal-section"><h3>When to use it</h3><p>Desktop app prototypes where keyboard shortcuts are core to the UX (Ctrl+S = save, Escape = close modal). Also useful for testing kiosk interfaces or screen-reader navigation patterns.</p></div>
+            <div class="modal-section"><h3>How to set it</h3><p>Select trigger → Key/Gamepad → click the key field and press the actual keyboard key you want to bind. Works in Figma's Preview player, not in embedded share links.</p></div>
+        </div>
+    </div>
+
+    <div class="teacher-mode-indicator">TEACHER MODE ACTIVE</div>
+    <script src="nav.js"></script>
+    <script src="script.js"></script>
+    <script>
+        function copyPrompt(card) {
+            const textEl = card.querySelector('.prompt-text');
+            if (!textEl) return;
+            navigator.clipboard.writeText(textEl.innerText).then(() => {
+                const hint = card.querySelector('.copy-hint');
+                const orig = hint.textContent;
+                hint.textContent = '✓ Copied!';
+                hint.style.color = '#6ee7b7';
+                setTimeout(() => { hint.textContent = orig; hint.style.color = ''; }, 2000);
+            });
+        }
+    </script>
+
+    <div class="modal-overlay" id="modal-glossary">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>📖 Glossary of Terms</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 70vh; overflow-y: auto; text-align: left;">
+                <h4>Glossary</h4>
+                <ul>
+                    <li><strong>UI (User Interface):</strong> The visual part of an application that the user interacts with.</li>
+                    <li><strong>Component:</strong> A reusable, self-contained piece of the UI, like a button or a search bar.</li>
+                    <li><strong>State:</strong> The visual appearance of a component based on user interaction (e.g., hover, disabled).</li>
+                </ul>
+                <hr>
+                <h4>A.1 Element: Buttons</h4>
+                <p>Clickable elements that allow a user to trigger an action, like submitting a form, confirming a choice, or navigating.</p>
+                <ul>
+                    <li>The most important action on a page should be the most prominent button (Primary).</li>
+                    <li>Button labels should be clear, action-oriented verbs (e.g., "Save", "Submit", "Cancel").</li>
+                    <li>Ensure buttons have clear 'hover' and 'disabled' states.</li>
+                </ul>
+                <hr>
+                <h4>A.2 Element: Input Fields</h4>
+                <p>Form elements that allow users to enter information, such as text, numbers, or selections.</p>
+                <ul>
+                    <li>Always use a clear label for each input field.</li>
+                    <li>Use placeholder text as a hint, not as a label.</li>
+                    <li>Use the correct input type for the required data (e.g., 'password' type to mask text).</li>
+                </ul>
+                <hr>
+                <h4>A.3 Element: Navigation</h4>
+                <p>A collection of links and components that help users move between different sections of an application.</p>
+                <hr>
+                <h4>A.4 Element: Cards</h4>
+                <p>Rectangular containers that group related information into a digestible chunk. They are a common way to display a collection of items.</p>
+                <hr>
+                <h4>A.5 Element: Modals (Pop-ups)</h4>
+                <p>A dialog box or pop-up window that appears on top of the main page content, requiring the user to interact with it before they can return to the page.</p>
+                <ul>
+                    <li>Use them sparingly, as they interrupt the user's flow.</li>
+                    <li>They are best used for critical actions, confirmations, or short forms.</li>
+                    <li>Always provide a clear way to close the modal (an 'X' button or a 'Cancel' button).</li>
+                </ul>
+                <hr>
+                <h4>A.6 Grid & Sizing Conventions</h4>
+                <p><strong>Grid & Layout:</strong></p>
+                <ul>
+                    <li><strong>8-Point Grid System:</strong> All sizes, margins, and padding should be in multiples of 8 (e.g., 8, 16, 24, 32pt).</li>
+                    <li><strong>Columns:</strong> Mobile designs typically use a 4-column grid.</li>
+                    <li><strong>Margins:</strong> Space on the left/right edges. Standard is 16pt.</li>
+                    <li><strong>Gutters:</strong> Space *between* columns. Standard is 16pt.</li>
+                </ul>
+                <p><strong>Sizing & Spacing (Tap Targets):</strong></p>
+                <ul>
+                    <li><strong>Minimum Tap Target:</strong> Any interactive element must have a minimum tappable area of 44 x 44pt.</li>
+                    <li><strong>Buttons (Height):</strong> 44pt, 48pt, or 56pt.</li>
+                    <li><strong>Icons (Visual Size):</strong> 24 x 24pt (but ensure the tappable area is at least 44x44pt).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+</html>

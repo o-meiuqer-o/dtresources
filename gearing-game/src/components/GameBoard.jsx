@@ -135,6 +135,7 @@ function TargetReference({ targetConfig }) {
   );
 }
 
+export default function GameBoard({ level, onBack, onNextLevel, isLastLevel, skipIntro }) {
   const { pegs, sliders = [], belts: beltsConfig = [] } = level;
   
   const [gears, setGears] = useState(() => getInitialGears(level));

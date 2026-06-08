@@ -820,7 +820,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
             <rect x="1050" y="90" width="204" height="150" fill="none" rx="15" stroke="#f1c40f" strokeWidth="6" strokeDasharray="10 5" />
             <text x="1152" y="70" fill="#f1c40f" fontSize="18" fontWeight="bold" textAnchor="middle">2. OBSERVE TARGET ⬇</text>
 
-            <foreignObject x="380" y="200" width="600" height="350">
+            <foreignObject x="380" y="200" width="600" height="400">
               <div style={{ backgroundColor: '#2c3e50', padding: '30px', borderRadius: '15px', color: 'white', textAlign: 'center', border: '4px solid #f1c40f', boxShadow: '0 10px 30px rgba(0,0,0,0.5)', fontFamily: 'system-ui, sans-serif' }}>
                 <h2 style={{ margin: '0 0 15px 0', fontSize: '28px', color: '#f1c40f', textTransform: 'uppercase' }}>Mission Brief</h2>
                 <p style={{ fontSize: '20px', lineHeight: '1.5', margin: '0 0 25px 0' }}>
@@ -831,7 +831,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
                   className="btn-primary" 
                   style={{ fontSize: '20px', padding: '10px 30px', backgroundColor: '#e67e22', border: 'none', borderRadius: '8px', cursor: 'pointer', color: 'white', fontWeight: 'bold' }}
                 >
-                  Let's Go!
+                  START LEVEL
                 </button>
               </div>
             </foreignObject>

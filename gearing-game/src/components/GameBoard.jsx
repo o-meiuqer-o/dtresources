@@ -147,18 +147,17 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
       beltId: null
     }));
   });
+export default function GameBoard({ level, onBack, onNextLevel, isLastLevel, skipIntro }) {
+  const { pegs, sliders = [], belts: beltsConfig = [] } = level;
   
-  const pegs = level.pegs;
-  const sliders = level.sliders || [];
-  const beltsConfig = level.belts || [];
-
+  const [gears, setGears] = useState(() => getInitialGears(level));
   const [draggingId, setDraggingId] = useState(null);
   const [shelfDragStart, setShelfDragStart] = useState(null);
   const [shelfScrollY, setShelfScrollY] = useState(0);
   const svgRef = useRef(null);
   const [boardRotation, setBoardRotation] = useState(0);
   const [showLesson, setShowLesson] = useState(false);
-  const [showStartInstruction, setShowStartInstruction] = useState(true);
+  const [showStartInstruction, setShowStartInstruction] = useState(!skipIntro);
   const [startTime] = useState(Date.now());
   const [endTime, setEndTime] = useState(null);
 
@@ -166,8 +165,8 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel }) {
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
-    setShowStartInstruction(true);
-  }, [level]);
+    setShowStartInstruction(!skipIntro);
+  }, [level, skipIntro]);
   const [isAudioMuted, setIsAudioMuted] = useState(false);
   
   useEffect(() => {

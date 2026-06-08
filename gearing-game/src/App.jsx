@@ -6,16 +6,23 @@ import './App.css';
 
 function App() {
   const [currentLevelId, setCurrentLevelId] = useState(null);
+  const [skipIntro, setSkipIntro] = useState(false);
 
   const currentLevel = levels.find(l => l.id === currentLevelId);
 
   const handleNextLevel = () => {
     const nextId = currentLevelId + 1;
     if (levels.find(l => l.id === nextId)) {
+      setSkipIntro(true);
       setCurrentLevelId(nextId);
     } else {
       setCurrentLevelId(null); 
     }
+  };
+
+  const handleSelectLevel = (level) => {
+    setSkipIntro(false);
+    setCurrentLevelId(level.id);
   };
 
   return (
@@ -27,9 +34,10 @@ function App() {
           onBack={() => setCurrentLevelId(null)}
           onNextLevel={handleNextLevel}
           isLastLevel={currentLevelId === levels[levels.length - 1].id}
+          skipIntro={skipIntro}
         />
       ) : (
-        <LevelSelect onSelectLevel={(level) => setCurrentLevelId(level.id)} />
+        <LevelSelect onSelectLevel={handleSelectLevel} />
       )}
     </div>
   );

@@ -74,7 +74,7 @@ content = re.sub(r'<!-- ══ FIGMA COMPREHENSIVE GUIDE ══ -->.*?</section>
 
 # 7. Update Next button
 #     <a href="mech_prototyping.html" class="nav-pill" style="font-size: 1.1rem; padding: 12px 24px;">Module 06: Mechanical Prototyping →</a>
-next_btn = '<a href="mech_prototyping.html" class="download-btn" style="margin-top: 2rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Next: Module 06: Mechanical Prototyping →</a>'
+next_btn = '<a href="mech_prototyping.html" class="primary-btn" style="margin-top: 2rem;">Next: Module 05.2: Mechanical Prototyping →</a>'
 content = re.sub(r'<a href="mech_prototyping\.html" class="nav-pill".*?</a>', next_btn, content)
 
 with open("prototyping.html", "w", encoding="utf-8") as f:

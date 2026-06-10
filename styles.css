@@ -979,6 +979,29 @@ img {
     color: #444;
 }
 
+/* ===== Primary Action Button ===== */
+.primary-btn {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--accent-color);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 30px;
+    border: 2px solid var(--accent-color);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 113, 227, 0.2);
+}
+
+.primary-btn:hover {
+    background: #005bb5;
+    border-color: #005bb5;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 113, 227, 0.4);
+}
+
 /* ===== Download Button ===== */
 .download-btn {
     display: inline-block;

@@ -72,11 +72,13 @@
                     <span style="font-size: 3rem;">🖼️</span>
                     <h3>Moodboards</h3>
                     <p>Collecting textures, colors, and images to establish an emotional tone before designing.</p>
+                    <span class="card-cta">Explore →</span>
                 </div>
                 <div class="card tool-card" data-modal="modal-mindmap">
                     <span style="font-size: 3rem;">🕸️</span>
                     <h3>Mindmaps</h3>
                     <p>Radiant thinking. Starting from a central problem and branching out into related ideas.</p>
+                    <span class="card-cta">Explore →</span>
                 </div>
             </div>
         </section>
@@ -90,12 +92,14 @@
                 <div class="card tool-card" data-modal="modal-635">
                     <span style="font-size: 2.5rem;">📝</span>
                     <h3>Method 6-3-5</h3>
-                    <p>Brainwriting. 6 people, 3 ideas, 5 minutes. Pass the paper to build on others' ideas. A high-efficiency method.</p>
+                    <p>Brainwriting. 6 people, 3 ideas, 5 minutes. Pass the paper to build on others' ideas.</p>
+                    <span class="card-cta">Explore →</span>
                 </div>
                 <div class="card tool-card" data-modal="modal-scamper">
                     <span style="font-size: 2.5rem;">🔄</span>
                     <h3>SCAMPER</h3>
                     <p>Substitute, Combine, Adapt, Modify, Put to other uses, Eliminate, Rearrange.</p>
+                    <span class="card-cta">Explore →</span>
                 </div>
             </div>
         </section>
@@ -109,7 +113,8 @@
                 <div class="card tool-card" data-modal="modal-worst-idea">
                     <span style="font-size: 2.5rem;">🗑️</span>
                     <h3>The Worst Idea Method</h3>
-                    <p>Instead of chasing the best solution, compete to generate the most disastrous one. Reversing the worst idea reveals radical, unconstrained solutions.</p>
+                    <p>Instead of chasing the best solution, compete to generate the most disastrous one.</p>
+                    <span class="card-cta">Explore →</span>
                 </div>
             </div>
         </section>
@@ -123,24 +128,38 @@
                 <div class="card tool-card" data-modal="modal-moscow">
                     <span style="font-size: 2.5rem;">🎯</span>
                     <h3>MoSCoW Matrix</h3>
-                    <p>Must Have, Should Have, Could Have, Won't Have. Agree on what to build before committing resources.</p>
+                    <p>Must Have, Should Have, Could Have, Won't Have.</p>
+                    <span class="card-cta">Explore →</span>
                 </div>
                 <div class="card tool-card" data-modal="modal-dfv">
                     <span style="font-size: 2.5rem;">🔺</span>
                     <h3>Desirability, Feasibility &amp; Viability</h3>
                     <p>IDEO's three lenses — does anyone want it, can we build it, and should we?</p>
+                    <span class="card-cta">Explore →</span>
                 </div>
                 <div class="card tool-card" data-modal="modal-value-effort">
                     <span style="font-size: 2.5rem;">📊</span>
                     <h3>Value vs Effort Matrix</h3>
-                    <p>A 2×2 grid that plots ideas by value against effort to surface quick wins and strategic bets.</p>
+                    <p>A 2×2 grid that plots ideas by value against effort.</p>
+                    <span class="card-cta">Explore →</span>
+                </div>
+            </div>
+
+            <div class="ag-strip" style="margin-top: 3rem; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 12px; padding: 2rem;">
+                <div class="as-badge" style="display:inline-block; background:#111; color:white; padding:4px 10px; border-radius:4px; font-size:0.75rem; font-weight:700; margin-bottom:1rem;">⚡ Antigravity AI — Prioritization Dashboard</div>
+                <h3 style="margin-top:0;">Hard to judge "Business Value"?</h3>
+                <p>Use Antigravity to build an interactive dashboard that plots and scores your ideas for you.</p>
+                <div class="prompt-card" onclick="copyPrompt(this)" style="margin-top: 1.5rem; background: #fff; padding: 1.5rem; border: 1px solid #eee; border-radius: 8px; cursor: pointer; transition: all 0.2s;">
+                    <div class="prompt-label" style="font-weight: 600; margin-bottom: 0.5rem;">📊 Generate an Evaluation Dashboard</div>
+                    <div class="prompt-text" style="font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #444; line-height: 1.6;">Build an HTML dashboard that lets me input a list of ideas and rank them by 'Desirability', 'Feasibility', and 'Viability' on a scale of 1-10. Then, automatically plot them on a 2x2 Value vs Effort matrix. Include a button to export the ranked list as a CSV file.</div>
+                    <div class="copy-hint" style="font-size: 0.75rem; color: #888; margin-top: 0.5rem; text-align: right;">Click to copy</div>
                 </div>
             </div>
             
             <div style="margin-top: 3rem; text-align: center;">
                 <h2>Ready to build?</h2>
-                <a href="prototyping.html" class="download-btn"
-                    style="margin-top: 1rem; background: var(--accent-color); color: white; border-color: var(--accent-color);">Next: Module 05: Prototyping →</a>
+                <a href="prototyping.html" class="primary-btn"
+                    style="margin-top: 1rem;">Next: Module 05: Prototyping →</a>
             </div>
         </section>
 
@@ -325,6 +344,19 @@
     <div class="teacher-mode-indicator">TEACHER MODE ACTIVE</div>
     <script src="nav.js"></script>
     <script src="script.js"></script>
+    <script>
+        function copyPrompt(card) {
+            const textEl = card.querySelector('.prompt-text');
+            if (!textEl) return;
+            navigator.clipboard.writeText(textEl.innerText).then(() => {
+                const hint = card.querySelector('.copy-hint');
+                const orig = hint.textContent;
+                hint.textContent = '✓ Copied!';
+                hint.style.color = '#6ee7b7';
+                setTimeout(() => { hint.textContent = orig; hint.style.color = ''; }, 2000);
+            });
+        }
+    </script>
 </body>
 
 </html>

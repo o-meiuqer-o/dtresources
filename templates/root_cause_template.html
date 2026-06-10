@@ -352,7 +352,8 @@
             if (params.nodes.length > 0) {
                 const nodeId = params.nodes[0];
                 const pos = network.getPositions([nodeId]);
-                nodes.update({ id: nodeId, x: pos[nodeId].x, y: pos[nodeId].y, physics: false, fixed: { x: true, y: true } });
+                // Turn off physics so it stays where dropped, but don't 'fix' it so it can be moved again
+                nodes.update({ id: nodeId, x: pos[nodeId].x, y: pos[nodeId].y, physics: false });
                 saveTemplateData();
             }
         });

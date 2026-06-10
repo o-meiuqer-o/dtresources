@@ -448,8 +448,7 @@
             <div class="worksheet-header">
                 <h2>Brainwriting Results</h2>
                 <div style="display: flex; gap: 1rem;">
-                    <button class="btn btn-secondary" onclick="exportToPNG()">📸 Save PNG</button>
-                    <button class="btn btn-secondary" onclick="window.print()">📄 Export PDF</button>
+                    <button class="btn btn-secondary" onclick="exportIdeasText()">💾 Export Ideas Text</button>
                 </div>
             </div>
             <div id="final-results-container" style="margin-top: 2rem;"></div>
@@ -640,7 +639,17 @@
             new QRCode(document.getElementById("qrcode"), { text: `${baseUrl}?room=${roomID}`, width: 180, height: 180 });
         }
         function endSessionPermanently() { if (confirm("End session?")) { clearSessionState(); window.location.reload(); } }
-        function exportToPNG() { if (typeof downloadAsPNG === 'function') downloadAsPNG(); else window.print(); }
+        function exportIdeasText() {
+            let content = "Problem Statement / Question:\n" + problemStatement + "\n\n";
+            content += "Brainstormed Ideas:\n--------------------------------------\n";
+            document.querySelectorAll('#final-results-container .idea-card').forEach((card, i) => {
+                content += `${i + 1}. ${card.innerText}\n`;
+            });
+            const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url; a.download = "635_Ideas.txt"; a.click(); URL.revokeObjectURL(url);
+        }
 
         window.onload = () => {
             const urlParams = new URLSearchParams(window.location.search), autoJoinId = urlParams.get('room');

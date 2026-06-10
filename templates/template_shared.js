@@ -354,9 +354,16 @@ function downloadAsPNG() {
             const fullW = Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, document.body.offsetWidth);
             const fullH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight);
 
+            // User requested ~100px text height for crisp exports. Base text is ~14px.
+            const desiredScale = 100 / 14; // ~7.14
+            // Cap html2canvas at 36 Megapixels to avoid RAM/OOM crashes on tablets/phones
+            const MAX_AREA = 36000000;
+            const maxSafeScale = Math.sqrt(MAX_AREA / (fullW * fullH));
+            const renderScale = Math.max(2, Math.min(desiredScale, maxSafeScale));
+
             ensureLib(() => {
                 html2canvas(document.body, {
-                    scale: 2,
+                    scale: renderScale,
                     useCORS: true,
                     allowTaint: true,
                     logging: false,

@@ -547,62 +547,49 @@
             const savedSize = { w: container.style.width, h: container.style.height };
             const savedView = { pos: network.getViewPosition(), scale: network.getScale() };
 
-            network.fit({ animation: false });
-
-            // If the graph is huge, network.fit() shrinks it so much that vis-network hides text to save performance.
-            // We must temporarily resize the container to force a scale near 1.0 so text renders.
-            let currentScale = network.getScale();
-            if (currentScale < 1.0) {
-                let reqW = (container.offsetWidth / currentScale) + 100;
-                let reqH = (container.offsetHeight / currentScale) + 100;
-                // Clamp to prevent browser crash on insanely large graphs
-                reqW = Math.min(reqW, 8000);
-                reqH = Math.min(reqH, 8000);
-
-                container.style.width = reqW + 'px';
-                container.style.height = reqH + 'px';
-                network.setSize(reqW + 'px', reqH + 'px');
-                network.redraw();
-                network.fit({ animation: false });
+            const box = network.getBoundingBox();
+            if (!box || Math.abs(box.left) === Infinity) {
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+                return;
             }
+
+            // User requested ~100px text height for crisp exports. Base font is 13px.
+            const dpr = window.devicePixelRatio || 1;
+            const desiredDOMScale = (100 / 13) / dpr;
+
+            const baseW = box.right - box.left + 160;
+            const baseH = box.bottom - box.top + 160;
+            const baseArea = baseW * baseH;
+
+            // Cap physical area at 64 Megapixels (e.g. 8000x8000) to prevent browser crashing
+            const MAX_AREA = 64000000;
+            const maxSafeDOMScale = Math.sqrt(MAX_AREA / (baseArea * dpr * dpr));
+
+            const targetDOMScale = Math.max(1.0, Math.min(desiredDOMScale, maxSafeDOMScale));
+
+            const reqW = baseW * targetDOMScale;
+            const reqH = baseH * targetDOMScale;
+
+            container.style.width = reqW + 'px';
+            container.style.height = reqH + 'px';
+            network.setSize(reqW + 'px', reqH + 'px');
+            network.moveTo({
+                position: { x: (box.left + box.right) / 2, y: (box.top + box.bottom) / 2 },
+                scale: targetDOMScale,
+                animation: false
+            });
 
             setTimeout(() => {
                 try {
                     const visCanvas = container.querySelector('canvas');
                     if (!visCanvas) throw new Error('Canvas not found.');
 
-                    const allPositions = network.getPositions();
-                    const nodeIds = Object.keys(allPositions);
-                    if (nodeIds.length === 0) throw new Error('No nodes found.');
-
-                    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-                    nodeIds.forEach(id => {
-                        const domPos = network.canvasToDOM(allPositions[id]);
-                        minX = Math.min(minX, domPos.x);
-                        minY = Math.min(minY, domPos.y);
-                        maxX = Math.max(maxX, domPos.x);
-                        maxY = Math.max(maxY, domPos.y);
-                    });
-
-                    const pad = 60;
-                    minX = Math.max(0, minX - pad);
-                    minY = Math.max(0, minY - pad);
-                    maxX = Math.min(visCanvas.clientWidth, maxX + pad);
-                    maxY = Math.min(visCanvas.clientHeight, maxY + pad);
-
-                    const cropW = Math.max(maxX - minX, 400);
-                    const cropH = Math.max(maxY - minY, 300);
-
-                    const dpr = window.devicePixelRatio || 1;
-                    const sx = minX * dpr;
-                    const sy = minY * dpr;
-                    const sWidth = cropW * dpr;
-                    const sHeight = cropH * dpr;
                     const headerH = 60 * dpr;
 
                     const out = document.createElement('canvas');
-                    out.width = sWidth;
-                    out.height = sHeight + headerH;
+                    out.width = visCanvas.width;
+                    out.height = visCanvas.height + headerH;
 
                     const ctx = out.getContext('2d');
                     ctx.fillStyle = '#ffffff';
@@ -619,7 +606,7 @@
                     ctx.fillText(`${nodes.get().length} nodes · Generated ${new Date().toLocaleDateString()}`, 20 * dpr, 46 * dpr);
 
                     // Draw the correctly-scaled canvas
-                    ctx.drawImage(visCanvas, sx, sy, sWidth, sHeight, 0, headerH, sWidth, sHeight);
+                    ctx.drawImage(visCanvas, 0, headerH);
 
                     const restoreAndFinish = () => {
                         container.style.width = savedSize.w;

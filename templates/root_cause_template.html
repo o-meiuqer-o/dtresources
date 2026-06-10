@@ -544,26 +544,36 @@
             btn.disabled = true;
             btn.innerHTML = '⏳ Rendering…';
 
+            const savedSize = { w: container.style.width, h: container.style.height };
+            const savedView = { pos: network.getViewPosition(), scale: network.getScale() };
+
             network.fit({ animation: false });
+
+            // If the graph is huge, network.fit() shrinks it so much that vis-network hides text to save performance.
+            // We must temporarily resize the container to force a scale near 1.0 so text renders.
+            let currentScale = network.getScale();
+            if (currentScale < 1.0) {
+                let reqW = (container.offsetWidth / currentScale) + 100;
+                let reqH = (container.offsetHeight / currentScale) + 100;
+                // Clamp to prevent browser crash on insanely large graphs
+                reqW = Math.min(reqW, 8000);
+                reqH = Math.min(reqH, 8000);
+
+                container.style.width = reqW + 'px';
+                container.style.height = reqH + 'px';
+                network.setSize(reqW + 'px', reqH + 'px');
+                network.redraw();
+                network.fit({ animation: false });
+            }
 
             setTimeout(() => {
                 try {
                     const visCanvas = container.querySelector('canvas');
-                    if (!visCanvas) {
-                        alert('Export failed: canvas not found.');
-                        btn.disabled = false;
-                        btn.innerHTML = originalText;
-                        return;
-                    }
+                    if (!visCanvas) throw new Error('Canvas not found.');
 
-                    // Find the bounding box of all nodes in DOM coords (CSS pixels relative to canvas)
                     const allPositions = network.getPositions();
                     const nodeIds = Object.keys(allPositions);
-                    if (nodeIds.length === 0) {
-                        btn.disabled = false;
-                        btn.innerHTML = originalText;
-                        return;
-                    }
+                    if (nodeIds.length === 0) throw new Error('No nodes found.');
 
                     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
                     nodeIds.forEach(id => {
@@ -577,14 +587,12 @@
                     const pad = 60;
                     minX = Math.max(0, minX - pad);
                     minY = Math.max(0, minY - pad);
-                    // clamp to client width/height
                     maxX = Math.min(visCanvas.clientWidth, maxX + pad);
                     maxY = Math.min(visCanvas.clientHeight, maxY + pad);
 
                     const cropW = Math.max(maxX - minX, 400);
                     const cropH = Math.max(maxY - minY, 300);
 
-                    // Map DOM coordinates to internal canvas physical pixels using devicePixelRatio
                     const dpr = window.devicePixelRatio || 1;
                     const sx = minX * dpr;
                     const sy = minY * dpr;
@@ -610,14 +618,21 @@
                     ctx.font = `${11 * dpr}px Segoe UI, Arial, sans-serif`;
                     ctx.fillText(`${nodes.get().length} nodes · Generated ${new Date().toLocaleDateString()}`, 20 * dpr, 46 * dpr);
 
-                    // Network content (extract exactly the physical pixels corresponding to the DOM crop box)
+                    // Draw the correctly-scaled canvas
                     ctx.drawImage(visCanvas, sx, sy, sWidth, sHeight, 0, headerH, sWidth, sHeight);
+
+                    const restoreAndFinish = () => {
+                        container.style.width = savedSize.w;
+                        container.style.height = savedSize.h;
+                        network.setSize(savedSize.w || '100%', savedSize.h || '100%');
+                        network.moveTo({ position: savedView.pos, scale: savedView.scale, animation: false });
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                    };
 
                     if (format === 'pdf' && window.jspdf) {
                         const imgData = out.toDataURL('image/png', 1.0);
                         const orientation = out.width > out.height ? 'l' : 'p';
-                        // Convert canvas pixels to PDF points (1 pt = 1/72 inch). 
-                        // To keep it high res but fitting page, we define the PDF page size identically to the canvas width in pt.
                         const pdf = new window.jspdf.jsPDF({
                             orientation: orientation,
                             unit: 'pt',
@@ -625,26 +640,27 @@
                         });
                         pdf.addImage(imgData, 'PNG', 0, 0, out.width, out.height);
                         pdf.save('Root-Cause-Analysis.pdf');
-                        btn.disabled = false;
-                        btn.innerHTML = originalText;
                         setStatus('✅ PDF saved!');
+                        restoreAndFinish();
                     } else {
                         out.toBlob(blob => {
-                            if (!blob) { throw new Error('Blob creation failed'); }
+                            if (!blob) throw new Error('Blob creation failed');
                             const a = document.createElement('a');
                             a.href = URL.createObjectURL(blob);
                             a.download = 'Root-Cause-Analysis.png';
                             document.body.appendChild(a);
                             a.click();
                             setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 200);
-                            btn.disabled = false;
-                            btn.innerHTML = originalText;
                             setStatus('✅ PNG saved!');
+                            restoreAndFinish();
                         }, 'image/png', 1.0);
                     }
 
                 } catch (err) {
                     console.error('RCA export error:', err);
+                    container.style.width = savedSize.w;
+                    container.style.height = savedSize.h;
+                    network.setSize(savedSize.w || '100%', savedSize.h || '100%');
                     btn.disabled = false;
                     btn.innerHTML = originalText;
                     alert('Export failed. See console for details.');

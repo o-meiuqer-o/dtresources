@@ -500,9 +500,14 @@
         function initSocket(isHosting, targetRoomId = null) {
             if (!myId) myId = generateParticipantId();
             
-            // Connect to Hugging Face backend
-            socket = io('https://o-meiuqer-o-dtresources.hf.space');
+            // Connect to Hugging Face backend (Force WebSocket to bypass HF load balancer sticky session issues)
+            socket = io('https://o-meiuqer-o-dtresources.hf.space', { transports: ['websocket'] });
             
+            socket.on('connect_error', (err) => {
+                console.error("Socket connection error:", err.message);
+                notify("Connection Error: " + err.message);
+            });
+
             socket.on('connect', () => {
                 if (isHosting) {
                     if (!roomID) roomID = generateRoomCode();

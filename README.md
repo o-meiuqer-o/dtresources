@@ -96,4 +96,5 @@ Educational use permitted. Attribution appreciated.
 
 ## 👨‍🏫 Author
 
+**Raj Narayanan**  
 Created for Design Thinking education at Mahindra University.

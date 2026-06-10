@@ -119,31 +119,6 @@
             border-bottom: 1px solid #eee;
         }
 
-        /* === Toast / coaching nudge === */
-        #coach-toast {
-            position: fixed;
-            top: 1.2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(-120%);
-            background: #1d1d1f;
-            color: #fff;
-            padding: 0.7rem 1.4rem;
-            border-radius: 40px;
-            font-size: 0.88rem;
-            font-weight: 500;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.18);
-            z-index: 9999;
-            transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
-            white-space: nowrap;
-            max-width: 90vw;
-            text-align: center;
-        }
-        #coach-toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-        #coach-toast .toast-icon {
-            margin-right: 6px;
-        }
 
         /* === Pre-save warning modal === */
         .modal-overlay {
@@ -231,8 +206,6 @@
 
     <div id="mynetwork"></div>
 
-    <!-- Coaching toast -->
-    <div id="coach-toast"><span class="toast-icon"></span><span id="toast-msg"></span></div>
 
     <!-- Pre-save depth warning modal -->
     <div class="modal-overlay" id="depth-warning-modal">
@@ -271,18 +244,6 @@
         const edges = new vis.DataSet([]);
         let nodeIdCounter = 2;
 
-        // ===== Toast state =====
-        let toastTimeout = null;
-
-        // ===== Coaching messages keyed by child-count (how wide the parent already is) =====
-        // Called after adding the Nth child to a parent.
-        const wideNudges = [
-            { icon: '💡', msg: "Good start! Can you think of another reason for this?" },       // 1st child
-            { icon: '🧐', msg: "Nice — two reasons! There might be one more cause here." },     // 2nd
-            { icon: '👍', msg: "Three branches! Are there any other causes you haven't listed?" }, // 3rd
-            { icon: '🌟', msg: "Great breadth! You're building a thorough analysis." },          // 4th
-            { icon: '🎯', msg: "Excellent! Now consider drilling deeper into each branch." },    // 5th+
-        ];
 
         // ===== Network Setup =====
         const container = document.getElementById('mynetwork');
@@ -377,11 +338,6 @@
             nodes.add({ id: newNodeId, label: label.trim(), level: newLevel });
             edges.add({ from: parentId, to: newNodeId });
 
-            // Count how many children the parent now has (to pick the right nudge)
-            const childCount = edges.get({ filter: e => e.from === parentId }).length;
-            const nudgeIdx = Math.min(childCount - 1, wideNudges.length - 1);
-            showToast(wideNudges[nudgeIdx].icon, wideNudges[nudgeIdx].msg);
-
             updateNodeColors();
             updateDepthIndicators();
             network.selectNodes([newNodeId]);
@@ -423,16 +379,6 @@
         function releaseAllNodes() {
             nodes.update(nodes.get().map(n => ({ id: n.id, physics: true, fixed: { x: false, y: false } })));
             saveTemplateData();
-        }
-
-        // ===== Toast =====
-        function showToast(icon, msg) {
-            clearTimeout(toastTimeout);
-            const toast = document.getElementById('coach-toast');
-            document.querySelector('#coach-toast .toast-icon').textContent = icon + ' ';
-            document.getElementById('toast-msg').textContent = msg;
-            toast.classList.add('show');
-            toastTimeout = setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
         // ===== Depth Indicators =====

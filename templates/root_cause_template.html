@@ -45,6 +45,7 @@
             box-shadow: 0 2px 12px rgba(0,0,0,0.06);
             max-width: 1400px;
             margin: 1rem auto 0;
+            flex-wrap: wrap;
         }
 
         .btn-tool {
@@ -64,153 +65,126 @@
         .btn-tool.primary:hover { background: #005bbf; }
         .btn-tool:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-        .depth-badge {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-            background: #e8f0fe;
-            color: #1a56d6;
-            font-weight: 600;
-            border: 1px solid #c6d9fd;
+        /* Depth indicator panel */
+        .depth-panel {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            flex-wrap: wrap;
         }
+        .depth-panel-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+        }
+        .branch-depth-row {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .branch-group {
+            display: flex;
+            align-items: center;
+            gap: 2px;
+            background: #f5f5f7;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            padding: 2px 6px;
+        }
+        .depth-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ddd;
+            transition: background 0.3s;
+            flex-shrink: 0;
+        }
+        .depth-dot.filled { background: #0071e3; }
+        .depth-dot.deep  { background: #00a66e; }
+        .depth-dot.warn  { background: #ff9f0a; }
 
         #mynetwork {
             width: 100%;
-            height: calc(100vh - 230px);
+            height: calc(100vh - 250px);
             min-height: 500px;
             background: #ffffff;
             border-top: 1px solid #eee;
             border-bottom: 1px solid #eee;
         }
 
-        /* === Coaching Prompt Modal === */
-        .coach-overlay {
+        /* === Toast / coaching nudge === */
+        #coach-toast {
+            position: fixed;
+            top: 1.2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120%);
+            background: #1d1d1f;
+            color: #fff;
+            padding: 0.7rem 1.4rem;
+            border-radius: 40px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.18);
+            z-index: 9999;
+            transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            white-space: nowrap;
+            max-width: 90vw;
+            text-align: center;
+        }
+        #coach-toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        #coach-toast .toast-icon {
+            margin-right: 6px;
+        }
+
+        /* === Pre-save warning modal === */
+        .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 9999;
+            background: rgba(0,0,0,0.5);
+            z-index: 9998;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(4px);
+            backdrop-filter: blur(3px);
         }
-        .coach-overlay.active { display: flex; }
-
-        .coach-card {
+        .modal-overlay.active { display: flex; }
+        .modal-card {
             background: white;
             border-radius: 16px;
             padding: 2rem;
-            max-width: 480px;
+            max-width: 440px;
             width: 90%;
             box-shadow: 0 20px 60px rgba(0,0,0,0.2);
             text-align: center;
-            animation: slideUp 0.25s ease;
+        }
+        .modal-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+        .modal-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .modal-body { font-size: 0.88rem; color: #555; line-height: 1.6; margin-bottom: 1.5rem; }
+        .modal-actions { display: flex; gap: 12px; justify-content: center; }
+        .modal-btn-yes {
+            flex: 1; padding: 10px; border-radius: 8px; font-weight: 700;
+            background: #0071e3; color: white; border: none; cursor: pointer;
+        }
+        .modal-btn-no {
+            flex: 1; padding: 10px; border-radius: 8px; font-weight: 600;
+            background: white; color: #333; border: 2px solid #ddd; cursor: pointer;
         }
 
-        @keyframes slideUp {
-            from { transform: translateY(30px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .coach-icon { font-size: 3rem; margin-bottom: 0.75rem; }
-        .coach-level-badge {
-            display: inline-block;
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.06em;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin-bottom: 1rem;
-        }
-        .coach-message {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-        .coach-sub {
-            font-size: 0.85rem;
-            color: #666;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
-        .coach-origin-label {
-            font-size: 0.75rem;
-            color: #999;
-            margin-bottom: 1.2rem;
-            font-style: italic;
-        }
-        .coach-origin-text {
-            background: #f5f5f7;
-            border-radius: 6px;
-            padding: 6px 12px;
-            font-style: normal;
-            font-weight: 600;
-            color: #333;
-            display: inline-block;
-            max-width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        .coach-actions {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-        }
-        .coach-btn-yes {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border: none;
-            background: #0071e3;
-            color: white;
-            transition: background 0.15s;
-        }
-        .coach-btn-yes:hover { background: #005bbf; }
-        .coach-btn-no {
-            flex: 1;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border: 2px solid #ddd;
-            background: white;
-            color: #666;
-            transition: all 0.15s;
-        }
-        .coach-btn-no:hover { border-color: #bbb; color: #333; }
-
-        /* progress dots */
-        .why-dots {
-            display: flex;
-            gap: 6px;
-            justify-content: center;
-            margin-bottom: 1.2rem;
-        }
-        .why-dot {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: #e5e7eb;
-            transition: background 0.3s;
-        }
-        .why-dot.filled { background: #0071e3; }
-        .why-dot.deep { background: #00c26a; }
-
-        /* Status bar */
         .status-bar {
             max-width: 1400px;
             margin: 0 auto;
             padding: 0.4rem 1rem;
             font-size: 0.75rem;
             color: #888;
-            display: flex;
-            gap: 1rem;
         }
         #status-msg { color: #555; font-weight: 500; }
 
@@ -227,22 +201,28 @@
         <h1>Root Cause Analysis — 5 Whys</h1>
         <p class="subtitle">Design Thinking — Define Phase</p>
         <div class="note">
-            <strong>How to use:</strong>
-            Select a node → click <strong>➕ Add Cause</strong> (or press <kbd>Enter</kbd>) to drill down with "Why?".
-            A coaching prompt will help you keep going deeper. 
-            <strong>Double-click</strong> to edit text. <strong>Right-click</strong> to mark a node as the definitive Root Cause 🔴.
+            <strong>Instructions:</strong>
+            Select a node → click <strong>➕ Add Cause</strong> (or press <kbd>Enter</kbd>) to branch out with a "Why?" reason.
+            Each node should have <strong>multiple branches</strong> — explore all possible causes before going deeper.
+            <strong>Double-click</strong> to edit. <strong>Right-click</strong> to mark a node as the 🔴 Root Cause.
         </div>
     </div>
 
     <div class="toolbar">
         <button class="btn-tool" id="btn-add" onclick="addNode()">➕ Add Cause</button>
         <button class="btn-tool" id="btn-edit" onclick="editNode()">✏️ Edit</button>
-        <button class="btn-tool danger" id="btn-delete" onclick="deleteNode()">➖ Delete</button>
-        <button class="btn-tool" onclick="releaseAllNodes()" title="Un-pin all nodes">🔓 Release All</button>
-        <button class="btn-tool" onclick="network.fit({animation:true})" title="Fit to view">⊡ Fit</button>
-        <div style="flex:1"></div>
-        <span class="depth-badge" id="depth-counter">Nodes: 1 · Max Depth: 0</span>
-        <button class="btn-tool primary" id="btn-export" onclick="exportRCA()">📥 Save PNG</button>
+        <button class="btn-tool danger" onclick="deleteNode()">➖ Delete</button>
+        <button class="btn-tool" onclick="releaseAllNodes()">🔓 Release All</button>
+        <button class="btn-tool" onclick="network.fit({animation:true})">⊡ Fit</button>
+
+        <div class="depth-panel" id="depth-panel">
+            <span class="depth-panel-label">Branch depths:</span>
+            <div class="branch-depth-row" id="branch-depth-row">
+                <span style="font-size:0.75rem;color:#bbb;">—</span>
+            </div>
+        </div>
+
+        <button class="btn-tool primary" id="btn-export" onclick="attemptExport()">📥 Save PNG</button>
     </div>
 
     <div class="status-bar">
@@ -251,20 +231,22 @@
 
     <div id="mynetwork"></div>
 
-    <!-- Coaching Prompt Modal -->
-    <div class="coach-overlay" id="coachOverlay">
-        <div class="coach-card">
-            <div class="coach-icon" id="coachIcon">🤔</div>
-            <div class="coach-level-badge" id="coachBadge">Level 1</div>
-            <div class="why-dots" id="whyDots"></div>
-            <div class="coach-message" id="coachMessage">Wait — is that really the cause?</div>
-            <div class="coach-sub" id="coachSub">Try to ask "Why?" one more time to go deeper.</div>
-            <div class="coach-origin-label">You just added a cause to:<br>
-                <span class="coach-origin-text" id="coachParentLabel">—</span>
+    <!-- Coaching toast -->
+    <div id="coach-toast"><span class="toast-icon"></span><span id="toast-msg"></span></div>
+
+    <!-- Pre-save depth warning modal -->
+    <div class="modal-overlay" id="depth-warning-modal">
+        <div class="modal-card">
+            <div class="modal-icon">⚠️</div>
+            <div class="modal-title" id="modal-title">Some branches are shallow</div>
+            <div class="modal-body" id="modal-body">
+                Good root cause analysis usually goes at least 5 levels deep.<br>
+                Your deepest branch is only <strong id="modal-max-depth">?</strong> level(s).
+                Consider drilling further before saving.
             </div>
-            <div class="coach-actions">
-                <button class="coach-btn-yes" id="coachYes" onclick="coachDrillDown()">Yes, dig deeper →</button>
-                <button class="coach-btn-no" id="coachNo" onclick="coachSkip()">No, I'm done here</button>
+            <div class="modal-actions">
+                <button class="modal-btn-yes" onclick="proceedExport()">Save anyway</button>
+                <button class="modal-btn-no" onclick="closeWarningModal()">Go back &amp; dig deeper</button>
             </div>
         </div>
     </div>
@@ -273,68 +255,33 @@
     <script>
         // ===== Layer Colors by Depth =====
         const layerColors = [
-            { bg: '#FF6B6B', border: '#e05252', font: '#fff' }, // 0: Red (Problem)
-            { bg: '#FF9F43', border: '#e0882d', font: '#fff' }, // 1: Orange
-            { bg: '#FFC312', border: '#d4a30f', font: '#333' }, // 2: Yellow
-            { bg: '#A3CB38', border: '#88ab2e', font: '#333' }, // 3: Green
-            { bg: '#12CBC4', border: '#0fb0a9', font: '#fff' }, // 4: Teal
-            { bg: '#9B59B6', border: '#7d4a96', font: '#fff' }, // 5+: Purple
+            { bg: '#FF6B6B', border: '#e05252', font: '#fff' }, // 0: Root problem
+            { bg: '#FF9F43', border: '#e0882d', font: '#fff' }, // 1
+            { bg: '#FFC312', border: '#d4a30f', font: '#333' }, // 2
+            { bg: '#A3CB38', border: '#88ab2e', font: '#333' }, // 3
+            { bg: '#12CBC4', border: '#0fb0a9', font: '#fff' }, // 4
+            { bg: '#9B59B6', border: '#7d4a96', font: '#fff' }, // 5+
         ];
         const rootCauseColor = { bg: '#c0392b', border: '#922b21', font: '#fff' };
 
         // ===== Dataset =====
         const nodes = new vis.DataSet([
-            {
-                id: 1,
-                label: 'The Problem\n(Double-click to edit)',
-                level: 0,
-                whyCount: 0 // how many "why?" children this node has
-            }
+            { id: 1, label: 'The Problem\n(Double-click to edit)', level: 0 }
         ]);
         const edges = new vis.DataSet([]);
         let nodeIdCounter = 2;
 
-        // ===== Coaching state =====
-        let coachPendingParentId = null;
-        let coachPendingDepth = 0;
+        // ===== Toast state =====
+        let toastTimeout = null;
 
-        // ===== Coaching Messages by Depth =====
-        const coachData = [
-            {
-                icon: '🔍',
-                badge: 'Why #1',
-                badgeBg: '#fff3cd', badgeColor: '#856404',
-                message: "Good start! But that might just be a symptom.",
-                sub: "Ask yourself: 'Why does that happen?' There's almost always a deeper cause hiding underneath."
-            },
-            {
-                icon: '🧐',
-                badge: 'Why #2',
-                badgeBg: '#d1ecf1', badgeColor: '#0c5460',
-                message: "You're getting warmer! But don't stop yet.",
-                sub: "Real root causes usually need at least 3–5 'Whys'. Push a little further."
-            },
-            {
-                icon: '💡',
-                badge: 'Why #3',
-                badgeBg: '#d4edda', badgeColor: '#155724',
-                message: "Now we're talking! Can you go one level deeper?",
-                sub: "This is where the most interesting insights usually appear — what's underneath this?"
-            },
-            {
-                icon: '🎯',
-                badge: 'Why #4',
-                badgeBg: '#e2d9f3', badgeColor: '#432874',
-                message: "Almost there — you're close to the root!",
-                sub: "Ask one final 'Why?' before you lock this in. The root cause is usually the one where the answer reveals a systemic or human issue."
-            },
-            {
-                icon: '🌱',
-                badge: 'Why #5 — Root Zone!',
-                badgeBg: '#f8d7da', badgeColor: '#721c24',
-                message: "One more?",
-                sub: "You've drilled 5 levels deep — that's strong analysis. If there's still a deeper reason, explore it. Otherwise, right-click this node to mark it as the 🔴 Root Cause."
-            }
+        // ===== Coaching messages keyed by child-count (how wide the parent already is) =====
+        // Called after adding the Nth child to a parent.
+        const wideNudges = [
+            { icon: '💡', msg: "Good start! Can you think of another reason for this?" },       // 1st child
+            { icon: '🧐', msg: "Nice — two reasons! There might be one more cause here." },     // 2nd
+            { icon: '👍', msg: "Three branches! Are there any other causes you haven't listed?" }, // 3rd
+            { icon: '🌟', msg: "Great breadth! You're building a thorough analysis." },          // 4th
+            { icon: '🎯', msg: "Excellent! Now consider drilling deeper into each branch." },    // 5th+
         ];
 
         // ===== Network Setup =====
@@ -373,24 +320,18 @@
         };
 
         const network = new vis.Network(container, networkData, options);
-
-        // Initial color pass
         updateNodeColors();
 
-        // ===== Event Handlers =====
-        network.on('selectNode', params => {
-            setStatus(`Node selected. Press "➕ Add Cause" to drill down.`);
-            updateDepthCounter();
+        // ===== Events =====
+        network.on('selectNode', () => {
+            setStatus('Node selected. Press "➕ Add Cause" to add a reason (branch).');
         });
-
         network.on('deselectNode', () => {
             setStatus('Click a node to select it, then add a cause with "➕ Add Cause".');
         });
-
         network.on('doubleClick', params => {
             if (params.nodes.length > 0) editNode();
         });
-
         network.on('oncontext', params => {
             params.event.preventDefault();
             const nodeId = network.getNodeAt(params.pointer.DOM);
@@ -398,14 +339,10 @@
                 const node = nodes.get(nodeId);
                 nodes.update({ id: nodeId, isRootCause: !node.isRootCause });
                 updateNodeColors();
-                const msg = node.isRootCause
-                    ? `Node un-marked as root cause.`
-                    : `✅ Marked as Root Cause! Right-click again to unmark.`;
-                setStatus(msg);
+                setStatus(node.isRootCause ? 'Un-marked root cause.' : '🔴 Marked as Root Cause! Right-click again to unmark.');
                 saveTemplateData();
             }
         });
-
         network.on('dragEnd', params => {
             if (params.nodes.length > 0) {
                 const nodeId = params.nodes[0];
@@ -414,53 +351,42 @@
                 saveTemplateData();
             }
         });
+        network.on('stabilizationIterationsDone', updateDepthIndicators);
 
-        network.on('stabilizationIterationsDone', () => {
-            updateDepthCounter();
-        });
-
-        // Keyboard shortcut: Enter = add cause
         document.addEventListener('keydown', e => {
-            if (e.key === 'Enter' && !isModalOpen()) {
+            if (e.key === 'Enter' && !document.getElementById('depth-warning-modal').classList.contains('active')) {
                 const sel = network.getSelectedNodes();
                 if (sel.length > 0) addNode();
             }
         });
 
         // ===== Core Functions =====
-        function addNode(silentParentId = null) {
-            const selected = silentParentId ? [silentParentId] : network.getSelectedNodes();
-            if (selected.length === 0) {
-                setStatus('⚠️ Select a node first, then click "➕ Add Cause".');
-                return;
-            }
+        function addNode() {
+            const selected = network.getSelectedNodes();
+            if (selected.length === 0) { setStatus('⚠️ Select a node first, then click "➕ Add Cause".'); return; }
+
             const parentId = selected[0];
             const parentNode = nodes.get(parentId);
 
             const label = prompt(`Why does this happen?\n\n"${truncate(parentNode.label, 60)}"\n\nEnter a cause:`);
             if (!label || !label.trim()) return;
 
-            const newLevel = ((parentNode.level !== undefined ? parentNode.level : 0) + 1);
+            const newLevel = (parentNode.level || 0) + 1;
             const newNodeId = nodeIdCounter++;
 
             nodes.add({ id: newNodeId, label: label.trim(), level: newLevel });
             edges.add({ from: parentId, to: newNodeId });
 
-            // Track "why count" per parent
-            nodes.update({ id: parentId, whyCount: (parentNode.whyCount || 0) + 1 });
+            // Count how many children the parent now has (to pick the right nudge)
+            const childCount = edges.get({ filter: e => e.from === parentId }).length;
+            const nudgeIdx = Math.min(childCount - 1, wideNudges.length - 1);
+            showToast(wideNudges[nudgeIdx].icon, wideNudges[nudgeIdx].msg);
 
             updateNodeColors();
-            updateDepthCounter();
+            updateDepthIndicators();
             network.selectNodes([newNodeId]);
             setTimeout(() => network.focus(newNodeId, { scale: 1.0, animation: true }), 100);
-
             saveTemplateData();
-
-            // Trigger coaching prompt
-            const depth = newLevel; // level 1 = first why, level 5+ = deep
-            coachPendingParentId = newNodeId;
-            coachPendingDepth = depth;
-            showCoachPrompt(newNodeId, parentNode, depth);
         }
 
         function editNode() {
@@ -481,15 +407,15 @@
             if (confirm('Delete this node and all branches below it?')) {
                 deleteSubtree(selected[0]);
                 updateNodeColors();
-                updateDepthCounter();
+                updateDepthIndicators();
                 saveTemplateData();
                 setStatus('Node deleted.');
             }
         }
 
         function deleteSubtree(nodeId) {
-            const connectedEdges = edges.get({ filter: e => e.from === nodeId });
-            connectedEdges.forEach(e => deleteSubtree(e.to));
+            const childEdges = edges.get({ filter: e => e.from === nodeId });
+            childEdges.forEach(e => deleteSubtree(e.to));
             edges.remove(edges.get({ filter: e => e.from === nodeId || e.to === nodeId }).map(e => e.id));
             nodes.remove(nodeId);
         }
@@ -499,78 +425,79 @@
             saveTemplateData();
         }
 
-        // ===== Coaching System =====
-        function showCoachPrompt(newNodeId, parentNode, depth) {
-            // Clamp to available messages
-            const dataIdx = Math.min(depth - 1, coachData.length - 1);
-            const d = coachData[dataIdx];
+        // ===== Toast =====
+        function showToast(icon, msg) {
+            clearTimeout(toastTimeout);
+            const toast = document.getElementById('coach-toast');
+            document.querySelector('#coach-toast .toast-icon').textContent = icon + ' ';
+            document.getElementById('toast-msg').textContent = msg;
+            toast.classList.add('show');
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 4000);
+        }
 
-            document.getElementById('coachIcon').textContent = d.icon;
+        // ===== Depth Indicators =====
+        // Returns the max depth of the subtree rooted at nodeId
+        function subtreeDepth(nodeId) {
+            const childEdges = edges.get({ filter: e => e.from === nodeId });
+            if (childEdges.length === 0) return 0;
+            return 1 + Math.max(...childEdges.map(e => subtreeDepth(e.to)));
+        }
 
-            const badge = document.getElementById('coachBadge');
-            badge.textContent = d.badge;
-            badge.style.background = d.badgeBg;
-            badge.style.color = d.badgeColor;
+        function updateDepthIndicators() {
+            const row = document.getElementById('branch-depth-row');
+            // Get direct children of root (node 1) — each is a "branch"
+            const rootChildren = edges.get({ filter: e => e.from === 1 });
 
-            document.getElementById('coachMessage').textContent = d.message;
-            document.getElementById('coachSub').textContent = d.sub;
-
-            // Parent label context
-            document.getElementById('coachParentLabel').textContent = truncate(parentNode.label, 50);
-
-            // Why progress dots (show 5 dots, fill current depth)
-            const dotsEl = document.getElementById('whyDots');
-            dotsEl.innerHTML = '';
-            for (let i = 1; i <= 5; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'why-dot' + (i <= depth ? (depth >= 5 ? ' deep' : ' filled') : '');
-                dotsEl.appendChild(dot);
+            if (rootChildren.length === 0) {
+                row.innerHTML = '<span style="font-size:0.75rem;color:#bbb;">No branches yet</span>';
+                return;
             }
 
-            // Adjust Yes/No labels based on depth
-            const yesBtn = document.getElementById('coachYes');
-            const noBtn = document.getElementById('coachNo');
-            if (depth >= 5) {
-                yesBtn.textContent = 'One more →';
-                noBtn.textContent = 'No, this is the root';
-            } else if (depth >= 4) {
-                yesBtn.textContent = "Yes, one more →";
-                noBtn.textContent = "No, I'm done here";
+            row.innerHTML = rootChildren.map(e => {
+                const depth = subtreeDepth(e.to) + 1; // +1 for the child itself
+                const dots = [];
+                for (let i = 1; i <= 5; i++) {
+                    let cls = 'depth-dot';
+                    if (i <= depth) {
+                        cls += depth >= 5 ? ' deep' : (depth >= 3 ? ' filled' : ' warn');
+                    }
+                    dots.push(`<div class="${cls}" title="Level ${i}"></div>`);
+                }
+                const label = nodes.get(e.to);
+                return `<div class="branch-group" title="${label ? label.label.replace(/\n/g,' ') : ''}">${dots.join('')}</div>`;
+            }).join('');
+
+            // Update node count in status
+            const total = nodes.get().length;
+            const maxDepth = Math.max(...nodes.get().map(n => n.level || 0));
+            setStatus(`${total} nodes · Max depth: ${maxDepth}. Select a node and add more causes.`);
+        }
+
+        // ===== Pre-save depth check =====
+        function attemptExport() {
+            const rootChildren = edges.get({ filter: e => e.from === 1 });
+            if (rootChildren.length === 0) { exportRCA(); return; }
+
+            const maxDepth = Math.max(...rootChildren.map(e => subtreeDepth(e.to) + 1));
+
+            if (maxDepth < 5) {
+                document.getElementById('modal-max-depth').textContent = maxDepth;
+                document.getElementById('depth-warning-modal').classList.add('active');
             } else {
-                yesBtn.textContent = "Yes, dig deeper →";
-                noBtn.textContent = "No, move on";
+                exportRCA();
             }
-
-            document.getElementById('coachOverlay').classList.add('active');
         }
 
-        function coachDrillDown() {
-            closeCoach();
-            if (coachPendingParentId === null) return;
-            // Select the newly created node and immediately invoke addNode
-            network.selectNodes([coachPendingParentId]);
-            setTimeout(() => addNode(), 200);
+        function proceedExport() {
+            closeWarningModal();
+            exportRCA();
         }
 
-        function coachSkip() {
-            closeCoach();
-            setStatus('💡 Good. Select another node or add more branches. Right-click to mark a Root Cause 🔴.');
+        function closeWarningModal() {
+            document.getElementById('depth-warning-modal').classList.remove('active');
         }
 
-        function closeCoach() {
-            document.getElementById('coachOverlay').classList.remove('active');
-        }
-
-        function isModalOpen() {
-            return document.getElementById('coachOverlay').classList.contains('active');
-        }
-
-        // Close coach on overlay click
-        document.getElementById('coachOverlay').addEventListener('click', e => {
-            if (e.target === document.getElementById('coachOverlay')) closeCoach();
-        });
-
-        // ===== Visual Helpers =====
+        // ===== Colors =====
         function updateNodeColors() {
             const updates = nodes.get().map(n => {
                 if (n.isRootCause) {
@@ -580,7 +507,7 @@
                         font: { color: rootCauseColor.font, size: 13, bold: true }
                     };
                 }
-                const idx = Math.min((n.level || 0), layerColors.length - 1);
+                const idx = Math.min(n.level || 0, layerColors.length - 1);
                 const c = layerColors[idx];
                 return {
                     id: n.id,
@@ -589,12 +516,6 @@
                 };
             });
             nodes.update(updates);
-        }
-
-        function updateDepthCounter() {
-            const allNodes = nodes.get();
-            const maxDepth = allNodes.reduce((m, n) => Math.max(m, n.level || 0), 0);
-            document.getElementById('depth-counter').textContent = `Nodes: ${allNodes.length} · Max Depth: ${maxDepth}`;
         }
 
         function setStatus(msg) {
@@ -606,18 +527,16 @@
             return str.length > len ? str.slice(0, len) + '…' : str;
         }
 
-        // ===== Export: Use vis-network's native canvas for lossless capture =====
+        // ===== Export: native vis-network canvas for lossless capture (no clipping at any size) =====
         function exportRCA() {
             const btn = document.getElementById('btn-export');
             btn.disabled = true;
             btn.innerHTML = '⏳ Rendering…';
 
-            // Fit everything in view first
             network.fit({ animation: false });
 
             setTimeout(() => {
                 try {
-                    // vis-network exposes its internal canvas directly
                     const visCanvas = container.querySelector('canvas');
                     if (!visCanvas) {
                         alert('Export failed: canvas not found.');
@@ -626,13 +545,11 @@
                         return;
                     }
 
-                    // Get the bounding box of all nodes to auto-crop
+                    // Find the bounding box of all nodes in DOM coords
                     const allPositions = network.getPositions();
                     const nodeIds = Object.keys(allPositions);
-
                     if (nodeIds.length === 0) return;
 
-                    // Find the canvas coordinate bounds of all nodes
                     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
                     nodeIds.forEach(id => {
                         const domPos = network.canvasToDOM(allPositions[id]);
@@ -642,7 +559,6 @@
                         maxY = Math.max(maxY, domPos.y);
                     });
 
-                    // Add generous padding so node borders aren't clipped
                     const pad = 120;
                     minX = Math.max(0, minX - pad);
                     minY = Math.max(0, minY - pad);
@@ -651,21 +567,18 @@
 
                     const cropW = Math.max(maxX - minX, 400);
                     const cropH = Math.max(maxY - minY, 300);
+                    const scale = 2;
+                    const headerH = 60;
 
-                    // Create an output canvas with white background
-                    const scale = 2; // 2x resolution for sharpness
-                    const headerH = 60; // pixels (pre-scale)
                     const out = document.createElement('canvas');
                     out.width = cropW * scale;
                     out.height = (cropH + headerH) * scale;
 
                     const ctx = out.getContext('2d');
-
-                    // White background
                     ctx.fillStyle = '#ffffff';
                     ctx.fillRect(0, 0, out.width, out.height);
 
-                    // Draw a header bar
+                    // Header
                     ctx.fillStyle = '#f5f5f7';
                     ctx.fillRect(0, 0, out.width, headerH * scale);
                     ctx.fillStyle = '#1d1d1f';
@@ -675,12 +588,8 @@
                     ctx.font = `${10 * scale}px Segoe UI, Arial, sans-serif`;
                     ctx.fillText(`${nodes.get().length} nodes · Generated ${new Date().toLocaleDateString()}`, 20 * scale, 44 * scale);
 
-                    // Draw the vis-network canvas content (cropped), placed below header
-                    ctx.drawImage(
-                        visCanvas,
-                        minX, minY, cropW, cropH,                         // source rect from vis canvas
-                        0, headerH * scale, cropW * scale, cropH * scale  // dest (below header)
-                    );
+                    // Network content
+                    ctx.drawImage(visCanvas, minX, minY, cropW, cropH, 0, headerH * scale, cropW * scale, cropH * scale);
 
                     out.toBlob(blob => {
                         if (!blob) {
@@ -695,23 +604,22 @@
                         document.body.appendChild(a);
                         a.click();
                         setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 200);
-
                         btn.disabled = false;
                         btn.innerHTML = '📥 Save PNG';
                         setStatus('✅ PNG saved!');
                     }, 'image/png');
 
-                } catch(err) {
+                } catch (err) {
                     console.error('RCA export error:', err);
                     btn.disabled = false;
                     btn.innerHTML = '📥 Save PNG';
                     alert('Export failed. See console for details.');
                 }
-            }, 500); // wait for network.fit() to settle
+            }, 500);
         }
 
-        // ===== Initialization =====
-        updateDepthCounter();
+        // ===== Init =====
+        updateDepthIndicators();
     </script>
 </body>
 

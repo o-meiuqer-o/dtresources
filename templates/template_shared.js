@@ -202,70 +202,76 @@ function downloadAsPNG() {
     if (tableControls) tableControls.style.display = 'none';
     extraUi.forEach(el => el.style.display = 'none');
 
-    // 2. Expand overflow containers
-    const tableContainer = document.querySelector('.table-container');
-    let savedOverflow = '';
-    if (tableContainer) {
-        savedOverflow = tableContainer.style.overflow;
-        tableContainer.style.overflow = 'visible';
-    }
+    // 2. Unlock ALL overflow-hidden/scroll containers so content is not clipped
+    const overflowSaved = [];
+    document.querySelectorAll('*').forEach(el => {
+        if (el === document.body || el === document.documentElement) return;
+        const cs = window.getComputedStyle(el);
+        const ox = cs.overflowX, oy = cs.overflowY;
+        if (ox === 'hidden' || ox === 'auto' || ox === 'scroll' ||
+            oy === 'hidden' || oy === 'auto' || oy === 'scroll') {
+            overflowSaved.push({ el, ox: el.style.overflowX, oy: el.style.overflowY, ov: el.style.overflow });
+            el.style.overflow = 'visible';
+            el.style.overflowX = 'visible';
+            el.style.overflowY = 'visible';
+        }
+    });
 
     // Hook for templates to prepare for export (e.g. redraw graphs)
     if (typeof window.onBeforeExport === 'function') window.onBeforeExport();
 
-    // 3. Force body to full scroll width (unconstrain table) BEFORE adjusting textareas
+    // 3. Remove body width constraints so the DOM can expand to full content width
     const savedBodyMaxWidth = document.body.style.maxWidth;
     const savedBodyWidth = document.body.style.width;
-    const computedW = document.body.scrollWidth;
+    const savedBodyPaddingBottom = document.body.style.paddingBottom;
     document.body.style.maxWidth = 'none';
-    // Use the actual pixel width rather than max-content to prevent 100% width textareas from shrinking
-    document.body.style.width = Math.max(computedW, document.body.offsetWidth) + 'px';
+    document.body.style.paddingBottom = '80px'; // prevent last-row clipping
 
-    // 4 & 5. Convert ALL textareas and cut-off inputs to divs
-    // html2canvas notoriously struggles with natively rendering <textarea> contents (especially manual resizes or newlines),
-    // so we permanently solve this by swapping them for identical-looking <div> elements before the screenshot.
+    // 4. Convert ALL textareas (and long text inputs) to divs for reliable rendering.
+    // html2canvas cannot paint textarea contents faithfully (scroll position, resize handles, etc.)
     const inputsToRestore = [];
     document.querySelectorAll('input[type="text"], textarea').forEach(el => {
-        if (el.tagName === 'TEXTAREA' || el.scrollWidth > el.clientWidth || el.value.length > 30) {
+        const hasValue = el.value && el.value.trim().length > 0;
+        if (el.tagName === 'TEXTAREA' || el.scrollWidth > el.clientWidth || hasValue) {
+            const cs = window.getComputedStyle(el);
             const div = document.createElement('div');
-            const style = window.getComputedStyle(el);
-            div.textContent = el.value || el.placeholder || '';
-            
-            // Copy computed styles
-            div.style.cssText = style.cssText;
-            
-            // Explicitly force auto height and wrap
+
+            div.textContent = el.value || '';
+            // Copy only safe style properties (cssText copies read-only props that throw errors)
+            div.style.display = 'block';
+            div.style.width = cs.width;
+            div.style.minHeight = el.offsetHeight + 'px';
             div.style.height = 'auto';
-            div.style.minHeight = style.height; // At least as tall as it was drawn
+            div.style.maxHeight = 'none';
+            div.style.padding = cs.padding;
+            div.style.margin = cs.margin;
+            div.style.border = cs.border;
+            div.style.borderRadius = cs.borderRadius;
+            div.style.fontFamily = cs.fontFamily;
+            div.style.fontSize = cs.fontSize;
+            div.style.fontWeight = cs.fontWeight;
+            div.style.lineHeight = cs.lineHeight;
+            div.style.color = el.value ? cs.color : '#aaa';
+            div.style.backgroundColor = cs.backgroundColor;
+            div.style.boxSizing = 'border-box';
             div.style.whiteSpace = 'pre-wrap';
             div.style.wordBreak = 'break-word';
             div.style.overflow = 'visible';
-            div.style.boxSizing = 'border-box';
-            
-            // Ensure core visual styles carry over cleanly
-            div.style.padding = style.padding;
-            div.style.border = style.border;
-            div.style.borderRadius = style.borderRadius;
-            div.style.font = style.font;
-            div.style.color = style.color;
-            div.style.background = style.background;
 
             el.parentElement.insertBefore(div, el);
-            
-            // Hide original
             const savedDisplay = el.style.display;
             el.style.display = 'none';
             inputsToRestore.push({ el, div, savedDisplay });
         }
     });
 
-    // 6. Special handling for vis-network (Root Cause Analysis)
+    // 5. Special handling for vis-network (Root Cause Analysis)
     let savedNetworkSize = null;
     let savedNetworkStyle = null;
     const networkDiv = document.getElementById('mynetwork');
     if (networkDiv && typeof network !== 'undefined') {
-        savedNetworkSize = { 
-            width: networkDiv.style.width, 
+        savedNetworkSize = {
+            width: networkDiv.style.width,
             height: networkDiv.style.height,
             viewId: network.getViewPosition(),
             scale: network.getScale()
@@ -275,12 +281,9 @@ function downloadAsPNG() {
             background: networkDiv.style.background,
             boxShadow: networkDiv.style.boxShadow
         };
-        
-        // Hide borders for export
         networkDiv.style.border = 'none';
         networkDiv.style.background = 'transparent';
         networkDiv.style.boxShadow = 'none';
-
         network.fit();
         const scale = network.getScale();
         if (scale < 1) {
@@ -297,55 +300,66 @@ function downloadAsPNG() {
     function restore() {
         document.body.style.maxWidth = savedBodyMaxWidth;
         document.body.style.width = savedBodyWidth;
+        document.body.style.paddingBottom = savedBodyPaddingBottom;
+
         if (controlsEl) controlsEl.style.display = 'flex';
         if (disclaimerEl) disclaimerEl.style.display = 'block';
         if (tableControls) tableControls.style.display = 'flex';
         extraUi.forEach(el => el.style.display = '');
 
-        if (tableContainer) tableContainer.style.overflow = savedOverflow;
-        
+        overflowSaved.forEach(({ el, ox, oy, ov }) => {
+            el.style.overflow = ov;
+            el.style.overflowX = ox;
+            el.style.overflowY = oy;
+        });
+
         inputsToRestore.forEach(item => {
             item.el.style.display = item.savedDisplay || '';
             item.div.remove();
         });
-        
+
         if (savedNetworkSize) {
             networkDiv.style.width = savedNetworkSize.width;
             networkDiv.style.height = savedNetworkSize.height;
             networkDiv.style.border = savedNetworkStyle.border;
             networkDiv.style.background = savedNetworkStyle.background;
             networkDiv.style.boxShadow = savedNetworkStyle.boxShadow;
-            
             network.setSize(savedNetworkSize.width, savedNetworkSize.height);
             network.redraw();
             setTimeout(() => {
-                network.moveTo({
-                    position: savedNetworkSize.viewId,
-                    scale: savedNetworkSize.scale,
-                    animation: false
-                });
+                network.moveTo({ position: savedNetworkSize.viewId, scale: savedNetworkSize.scale, animation: false });
             }, 50);
         }
 
-        // Hook for templates to restore after export
         if (typeof window.onAfterExport === 'function') window.onAfterExport();
-
         btn.innerHTML = originalText;
         btn.disabled = false;
     }
 
-    // Let the layout reflow, then capture
+    // 6. Wait for full reflow, scroll to origin, measure true dimensions, then capture
     requestAnimationFrame(() => {
+        // Pin body to its true scroll width so the measurement is stable
+        document.body.style.width = Math.max(
+            document.body.scrollWidth,
+            document.documentElement.scrollWidth
+        ) + 'px';
+
         setTimeout(() => {
+            // Scroll to absolute origin so html2canvas starts from (0,0)
+            window.scrollTo(0, 0);
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+
             const pad = 40;
-            const fullW = document.body.scrollWidth;
-            const fullH = document.body.scrollHeight;
+            const fullW = Math.max(document.body.scrollWidth, document.documentElement.scrollWidth, document.body.offsetWidth);
+            const fullH = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight, document.body.offsetHeight);
 
             ensureLib(() => {
                 html2canvas(document.body, {
                     scale: 2,
                     useCORS: true,
                     allowTaint: true,
+                    logging: false,
                     width: fullW,
                     height: fullH,
                     windowWidth: fullW,
@@ -355,27 +369,22 @@ function downloadAsPNG() {
                     x: 0,
                     y: 0
                 }).then(srcCanvas => {
-                    // Create a padded canvas
                     const finalCanvas = document.createElement('canvas');
-                    finalCanvas.width = srcCanvas.width + pad * 2 * 2; // pad * scale
-                    finalCanvas.height = srcCanvas.height + pad * 2 * 2;
+                    finalCanvas.width = srcCanvas.width + pad * 4;
+                    finalCanvas.height = srcCanvas.height + pad * 4;
                     const ctx = finalCanvas.getContext('2d');
                     ctx.fillStyle = '#ffffff';
                     ctx.fillRect(0, 0, finalCanvas.width, finalCanvas.height);
                     ctx.drawImage(srcCanvas, pad * 2, pad * 2);
 
-                    // Trigger download
                     finalCanvas.toBlob(blob => {
                         if (!blob) { restore(); return; }
                         const a = document.createElement('a');
                         a.href = URL.createObjectURL(blob);
-                        a.download = (document.title || 'template').replace(/[^a-zA-Z0-9 ]/g, '') + '.png';
+                        a.download = (document.title || 'template').replace(/[^a-zA-Z0-9 _-]/g, '').trim() + '.png';
                         document.body.appendChild(a);
                         a.click();
-                        setTimeout(() => {
-                            document.body.removeChild(a);
-                            URL.revokeObjectURL(a.href);
-                        }, 100);
+                        setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 100);
                         restore();
                     }, 'image/png');
                 }).catch(err => {
@@ -384,7 +393,7 @@ function downloadAsPNG() {
                     alert('PNG export failed. Try again or use your browser\'s screenshot tool.');
                 });
             });
-        }, 200);
+        }, 400);
     });
 }
 

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Root Cause Analysis — 5 Whys</title>
     <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -222,7 +223,8 @@
             </div>
         </div>
 
-        <button class="btn-tool primary" id="btn-export" onclick="attemptExport()">📥 Save PNG</button>
+        <button class="btn-tool primary" id="btn-export-png" onclick="attemptExport('png')">📥 Save PNG</button>
+        <button class="btn-tool primary" id="btn-export-pdf" onclick="attemptExport('pdf')">📄 Save PDF</button>
     </div>
 
     <div class="status-bar">
@@ -467,9 +469,12 @@
         }
 
         // ===== Pre-save depth check =====
-        function attemptExport() {
+        let pendingExportFormat = 'png';
+
+        function attemptExport(format = 'png') {
+            pendingExportFormat = format;
             const rootChildren = edges.get({ filter: e => e.from === 1 });
-            if (rootChildren.length === 0) { exportRCA(); return; }
+            if (rootChildren.length === 0) { exportRCA(format); return; }
 
             const maxDepth = Math.max(...rootChildren.map(e => subtreeDepth(e.to) + 1));
 
@@ -477,13 +482,13 @@
                 document.getElementById('modal-max-depth').textContent = maxDepth;
                 document.getElementById('depth-warning-modal').classList.add('active');
             } else {
-                exportRCA();
+                exportRCA(format);
             }
         }
 
         function proceedExport() {
             closeWarningModal();
-            exportRCA();
+            exportRCA(pendingExportFormat);
         }
 
         function closeWarningModal() {
@@ -532,8 +537,10 @@
         }
 
         // ===== Export: native vis-network canvas for lossless capture (no clipping at any size) =====
-        function exportRCA() {
-            const btn = document.getElementById('btn-export');
+        function exportRCA(format = 'png') {
+            const btnId = format === 'pdf' ? 'btn-export-pdf' : 'btn-export-png';
+            const btn = document.getElementById(btnId);
+            const originalText = btn.innerHTML;
             btn.disabled = true;
             btn.innerHTML = '⏳ Rendering…';
 
@@ -545,14 +552,18 @@
                     if (!visCanvas) {
                         alert('Export failed: canvas not found.');
                         btn.disabled = false;
-                        btn.innerHTML = '📥 Save PNG';
+                        btn.innerHTML = originalText;
                         return;
                     }
 
-                    // Find the bounding box of all nodes in DOM coords
+                    // Find the bounding box of all nodes in DOM coords (CSS pixels relative to canvas)
                     const allPositions = network.getPositions();
                     const nodeIds = Object.keys(allPositions);
-                    if (nodeIds.length === 0) return;
+                    if (nodeIds.length === 0) {
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                        return;
+                    }
 
                     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
                     nodeIds.forEach(id => {
@@ -563,20 +574,27 @@
                         maxY = Math.max(maxY, domPos.y);
                     });
 
-                    const pad = 120;
+                    const pad = 60;
                     minX = Math.max(0, minX - pad);
                     minY = Math.max(0, minY - pad);
-                    maxX = Math.min(visCanvas.width, maxX + pad);
-                    maxY = Math.min(visCanvas.height, maxY + pad);
+                    // clamp to client width/height
+                    maxX = Math.min(visCanvas.clientWidth, maxX + pad);
+                    maxY = Math.min(visCanvas.clientHeight, maxY + pad);
 
                     const cropW = Math.max(maxX - minX, 400);
                     const cropH = Math.max(maxY - minY, 300);
-                    const scale = 2;
-                    const headerH = 60;
+
+                    // Map DOM coordinates to internal canvas physical pixels using devicePixelRatio
+                    const dpr = window.devicePixelRatio || 1;
+                    const sx = minX * dpr;
+                    const sy = minY * dpr;
+                    const sWidth = cropW * dpr;
+                    const sHeight = cropH * dpr;
+                    const headerH = 60 * dpr;
 
                     const out = document.createElement('canvas');
-                    out.width = cropW * scale;
-                    out.height = (cropH + headerH) * scale;
+                    out.width = sWidth;
+                    out.height = sHeight + headerH;
 
                     const ctx = out.getContext('2d');
                     ctx.fillStyle = '#ffffff';
@@ -584,39 +602,51 @@
 
                     // Header
                     ctx.fillStyle = '#f5f5f7';
-                    ctx.fillRect(0, 0, out.width, headerH * scale);
+                    ctx.fillRect(0, 0, out.width, headerH);
                     ctx.fillStyle = '#1d1d1f';
-                    ctx.font = `bold ${14 * scale}px Segoe UI, Arial, sans-serif`;
-                    ctx.fillText('Root Cause Analysis — 5 Whys', 20 * scale, 24 * scale);
+                    ctx.font = `bold ${16 * dpr}px Segoe UI, Arial, sans-serif`;
+                    ctx.fillText('Root Cause Analysis — 5 Whys', 20 * dpr, 26 * dpr);
                     ctx.fillStyle = '#888';
-                    ctx.font = `${10 * scale}px Segoe UI, Arial, sans-serif`;
-                    ctx.fillText(`${nodes.get().length} nodes · Generated ${new Date().toLocaleDateString()}`, 20 * scale, 44 * scale);
+                    ctx.font = `${11 * dpr}px Segoe UI, Arial, sans-serif`;
+                    ctx.fillText(`${nodes.get().length} nodes · Generated ${new Date().toLocaleDateString()}`, 20 * dpr, 46 * dpr);
 
-                    // Network content
-                    ctx.drawImage(visCanvas, minX, minY, cropW, cropH, 0, headerH * scale, cropW * scale, cropH * scale);
+                    // Network content (extract exactly the physical pixels corresponding to the DOM crop box)
+                    ctx.drawImage(visCanvas, sx, sy, sWidth, sHeight, 0, headerH, sWidth, sHeight);
 
-                    out.toBlob(blob => {
-                        if (!blob) {
-                            alert('Export failed.');
-                            btn.disabled = false;
-                            btn.innerHTML = '📥 Save PNG';
-                            return;
-                        }
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = 'Root-Cause-Analysis.png';
-                        document.body.appendChild(a);
-                        a.click();
-                        setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 200);
+                    if (format === 'pdf' && window.jspdf) {
+                        const imgData = out.toDataURL('image/png', 1.0);
+                        const orientation = out.width > out.height ? 'l' : 'p';
+                        // Convert canvas pixels to PDF points (1 pt = 1/72 inch). 
+                        // To keep it high res but fitting page, we define the PDF page size identically to the canvas width in pt.
+                        const pdf = new window.jspdf.jsPDF({
+                            orientation: orientation,
+                            unit: 'pt',
+                            format: [out.width, out.height]
+                        });
+                        pdf.addImage(imgData, 'PNG', 0, 0, out.width, out.height);
+                        pdf.save('Root-Cause-Analysis.pdf');
                         btn.disabled = false;
-                        btn.innerHTML = '📥 Save PNG';
-                        setStatus('✅ PNG saved!');
-                    }, 'image/png');
+                        btn.innerHTML = originalText;
+                        setStatus('✅ PDF saved!');
+                    } else {
+                        out.toBlob(blob => {
+                            if (!blob) { throw new Error('Blob creation failed'); }
+                            const a = document.createElement('a');
+                            a.href = URL.createObjectURL(blob);
+                            a.download = 'Root-Cause-Analysis.png';
+                            document.body.appendChild(a);
+                            a.click();
+                            setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 200);
+                            btn.disabled = false;
+                            btn.innerHTML = originalText;
+                            setStatus('✅ PNG saved!');
+                        }, 'image/png', 1.0);
+                    }
 
                 } catch (err) {
                     console.error('RCA export error:', err);
                     btn.disabled = false;
-                    btn.innerHTML = '📥 Save PNG';
+                    btn.innerHTML = originalText;
                     alert('Export failed. See console for details.');
                 }
             }, 500);

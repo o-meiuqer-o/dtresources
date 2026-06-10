@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>6-3-5 Brainwriting | Multiplayer Lobby</title>
-    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
@@ -275,7 +275,7 @@
 
     <div class="container">
         <header style="position: relative;">
-            <a href="https://o-meiuqer-o.github.io/dtresources/ideation.html" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); color: var(--text-muted); text-decoration: none; font-size: 0.9rem; padding: 0.5rem; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s;">← Back to Course</a>
+            <a href="../ideation.html" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); color: var(--text-muted); text-decoration: none; font-size: 0.9rem; padding: 0.5rem; display: flex; align-items: center; gap: 0.5rem; transition: color 0.2s;">← Back to Course</a>
             <h1>6-3-5 Brainwriting</h1>
             <p class="subtitle">Real-time Collaborative Ideation</p>
         </header>
@@ -461,13 +461,24 @@
 
     <script>
         const PERSIST_KEY = 'dt-635-session';
-        let peer = null, conn = null, connections = {}, participants = [], mySheetHistory = [];
+        let socket = null, participants = [], mySheetHistory = [];
         let myId = null, myName = "", isHost = false, roomID = "", problemStatement = "";
         let currentRound = 1, totalRounds = 1, timerSeconds = 300, timerInterval = null, currentSheets = {};
 
+        function generateRoomCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = '';
+            for (let i = 0; i < 6; i++) result += chars.charAt(Math.floor(Math.random() * chars.length));
+            return result;
+        }
+
+        function generateParticipantId() {
+            return Math.random().toString(36).substr(2, 9);
+        }
+
         function saveSessionState() {
             if (!roomID) return;
-            localStorage.setItem(PERSIST_KEY, JSON.stringify({ roomID, isHost, myName, problemStatement, currentRound, participants, 
+            localStorage.setItem(PERSIST_KEY, JSON.stringify({ roomID, isHost, myName, myId, problemStatement, currentRound, participants, 
                 ideas: { i1: document.getElementById('idea-1').value, i2: document.getElementById('idea-2').value, i3: document.getElementById('idea-3').value } 
             }));
         }
@@ -477,7 +488,6 @@
             document.querySelectorAll('.card').forEach(c => c.classList.remove('active')); 
             document.getElementById('screen-' + name).classList.add('active'); 
             
-            // Toggle universal header bar
             const bar = document.getElementById('active-session-bar');
             if (name === 'join') {
                 bar.style.display = 'none';
@@ -487,48 +497,53 @@
             }
         }
 
-        function initPeer(customId = null, targetHostId = null) {
-            if (peer) peer.destroy();
-            peer = customId ? new Peer(customId) : new Peer();
-            peer.on('open', (id) => {
-                myId = id;
-                if (isHost) {
-                    roomID = id; document.getElementById('display-room-id').innerText = id;
-                    document.getElementById('cloud-sync-status').innerText = "Cloud-Sync: ACTIVE";
-                    generateQR(id);
-                    if (participants.length === 0) participants = [{ id, name: myName, role: 'host' }];
+        function initSocket(isHosting, targetRoomId = null) {
+            if (!myId) myId = generateParticipantId();
+            
+            // Connect to Hugging Face backend
+            socket = io('https://o-meiuqer-o-dtresources.hf.space');
+            
+            socket.on('connect', () => {
+                if (isHosting) {
+                    if (!roomID) roomID = generateRoomCode();
+                    document.getElementById('display-room-id').innerText = roomID;
+                    document.getElementById('cloud-sync-status').innerText = "Cloud-Sync: ACTIVE (Relay Server)";
+                    generateQR(roomID);
+                    if (participants.length === 0) participants = [{ id: myId, name: myName, role: 'host' }];
                     updateParticipantUI(); showScreen('lobby'); saveSessionState();
-                } else if (targetHostId) { roomID = targetHostId; connectToHost(targetHostId); }
+                    socket.emit('join_room', { room: roomID });
+                } else if (targetRoomId) {
+                    roomID = targetRoomId.toUpperCase();
+                    socket.emit('join_room', { room: roomID });
+                    socket.emit('broadcast', { room: roomID, message: { type: 'IDENTIFY', name: myName, id: myId } });
+                    showScreen('lobby');
+                }
             });
-            peer.on('connection', (c) => {
-                c.on('data', (data) => {
-                    if (data.type === 'IDENTIFY') {
-                        participants.push({ id: c.peer, name: data.name, role: 'client' });
-                        connections[c.peer] = c; broadcastParticipants(); updateParticipantUI();
-                    } else if (data.type === 'ROUTE_SHEET') handleSheetReceipt(c.peer, data.content);
-                });
-            });
-            peer.on('error', (err) => {
-                if (err.type === 'unavailable-id' && isHost) {
-                    const nextId = Math.floor(100000 + Math.random() * 900000).toString();
-                    setTimeout(() => initPeer(nextId), 1500);
+
+            socket.on('room_message', (data) => {
+                if (data.type === 'IDENTIFY' && isHost) {
+                    if (!participants.find(p => p.id === data.id)) {
+                        participants.push({ id: data.id, name: data.name, role: 'client' });
+                    }
+                    broadcastParticipants(); updateParticipantUI();
+                } else if (data.type === 'SYNC_LOBBY') {
+                    participants = data.participants; problemStatement = data.problem; updateParticipantUI();
+                } else if (data.type === 'START') {
+                    startSessionUI();
+                } else if (data.type === 'COLLECT') {
+                    const content = { idea1: document.getElementById('idea-1').value, idea2: document.getElementById('idea-2').value, idea3: document.getElementById('idea-3').value, history: mySheetHistory };
+                    socket.emit('broadcast', { room: roomID, message: { type: 'ROUTE_SHEET', id: myId, content: content } });
+                } else if (data.type === 'ROUTE_SHEET' && isHost) {
+                    handleSheetReceipt(data.id, data.content);
+                } else if (data.type === 'RECEIVE_SHEET' && data.targetId === myId) {
+                    receiveSheetData(data.content);
+                } else if (data.type === 'SHOW_REVIEW') {
+                    showReviewUI(data.allSheets);
                 }
             });
         }
 
-        function connectToHost(hostId) {
-            conn = peer.connect(hostId);
-            conn.on('open', () => { conn.send({ type: 'IDENTIFY', name: myName }); showScreen('lobby'); });
-            conn.on('data', (data) => {
-                if (data.type === 'SYNC_LOBBY') { participants = data.participants; problemStatement = data.problem; updateParticipantUI(); }
-                else if (data.type === 'START') startSessionUI();
-                else if (data.type === 'COLLECT') conn.send({ type: 'ROUTE_SHEET', content: { idea1: document.getElementById('idea-1').value, idea2: document.getElementById('idea-2').value, idea3: document.getElementById('idea-3').value, history: mySheetHistory } });
-                else if (data.type === 'RECEIVE_SHEET') receiveSheetData(data.content);
-                else if (data.type === 'SHOW_REVIEW') showReviewUI(data.allSheets);
-            });
-        }
-
-        function broadcastParticipants() { Object.values(connections).forEach(c => c.send({ type: 'SYNC_LOBBY', participants, problem: problemStatement })); }
+        function broadcastParticipants() { socket.emit('broadcast', { room: roomID, message: { type: 'SYNC_LOBBY', participants, problem: problemStatement } }); }
         function updateParticipantUI() {
             document.getElementById('participant-list').innerHTML = participants.map(p => `<div class="participant-card"><span>${p.name}${p.id === myId ? ' (You)' : ''}</span></div>`).join('');
             document.getElementById('participant-count-msg').innerText = `Connected: ${participants.length} / 6`;
@@ -538,15 +553,14 @@
         document.getElementById('btn-create-room').addEventListener('click', () => { 
             clearSessionState(); myName = document.getElementById('input-name').value || "Host"; 
             problemStatement = document.getElementById('host-problem').value; isHost = true;
-            initPeer(Math.floor(100000 + Math.random() * 900000).toString());
+            initSocket(true);
         });
         document.getElementById('btn-join-room').addEventListener('click', () => { 
-            clearSessionState(); // clear any previous session before joining a new one
-            isHost = false; myName = document.getElementById('input-name').value || "Joiner"; 
-            initPeer(null, document.getElementById('input-room-id').value.trim()); 
+            clearSessionState(); isHost = false; myName = document.getElementById('input-name').value || "Joiner"; 
+            initSocket(false, document.getElementById('input-room-id').value.trim()); 
         });
         document.getElementById('btn-start-session').addEventListener('click', () => { 
-            Object.values(connections).forEach(c => c.send({ type: 'START' })); startSessionUI(); 
+            socket.emit('broadcast', { room: roomID, message: { type: 'START' } }); startSessionUI(); 
         });
 
         function startSessionUI() {
@@ -559,7 +573,7 @@
 
         document.getElementById('btn-pass-ideas').addEventListener('click', () => {
             currentSheets = {}; currentSheets[myId] = { idea1: document.getElementById('idea-1').value, idea2: document.getElementById('idea-2').value, idea3: document.getElementById('idea-3').value, history: mySheetHistory };
-            Object.values(connections).forEach(c => c.send({ type: 'COLLECT' }));
+            socket.emit('broadcast', { room: roomID, message: { type: 'COLLECT' } });
         });
 
         function handleSheetReceipt(fromId, content) {
@@ -567,7 +581,7 @@
             if (Object.keys(currentSheets).length === participants.length) {
                 if (currentRound >= totalRounds) {
                     const finalData = { type: 'SHOW_REVIEW', allSheets: currentSheets };
-                    Object.values(connections).forEach(c => c.send(finalData)); showReviewUI(currentSheets);
+                    socket.emit('broadcast', { room: roomID, message: finalData }); showReviewUI(currentSheets);
                 } else rotateAndDistribute();
             }
         }
@@ -577,7 +591,7 @@
             for (let i = 0; i < participants.length; i++) rotated[participants[(i + 1) % participants.length].id] = currentSheets[participants[i].id];
             participants.forEach(p => { 
                 if (p.id === myId) receiveSheetData(rotated[p.id]); 
-                else if (connections[p.id]) connections[p.id].send({ type: 'RECEIVE_SHEET', content: rotated[p.id] });
+                else socket.emit('broadcast', { room: roomID, message: { type: 'RECEIVE_SHEET', targetId: p.id, content: rotated[p.id] } });
             });
         }
 
@@ -617,6 +631,7 @@
 
         function generateQR(roomID) {
             const baseUrl = window.location.href.split('?')[0];
+            document.getElementById("qrcode").innerHTML = ""; // clear previous QR
             new QRCode(document.getElementById("qrcode"), { text: `${baseUrl}?room=${roomID}`, width: 180, height: 180 });
         }
         function endSessionPermanently() { if (confirm("End session?")) { clearSessionState(); window.location.reload(); } }
@@ -626,7 +641,10 @@
             const urlParams = new URLSearchParams(window.location.search), autoJoinId = urlParams.get('room');
             if (autoJoinId) { document.getElementById('screen-join').classList.add('active'); document.getElementById('input-room-id').value = autoJoinId; }
             const saved = JSON.parse(localStorage.getItem(PERSIST_KEY));
-            if (saved) { roomID = saved.roomID; isHost = saved.isHost; myName = saved.myName; problemStatement = saved.problemStatement; initPeer(isHost ? roomID : null, isHost ? null : roomID); }
+            if (saved) { 
+                roomID = saved.roomID; isHost = saved.isHost; myName = saved.myName; myId = saved.myId; problemStatement = saved.problemStatement; 
+                initSocket(isHost, isHost ? null : roomID); 
+            }
         };
     </script>
 </body>

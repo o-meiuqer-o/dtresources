@@ -109,23 +109,26 @@
             white-space: nowrap;
         }
 
-        /* Toast */
+        /* Toast — pinned to bottom centre, always visible above network */
         #coach-toast {
             position: fixed;
-            top: 1rem;
+            bottom: 2rem;
             left: 50%;
-            transform: translateX(-50%) translateY(-140%);
+            transform: translateX(-50%) translateY(140%);
             background: #1d1d1f;
             color: #fff;
-            padding: 0.65rem 1.4rem;
+            padding: 0.7rem 1.6rem;
             border-radius: 40px;
-            font-size: 0.87rem;
+            font-size: 0.9rem;
             font-weight: 500;
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.25);
             z-index: 9999;
-            transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+            transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
             pointer-events: none;
             white-space: nowrap;
+            max-width: 90vw;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         #coach-toast.visible { transform: translateX(-50%) translateY(0); }
 
@@ -490,7 +493,12 @@
                 if (n.isRootCause) {
                     return {
                         id: n.id,
-                        color: { background: rootCauseColor.bg, border: rootCauseColor.border, highlight: { background: '#e74c3c', border: '#922b21' } },
+                        color: {
+                            background: rootCauseColor.bg,
+                            border: rootCauseColor.border,
+                            highlight: { background: rootCauseColor.bg, border: '#ff6b6b' },
+                            hover:      { background: rootCauseColor.bg, border: '#ff6b6b' }
+                        },
                         font: { color: rootCauseColor.font, size: 13, bold: true }
                     };
                 }
@@ -498,7 +506,13 @@
                 const c = layerColors[idx];
                 return {
                     id: n.id,
-                    color: { background: c.bg, border: c.border, highlight: { background: '#fff', border: '#0071e3' } },
+                    color: {
+                        background: c.bg,
+                        border: c.border,
+                        // Keep same background on select/hover so white-text nodes stay readable
+                        highlight: { background: c.bg, border: '#0071e3' },
+                        hover:      { background: c.bg, border: '#555' }
+                    },
                     font: { color: c.font, size: 13 }
                 };
             });

@@ -210,6 +210,63 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.3); transform: translateX(200%); transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28); z-index: 1000;
         }
         #notification.show { transform: translateX(0); }
+
+        /* Step-by-step instructions panel */
+        .how-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.75rem 0.875rem;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .how-step:hover {
+            background: rgba(99, 102, 241, 0.08);
+            border-color: rgba(99, 102, 241, 0.2);
+        }
+        .how-step-num {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1, #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: white;
+            margin-top: 0.15rem;
+            box-shadow: 0 0 8px rgba(99, 102, 241, 0.45);
+        }
+        .how-step-body {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            flex: 1;
+        }
+        .how-step-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+            margin-top: 0.05rem;
+            line-height: 1;
+        }
+        .how-step-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #e2e8f0;
+            margin-bottom: 0.2rem;
+            line-height: 1.3;
+        }
+        .how-step-desc {
+            font-size: 0.73rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .how-step-desc strong { color: #a5b4fc; font-weight: 700; }
+        .how-step-desc em { color: #c4b5fd; font-style: normal; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -247,13 +304,88 @@
                     </div>
                     <button class="btn btn-secondary" id="btn-join-room">🤝 Join Session</button>
                 </div>
-                <div class="setup-info" style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--glass-border);">
-                    <h3 style="margin-bottom: 1rem; font-size: 1rem; color: var(--primary);">HOW IT WORKS</h3>
-                    <ul style="font-size: 0.875rem; color: var(--text-muted); padding-left: 1.2rem;">
-                        <li style="margin-bottom: 0.5rem;"><strong>6</strong> participants, <strong>3</strong> ideas each, <strong>5</strong> minutes per round.</li>
-                        <li style="margin-bottom: 0.5rem;">Sheets pass around until everyone has built on every idea.</li>
-                        <li style="margin-bottom: 0.5rem;">Results are flattened and randomized for <strong>100% anonymity</strong>.</li>
-                    </ul>
+                <div class="setup-info" style="background: rgba(99, 102, 241, 0.04); padding: 1.75rem; border-radius: 20px; border: 1px solid rgba(99,102,241,0.2);">
+                    <h3 style="margin-bottom: 1.25rem; font-size: 0.75rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.1em;">📋 How It Works</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+
+                        <div class="how-step">
+                            <div class="how-step-num">1</div>
+                            <div class="how-step-body">
+                                <span class="how-step-icon">📱</span>
+                                <div>
+                                    <p class="how-step-title">Host opens this page</p>
+                                    <p class="how-step-desc">The <strong>moderator</strong> (group leader) opens this page on their device and taps <em>Host New Session</em>. Their phone becomes the server.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <div class="how-step-num">2</div>
+                            <div class="how-step-body">
+                                <span class="how-step-icon">🔗</span>
+                                <div>
+                                    <p class="how-step-title">Others join the room</p>
+                                    <p class="how-step-desc">Everyone else opens the link and enters the <strong>Room ID</strong> shown on the host's screen — or scans the QR code.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <div class="how-step-num">3</div>
+                            <div class="how-step-body">
+                                <span class="how-step-icon">💬</span>
+                                <div>
+                                    <p class="how-step-title">Moderator sets the challenge</p>
+                                    <p class="how-step-desc">The moderator types in the problem statement — usually a <em>"How might we…"</em> question.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <div class="how-step-num">4</div>
+                            <div class="how-step-body">
+                                <span class="how-step-icon">🚀</span>
+                                <div>
+                                    <p class="how-step-title">Start when ready (up to 6)</p>
+                                    <p class="how-step-desc">Once everyone has joined (up to <strong>6</strong> people), the moderator taps <em>Start Session</em>.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <div class="how-step-num">5</div>
+                            <div class="how-step-body">
+                                <span class="how-step-icon">✍️</span>
+                                <div>
+                                    <p class="how-step-title">Write 3 ideas in 5 minutes</p>
+                                    <p class="how-step-desc">Each person writes <strong>3 ideas</strong> on their own sheet within <strong>5 minutes</strong>.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <div class="how-step-num">6</div>
+                            <div class="how-step-body">
+                                <span class="how-step-icon">🔄</span>
+                                <div>
+                                    <p class="how-step-title">Rotate &amp; build on ideas</p>
+                                    <p class="how-step-desc">The host taps <em>Pass All →</em> to rotate sheets. Everyone then builds on the ideas they receive. Repeat until all sheets have been seen.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="how-step">
+                            <div class="how-step-num">7</div>
+                            <div class="how-step-body">
+                                <span class="how-step-icon">🎲</span>
+                                <div>
+                                    <p class="how-step-title">Anonymous results</p>
+                                    <p class="how-step-desc">All ideas are collected, shuffled, and displayed in <strong>random order</strong> — 100% anonymously.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -408,6 +540,7 @@
             initPeer(Math.floor(100000 + Math.random() * 900000).toString());
         });
         document.getElementById('btn-join-room').addEventListener('click', () => { 
+            clearSessionState(); // clear any previous session before joining a new one
             isHost = false; myName = document.getElementById('input-name').value || "Joiner"; 
             initPeer(null, document.getElementById('input-room-id').value.trim()); 
         });

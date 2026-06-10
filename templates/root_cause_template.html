@@ -389,8 +389,10 @@
 
             updateNodeColors();
             updateDepthIndicators();
-            network.selectNodes([newNodeId]);
-            setTimeout(() => network.focus(newNodeId, { scale: 1.0, animation: true }), 100);
+
+            // Return focus to the PARENT so the student can immediately add another branch
+            network.selectNodes([parentId]);
+            setTimeout(() => network.focus(parentId, { scale: 1.0, animation: true }), 100);
             saveTemplateData();
         }
 

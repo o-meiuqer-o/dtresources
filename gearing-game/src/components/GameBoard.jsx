@@ -805,7 +805,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel, ski
           })}
         </g>
         {/* Overlay for Level Start Instruction */}
-        {showStartInstruction && !isSolved && (
+        {showStartInstruction && (
           <g style={{ pointerEvents: 'all' }} onPointerDown={(e) => { e.stopPropagation(); setShowStartInstruction(false); }}>
             <rect x="0" y="0" width="1280" height="720" fill="rgba(0,0,0,0.6)" />
             

@@ -4,6 +4,8 @@ import LevelSelect from './components/LevelSelect';
 import { levels } from './levels';
 import './App.css';
 
+import { ErrorBoundary } from './ErrorBoundary';
+
 function App() {
   const [currentLevelId, setCurrentLevelId] = useState(null);
   const [skipIntro, setSkipIntro] = useState(false);
@@ -28,14 +30,16 @@ function App() {
   return (
     <div className="app-container">
       {currentLevel ? (
-        <GameBoard 
-          key={currentLevel.id}
-          level={currentLevel} 
-          onBack={() => setCurrentLevelId(null)}
-          onNextLevel={handleNextLevel}
-          isLastLevel={currentLevelId === levels[levels.length - 1].id}
-          skipIntro={skipIntro}
-        />
+        <ErrorBoundary>
+          <GameBoard 
+            key={currentLevel.id}
+            level={currentLevel} 
+            onBack={() => setCurrentLevelId(null)}
+            onNextLevel={handleNextLevel}
+            isLastLevel={currentLevelId === levels[levels.length - 1].id}
+            skipIntro={skipIntro}
+          />
+        </ErrorBoundary>
       ) : (
         <LevelSelect onSelectLevel={handleSelectLevel} />
       )}

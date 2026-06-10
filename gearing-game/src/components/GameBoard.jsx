@@ -139,7 +139,7 @@ export default function GameBoard({ level, onBack, onNextLevel, isLastLevel, ski
   const { pegs, sliders = [], belts: beltsConfig = [] } = level;
   
   const [gears, setGears] = useState(() => {
-    return level.shelfGears.map((g, index) => ({
+    return (level.shelfGears || []).map((g, index) => ({
       ...g,
       x: 125,
       y: 400 + index * 150,
